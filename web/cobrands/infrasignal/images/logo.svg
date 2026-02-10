@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 120" width="175" height="37">
+  <defs>
+    <linearGradient id="pinGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#FF6B35;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF1493;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Location Pin with double outline -->
+  <!-- Outer outline -->
+  <path d="M 50 30 C 65 30, 75 40, 75 55 C 75 75, 50 95, 50 95 C 50 95, 25 75, 25 55 C 25 40, 35 30, 50 30 Z" fill="none" stroke="url(#pinGradient)" stroke-width="4"/>
+  
+  <!-- Inner filled pin -->
+  <path d="M 50 32 C 64 32, 73 41, 73 55 C 73 74, 50 93, 50 93 C 50 93, 27 74, 27 55 C 27 41, 36 32, 50 32 Z" fill="url(#pinGradient)"/>
+  
+  <!-- "Infra" text in gold/yellow -->
+  <text x="100" y="65" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="bold" fill="#FFC800">Infra</text>
+  
+  <!-- "Signal" text in dark navy/blue -->
+  <text x="245" y="65" font-family="Arial, Helvetica, sans-serif" font-size="64" font-weight="bold" fill="#1F3A5F">Signal</text>
+</svg>
