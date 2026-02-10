@@ -1,0 +1,28 @@
+@import "../sass/h5bp";
+@import "./_colours";
+@import "../sass/mixins";
+
+@import "../sass/base";
+
+// Custom logo styling for InfraSignal
+#site-logo {
+    width: 550px;
+    height: 120px;
+    background-image: url('/cobrands/infrasignal/images/logo.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: left -35px;
+}
+
+#site-header {
+    height: 45px;
+    overflow: hidden;
+    padding: 0;
+}
+
+#main-nav {
+    min-height: 1.5em;
+}
+
+/* Header: 45px fixed height (clips 120px logo), logo stays 550x120px */
+
