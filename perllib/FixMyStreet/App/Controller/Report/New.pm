@@ -790,11 +790,24 @@ sub setup_categories_and_bodies : Private {
     my $contacts = $c->model('DB::Contact')->for_new_reports($c, \%bodies);
     my @contacts = $c->cobrand->categories_restriction($contacts)->all_sorted;
 
-    # If there are multiple contacts with the same category name and one of
-    # them has prefer_if_multiple set then use that one.
-    my @preferred = grep { $_->get_extra_metadata('prefer_if_multiple') } @contacts;
-    my %preferred_ids = map { $_->id => 1 } @preferred;
-    my %preferred_cats = map { $_->category => 1 } @preferred;
+    # If there are multiple contacts with the same category name, use the
+    # one(s) with the highest prefer_if_multiple value. This allows 3-tier
+    # priority: city (2) > county (1) > state (0).
+    my %cat_max_priority;
+    for my $contact (@contacts) {
+        my $prio = $contact->get_extra_metadata('prefer_if_multiple') || 0;
+        my $cat = $contact->category;
+        $cat_max_priority{$cat} = $prio if !defined $cat_max_priority{$cat} || $prio > $cat_max_priority{$cat};
+    }
+    my %preferred_ids;
+    for my $contact (@contacts) {
+        my $prio = $contact->get_extra_metadata('prefer_if_multiple') || 0;
+        my $cat = $contact->category;
+        if ($cat_max_priority{$cat} > 0 && $prio == $cat_max_priority{$cat}) {
+            $preferred_ids{$contact->id} = 1;
+        }
+    }
+    my %preferred_cats = map { $_ => 1 } grep { $cat_max_priority{$_} > 0 } keys %cat_max_priority;
 
     @contacts = grep { !$preferred_cats{$_->category} || $preferred_ids{$_->id} } @contacts;
 
@@ -931,7 +944,14 @@ sub setup_categories_and_bodies : Private {
     $csv->combine(@list_of_names);
     $c->stash->{list_of_names_as_string} = $csv->string;
 
-    my @missing_details_bodies = grep { !$bodies_to_list{$_->id} } values %bodies;
+    # Bodies that exist for this area but have no categories shown (filtered
+    # out by prefer_if_multiple priority). Only treat as "missing details" if
+    # they genuinely have no contacts at all, not just de-prioritized ones.
+    my @missing_details_bodies = grep {
+        my $body = $_;
+        !$bodies_to_list{$body->id}
+        && !$body->contacts->search({ state => 'confirmed' })->count
+    } values %bodies;
     my @missing_details_body_names = map { $_->name } @missing_details_bodies;
 
     $c->stash->{missing_details_bodies} = \@missing_details_bodies;
@@ -1335,12 +1355,16 @@ sub contacts_to_bodies : Private {
 
     # If there are multiple contacts for different bodies then the default
     # behaviour is to send to all bodies. However if a contact has the
-    # "prefer_if_multiple" checkbox checked then only send reports to that contact.
-    # This is useful for e.g. routing reports to parishes when the parent council
-    # has a contact of the same name.
-    my @preferred_contacts = grep { $_->get_extra_metadata('prefer_if_multiple') } @contacts;
-    if (scalar @preferred_contacts) {
-        @contacts = @preferred_contacts;
+    # "prefer_if_multiple" value set then only send reports to the contact(s)
+    # with the highest value. This enables 3-tier priority:
+    # city (2) > county (1) > state (0).
+    my $max_prio = 0;
+    for my $contact (@contacts) {
+        my $prio = $contact->get_extra_metadata('prefer_if_multiple') || 0;
+        $max_prio = $prio if $prio > $max_prio;
+    }
+    if ($max_prio > 0) {
+        @contacts = grep { ($_->get_extra_metadata('prefer_if_multiple') || 0) == $max_prio } @contacts;
     }
 
     # check that the front end has not indicated that we should not send to a
