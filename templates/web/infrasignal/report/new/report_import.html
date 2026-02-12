@@ -1,0 +1,14 @@
+[% INCLUDE 'header.html', title => 'External import' %]
+
+<h1>External import</h1>
+
+[% INCLUDE 'errors.html' %]
+
+<p>You may inject problem reports into InfraSignal programatically using this
+simple interface. Upon receipt, an email will be sent to the address given,
+with a link the user must click in order to check the details of their report,
+add any other information they wish, and then submit to the local authority.
+
+<p>This interface returns a plain text response; either <samp>SUCCESS</samp> if
+the report has been successfully received, or if not, a list of errors, one per
+line each starting with <samp>ERROR:</samp>.
