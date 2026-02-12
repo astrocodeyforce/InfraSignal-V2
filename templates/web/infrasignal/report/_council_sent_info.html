@@ -1,0 +1,12 @@
+[% SET can_display_external_id = problem.can_display_external_id %]
+[% SET duration_clause = problem.duration_string %]
+<p class="council_sent_info">
+    [% duration_clause %][% IF duration_clause %]. [% END %]
+    <strong>
+    [%- IF can_display_external_id %]
+        [%- tprintf(loc('Ref:&nbsp;%s'), problem.external_id) %].
+    [%- ELSE -%]
+        [%- tprintf(loc('InfraSignal ref:&nbsp;%s'), problem.id) %].
+    [%- END -%]
+    </strong>
+</p>

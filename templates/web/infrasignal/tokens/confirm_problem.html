@@ -1,0 +1,34 @@
+[% INCLUDE 'header.html', title = loc('Confirmation') %]
+
+<div class="confirmation-header">
+
+  <h1><a href="[% c.cobrand.relative_url_for_report( report ) %][% report.url %]">[% report.title %]</a></h1>
+
+  [% TRY %]
+      [% INCLUDE 'tokens/_confirm_problem.html' %]
+  [% CATCH file %]
+    <h2>[% loc('Thank you for reporting this issue!') %]</h2>
+    [% IF report.bodies_str %]
+      <p>[% loc("It's on its way to the local authority right now.") %]</p>
+    [% END %]
+  [% END %]
+
+[% TRY %][% INCLUDE 'tokens/_extras_confirm.html' %][% CATCH file %][% END %]
+
+  <p class="confirmation-again">
+    <a href="/report/new?latitude=[% report.latitude %]&amp;longitude=[% report.longitude %]" class="btn btn--primary">
+      [% loc('Report another problem here') %]
+    </a>
+  </p>
+
+</div>
+
+[% INCLUDE
+  next_steps.html,
+  just_interacted = 1,
+  utm_content = 'problem confirmed',
+  share_url = c.cobrand.base_url_for_report(report) _ report.url,
+  twitter_comment = loc('I just reported a problem on @fixmystreet')
+%]
+
+[% INCLUDE 'footer.html' %]
