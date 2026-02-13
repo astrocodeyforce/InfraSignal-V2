@@ -10,3 +10,11 @@
     [%- END -%]
     </strong>
 </p>
+[% IF problem.bodies_str %]
+<p class="council_sent_info" style="margin-top: 0.25em;">
+    <strong>[% loc('Responsible Authority:') %]</strong>
+    [% FOREACH body IN problem.bodies.values %]
+        [% body.name | html %][% ', ' UNLESS loop.last %]
+    [% END %]
+</p>
+[% END %]

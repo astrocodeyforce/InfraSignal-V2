@@ -1,0 +1,23 @@
+#!/bin/bash
+#
+# Production server script - runs Starman WITHOUT auto-reload and debug.
+# Uses more workers for better concurrency.
+
+set -e
+cd "$(dirname "$0")/.."
+
+# Disable debug in production
+export FIXMYSTREET_APP_DEBUG=0
+
+# Number of workers - adjust based on available CPU/RAM
+# Each worker uses ~200-350MB RAM. With 8GB RAM, 8-10 workers is safe.
+WORKERS=${FMS_WORKERS:-8}
+
+echo "Starting production Starman with $WORKERS workers..."
+bin/cron-wrapper perl local/bin/plackup -s Starman \
+    --listen :3000 \
+    --workers $WORKERS \
+    --preload-app \
+    --max-requests 1000 \
+    --keepalive-timeout 5 \
+    "$@"

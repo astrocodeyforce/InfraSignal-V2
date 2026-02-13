@@ -12,6 +12,12 @@ title: Docker
 
 This is just one of [many ways to install FixMyStreet]({{ "/install/" | relative_url }}).
 
+> **⚠️ IMPORTANT:** This page describes the **production / standalone** Docker
+> setup using the root `docker-compose.yml`. For **development**, use
+> `docker/compose-dev up` instead — see
+> [Docker (development)](docker-develop) for details. Do **not** mix the two;
+> each creates its own set of containers and database.
+
 ## Public images
 
 As well as providing a `Dockerfile` which you could use as the basis of your own

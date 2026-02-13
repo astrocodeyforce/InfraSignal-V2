@@ -12,11 +12,31 @@ title: Docker
 
 This is just one of [many ways to install FixMyStreet]({{ "/install/" | relative_url }}).
 
+> **⚠️ IMPORTANT: Docker Project Structure**
+>
+> The development Docker setup lives in the `docker/` subdirectory. Always use
+> **`docker/compose-dev`** to manage containers. **Do NOT** run `docker compose up`
+> from the repository root — the root `docker-compose.yml` is for standalone
+> production deployment and will create a **separate** set of containers with a
+> different database. The development project is named **"docker"** in Docker
+> Desktop; do not create or use any other project.
+
 If you have Docker and Docker Compose installed, then the following should
 set up a working FixMyStreet installation, with containers for the application,
 database, memcached and webserver:
 
     docker/compose-dev up
+
+## Accessing the site
+
+Once running, the site is available at:
+
+    http://<your-server-ip>:3000
+
+> **Note:** Use **`http://`** (not `https://`). The nginx proxy on port 3000
+> serves plain HTTP. Using `https://` in your browser will produce an
+> `ERR_SSL_PROTOCOL_ERROR`. The internal SSL between nginx and the app server
+> is handled automatically and is not exposed to the browser.
 
 Note that the setup step can take a long time the first time, and Docker does
 not output the ongoing logs. While it is running, you can run `docker logs

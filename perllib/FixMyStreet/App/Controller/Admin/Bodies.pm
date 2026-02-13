@@ -222,7 +222,12 @@ sub body_form_dropdowns : Private {
     if ( $whitelist && ref $whitelist eq 'ARRAY' && @$whitelist ) {
         $areas = FixMyStreet::MapIt::call('areas', $whitelist);
     } else {
-        $areas = FixMyStreet::MapIt::call('areas', $c->cobrand->area_types_for_admin);
+        my $types = $c->cobrand->area_types_for_admin;
+        if ($types && ref $types eq 'ARRAY' && @$types) {
+            $areas = FixMyStreet::MapIt::call('areas', $types);
+        } else {
+            $areas = {};
+        }
     }
 
     # Some cobrands may want to add extra areas at runtime beyond those
@@ -237,6 +242,239 @@ sub body_form_dropdowns : Private {
 
     my @cobrands = uniq sort map { $_->{moniker} } FixMyStreet::Cobrand->available_cobrand_classes;
     $c->stash->{cobrands} = \@cobrands;
+}
+
+
+
+=head2 areas_by_state
+
+AJAX endpoint returning body area_ids grouped as counties and cities
+for a given US state abbreviation. Used for cascading area dropdowns.
+
+=cut
+
+sub areas_by_state : Path("areas_by_state") : Args(0) {
+    my ( $self, $c ) = @_;
+
+    # Require login
+    unless ($c->user && $c->user->is_superuser) {
+        $c->res->status(403);
+        $c->res->body("Forbidden");
+        return;
+    }
+
+    my $state = $c->get_param("state") || "";
+    $state =~ s/[^A-Za-z]//g;  # sanitize
+    $state = uc($state);
+
+    unless ($state && length($state) == 2) {
+        $c->res->content_type("application/json; charset=utf-8");
+        $c->res->body(encode_json({ error => "Invalid state" }));
+        return;
+    }
+
+    # Query counties for this state from body table
+    my @counties = $c->model("DB::Body")->search(
+        { name => { -like => "%County, $state" } },
+        { join => "body_areas", select => ["me.name", "body_areas.area_id"],
+          as => ["name", "area_id"], order_by => "me.name",
+          result_class => "DBIx::Class::ResultClass::HashRefInflator" }
+    );
+
+    # Query cities for this state from body table
+    my @cities = $c->model("DB::Body")->search(
+        { name => { -like => "%, $state", -not_like => "%County, $state" } },
+        { join => "body_areas", select => ["me.name", "body_areas.area_id"],
+          as => ["name", "area_id"], order_by => "me.name",
+          result_class => "DBIx::Class::ResultClass::HashRefInflator" }
+    );
+
+    # Build unique area lists
+    my (%county_areas, %city_areas);
+    for my $r (@counties) {
+        my $aid = $r->{area_id};
+        next unless $aid;
+        $county_areas{$aid} = $r->{name};
+    }
+    for my $r (@cities) {
+        my $aid = $r->{area_id};
+        next unless $aid;
+        $city_areas{$aid} = $r->{name};
+    }
+
+    my @county_list = map { { id => $_, name => $county_areas{$_} } }
+                      sort { $county_areas{$a} cmp $county_areas{$b} }
+                      keys %county_areas;
+    my @city_list = map { { id => $_, name => $city_areas{$_} } }
+                    sort { $city_areas{$a} cmp $city_areas{$b} }
+                    keys %city_areas;
+
+    $c->res->content_type("application/json; charset=utf-8");
+    $c->res->body(encode_json({
+        state => $state,
+        counties => \@county_list,
+        cities => \@city_list,
+    }));
+}
+
+
+
+=head2 bodies_by_state
+
+AJAX endpoint returning bodies for a given US state abbreviation.
+Used for the cascading body picker on the admin summary page.
+
+=cut
+
+sub bodies_by_state : Path("bodies_by_state") : Args(0) {
+    my ( $self, $c ) = @_;
+
+    unless ($c->user && $c->user->is_superuser) {
+        $c->res->status(403);
+        $c->res->body("Forbidden");
+        return;
+    }
+
+    my $state = $c->get_param("state") || "";
+    $state =~ s/[^A-Za-z]//g;
+    $state = uc($state);
+
+    unless ($state && length($state) == 2) {
+        $c->res->content_type("application/json; charset=utf-8");
+        $c->res->body(encode_json({ error => "Invalid state" }));
+        return;
+    }
+
+    my @bodies = $c->model("DB::Body")->search(
+        { name => { -like => "%, $state" } },
+        { select => ["id", "name"], as => ["id", "name"],
+          order_by => "name",
+          result_class => "DBIx::Class::ResultClass::HashRefInflator" }
+    );
+
+    # Map state codes to full names for finding state-level bodies
+    my %code_to_name = (
+        AL => 'Alabama', AK => 'Alaska', AZ => 'Arizona', AR => 'Arkansas',
+        CA => 'California', CO => 'Colorado', CT => 'Connecticut', DE => 'Delaware',
+        DC => 'District of Columbia', FL => 'Florida', GA => 'Georgia', HI => 'Hawaii',
+        ID => 'Idaho', IL => 'Illinois', IN => 'Indiana', IA => 'Iowa',
+        KS => 'Kansas', KY => 'Kentucky', LA => 'Louisiana', ME => 'Maine',
+        MD => 'Maryland', MA => 'Massachusetts', MI => 'Michigan', MN => 'Minnesota',
+        MS => 'Mississippi', MO => 'Missouri', MT => 'Montana', NE => 'Nebraska',
+        NV => 'Nevada', NH => 'New Hampshire', NJ => 'New Jersey', NM => 'New Mexico',
+        NY => 'New York', NC => 'North Carolina', ND => 'North Dakota', OH => 'Ohio',
+        OK => 'Oklahoma', OR => 'Oregon', PA => 'Pennsylvania', RI => 'Rhode Island',
+        SC => 'South Carolina', SD => 'South Dakota', TN => 'Tennessee', TX => 'Texas',
+        UT => 'Utah', VT => 'Vermont', VA => 'Virginia', WA => 'Washington',
+        WV => 'West Virginia', WI => 'Wisconsin', WY => 'Wyoming',
+    );
+
+    # Find the state-level body (e.g. "State of Alabama" or "District of Columbia")
+    my @state_body;
+    if (my $full_name = $code_to_name{$state}) {
+        my $state_body_name = ($state eq 'DC') ? 'District of Columbia' : "State of $full_name";
+        @state_body = $c->model("DB::Body")->search(
+            { name => $state_body_name },
+            { select => ["id", "name"], as => ["id", "name"],
+              result_class => "DBIx::Class::ResultClass::HashRefInflator" }
+        );
+    }
+
+    # Combine all bodies
+    my @all_bodies = (@state_body, @bodies);
+
+    $c->res->content_type("application/json; charset=utf-8");
+    $c->res->body(encode_json({
+        state => $state,
+        count => scalar @all_bodies,
+        bodies => \@all_bodies,
+    }));
+}
+
+=head2 cities_by_county
+
+AJAX endpoint returning cities/towns within a given county,
+using MapIt's area covers API to find geographic containment.
+
+=cut
+
+sub cities_by_county : Path("cities_by_county") : Args(0) {
+    my ( $self, $c ) = @_;
+
+    unless ($c->user && $c->user->is_superuser) {
+        $c->res->status(403);
+        $c->res->body("Forbidden");
+        return;
+    }
+
+    my $county_id = $c->get_param("county_id");
+    $county_id =~ s/\D//g if $county_id;
+
+    unless ($county_id && $county_id > 0) {
+        $c->res->content_type("application/json; charset=utf-8");
+        $c->res->body(encode_json({ error => "Invalid county_id" }));
+        return;
+    }
+
+    # Get the county body and its MapIt area_id
+    my $county_body = $c->model("DB::Body")->find($county_id);
+    unless ($county_body) {
+        $c->res->content_type("application/json; charset=utf-8");
+        $c->res->body(encode_json({ error => "County not found" }));
+        return;
+    }
+
+    my @county_areas = $county_body->body_areas->all;
+    unless (@county_areas) {
+        $c->res->content_type("application/json; charset=utf-8");
+        $c->res->body(encode_json({ error => "No area for county", cities => [] }));
+        return;
+    }
+
+    # Use MapIt covers API to find O07/O08 areas within this county
+    my $mapit_url = $c->config->{MAPIT_URL} || 'https://global.mapit.mysociety.org/';
+    $mapit_url =~ s{/$}{};
+
+    my @all_child_area_ids;
+    require LWP::Simple;
+    require JSON::MaybeXS;
+
+    for my $ca (@county_areas) {
+        my $area_id = $ca->area_id;
+        my $url = "$mapit_url/area/$area_id/covers?type=O07,O08";
+        my $content = LWP::Simple::get($url);
+        next unless $content;
+        my $data = eval { JSON::MaybeXS::decode_json($content) };
+        next unless $data && ref $data eq 'HASH';
+        push @all_child_area_ids, keys %$data;
+    }
+
+    # Find bodies matching those area_ids
+    my @cities;
+    if (@all_child_area_ids) {
+        @cities = $c->model("DB::Body")->search(
+            {
+                'body_areas.area_id' => { -in => \@all_child_area_ids },
+                'me.name' => { 'not like' => '%County,%' },
+            },
+            {
+                join => 'body_areas',
+                select => ['me.id', 'me.name'],
+                as => ['id', 'name'],
+                distinct => 1,
+                order_by => 'me.name',
+                result_class => "DBIx::Class::ResultClass::HashRefInflator",
+            }
+        );
+    }
+
+    $c->res->content_type("application/json; charset=utf-8");
+    $c->res->body(encode_json({
+        county_id => int($county_id),
+        county_name => $county_body->name,
+        count => scalar @cities,
+        cities => \@cities,
+    }));
 }
 
 sub check_for_super_user : Private {

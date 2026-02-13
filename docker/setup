@@ -20,3 +20,11 @@ fi
 
 script/update --development
 bin/update-all-reports
+
+# Install cron job to regenerate dashboard cache every 5 minutes
+cat > /etc/cron.d/fixmystreet-dashboard << 'CRON'
+# Regenerate dashboard cache every 5 minutes
+*/5 * * * * root cd /var/www/fixmystreet && bin/update-all-reports > /dev/null 2>&1
+CRON
+chmod 644 /etc/cron.d/fixmystreet-dashboard
+service cron start || true
