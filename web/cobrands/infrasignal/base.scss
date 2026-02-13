@@ -26,3 +26,25 @@
 
 /* Header: 45px fixed height (clips 120px logo), logo stays 550x120px */
 
+/* "Show reports in your area" box: keep within page boundary */
+.dashboard-item--6 {
+    float: left !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+}
+
+.dashboard-search {
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.dashboard-search__input {
+    max-width: 100%;
+    box-sizing: border-box;
+
+    select {
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+}
+

@@ -21,14 +21,25 @@ services:
     volumes:
       - ../:/var/www/fixmystreet
       - fixmystreet-local:/var/www/fixmystreet/local
+  nginx:
+    image: nginx:1.27.2
+    depends_on:
+      - fixmystreet
+    ports:
+      - 3000:80
+    volumes:
+      - ../web:/var/www/fixmystreet/web:ro
+      - ../conf/nginx.conf-dev:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      default:
+        aliases:
+          - nginx.svc
   fixmystreet:
     build:
       context: ..
       dockerfile: docker/Dockerfile-development
-    command: script/server ${SERVER_ARGUMENTS}
+    command: docker/start-server ${SERVER_ARGUMENTS}
     tty: true
-    ports:
-      - 3000:3000
     depends_on:
       setup:
         condition: service_completed_successfully
@@ -68,8 +79,9 @@ services:
       timeout: 5s
       retries: 5
   memcached:
-    image: memcached:1.5.10
+    image: memcached:1.6.32
     restart: always
+    command: memcached -m 128
     networks:
       default:
         aliases:

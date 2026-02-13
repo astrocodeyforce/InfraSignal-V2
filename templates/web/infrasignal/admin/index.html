@@ -1,0 +1,119 @@
+[% INCLUDE 'admin/header.html' title=loc('Summary') -%]
+[% PROCESS 'admin/report_blocks.html' %]
+
+[% PROCESS 'admin/_index_intro.html' %]
+
+<div class="admin-index-search clearfix">
+
+[% IF c.user.has_body_permission_to('report_edit') %]
+<form method="get" action="[% c.uri_for('reports') %]" accept-charset="utf-8">
+    <label for="search_reports">[% loc('Search Reports') %]</label>
+    <div class="form-txt-submit-box">
+        <input type="text" class="form-control" name="search" size="30" id="search_reports" value="[% searched | html %]">
+        <input type="submit" class="btn" value="[% loc('Go') %]">
+    </div>
+</form>
+[% END %]
+
+[% IF c.user.has_body_permission_to('user_edit') %]
+<form method="get" action="[% c.uri_for('users') %]" accept-charset="utf-8">
+    <label for="search_users">[% loc('Search Users') %]</label>
+    <div class="form-txt-submit-box">
+        <input type="text" class="form-control" name="search" size="30" id="search_users" value="[% searched | html %]">
+        <input type="submit" class="btn" value="[% loc('Go') %]">
+    </div>
+</form>
+[% END %]
+
+[% TRY %][% PROCESS 'admin/_index_extra_search.html' %][% CATCH file %][% END %]
+
+[% IF c.user.is_superuser %]
+<form method="get" action="[% c.uri_for('bodies') %]" id="body_search_form">
+    <label for="state_select">[% loc('Edit body details') %]</label>
+    <div class="form-txt-submit-box" style="display:flex; gap:0.5em; align-items:center; flex-wrap:wrap;">
+        <select class="form-control" id="state_select" style="min-width:180px;">
+          <option value="">-- State --</option>
+        </select>
+        <select class="form-control" id="body_select" name="body" style="min-width:250px;" disabled>
+          <option value="">-- Select state first --</option>
+        </select>
+        <input type="submit" class="btn" value="[% loc('Go') %]">
+        <span id="summary_loading" style="display:none; color:#999;">Loading...</span>
+    </div>
+</form>
+<script>
+(function() {
+  var US_STATES = [
+    {c:"AL",n:"Alabama"},{c:"AK",n:"Alaska"},{c:"AZ",n:"Arizona"},
+    {c:"AR",n:"Arkansas"},{c:"CA",n:"California"},{c:"CO",n:"Colorado"},
+    {c:"CT",n:"Connecticut"},{c:"DE",n:"Delaware"},{c:"DC",n:"DC"},
+    {c:"FL",n:"Florida"},{c:"GA",n:"Georgia"},{c:"HI",n:"Hawaii"},
+    {c:"ID",n:"Idaho"},{c:"IL",n:"Illinois"},{c:"IN",n:"Indiana"},
+    {c:"IA",n:"Iowa"},{c:"KS",n:"Kansas"},{c:"KY",n:"Kentucky"},
+    {c:"LA",n:"Louisiana"},{c:"ME",n:"Maine"},{c:"MD",n:"Maryland"},
+    {c:"MA",n:"Massachusetts"},{c:"MI",n:"Michigan"},{c:"MN",n:"Minnesota"},
+    {c:"MS",n:"Mississippi"},{c:"MO",n:"Missouri"},{c:"MT",n:"Montana"},
+    {c:"NE",n:"Nebraska"},{c:"NV",n:"Nevada"},{c:"NH",n:"New Hampshire"},
+    {c:"NJ",n:"New Jersey"},{c:"NM",n:"New Mexico"},{c:"NY",n:"New York"},
+    {c:"NC",n:"N. Carolina"},{c:"ND",n:"N. Dakota"},{c:"OH",n:"Ohio"},
+    {c:"OK",n:"Oklahoma"},{c:"OR",n:"Oregon"},{c:"PA",n:"Pennsylvania"},
+    {c:"RI",n:"Rhode Island"},{c:"SC",n:"S. Carolina"},{c:"SD",n:"S. Dakota"},
+    {c:"TN",n:"Tennessee"},{c:"TX",n:"Texas"},{c:"UT",n:"Utah"},
+    {c:"VT",n:"Vermont"},{c:"VA",n:"Virginia"},{c:"WA",n:"Washington"},
+    {c:"WV",n:"W. Virginia"},{c:"WI",n:"Wisconsin"},{c:"WY",n:"Wyoming"}
+  ];
+  var ss = document.getElementById('state_select');
+  var bs = document.getElementById('body_select');
+  US_STATES.forEach(function(s) {
+    var o = document.createElement('option');
+    o.value = s.c; o.textContent = s.n + ' (' + s.c + ')';
+    ss.appendChild(o);
+  });
+  ss.addEventListener('change', function() {
+    var st = this.value;
+    bs.innerHTML = '<option value="">Loading...</option>';
+    bs.disabled = true;
+    if (!st) { bs.innerHTML = '<option value="">-- Select state first --</option>'; return; }
+    document.getElementById('summary_loading').style.display = '';
+    fetch('/admin/bodies/bodies_by_state?state=' + st)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        document.getElementById('summary_loading').style.display = 'none';
+        bs.innerHTML = '';
+        var def = document.createElement('option');
+        def.value = ''; def.textContent = '-- ' + d.count + ' bodies --';
+        bs.appendChild(def);
+        (d.bodies||[]).forEach(function(b) {
+          var o = document.createElement('option');
+          o.value = b.id; o.textContent = b.name;
+          bs.appendChild(o);
+        });
+        bs.disabled = false;
+      }).catch(function() {
+        document.getElementById('summary_loading').style.display = 'none';
+        bs.innerHTML = '<option value="">Error loading</option>';
+      });
+  });
+})();
+</script>
+[% END %]
+
+</div>
+
+[% IF unsent_reports.size %]
+<h2>[% loc('Reports waiting to be sent') %]</h2>
+
+<table cellspacing="0" cellpadding="2" border="1">
+    <tr>
+        <th>[% loc('ID') %]</th>
+        <th>[% loc('Title') %]</th>
+        <th>[% loc('Name') %]</th>
+        <th>[% loc('Body') %]</th>
+        <th>[% loc('State') %]</th>
+        <th>*</th>
+    </tr>
+    [% INCLUDE 'admin/problem_row.html' problems = unsent_reports %]
+</table>
+[% END %]
+
+[% INCLUDE 'admin/footer.html' %]

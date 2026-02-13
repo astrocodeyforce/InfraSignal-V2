@@ -11,19 +11,50 @@ server {
     root /var/www/fixmystreet/fixmystreet/web;
     error_page 503 /down.html;
 
-    # Make sure that Javascript and CSS are compressed.  (HTML is
-    # already compressed under the default configuration of the nginx
-    # package.)
-
+    # Enable gzip compression for all text-based content
     gzip on;
     gzip_disable "msie6";
-    gzip_types application/javascript application/x-javascript text/css;
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 6;
+    gzip_min_length 256;
+    gzip_types
+        application/javascript
+        application/x-javascript
+        application/json
+        application/xml
+        text/css
+        text/plain
+        text/xml
+        text/javascript
+        image/svg+xml
+        application/font-woff
+        application/font-woff2;
 
     client_max_body_size 10m;
 
-    # These rewrite rules are ported from the Apache configuration in
-    # conf/httpd.conf
+    # Proxy buffering for faster response times
+    proxy_buffering on;
+    proxy_buffer_size 16k;
+    proxy_buffers 8 16k;
+    proxy_busy_buffers_size 32k;
 
+    # Long cache for static assets (CSS, JS, images, fonts)
+    location ~* \.(css|js)$ {
+        expires 10y;
+        add_header Cache-Control "public, immutable";
+        add_header X-Content-Type-Options nosniff;
+        access_log off;
+        try_files $uri @catalyst;
+    }
+
+    location ~* \.(jpg|jpeg|png|gif|ico|svg|woff|woff2|ttf|eot|webp)$ {
+        expires 30d;
+        add_header Cache-Control "public";
+        access_log off;
+    }
+
+    # Rewrite rules
     rewrite ^/rss/council/([0-9]+)$  /rss/reports/$1 permanent;
     rewrite ^/report$                /reports        permanent;
     rewrite '^/{/rss/(.*)}$'         /rss/$1         permanent;
