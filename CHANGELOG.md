@@ -1,6 +1,53 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal Cobrand — February 15, 2026:
+        - Content moderation (SightEngine):
+            - Image moderation: All uploaded photos checked against 14 models
+              (nudity, weapon, violence, gore, self-harm, offensive, alcohol,
+              drugs, tobacco, gambling, money, text-content/OCR, AI-generated
+              detection, image quality) via SightEngine API.
+            - Text moderation: Report titles and descriptions checked for
+              profanity, URLs/links, personal information (emails, phone
+              numbers), and ML-classified content (sexual, discriminatory,
+              insulting, violent, toxic).
+            - Fail-open design: if the SightEngine API is unreachable, content
+              is allowed through so submissions are not blocked by API issues.
+            - Error display: Red error banner on the report form shows clear
+              moderation rejection messages with auto-navigation to the
+              details step.
+        - Category auto-fill: Selecting a report category auto-populates
+          title and description with sensible defaults. Users can override
+          the auto-filled text. Covers all 13 categories.
+        - Security: Removed hardcoded API credentials from source code and
+          Docker config templates. Credentials must be set in conf/general.yml
+          (gitignored) only. Added SightEngine config section to
+          general.yml-example with placeholder values.
+    - InfraSignal Cobrand — February 14, 2026:
+        - Search icon: Added black magnifying glass icon to all search bars
+          across the site (front-end and admin) using a ::before pseudo-element
+          for front-end inputs and background-image for admin inputs. Dropdowns
+          and select elements are not affected.
+        - Search icon CSS fix: Split SCSS variable from background shorthand
+          into separate url-only variable ($search-icon-url) so background-image
+          property is valid and the icon renders correctly.
+        - Contact page "optional" fix: Moved the "optional" label from
+          position:absolute (which caused it to float into the header area)
+          to inline within the phone number label. Text now reads "(optional)"
+          in parentheses, styled italic gray, right next to "Your phone number".
+        - Logo positioning: Removed left padding from header .container and
+          added margin-left: -1.5em to #site-logo-wrapper so the logo aligns
+          flush with the left edge of the page on all pages.
+        - Port 8000 Docker stack: Configured the infrasignal-v2 Docker stack
+          (port 8000) to use the InfraSignal cobrand by:
+            - Updating ALLOWED_COBRANDS in general.yml-docker to "infrasignal"
+            - Adding volume mounts for Infrasignal.pm, web/cobrands/infrasignal/,
+              and templates/web/infrasignal/ in docker-compose.yml
+            - Fixing file permissions (chmod a+rwX) on all cobrand template and
+              CSS files so the container's fms user can read/write them
+        - .govuk-form-group: Added position:relative so any absolutely-positioned
+          child elements (like "optional" labels) anchor correctly within their
+          form group instead of flying to the page header.
     - Front end improvements:
         - Make the continue button / asset stopper messages float at the bottom
           of initial steps of reporting flow.

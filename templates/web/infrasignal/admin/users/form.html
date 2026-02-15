@@ -1,0 +1,477 @@
+<form method="post" id="user_edit" action="[%
+    SET action_end = user.id || 'add';
+    c.uri_for_action( 'admin/users/edit', [ action_end ] )
+    %]" enctype="application/x-www-form-urlencoded" accept-charset="utf-8">
+    <input type="hidden" name="token" value="[% csrf_token %]" >
+    <input type="hidden" name="submit" value="1" >
+
+    [% INCLUDE 'errors.html' errors = field_errors.values %]
+    <ul class="no-bullets">
+        [% PROCESS 'admin/users/_form_details.html' %]
+
+        [% IF user.id %]
+        <li>
+          <div class="admin-hint">
+            <p>
+              [% IF c.user.is_superuser %]
+                [% loc("Mark users whose behaviour you want to keep a check on as <strong>flagged</strong>.") %]
+                <br>
+                [% tprintf(loc("Flagged users are listed on the <a href='%s'>flagged</a> page."), c.uri_for_action( 'admin/flagged' )) %]
+                <br>
+              [% END %]
+              [% loc("You can add an abusive user's email to the abuse list, which automatically hides (and never sends) reports they create.") %]
+            </p>
+          </div>
+
+          [% IF c.user.is_superuser %]
+            <label>
+              [% loc('Flagged:') %]
+              <input type="checkbox" id="flagged" name="flagged"[% user.flagged ? ' checked' : '' %]>
+            </label>
+          [% END %]
+          [% IF username_in_abuse %]
+           <small>[% loc('User in abuse table') %]</small>
+           <input class="btn" name="unban" type="submit" value="[% loc('Unban') %]">
+          [% ELSE %]
+           <input type="submit" class="btn" name="banuser" value="[% loc('Ban user') %]">
+          [% END %]
+        </li>
+        [% END %]
+
+      [% IF c.user.is_superuser %]
+        <li>
+          <div class="admin-hint">
+            <p>
+              [% loc(
+                "Normal (public) users should not be associated with any <strong>body</strong>.<br>
+                Authorised staff users can be associated with the body they represent.<br>
+                Depending on the implementation, staff users may have access to the dashboard (summary of
+                activity across their body), the ability to hide reports or set special report statuses.")
+              %]
+            </p>
+          </div>
+
+          <style>
+            .body-picker-row { display:flex; gap:1em; align-items:center; flex-wrap:wrap; margin-bottom:0.5em; }
+            .body-picker-row label { font-weight:bold; min-width:80px; }
+            .body-picker-row select { padding:6px 10px; border:1px solid #ccc; border-radius:4px; min-width:250px; }
+            .body-picker-row .loading { color:#999; font-size:13px; display:none; }
+            .body-picker-row .info { color:#666; font-size:13px; }
+          </style>
+
+          <div class="body-picker-row">
+            <label for="state_filter">[% loc('State:') %]</label>
+            <select id="state_filter">
+              <option value="">-- [% loc('Select a state') %] --</option>
+            </select>
+            <span id="state_loading" class="loading">Loading bodies...</span>
+            <span id="state_info" class="info"></span>
+          </div>
+
+          <div class="body-picker-row" id="county_row" style="display:none;">
+            <label for="county_filter">[% loc('County:') %]</label>
+            <select id="county_filter">
+              <option value="">-- [% loc('All counties') %] --</option>
+            </select>
+            <span id="county_info" class="info"></span>
+            <span id="county_loading" class="loading">Loading cities...</span>
+          </div>
+
+          <div class="body-picker-row">
+            <label for="body">[% loc('Body:') %]</label>
+            <select class="form-control" id="body" name="body"
+              data-current-body-id="[% user.from_body.id %]"
+              data-current-body-name="[% user.from_body.name | html %]">
+              <option value="">[% loc('No body') %]</option>
+              [% IF user.from_body %]
+                <option value="[% user.from_body.id %]" selected data-originally-selected>[% user.from_body.name %]</option>
+              [% END %]
+            </select>
+            <span id="body_info" class="info"></span>
+          </div>
+
+          <script>
+          (function() {
+            var US_STATES = [
+              {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
+              {code:"AR",name:"Arkansas"},{code:"CA",name:"California"},{code:"CO",name:"Colorado"},
+              {code:"CT",name:"Connecticut"},{code:"DE",name:"Delaware"},{code:"DC",name:"District of Columbia"},
+              {code:"FL",name:"Florida"},{code:"GA",name:"Georgia"},{code:"HI",name:"Hawaii"},
+              {code:"ID",name:"Idaho"},{code:"IL",name:"Illinois"},{code:"IN",name:"Indiana"},
+              {code:"IA",name:"Iowa"},{code:"KS",name:"Kansas"},{code:"KY",name:"Kentucky"},
+              {code:"LA",name:"Louisiana"},{code:"ME",name:"Maine"},{code:"MD",name:"Maryland"},
+              {code:"MA",name:"Massachusetts"},{code:"MI",name:"Michigan"},{code:"MN",name:"Minnesota"},
+              {code:"MS",name:"Mississippi"},{code:"MO",name:"Missouri"},{code:"MT",name:"Montana"},
+              {code:"NE",name:"Nebraska"},{code:"NV",name:"Nevada"},{code:"NH",name:"New Hampshire"},
+              {code:"NJ",name:"New Jersey"},{code:"NM",name:"New Mexico"},{code:"NY",name:"New York"},
+              {code:"NC",name:"North Carolina"},{code:"ND",name:"North Dakota"},{code:"OH",name:"Ohio"},
+              {code:"OK",name:"Oklahoma"},{code:"OR",name:"Oregon"},{code:"PA",name:"Pennsylvania"},
+              {code:"RI",name:"Rhode Island"},{code:"SC",name:"South Carolina"},{code:"SD",name:"South Dakota"},
+              {code:"TN",name:"Tennessee"},{code:"TX",name:"Texas"},{code:"UT",name:"Utah"},
+              {code:"VT",name:"Vermont"},{code:"VA",name:"Virginia"},{code:"WA",name:"Washington"},
+              {code:"WV",name:"West Virginia"},{code:"WI",name:"Wisconsin"},{code:"WY",name:"Wyoming"}
+            ];
+
+            // Build reverse lookup: full state name → code
+            var nameToCode = {};
+            US_STATES.forEach(function(s) { nameToCode[s.name.toLowerCase()] = s.code; });
+
+            var stateSel = document.getElementById('state_filter');
+            var countySel = document.getElementById('county_filter');
+            var countyRow = document.getElementById('county_row');
+            var bodySel = document.getElementById('body');
+            var stateLoading = document.getElementById('state_loading');
+            var stateInfo = document.getElementById('state_info');
+            var countyInfo = document.getElementById('county_info');
+            var countyLoading = document.getElementById('county_loading');
+            var bodyInfo = document.getElementById('body_info');
+
+            var currentBodyId = bodySel.getAttribute('data-current-body-id') || '';
+            var currentBodyName = bodySel.getAttribute('data-current-body-name') || '';
+
+            // Cached state data for county filtering
+            var stateData = { stateBody: [], counties: [], allCities: [] };
+
+            // Populate state dropdown
+            US_STATES.forEach(function(s) {
+              var o = document.createElement('option');
+              o.value = s.code;
+              o.textContent = s.name + ' (' + s.code + ')';
+              stateSel.appendChild(o);
+            });
+
+            // Classify a body name as state, county, or city
+            function classify(name) {
+              if (/^State of /i.test(name) || /^Commonwealth of /i.test(name) || name === 'District of Columbia') return 'state';
+              if (/\bCounty,\s/i.test(name) || /\bParish,\s/i.test(name) || /\bBorough,\s/i.test(name)) return 'county';
+              return 'city';
+            }
+
+            // Extract state code from body name
+            function extractState(bodyName) {
+              if (!bodyName) return '';
+              var m = bodyName.match(/,\s*([A-Z]{2})$/);
+              if (m) return m[1];
+              var m2 = bodyName.match(/^(?:State|Commonwealth)\s+of\s+(.+)$/i);
+              if (m2) {
+                var code = nameToCode[m2[1].toLowerCase()];
+                if (code) return code;
+              }
+              if (/district\s+of\s+columbia/i.test(bodyName)) return 'DC';
+              return '';
+            }
+
+            function resetDropdown(sel, label) {
+              sel.innerHTML = '';
+              var o = document.createElement('option');
+              o.value = '';
+              o.textContent = label;
+              sel.appendChild(o);
+            }
+
+            // Populate the body <select> with given bodies, optionally pre-selecting one
+            function populateBodyDropdown(bodies, preselectBodyId) {
+              bodySel.innerHTML = '';
+              var noBody = document.createElement('option');
+              noBody.value = '';
+              noBody.textContent = 'No body';
+              bodySel.appendChild(noBody);
+
+              // Add state-level body first, then counties, then cities
+              var stBodies = [], ctBodies = [], cyBodies = [];
+              bodies.forEach(function(b) {
+                var t = classify(b.name);
+                if (t === 'state') stBodies.push(b);
+                else if (t === 'county') ctBodies.push(b);
+                else cyBodies.push(b);
+              });
+
+              function addGroup(label, list) {
+                if (!list.length) return;
+                var og = document.createElement('optgroup');
+                og.label = label + ' (' + list.length + ')';
+                list.forEach(function(b) {
+                  var o = document.createElement('option');
+                  o.value = b.id;
+                  o.textContent = b.name;
+                  if (preselectBodyId && String(b.id) === String(preselectBodyId)) {
+                    o.selected = true;
+                    o.setAttribute('data-originally-selected', '');
+                  }
+                  og.appendChild(o);
+                });
+                bodySel.appendChild(og);
+              }
+              addGroup('State', stBodies);
+              addGroup('Counties', ctBodies);
+              addGroup('Cities / Towns', cyBodies);
+
+              bodyInfo.textContent = bodies.length + ' bodies loaded';
+            }
+
+            // Load bodies for a state, populate county filter and body dropdown
+            function loadBodiesForState(stateCode, preselectBodyId) {
+              stateLoading.style.display = '';
+              stateInfo.textContent = '';
+              bodyInfo.textContent = '';
+              countyRow.style.display = 'none';
+              resetDropdown(countySel, '-- All counties --');
+              countyInfo.textContent = '';
+              stateData = { stateBody: [], counties: [], allCities: [] };
+
+              bodySel.innerHTML = '';
+              var noBody = document.createElement('option');
+              noBody.value = '';
+              noBody.textContent = 'No body';
+              bodySel.appendChild(noBody);
+
+              fetch('/admin/bodies/bodies_by_state?state=' + stateCode)
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                  stateLoading.style.display = 'none';
+                  if (!data.bodies || !data.bodies.length) {
+                    stateInfo.textContent = 'No bodies found for ' + stateCode;
+                    return;
+                  }
+                  stateInfo.textContent = data.count + ' bodies in ' + stateCode;
+
+                  // Classify bodies into state/county/city
+                  data.bodies.forEach(function(b) {
+                    var t = classify(b.name);
+                    if (t === 'state') stateData.stateBody.push(b);
+                    else if (t === 'county') stateData.counties.push(b);
+                    else stateData.allCities.push(b);
+                  });
+
+                  // Show county filter if there are counties
+                  if (stateData.counties.length) {
+                    countyRow.style.display = 'flex';
+                    stateData.counties.forEach(function(b) {
+                      var o = document.createElement('option');
+                      o.value = b.id;
+                      o.textContent = b.name;
+                      countySel.appendChild(o);
+                    });
+                    countyInfo.textContent = stateData.counties.length + ' counties';
+                  }
+
+                  // Populate body dropdown with all bodies
+                  populateBodyDropdown(data.bodies, preselectBodyId);
+                })
+                .catch(function() {
+                  stateLoading.style.display = 'none';
+                  stateInfo.textContent = 'Error loading bodies';
+                });
+            }
+
+            // STATE CHANGE
+            stateSel.addEventListener('change', function() {
+              var stateCode = this.value;
+              if (!stateCode) {
+                bodySel.innerHTML = '';
+                var noBody = document.createElement('option');
+                noBody.value = '';
+                noBody.textContent = 'No body';
+                bodySel.appendChild(noBody);
+                stateInfo.textContent = '';
+                bodyInfo.textContent = '';
+                countyRow.style.display = 'none';
+                resetDropdown(countySel, '-- All counties --');
+                countyInfo.textContent = '';
+                return;
+              }
+              loadBodiesForState(stateCode, null);
+            });
+
+            // COUNTY CHANGE — filter body dropdown to show only bodies within selected county
+            countySel.addEventListener('change', function() {
+              var countyId = this.value;
+
+              if (!countyId) {
+                // Reset: show all bodies for the state
+                var allBodies = stateData.stateBody.concat(stateData.counties, stateData.allCities);
+                populateBodyDropdown(allBodies, null);
+                bodyInfo.textContent = allBodies.length + ' bodies loaded';
+                return;
+              }
+
+              // Fetch cities within this county
+              countyLoading.style.display = '';
+
+              fetch('/admin/bodies/cities_by_county?county_id=' + countyId)
+                .then(function(r) { return r.json(); })
+                .then(function(data) {
+                  countyLoading.style.display = 'none';
+                  var filteredCities = (data.cities && data.cities.length) ? data.cities : [];
+
+                  // Find the selected county object to include it in the body dropdown
+                  var selectedCounty = stateData.counties.filter(function(c) { return String(c.id) === String(countyId); });
+
+                  // Body dropdown: state body + this county + its cities
+                  var filtered = stateData.stateBody.concat(selectedCounty, filteredCities);
+                  populateBodyDropdown(filtered, null);
+                  bodyInfo.textContent = filteredCities.length + ' cities in ' + (data.county_name || 'county') + ' + ' + selectedCounty.length + ' county body';
+                })
+                .catch(function() {
+                  countyLoading.style.display = 'none';
+                  bodyInfo.textContent = 'Error loading cities for county';
+                });
+            });
+
+            // On page load: if user already has a body, auto-detect state and pre-select
+            if (currentBodyId && currentBodyName) {
+              var detectedState = extractState(currentBodyName);
+              if (detectedState) {
+                stateSel.value = detectedState;
+                loadBodiesForState(detectedState, currentBodyId);
+              }
+            }
+          })();
+          </script>
+        </li>
+      [% ELSE %]
+        <li>
+            <div class="admin-hint">
+              <p>
+                [% loc("Staff users have permission to log in to the admin.") %]
+              </p>
+            </div>
+            [% IF user.id %]
+              <label>
+                [% loc('Staff:') %]
+                <input type="checkbox" id="body" name="body" value="[% c.user.from_body.id %]" [% user.from_body.id == c.user.from_body.id ? ' checked' : '' %] [% 'disabled' UNLESS c.user.has_body_permission_to('user_assign_body') %]>
+              </label>
+            [% ELSE  %]
+              <label>
+                [% loc('Staff:') %]
+                <input type="checkbox" id="staff_checkbox_display_only" name="staff_checkbox_display_only" checked disabled %]>
+              </label>
+              <input type="hidden" id="body" name="body" value="[% c.user.from_body.id %]">
+            [% END %]
+          </li>
+      [% END %]
+
+        [% IF areas %]
+          <li>
+            <div class="admin-hint">
+              <p>
+                [% loc(
+                  "Normal (public) users should not be associated with any <strong>area</strong>.<br>
+                  Authorised staff users can be associated with the area in which they operate.")
+                %]
+              </p>
+            </div>
+            <label for="area_ids">[% loc('Area:') %]</label>
+            <select class="form-control js-multiple" id="area_ids" name="area_ids"
+                multiple data-none="-- [% loc('Select an area') %] --"
+                [% 'disabled' UNLESS c.user.has_permission_to('user_assign_areas', user.from_body.id) %]>
+              [% FOREACH area IN areas %]
+              [% SET aid = area.id %]
+                <option value="[% aid %]"[% ' selected' IF user.in_area(aid) %]>[% area.name | html %]</option>
+              [% END %]
+            </select>
+          </li>
+        [% END %]
+
+        [% IF contacts %]
+          <li class="js-user-categories">
+            [% INCLUDE 'admin/category-checkboxes.html' hint=loc("Authorised staff users can be associated with the categories in which they operate.") %]
+          </li>
+        [% END %]
+
+
+      [% IF user.from_body %]
+        <li>
+          <div class="admin-hint">
+            <p>
+              [% loc("This means the user will only see front end staff features (such as the inspector form) in their assigned categories.") %]
+            </p>
+          </div>
+
+          <label>
+            [% loc('Assigned categories only') %]:
+            <input type="checkbox" id="assigned_categories_only" name="assigned_categories_only"[% user.extra.assigned_categories_only ? ' checked' : '' %]>
+          </label>
+        </li>
+      [% END %]
+
+        [% IF c.user.is_superuser %]
+          <li>
+            <div class="admin-hint">
+              <p>
+                [% loc("Superusers have permission to perform <strong>all actions</strong> within the admin.") %]
+              </p>
+            </div>
+            <label>
+              [% loc('Superuser:') %]
+              <input type="checkbox" id="is_superuser" name="is_superuser"[% user.is_superuser ? ' checked' : '' %]>
+            </label>
+          </li>
+        [% END %]
+
+        [% IF available_permissions AND NOT user.is_superuser %]
+          <li>
+            <div class="admin-hint">
+              <p>
+                [% loc("Users can be assigned one or more roles to give them all the permissions of those roles. Selecting a role or roles will disable manual permission selection.") %]
+              </p>
+            </div>
+            <label for="roles">[% loc('Role:') %]</label>
+            <select class="form-control js-multiple" id="roles" name="roles" multiple>
+              [% FOREACH role IN roles %]
+                <option data-permissions='["[% role.permissions.join('","') | html %]"]' value="[% role.id %]"[% ' selected' IF user.in_role(role.id) %]>[% role.name | html %]</option>
+              [% END %]
+            </select>
+          </li>
+
+          <li>
+            <fieldset>
+              <legend>
+                <div class="admin-hint">
+                  <p>
+                    [% loc("Users can perform the following actions within their assigned body or area.") %]
+                  </p>
+                </div>
+                [% loc('Permissions:') %]
+              </legend>
+              <ul class="permissions-checkboxes">
+                [% FOREACH group IN available_permissions.pairs %]
+                  <li>
+                    [% group.key %]
+                    <ul class="no-bullets no-margin">
+                      <li>
+                        (<a href="#" data-select-all>[% loc('all') %]</a> /
+                        <a href="#" data-select-none>[% loc('none') %]</a>)
+                      </li>
+                      [% FOREACH permission IN group.value %]
+                        <li>
+                          <label class="inline">
+                            <input type="checkbox" id="perms_[% permission.key %]" name="permissions[[% permission.key %]]" [% "checked" IF NOT user.is_superuser AND user.has_body_permission_to(permission.key) %]>
+                            [% permission.value %]
+                          </label>
+                        </li>
+                      [% END %]
+                    </ul>
+                  </li>
+                [% END %]
+              </ul>
+            </fieldset>
+          </li>
+        [% END %]
+
+      [% TRY %][% INCLUDE 'admin/users/form-extra-fields.html' %][% CATCH file %][% END %]
+    </ul>
+    <p>
+      <input type="submit" class="btn" name="Submit changes" value="[% loc('Submit changes') %]" >
+    </p>
+
+  [% IF user AND NOT user.from_body %]
+    <ul class="no-bullets danger-zone">
+      <li><input class="btn btn--danger" type="submit" name="logout_everywhere" value="[% loc('Log out of all sessions') %]">
+      <li><input class="btn btn--danger" type="submit" name="anon_everywhere" value="[% loc('Make anonymous on all reports and updates') %]">
+      <li><input class="btn btn--danger" type="submit" name="hide_everywhere" value="[% loc('Hide all reports and updates') %]">
+      <li><input class="btn btn--danger" type="submit" name="remove_account" value="[% loc('Remove account details') %]">
+    </ul>
+  [% END %]
+
+</form>

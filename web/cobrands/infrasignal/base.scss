@@ -5,19 +5,40 @@
 @import "../sass/base";
 
 // Custom logo styling for InfraSignal
-#site-logo {
+// Wrapper holds the full-width background image (non-clickable)
+#site-logo-wrapper {
     width: 550px;
     height: 120px;
     background-image: url('/cobrands/infrasignal/images/logo.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: left -35px;
+    position: relative;
+    z-index: 2;
+    pointer-events: none; /* Wrapper itself is NOT clickable */
+    margin-left: -1.5em;
+}
+
+// The actual <a> link is only as wide as the logo graphic
+#site-logo {
+    display: block;
+    width: 200px;  /* Only the logo graphic area is clickable */
+    height: 100%;
+    background-image: none !important;
+    text-indent: -999999px;
+    pointer-events: auto; /* Only this link is clickable */
+    cursor: pointer;
 }
 
 #site-header {
     height: 45px;
     overflow: hidden;
     padding: 0;
+    position: relative;
+
+    .container {
+        padding-left: 0;
+    }
 }
 
 #main-nav {
@@ -45,6 +66,122 @@
     select {
         max-width: 100%;
         box-sizing: border-box;
+    }
+}
+
+/* Fix "optional" label positioning on contact page */
+.govuk-form-group {
+    position: relative;
+}
+.required-text--optional {
+    font-weight: normal;
+    font-style: italic;
+    color: #666;
+}
+
+/* Search icon inside all postcode/location search bars (not dropdowns) */
+/* Uses ::before on the parent div so icon is never affected by autofill */
+$search-icon-url: url("data:image/svg+xml,%3Csvg fill='none' height='26' viewBox='0 0 25 26' width='25' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m24.6582 21.6162-4.8682-4.8682c-.2197-.2197-.5175-.3418-.83-.3418h-.7959c1.3476-1.7236 2.1484-3.8916 2.1484-6.25 0-5.6103-4.5459-10.1562-10.1563-10.1562-5.6103 0-10.1562 4.5459-10.1562 10.1562 0 5.6104 4.5459 10.1563 10.1562 10.1563 2.3584 0 4.5264-.8008 6.25-2.1484v.7959c0 .3125.1221.6103.3418.83l4.8682 4.8682c.459.459 1.2012.459 1.6553 0l1.3818-1.3818c.459-.459.459-1.2012.0049-1.6602zm-14.502-5.21c-3.4521 0-6.24995-2.7929-6.24995-6.25 0-3.4521 2.79297-6.24995 6.24995-6.24995 3.4522 0 6.25 2.79297 6.25 6.24995 0 3.4522-2.7929 6.25-6.25 6.25z' fill='%23000'/%3E%3C/svg%3E");
+
+/* Front-end search bars: ::before pseudo-element on parent div */
+.postcode-form-box div {
+    position: relative;
+
+    &::before {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 18px;
+        height: 18px;
+        background: $search-icon-url no-repeat center / contain;
+        z-index: 1;
+        pointer-events: none;
+    }
+}
+
+.postcode-form-box input#pc[type="text"] {
+    padding-left: 36px !important;
+}
+
+/* Admin search bars: search icon on all text inputs with name="search" */
+/* Covers Summary (Search Reports/Users), Reports, and Users pages */
+/* Does NOT affect select dropdowns (body selector, role filter) */
+input[type="text"].form-control[name="search"] {
+    background-image: $search-icon-url !important;
+    background-repeat: no-repeat !important;
+    background-position: 8px center !important;
+    background-size: 16px 16px !important;
+    padding-left: 32px !important;
+}
+
+/* ============================================
+   Photo Moderation Error Banner
+   Professional, accessible, mobile-friendly
+   ============================================ */
+.photo-moderation-error {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 14px 16px;
+    margin: 12px 0;
+    background: #FFF5F5;
+    border: 1px solid #E53E3E;
+    border-left: 4px solid #E53E3E;
+    border-radius: 6px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.5;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.photo-moderation-error__icon {
+    flex-shrink: 0;
+    color: #E53E3E;
+    margin-top: 1px;
+
+    svg {
+        display: block;
+    }
+}
+
+.photo-moderation-error__content {
+    flex: 1;
+    min-width: 0;
+}
+
+.photo-moderation-error__title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #C53030;
+    margin: 0 0 4px 0;
+}
+
+.photo-moderation-error__message {
+    font-size: 13px;
+    color: #742A2A;
+    margin: 0;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.photo-moderation-error__close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    font-size: 20px;
+    line-height: 1;
+    color: #C53030;
+    cursor: pointer;
+    padding: 0 2px;
+    opacity: 0.6;
+    transition: opacity 0.15s;
+
+    &:hover {
+        opacity: 1;
     }
 }
 

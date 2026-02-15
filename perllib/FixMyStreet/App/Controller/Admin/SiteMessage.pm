@@ -11,8 +11,36 @@ sub index :Path :Args(0) {
     $c->detach('edit_site_message', [$c->user->from_body]) unless $c->user->is_superuser;
 
     # Superusers can see a list of all bodies with site messages.
+    # If the cobrand provides admin_fetch_all_bodies returning non-empty,
+    # skip loading all bodies (cobrand template uses AJAX instead).
+    my @cobrand_bodies = $c->cobrand->call_hook('admin_fetch_all_bodies');
+    unless (@cobrand_bodies) {
+        my @bodies = $c->model('DB::Body')->active->search(undef, { order_by => [ 'name', 'id' ] });
+        $c->stash->{bodies} = \@bodies;
+    }
+}
+
+sub with_messages :Path('with_messages') :Args(0) {
+    my ($self, $c) = @_;
+    $c->detach('/page_error_403_access_denied', []) unless $c->user->is_superuser;
     my @bodies = $c->model('DB::Body')->active->search(undef, { order_by => [ 'name', 'id' ] });
-    $c->stash->{bodies} = \@bodies;
+    my @with_msgs;
+    foreach my $body (@bodies) {
+        my $has_msg = 0;
+        foreach my $type ("", "waste", "reporting") {
+            foreach my $ooh (0, 1) {
+                my $msg = $body->site_message($type, $ooh);
+                if ($msg && $msg =~ /\S/) {
+                    $has_msg = 1;
+                    last;
+                }
+            }
+            last if $has_msg;
+        }
+        push @with_msgs, $body if $has_msg;
+    }
+    $c->stash->{bodies} = \@with_msgs;
+    $c->stash->{template} = 'admin/sitemessage/with_messages.html';
 }
 
 sub edit :Local :Args(1) {

@@ -1,0 +1,295 @@
+[% INCLUDE 'admin/header.html' title=loc('Site message') %]
+
+<style>
+  .filter-row { display:flex; gap:1em; align-items:center; flex-wrap:wrap; margin-bottom:0.8em; }
+  .filter-row label { font-weight:bold; min-width:120px; }
+  .filter-row select { padding:6px 10px; border:1px solid #ccc; border-radius:4px; min-width:250px; }
+  .filter-row .info { color:#666; font-size:13px; }
+  .filter-row .loading { color:#999; font-size:13px; }
+  .section-header td { background:#5a5a5a; color:#fff; font-weight:bold; padding:8px 10px; font-size:14px; }
+  .type-cell { color:#888; font-size:12px; }
+  #admin_bodies { width:100%; border-collapse:collapse; }
+  #admin_bodies th { background:#666; color:#fff; padding:8px 10px; text-align:left; }
+  #admin_bodies td { padding:6px 10px; border-bottom:1px solid #ddd; }
+  #admin_bodies tr:hover td { background:#fef9e7; }
+</style>
+
+<p style="color:#555;">Select a state to find a body, then click to manage its site message.</p>
+
+<div class="filter-row">
+  <label for="state_filter">State:</label>
+  <select id="state_filter"><option value="">-- Select a state --</option></select>
+  <span id="state_info" class="info"></span>
+  <span id="state_loading" class="loading" style="display:none;">Loading...</span>
+</div>
+
+<div class="filter-row" id="county_row" style="display:none;">
+  <label for="county_filter">County:</label>
+  <select id="county_filter"><option value="">-- All counties --</option></select>
+  <span id="county_info" class="info"></span>
+  <span id="county_loading" class="loading" style="display:none;">Loading cities...</span>
+</div>
+
+<div class="filter-row" id="city_row" style="display:none;">
+  <label for="city_filter">City / Town:</label>
+  <select id="city_filter"><option value="">-- All cities --</option></select>
+  <span id="city_info" class="info"></span>
+</div>
+
+<table id="admin_bodies" style="display:none;">
+  <thead>
+    <tr><th>Name</th><th>Type</th><th></th></tr>
+  </thead>
+  <tbody id="bodies_tbody"></tbody>
+</table>
+
+<p id="bodies_placeholder" style="color:#666;">Select a state above to view its bodies.</p>
+
+<script>
+(function() {
+  var US_STATES = [
+    {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
+    {code:"AR",name:"Arkansas"},{code:"CA",name:"California"},{code:"CO",name:"Colorado"},
+    {code:"CT",name:"Connecticut"},{code:"DE",name:"Delaware"},{code:"DC",name:"District of Columbia"},
+    {code:"FL",name:"Florida"},{code:"GA",name:"Georgia"},{code:"HI",name:"Hawaii"},
+    {code:"ID",name:"Idaho"},{code:"IL",name:"Illinois"},{code:"IN",name:"Indiana"},
+    {code:"IA",name:"Iowa"},{code:"KS",name:"Kansas"},{code:"KY",name:"Kentucky"},
+    {code:"LA",name:"Louisiana"},{code:"ME",name:"Maine"},{code:"MD",name:"Maryland"},
+    {code:"MA",name:"Massachusetts"},{code:"MI",name:"Michigan"},{code:"MN",name:"Minnesota"},
+    {code:"MS",name:"Mississippi"},{code:"MO",name:"Missouri"},{code:"MT",name:"Montana"},
+    {code:"NE",name:"Nebraska"},{code:"NV",name:"Nevada"},{code:"NH",name:"New Hampshire"},
+    {code:"NJ",name:"New Jersey"},{code:"NM",name:"New Mexico"},{code:"NY",name:"New York"},
+    {code:"NC",name:"North Carolina"},{code:"ND",name:"North Dakota"},{code:"OH",name:"Ohio"},
+    {code:"OK",name:"Oklahoma"},{code:"OR",name:"Oregon"},{code:"PA",name:"Pennsylvania"},
+    {code:"RI",name:"Rhode Island"},{code:"SC",name:"South Carolina"},{code:"SD",name:"South Dakota"},
+    {code:"TN",name:"Tennessee"},{code:"TX",name:"Texas"},{code:"UT",name:"Utah"},
+    {code:"VT",name:"Vermont"},{code:"VA",name:"Virginia"},{code:"WA",name:"Washington"},
+    {code:"WV",name:"West Virginia"},{code:"WI",name:"Wisconsin"},{code:"WY",name:"Wyoming"}
+  ];
+
+  // Cached data for current state
+  var stateData = { stateBody: [], counties: [], allCities: [] };
+
+  var stateSel = document.getElementById('state_filter');
+  var countySel = document.getElementById('county_filter');
+  var citySel = document.getElementById('city_filter');
+  var countyRow = document.getElementById('county_row');
+  var cityRow = document.getElementById('city_row');
+  var tbody = document.getElementById('bodies_tbody');
+  var table = document.getElementById('admin_bodies');
+  var placeholder = document.getElementById('bodies_placeholder');
+
+  // Populate state dropdown
+  US_STATES.forEach(function(s) {
+    var o = document.createElement('option');
+    o.value = s.code;
+    o.textContent = s.name + ' (' + s.code + ')';
+    stateSel.appendChild(o);
+  });
+
+  function classify(name) {
+    if (/^State of /i.test(name) || /^Commonwealth of /i.test(name) || name === 'District of Columbia') return 'state';
+    if (/\bCounty,\s/i.test(name) || /\bParish,\s/i.test(name) || /\bBorough,\s/i.test(name)) return 'county';
+    return 'city';
+  }
+
+  function resetDropdown(sel, label) {
+    sel.innerHTML = '';
+    var o = document.createElement('option');
+    o.value = '';
+    o.textContent = label;
+    sel.appendChild(o);
+  }
+
+  function addSection(label, count) {
+    var tr = document.createElement('tr');
+    tr.className = 'section-header';
+    var td = document.createElement('td');
+    td.colSpan = 3;
+    td.textContent = label + ' (' + count + ')';
+    tr.appendChild(td);
+    tbody.appendChild(tr);
+  }
+
+  function addRow(b, type) {
+    var tr = document.createElement('tr');
+    var td1 = document.createElement('td');
+    var a = document.createElement('a');
+    a.href = '/admin/sitemessage/edit/' + b.id;
+    a.textContent = b.name;
+    td1.appendChild(a);
+    var td2 = document.createElement('td');
+    td2.className = 'type-cell';
+    td2.textContent = type;
+    var td3 = document.createElement('td');
+    var btn = document.createElement('a');
+    btn.href = '/admin/sitemessage/edit/' + b.id;
+    btn.className = 'btn';
+    btn.textContent = 'Edit Message';
+    td3.appendChild(btn);
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+    tbody.appendChild(tr);
+  }
+
+  function renderTable(stateBody, counties, cities) {
+    tbody.innerHTML = '';
+    if (stateBody.length) { addSection('State', stateBody.length); stateBody.forEach(function(b){ addRow(b,'State'); }); }
+    if (counties.length)  { addSection('Counties', counties.length); counties.forEach(function(b){ addRow(b,'County'); }); }
+    if (cities.length)    { addSection('Cities / Towns', cities.length); cities.forEach(function(b){ addRow(b,'City/Town'); }); }
+    var total = stateBody.length + counties.length + cities.length;
+    if (total > 0) {
+      table.style.display = '';
+      placeholder.style.display = 'none';
+    } else {
+      table.style.display = 'none';
+      placeholder.style.display = '';
+      placeholder.textContent = 'No bodies found.';
+    }
+  }
+
+  // STATE CHANGE
+  stateSel.addEventListener('change', function() {
+    var state = this.value;
+    countyRow.style.display = 'none';
+    cityRow.style.display = 'none';
+    resetDropdown(countySel, '-- All counties --');
+    resetDropdown(citySel, '-- All cities --');
+    document.getElementById('state_info').textContent = '';
+    document.getElementById('county_info').textContent = '';
+    document.getElementById('city_info').textContent = '';
+    stateData = { stateBody: [], counties: [], allCities: [] };
+
+    if (!state) {
+      table.style.display = 'none';
+      placeholder.style.display = '';
+      placeholder.textContent = 'Select a state above to view its bodies.';
+      return;
+    }
+
+    document.getElementById('state_loading').style.display = '';
+    placeholder.style.display = 'none';
+
+    fetch('/admin/bodies/bodies_by_state?state=' + state)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        document.getElementById('state_loading').style.display = 'none';
+        if (!data.bodies || !data.bodies.length) {
+          placeholder.style.display = '';
+          placeholder.textContent = 'No bodies found for ' + state + '.';
+          return;
+        }
+
+        stateData.stateBody = [];
+        stateData.counties = [];
+        stateData.allCities = [];
+        data.bodies.forEach(function(b) {
+          var t = classify(b.name);
+          if (t === 'state') stateData.stateBody.push(b);
+          else if (t === 'county') stateData.counties.push(b);
+          else stateData.allCities.push(b);
+        });
+
+        document.getElementById('state_info').textContent = data.count + ' bodies in ' + state;
+
+        // Populate county dropdown
+        if (stateData.counties.length) {
+          countyRow.style.display = 'flex';
+          stateData.counties.forEach(function(b) {
+            var o = document.createElement('option');
+            o.value = b.id;
+            o.textContent = b.name;
+            countySel.appendChild(o);
+          });
+          document.getElementById('county_info').textContent = stateData.counties.length + ' counties';
+        }
+
+        // Populate city dropdown with all cities
+        if (stateData.allCities.length) {
+          cityRow.style.display = 'flex';
+          stateData.allCities.forEach(function(b) {
+            var o = document.createElement('option');
+            o.value = b.id;
+            o.textContent = b.name;
+            citySel.appendChild(o);
+          });
+          document.getElementById('city_info').textContent = stateData.allCities.length + ' cities/towns';
+        }
+
+        // Render full table
+        renderTable(stateData.stateBody, stateData.counties, stateData.allCities);
+      })
+      .catch(function() {
+        document.getElementById('state_loading').style.display = 'none';
+        placeholder.style.display = '';
+        placeholder.textContent = 'Error loading bodies.';
+      });
+  });
+
+  // COUNTY CHANGE — filter cities to those within the selected county
+  countySel.addEventListener('change', function() {
+    var countyId = this.value;
+    resetDropdown(citySel, '-- All cities --');
+    document.getElementById('city_info').textContent = '';
+
+    if (!countyId) {
+      // Reset to show all cities
+      if (stateData.allCities.length) {
+        cityRow.style.display = 'flex';
+        stateData.allCities.forEach(function(b) {
+          var o = document.createElement('option');
+          o.value = b.id;
+          o.textContent = b.name;
+          citySel.appendChild(o);
+        });
+        document.getElementById('city_info').textContent = stateData.allCities.length + ' cities/towns';
+      }
+      // Show all in table
+      renderTable(stateData.stateBody, stateData.counties, stateData.allCities);
+      return;
+    }
+
+    // Fetch cities for this county
+    document.getElementById('county_loading').style.display = '';
+    cityRow.style.display = 'flex';
+
+    fetch('/admin/bodies/cities_by_county?county_id=' + countyId)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        document.getElementById('county_loading').style.display = 'none';
+        resetDropdown(citySel, '-- All cities in county --');
+        var filteredCities = (data.cities && data.cities.length) ? data.cities : [];
+
+        filteredCities.forEach(function(b) {
+          var o = document.createElement('option');
+          o.value = b.id;
+          o.textContent = b.name;
+          citySel.appendChild(o);
+        });
+
+        document.getElementById('city_info').textContent = filteredCities.length + ' cities/towns in ' + (data.county_name || 'county');
+
+        // Find the selected county object
+        var selectedCounty = stateData.counties.filter(function(c) { return c.id == countyId; });
+        renderTable(stateData.stateBody, selectedCounty, filteredCities);
+      })
+      .catch(function() {
+        document.getElementById('county_loading').style.display = 'none';
+        document.getElementById('city_info').textContent = 'Error loading cities';
+      });
+  });
+
+  // CITY CHANGE — filter table to just that city
+  citySel.addEventListener('change', function() {
+    var cityId = this.value;
+    if (!cityId) {
+      // Reset — trigger county change to re-render
+      countySel.dispatchEvent(new Event('change'));
+      return;
+    }
+    var cityBody = stateData.allCities.filter(function(c) { return c.id == cityId; });
+    renderTable([], [], cityBody);
+  });
+})();
+</script>
+
+[% INCLUDE 'admin/footer.html' %]

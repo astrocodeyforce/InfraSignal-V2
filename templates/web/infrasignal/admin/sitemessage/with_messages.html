@@ -1,0 +1,29 @@
+[% INCLUDE 'admin/header.html' title=loc('Bodies with Site Messages') %]
+
+<table>
+  <thead>
+    <tr>
+      <th>Body</th>
+      <th>Site Message</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    [% FOR body IN bodies %]
+      [% site_message = body.site_message('') %]
+      [% IF site_message %]
+      <tr>
+        <td>[% body.name %]</td>
+        <td>[% site_message.substr(0, 80) %][% IF site_message.length > 80 %]&hellip;[% END %]</td>
+        <td><a href="[% c.uri_for('edit', body.id) %]">Edit</a></td>
+      </tr>
+      [% END %]
+    [% END %]
+  </tbody>
+</table>
+
+[% IF !bodies.size %]
+  <p>No bodies with site messages found.</p>
+[% END %]
+
+[% INCLUDE 'admin/footer.html' %]

@@ -16,7 +16,7 @@
 # PostgreSQL database details for FixMyStreet
 FMS_DB_HOST: 'postgres.svc'
 FMS_DB_PORT: '5432'
-FMS_DB_NAME: 'fixmystreet'
+FMS_DB_NAME: 'infrasignal'
 FMS_DB_USER: 'fms'
 FMS_DB_PASS: 'fms'
 
@@ -89,6 +89,17 @@ PHOTO_STORAGE_BACKEND: 'FileSystem'
 PHOTO_STORAGE_OPTIONS:
   # Where uploaded photos will be stored
   UPLOAD_DIR: '../upload/'
+
+# SightEngine image moderation (https://sightengine.com)
+# Automatically checks uploaded photos for inappropriate content.
+# Models: nudity, weapon, violence, gore, self-harm, offensive/hate,
+#         alcohol, drugs, tobacco, gambling, money, text-content (OCR),
+#         AI-generated detection, image quality, duplicate detection.
+SIGHTENGINE_ENABLED: 1
+SIGHTENGINE_API_USER: ''  # Get from dashboard.sightengine.com
+SIGHTENGINE_API_SECRET: ''  # Get from dashboard.sightengine.com
+# Optional: Image List ID for duplicate detection (create at dashboard.sightengine.com)
+SIGHTENGINE_IMAGE_LIST_ID: ''
 
 # If using the S3 backend, you'll need to set the following options instead:
 #PHOTO_STORAGE_OPTIONS:
@@ -194,9 +205,7 @@ MAP_TYPE: 'OSM'
 # This also allows development servers to map to different cobrands if needed,
 # using DNS subdomains for example.
 ALLOWED_COBRANDS:
-  - cobrand1
-  - cobrand2: 'hostname_substring2'
-  - cobrand3
+  - infrasignal
 
 # This is used in e.g. "offensive report" emails to provide a link directly to
 # the admin interface. Defaults to BASE_URL with "/admin" on the end.

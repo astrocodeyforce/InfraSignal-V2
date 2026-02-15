@@ -17,10 +17,12 @@ Overrides area fetching to avoid slow global MapIt calls.
 
 =cut
 
-# Return an empty list so fetch_all_bodies doesn't load all 28K bodies.
-# The admin templates use AJAX state-based filtering instead.
+# Return a non-empty list so fetch_all_bodies skips its fallback that
+# would otherwise load all 28K bodies from the DB.
+# Our admin templates use AJAX cascading state→body dropdowns instead,
+# so the 'bodies' stash variable is never iterated in our cobrand templates.
 sub admin_fetch_all_bodies {
-    return ();
+    return (0);  # truthy list (length 1) prevents the fallback query
 }
 
 # Override the area_types used for admin to prevent fetching all global areas.
@@ -113,5 +115,8 @@ sub report_new_munge_after_insert {
         }
     }
 }
+
+# Disable the creation graph link — the PNG is not generated for this site
+sub admin_show_creation_graph { 0 }
 
 1;

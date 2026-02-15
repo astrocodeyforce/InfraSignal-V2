@@ -293,3 +293,28 @@ O311_POLLING_INTERVAL: 2
 O311_POLLING_MAX_TRIES: 5
 
 WASTEWORKS_BACKEND_TMP_DIR: '/tmp'
+# SightEngine content moderation (https://sightengine.com)
+# Checks uploaded photos and report text for inappropriate content.
+# Sign up at https://dashboard.sightengine.com to get API credentials.
+# Image models: nudity, weapon, violence, gore, self-harm, offensive/hate,
+#   alcohol, drugs, tobacco, gambling, money, text-content (OCR),
+#   AI-generated detection, image quality, duplicate detection.
+# Text moderation: profanity, URLs/links, personal info (email/phone),
+#   ML classification (sexual, discriminatory, insulting, violent, toxic).
+SIGHTENGINE_ENABLED: 0
+SIGHTENGINE_API_USER: ''
+SIGHTENGINE_API_SECRET: ''
+# Optional: Image List ID for duplicate detection (create at dashboard.sightengine.com/image-lists)
+SIGHTENGINE_IMAGE_LIST_ID: ''
+# Optional: override default detection thresholds (0.0-1.0, lower = stricter)
+#SIGHTENGINE_THRESHOLDS:
+#  nudity: 0.50
+#  weapon: 0.60
+#  violence: 0.50
+#  offensive: 0.50
+#  gore: 0.40
+#  self_harm: 0.50
+#  alcohol: 0.80
+#  drugs: 0.70
+#  tobacco: 0.80
+#  gambling: 0.80
