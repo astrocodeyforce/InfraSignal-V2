@@ -7,6 +7,7 @@ BEGIN { extends 'Catalyst::Controller'; }
 use utf8;
 use Path::Class;
 use Utils;
+use FixMyStreet::SightEngine;
 
 =head1 NAME
 
@@ -413,6 +414,15 @@ sub check_for_errors : Private {
 
     if ( my $photo_error  = delete $c->stash->{photo_error} ) {
         $field_errors{photo} = $photo_error;
+    }
+
+    # SightEngine text moderation for update text
+    my $update = $c->stash->{update};
+    if (!$field_errors{update} && $update->text) {
+        my $text_check = FixMyStreet::SightEngine::moderate_text($update->text);
+        if ($text_check && !$text_check->{allowed}) {
+            $field_errors{update} = _('Your update contains content that is not allowed: ') . $text_check->{reason};
+        }
     }
 
     # Now assign the username error according to where it came from

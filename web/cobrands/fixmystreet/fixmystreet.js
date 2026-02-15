@@ -1148,6 +1148,28 @@ $.extend(fixmystreet.set_up, {
                 }
               });
               this.on("error", function(file, errorMessage, xhrResponse) {
+                var self = this;
+                self.removeFile(file);
+                var msg = typeof errorMessage === 'string' ? errorMessage : (errorMessage && errorMessage.error ? errorMessage.error : 'Upload failed. Please try again.');
+                // Remove any existing error banner
+                $dropzone.siblings('.photo-moderation-error').remove();
+                var $errorBanner = $('<div class="photo-moderation-error" role="alert">' +
+                  '<div class="photo-moderation-error__icon">' +
+                    '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">' +
+                      '<path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm1 15H9v-2h2v2zm0-4H9V5h2v6z" fill="currentColor"/>' +
+                    '</svg>' +
+                  '</div>' +
+                  '<div class="photo-moderation-error__content">' +
+                    '<strong class="photo-moderation-error__title">Photo not accepted</strong>' +
+                    '<p class="photo-moderation-error__message">' + $('<span>').text(msg).html() + '</p>' +
+                  '</div>' +
+                  '<button type="button" class="photo-moderation-error__close" aria-label="Dismiss">&times;</button>' +
+                '</div>');
+                $errorBanner.find('.photo-moderation-error__close').on('click', function() {
+                  $errorBanner.slideUp(200, function() { $errorBanner.remove(); });
+                });
+                $dropzone.before($errorBanner);
+                $errorBanner.hide().slideDown(300);
               });
               this.on("removedfile", function(file) {
                 var $upload_fileids = $('input[name="' + $fileid_input + '"]', $context);

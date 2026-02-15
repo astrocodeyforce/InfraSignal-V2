@@ -14,6 +14,7 @@ use Try::Tiny;
 use FixMyStreet;
 use FixMyStreet::ImageMagick;
 use FixMyStreet::PhotoStorage;
+use FixMyStreet::SightEngine;
 
 # Attached Catalyst app, if present, for feeding back errors during photo upload
 has c => (
@@ -186,10 +187,25 @@ has ids => ( #  Arrayref of $fileid tuples (always, so post upload/raw data proc
                 # Convert all images to JPEGs
                 my %params = ( magick => 'JPEG' );
 
-                # we have an image we can use - save it to storage
+                # we have an image we can use - resize it
                 $photo_blob = try {
                     FixMyStreet::ImageMagick->new(blob => $photo_blob)->shrink('2048x2048')->as_blob(%params);
                 } catch { $photo_blob };
+
+                # SightEngine content moderation check
+                if (FixMyStreet::SightEngine::is_enabled()) {
+                    my $moderation = FixMyStreet::SightEngine::moderate_photo($photo_blob);
+                    unless ($moderation->{allowed}) {
+                        my $c = $self->c;
+                        if ($c) {
+                            $c->log->info('SightEngine rejected photo: ' . $moderation->{reason});
+                            $c->stash->{photo_error} = 'Your photo was not accepted. Reason: ' . $moderation->{reason}
+                                . '. Please upload an appropriate image related to the issue you are reporting.';
+                        }
+                        return ();
+                    }
+                }
+
                 return $self->storage->store_photo($photo_blob);
             }
 

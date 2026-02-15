@@ -1,5 +1,6 @@
 package FixMyStreet::App::Controller::Admin::Stats;
 use Moose;
+use Memcached;
 use namespace::autoclean;
 
 BEGIN { extends 'Catalyst::Controller'; }
@@ -13,46 +14,48 @@ sub index : Path : Args(0) {
 sub gather : Private {
     my ($self, $c) = @_;
 
-    $c->forward('state'); # Problem/update stats used on that page
-    $c->forward('/admin/fetch_all_bodies'); # For body stat
+        # Use Memcached to cache the expensive stats for 10 minutes (600 seconds)
+        my $cache_key = 'admin_stats_gather_' . ($c->cobrand->moniker || 'default');
+        my $cache_expiry = 600; # 10 minutes
 
-    my $alerts = $c->model('DB::Alert')->summary_report_alerts( $c->cobrand->restriction );
+        my $stats = Memcached::get_or_calculate($cache_key, $cache_expiry, sub {
+                $c->forward('state'); # Problem/update stats used on that page
+                $c->forward('/admin/fetch_all_bodies'); # For body stat
 
-    my %alert_counts =
-      map { $_->confirmed => $_->get_column('confirmed_count') } $alerts->all;
+                my $alerts = $c->model('DB::Alert')->summary_report_alerts( $c->cobrand->restriction );
+                my %alert_counts = map { $_->confirmed => $_->get_column('confirmed_count') } $alerts->all;
+                $alert_counts{0} ||= 0;
+                $alert_counts{1} ||= 0;
 
-    $alert_counts{0} ||= 0;
-    $alert_counts{1} ||= 0;
+                my $contacts = $c->model('DB::Contact')->summary_count();
+                my %contact_counts = map { $_->state => $_->get_column('state_count') } $contacts->all;
+                $contact_counts{confirmed} ||= 0;
+                $contact_counts{unconfirmed} ||= 0;
+                $contact_counts{total} = $contact_counts{confirmed} + $contact_counts{unconfirmed};
 
-    $c->stash->{alerts} = \%alert_counts;
+                my $questionnaires = $c->model('DB::Questionnaire')->summary_count( $c->cobrand->restriction );
+                my %questionnaire_counts = map {
+                        $_->get_column('answered') => $_->get_column('questionnaire_count')
+                } $questionnaires->all;
+                $questionnaire_counts{1} ||= 0;
+                $questionnaire_counts{0} ||= 0;
+                $questionnaire_counts{total} = $questionnaire_counts{0} + $questionnaire_counts{1};
+                my $questionnaires_pc = $questionnaire_counts{total}
+                        ? sprintf('%.1f', $questionnaire_counts{1} / $questionnaire_counts{total} * 100)
+                        : _('n/a');
 
-    my $contacts = $c->model('DB::Contact')->summary_count();
+                return {
+                        alert_counts => \%alert_counts,
+                        contact_counts => \%contact_counts,
+                        questionnaire_counts => \%questionnaire_counts,
+                        questionnaires_pc => $questionnaires_pc,
+                };
+        });
 
-    my %contact_counts =
-      map { $_->state => $_->get_column('state_count') } $contacts->all;
-
-    $contact_counts{confirmed} ||= 0;
-    $contact_counts{unconfirmed} ||= 0;
-    $contact_counts{total} = $contact_counts{confirmed} + $contact_counts{unconfirmed};
-
-    $c->stash->{contacts} = \%contact_counts;
-
-    my $questionnaires = $c->model('DB::Questionnaire')->summary_count( $c->cobrand->restriction );
-
-    my %questionnaire_counts = map {
-        $_->get_column('answered') => $_->get_column('questionnaire_count')
-    } $questionnaires->all;
-    $questionnaire_counts{1} ||= 0;
-    $questionnaire_counts{0} ||= 0;
-
-    $questionnaire_counts{total} =
-      $questionnaire_counts{0} + $questionnaire_counts{1};
-    $c->stash->{questionnaires_pc} =
-      $questionnaire_counts{total}
-      ? sprintf( '%.1f',
-        $questionnaire_counts{1} / $questionnaire_counts{total} * 100 )
-      : _('n/a');
-    $c->stash->{questionnaires} = \%questionnaire_counts;
+        $c->stash->{alerts} = $stats->{alert_counts};
+        $c->stash->{contacts} = $stats->{contact_counts};
+        $c->stash->{questionnaires} = $stats->{questionnaire_counts};
+        $c->stash->{questionnaires_pc} = $stats->{questionnaires_pc};
 }
 
 sub state : Local : Args(0) {

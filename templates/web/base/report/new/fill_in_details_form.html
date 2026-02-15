@@ -27,6 +27,24 @@
     [% PROCESS 'report/new/top_message.html' %]
 </div>
 
+[%# Show prominent error banner at the top when there are field errors %]
+[% IF field_errors.title OR field_errors.detail OR field_errors.photo %]
+<div id="content-moderation-error" class="box-warning" style="background-color: #d32f2f; color: #fff; padding: 16px 20px; margin: 15px 0; border-radius: 6px; border-left: 5px solid #b71c1c;">
+    <h3 style="margin: 0 0 8px 0; font-size: 1.1em; color: #fff;">&#9888; Submission Error — Please fix the following:</h3>
+    <ul style="margin: 0; padding-left: 20px; list-style: disc;">
+    [% IF field_errors.title %]
+        <li style="margin-bottom: 4px;">[% field_errors.title %]</li>
+    [% END %]
+    [% IF field_errors.detail %]
+        <li style="margin-bottom: 4px;">[% field_errors.detail %]</li>
+    [% END %]
+    [% IF field_errors.photo %]
+        <li style="margin-bottom: 4px;">[% field_errors.photo %]</li>
+    [% END %]
+    </ul>
+</div>
+[% END %]
+
 [% IF report.used_map && partial_token %]
     <p id="unknown">[% loc('Please note your report has <strong>not yet been sent</strong>. Choose a category and add further information below, then submit.') %]</p>
 [% END %]
@@ -42,3 +60,37 @@
     [% PROCESS 'report/new/form_user.html' %]
 
 </div>
+
+[%# Auto-navigate to the details page when there are content moderation errors %]
+[% IF field_errors.title OR field_errors.detail OR field_errors.photo %]
+<script>
+(function() {
+    // Wait for fixmystreet.pageController to be available
+    function navigateToErrors() {
+        if (typeof fixmystreet !== 'undefined' && fixmystreet.pageController) {
+            fixmystreet.pageController.toPage('details');
+            // Scroll to the error banner
+            var banner = document.getElementById('content-moderation-error');
+            if (banner) {
+                banner.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        } else {
+            // Fallback: show the details page directly via CSS classes
+            var pages = document.querySelectorAll('.js-reporting-page');
+            for (var i = 0; i < pages.length; i++) {
+                pages[i].classList.remove('js-reporting-page--active');
+            }
+            var detailsPage = document.querySelector('[data-page-name="details"]');
+            if (detailsPage) {
+                detailsPage.classList.add('js-reporting-page--active');
+            }
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', function() { setTimeout(navigateToErrors, 300); });
+    } else {
+        setTimeout(navigateToErrors, 300);
+    }
+})();
+</script>
+[% END %]

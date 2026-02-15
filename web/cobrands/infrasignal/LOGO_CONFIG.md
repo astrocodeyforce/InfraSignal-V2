@@ -10,7 +10,7 @@
 
 ## CSS Styling
 
-**Logo Container (`#site-logo`)**
+**Logo Wrapper (`#site-logo-wrapper`)** — holds the background image, NOT clickable
 ```scss
 width: 550px;
 height: 120px;
@@ -18,6 +18,16 @@ background-image: url('/cobrands/infrasignal/images/logo.png');
 background-size: contain;
 background-repeat: no-repeat;
 background-position: left -35px;
+pointer-events: none;
+```
+
+**Logo Link (`#site-logo`)** — only the logo graphic area is clickable
+```scss
+display: block;
+width: 200px;
+height: 100%;
+background-image: none !important;
+pointer-events: auto;
 ```
 
 **Header Container (`#site-header`)**
@@ -25,6 +35,7 @@ background-position: left -35px;
 height: 45px;
 overflow: hidden;
 padding: 0;
+position: relative;
 ```
 
 **Navigation (`#main-nav`)**
@@ -44,8 +55,9 @@ min-height: 1.5em;
 
 1. **Container Hierarchy**:
    - `#site-header` (45px fixed height, overflow hidden)
+   - `#site-logo-wrapper` (550×120px, background image, non-clickable)
+   - `#site-logo` (200px wide link, clickable — navigates to home)
    - `#main-nav` (1.5em min-height, flex layout)
-   - `#site-logo` (550×120px, positioned at left -35px)
 
 2. **CSS Inheritance**:
    - Logo styling: Defined in `/opt/infrasignal-v2/web/cobrands/infrasignal/base.scss`
@@ -84,3 +96,5 @@ min-height: 1.5em;
 - The -35px vertical offset positions the logo so the prominent graphic area appears in the visible header space
 - `background-size: contain` ensures the full PNG scales proportionally without distortion
 - The side navigation and menu items align below/around the compact header
+- **Clickable area**: Only the left 200px (logo graphic) is clickable; the rest of the blue header is inert
+- Template override: `templates/web/infrasignal/header_logo.html` wraps the logo link in a `#site-logo-wrapper` div

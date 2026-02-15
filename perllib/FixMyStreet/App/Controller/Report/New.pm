@@ -15,6 +15,7 @@ use JSON::MaybeXS;
 use Text::CSV;
 use Time::HiRes;
 use FixMyStreet::SMS;
+use FixMyStreet::SightEngine;
 
 =head1 NAME
 
@@ -1507,6 +1508,20 @@ sub check_for_errors : Private {
     # add the photo error if there is one.
     if ( my $photo_error = delete $c->stash->{photo_error} ) {
         $field_errors{photo} = $photo_error;
+    }
+
+    # SightEngine text moderation - check title and detail for inappropriate content
+    if (!$field_errors{title} && $report->title) {
+        my $title_check = FixMyStreet::SightEngine::moderate_text($report->title);
+        if ($title_check && !$title_check->{allowed}) {
+            $field_errors{title} = _('Your subject contains content that is not allowed: ') . $title_check->{reason};
+        }
+    }
+    if (!$field_errors{detail} && $report->detail) {
+        my $detail_check = FixMyStreet::SightEngine::moderate_text($report->detail);
+        if ($detail_check && !$detail_check->{allowed}) {
+            $field_errors{detail} = _('Your details contain content that is not allowed: ') . $detail_check->{reason};
+        }
     }
 
     # Now assign the username error according to where it came from
