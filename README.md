@@ -28,8 +28,14 @@ include built-in content moderation powered by
   Census 2020 data.
 - **Multi-Language Support** — Cookie-based language switching with full
   translation across UI strings (gettext), database content (categories,
-  states), and static pages. Currently available: English, Turkish (Türkçe).
-  See `PROJECT PLAN/LANGUAGE_TRANSLATION_GUIDE.md` for adding new languages.
+  states), and static pages. Currently available: English, Turkish (Türkçe),
+  Spanish (Español), Russian (Русский). See
+  `PROJECT PLAN/LANGUAGE_TRANSLATION_GUIDE.md` for adding new languages.
+- **Duplicate Detection** — Geographic duplicate suggestion (500m public,
+  1500m inspectors) with admin management page at `/admin/duplicate_reports`.
+- **Server Scaling** — Tuned for 200–500 concurrent users: 10 Starman
+  workers with preload-app, nginx rate/connection limiting, PostgreSQL
+  memory optimization, and memcached tuning.
 
 ## Installation
 
@@ -83,6 +89,7 @@ script/update    # Update dependencies
 | Templates | Template Toolkit |
 | Frontend | jQuery, OpenLayers (maps) |
 | Content Moderation | SightEngine API |
+| Caching | Memcached (128MB, 1024 connections) |
 | Containerisation | Docker Compose |
 
 ## Upstream
