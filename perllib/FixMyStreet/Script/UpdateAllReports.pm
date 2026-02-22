@@ -269,12 +269,37 @@ sub calculate_top_five_bodies {
 
     my(@top_five_bodies);
 
-    my $bodies = FixMyStreet::DB->resultset('Body')->search({ name => {'!=', 'Thamesmead'}});
-    while (my $body = $bodies->next) {
-        my $avg = $body->calculate_average($cobrand_cls->call_hook("body_responsiveness_threshold"));
-        push @top_five_bodies, { name => $body->name, days => int($avg / 60 / 60 / 24 + 0.5) }
-            if defined $avg;
+    # Only process bodies that actually have visible reports, not all 28K+
+    my @body_ids_with_reports = FixMyStreet::DB->resultset('Problem')->search(
+        {
+            state => [ FixMyStreet::DB::Result::Problem->visible_states() ],
+            bodies_str => \'is not null',
+        },
+        {
+            columns => ['bodies_str'],
+            distinct => 1,
+        }
+    )->all;
+
+    my %seen_body_ids;
+    for my $row (@body_ids_with_reports) {
+        for my $id (split /,/, $row->bodies_str) {
+            $seen_body_ids{$id} = 1;
+        }
     }
+
+    if (%seen_body_ids) {
+        my $bodies = FixMyStreet::DB->resultset('Body')->search({
+            id => { -in => [ keys %seen_body_ids ] },
+            name => { '!=' => 'Thamesmead' },
+        });
+        while (my $body = $bodies->next) {
+            my $avg = $body->calculate_average($cobrand_cls->call_hook("body_responsiveness_threshold"));
+            push @top_five_bodies, { name => $body->name, days => int($avg / 60 / 60 / 24 + 0.5) }
+                if defined $avg;
+        }
+    }
+
     @top_five_bodies = sort { $a->{days} <=> $b->{days} } @top_five_bodies;
     $data->{average} = @top_five_bodies
         ? int((sum map { $_->{days} } @top_five_bodies) / @top_five_bodies + 0.5) : undef;

@@ -1,6 +1,42 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal Cobrand — February 20, 2026:
+        - Multi-language support — Russian (complete):
+            - Full Russian translation: 1,502 gettext UI strings (100%),
+              365,170 database category translations, 10 state translations,
+              4 translated static pages (about, FAQ, privacy, terms).
+            - Proper Russian plural forms (nplurals=3) for all 21 plural entries.
+            - Language switcher updated to support 4 languages (en/tr/es/ru).
+        - Language switcher redesign:
+            - Moved from header to nav bar as compact dropdown with globe icon.
+            - Options display as EN, TR, ES, RU with visual polish.
+            - Fixed overflow:hidden clipping issue in site header.
+        - Spanish nav bar overflow fix:
+            - Shortened 5 Spanish nav translations to prevent wrapping.
+        - Browser caching language fix:
+            - Nginx now sends Cache-Control: no-cache + Vary: Cookie headers
+              to prevent stale language content after switching.
+    - InfraSignal Cobrand — February 19, 2026:
+        - Multi-language support — Spanish (complete):
+            - Full Spanish translation: 1,499 gettext UI strings (100%),
+              365,180 database translations (365,170 categories + 10 states),
+              4 translated static pages (about, FAQ, privacy, terms).
+            - Fixed 98 fuzzy entries with corrected translations.
+            - Added 43 custom InfraSignal .po entries (moderation, sidebar, alerts).
+            - Language switcher updated to support 3 languages (en/tr/es).
+        - Multi-language support — Turkish (complete):
+            - Full Turkish translation: 1,499 gettext UI strings (100%),
+              365,170 database category translations, 10 state translations,
+              4 translated static pages (about, FAQ, privacy, terms).
+            - Internationalised SightEngine moderation: All 31 image/text
+              moderation rejection messages now translatable via gettext.
+            - Translatable UI elements: error banner, sidebar navigation,
+              reports page headings wrapped in loc() for all languages.
+            - Cookie-based language switcher with automatic fallback to English.
+        - Translation infrastructure (supports all future languages):
+            - Language Translation Guide created for repeatable deployment
+              of Spanish, Russian, and future languages.
     - InfraSignal Cobrand — February 15, 2026:
         - Content moderation (SightEngine):
             - Image moderation: All uploaded photos checked against 14 models

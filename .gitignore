@@ -67,6 +67,7 @@ gh_fixmycommunity
 PROJECT PLAN/
 DATABASE_DIRECTORY.json
 DATABASE_DIRECTORY.md
+.vscode/
 
 # Commercial
 /fixmystreet-commercial

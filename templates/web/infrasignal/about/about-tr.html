@@ -1,0 +1,111 @@
+[% INCLUDE 'header.html',
+    title = loc('About InfraSignal'),
+    sidebar = 'about/_sidebar.html'
+%]
+
+<h1>InfraSignal Hakkında</h1>
+
+<p>InfraSignal, sakinlerin yerel altyapı sorunlarını bildirmesini ve takip
+etmesini &mdash; yerel yönetimlerin ise bu sorunları almasını,
+önceliklendirmesini ve çözmesini kolaylaştıran bir sivil altyapı bildirim
+platformudur.</p>
+
+<h2>Ne Yapıyoruz</h2>
+
+<p>Amerika Birleşik Devletleri genelinde, çukurlar, bozuk sokak lambaları,
+hasarlı kaldırımlar ve yasadışı atık gibi altyapı sorunları, sakinlerin
+kime başvuracaklarını veya nasıl ulaşacaklarını bilmemeleri nedeniyle
+bildirilmeden kalır. InfraSignal, sorunun coğrafi konumuna göre raporları
+otomatik olarak doğru şehir, ilçe veya eyalet yönetimine yönlendiren
+tek, kullanımı kolay bir platform sunarak bu sorunu çözer.</p>
+
+<p>Bir sakin rapor gönderdiğinde, InfraSignal:</p>
+<ol>
+    <li>Resmi coğrafi sınır verilerini kullanarak sorumlu yerel yönetimi
+    belirler</li>
+    <li>Konum, kategori, açıklama, fotoğraflar ve öncelik seviyesi dahil
+    eksiksiz raporu doğrudan ilgili yönetime iletir</li>
+    <li>Durum değiştikçe bildirimi yapan kişiyi e-posta bildirimleriyle
+    güncel tutar</li>
+    <li>Raporu, topluluğun yerel sorunları ve çözüm süreçlerini görebilmesi
+    için kamuya açık bir haritada yayınlar</li>
+</ol>
+
+<h2>Kapsam</h2>
+
+<p>InfraSignal şu anda Amerika Birleşik Devletleri&rsquo;nin tamamına
+hizmet vermektedir; altyapı raporları şu birimlere yönlendirilir:</p>
+<ul>
+    <li><strong>51 eyalet düzeyinde yönetim</strong> (50 eyaletin tamamı ve
+    Columbia Bölgesi)</li>
+    <li><strong>3.000&rsquo;den fazla ilçe yönetimi</strong></li>
+    <li><strong>25.000&rsquo;den fazla şehir ve kasaba yönetimi</strong></li>
+</ul>
+
+<p>Tüm yetki birimleri; çukur/yol hasarı, sokak lambası arızası,
+drenaj/su baskını, grafiti/vandalizm, kaldırım hasarı, köprü/korkuluk
+hasarı, trafik sinyali/tabela sorunları ve daha fazlasını içeren 13
+standartlaştırılmış altyapı kategorisinde raporlar alır.</p>
+
+<h2>Nasıl Çalışır</h2>
+
+<table class="nicetable">
+    <tr>
+        <th scope="col">Adım</th>
+        <th scope="col">Ne Olur</th>
+    </tr>
+    <tr>
+        <td><strong>1. Konum Belirle</strong></td>
+        <td>Bir sokak adresi, şehir veya posta kodu girin. Haritada sorunun
+        bulunduğu noktaya bir işaretçi yerleştirin.</td>
+    </tr>
+    <tr>
+        <td><strong>2. Tanımla</strong></td>
+        <td>Bir kategori seçin, açıklama yazın ve en fazla 3 fotoğraf
+        yükleyin. Fotoğraflar uygunsuz içerik açısından otomatik olarak
+        kontrol edilir.</td>
+    </tr>
+    <tr>
+        <td><strong>3. Yönlendir</strong></td>
+        <td>InfraSignal, coğrafi sınır verilerini kullanarak sorumlu
+        yönetimi belirler ve raporunuzu tam ayrıntılar ve öncelik
+        sınıflandırmasıyla birlikte gönderir.</td>
+    </tr>
+    <tr>
+        <td><strong>4. Takip Et</strong></td>
+        <td>Yönetim inceleme yaparken e-posta güncellemeleri alın.
+        Tüm raporları kamuya açık haritada görüntüleyin. İstediğiniz
+        zaman takip güncellemeleri gönderin.</td>
+    </tr>
+</table>
+
+<h2>Yerel Yönetimler İçin</h2>
+
+<p>InfraSignal, kamu kurumlarına vatandaşlardan altyapı raporları almak
+için ücretsiz, standartlaştırılmış bir kanal sunar. Avantajlar:</p>
+<ul>
+    <li>Fotoğraflar ve öncelik seviyeleriyle yapılandırılmış, coğrafi
+    konumlu raporlar</li>
+    <li>Yaygın bayındırlık operasyonlarına uygun 13 standartlaştırılmış
+    kategori</li>
+    <li>Her yetki birimi için otomatik olarak oluşturulan dört kademeli
+    öncelik sistemi (Acil, Yüksek, Normal, Düşük)</li>
+    <li>CRM ve iş emri sistemleriyle gelecekte otomatik entegrasyon için
+    Open311 GeoReport v2 standardıyla uyumluluk</li>
+    <li>Raporları alma, yönetme veya yanıtlama için herhangi bir maliyet
+    yok</li>
+</ul>
+
+<p>Yetki biriminizin iletişim bilgilerini güncellemek veya entegrasyonu
+görüşmek için <a href="/contact">iletişim sayfamızı</a> ziyaret edin.</p>
+
+<h2>İletişim</h2>
+
+<p>Sorularınız, önerileriniz veya iş birliği talepleriniz mi var?
+Bize ulaşın:</p>
+<ul>
+    <li>E-posta: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
+    <li>Web: <a href="/contact">İletişim Formu</a></li>
+</ul>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

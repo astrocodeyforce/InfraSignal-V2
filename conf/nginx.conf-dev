@@ -61,13 +61,24 @@ server {
     }
 
     location @app {
+        limit_req zone=general burst=20 nodelay;
+        limit_conn addr 50;
+
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        proxy_http_version 1.1;
         proxy_redirect off;
-        proxy_connect_timeout 120s;
-        proxy_read_timeout 120s;
-        proxy_send_timeout 120s;
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 60s;
+        proxy_send_timeout 30s;
+
+        # Language switching: browser must re-validate when cookie changes
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, must-revalidate" always;
+        add_header Vary "Cookie" always;
+
         # Starman listens on port 3000 inside the fixmystreet container
         proxy_pass http://fixmystreet.svc:3000;
     }

@@ -1,0 +1,28 @@
+#!/bin/bash
+# InfraSignal tuned start-server script
+# Starts cron for background tasks, then launches Starman with optimized settings.
+
+set -e
+cd /var/www/fixmystreet
+
+# Install cron jobs for background tasks
+cat > /etc/cron.d/fixmystreet-dashboard << 'CRON'
+# Regenerate dashboard cache hourly, low priority
+0 * * * * root cd /var/www/fixmystreet && nice -n 19 ionice -c 3 bin/update-all-reports > /dev/null 2>&1
+CRON
+chmod 644 /etc/cron.d/fixmystreet-dashboard
+
+# Start cron daemon for background jobs
+service cron start 2>/dev/null || true
+
+# Launch Starman with production tuning
+#   --workers 10        : 10 worker processes (handles 10 simultaneous requests)
+#   --preload-app       : Load app once in master, fork to workers (saves ~40% memory via COW)
+#   --max-requests 1000 : Recycle workers after 1000 requests (prevents memory leaks)
+#   --listen :3000      : Listen on port 3000
+exec bin/cron-wrapper perl local/bin/plackup \
+    -s Starman \
+    --workers=10 \
+    --preload-app \
+    --max-requests=1000 \
+    --listen=:3000
