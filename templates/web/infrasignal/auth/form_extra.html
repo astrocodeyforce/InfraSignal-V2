@@ -1,0 +1,4 @@
+[% IF c.config.TURNSTILE AND NOT c.user_exists %]
+    <div class="cf-turnstile" data-sitekey="[% c.config.TURNSTILE.site_key %]" data-theme="light" data-language="[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]"></div>
+    <script nonce="[% csp_nonce %]" src="https://challenges.cloudflare.com/turnstile/v0/api.js?hl=[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]" async defer></script>
+[% END %]

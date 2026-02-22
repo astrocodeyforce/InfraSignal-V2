@@ -26,6 +26,17 @@ RUN /install-site.sh --docker fixmystreet fms 127.0.0.1.xip.io \
       && rm -fr /var/lib/apt/lists/* \
       && rm -fr /home/fms/.cpanm/*
 
+# Install locales for multilingual support (TR, ES, RU)
+RUN apt-get -qq update \
+      && apt-get -qq -y install locales \
+      && echo "tr_TR.UTF-8 UTF-8" >> /etc/locale.gen \
+      && echo "es_ES.UTF-8 UTF-8" >> /etc/locale.gen \
+      && echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen \
+      && echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen \
+      && locale-gen \
+      && apt-get -y clean \
+      && rm -fr /var/lib/apt/lists/*
+
 RUN cp /var/www/fixmystreet/fixmystreet/bin/docker.preinit /usr/local/preinit/99-fixmystreet \
       && chmod +x /usr/local/preinit/99-fixmystreet
 

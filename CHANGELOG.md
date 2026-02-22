@@ -2,6 +2,26 @@
 
 * Unreleased
     - InfraSignal Cobrand — February 22, 2026 (Version 1.9):
+        - Cloudflare Turnstile CAPTCHA (anti-spam):
+            - Added CAPTCHA verification on login, signup, forgot-password,
+              report creation, alert subscription, and contact forms.
+            - Backend: check_captcha hook in Auth.pm, Turnstile verification
+              in Infrasignal.pm cobrand (requires_turnstile, check_captcha,
+              check_recaptcha methods using LWP::UserAgent + siteverify API).
+            - Frontend: Custom auth/general.html, auth/create.html, and
+              auth/form_extra.html templates with Turnstile widget.
+            - Multilingual CAPTCHA: data-language attribute and ?hl= script
+              parameter sync Turnstile widget language with site language
+              (EN/TR/ES/RU).
+            - Config: TURNSTILE block in general.yml (Managed mode).
+        - Multilingual locale fix:
+            - Root cause: Docker container was missing OS locales for
+              tr_TR.UTF-8, es_ES.UTF-8, ru_RU.UTF-8. The setlocale() call
+              in mySociety::Locale silently failed, causing gettext to
+              always return English strings.
+            - Fix: Generated missing locales via locale-gen in container.
+            - Persistence: Added locale generation to Dockerfile and
+              docker/start-server-tuned startup script.
         - Server scaling for 100–500 concurrent users:
             - Starman workers: 5 → 10, with --preload-app (COW memory savings)
               and --max-requests=1000 (worker recycling to prevent memory leaks).
