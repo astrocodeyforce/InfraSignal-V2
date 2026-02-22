@@ -1,6 +1,35 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal Cobrand — February 22, 2026 (Version 1.9):
+        - Server scaling for 100–500 concurrent users:
+            - Starman workers: 5 → 10, with --preload-app (COW memory savings)
+              and --max-requests=1000 (worker recycling to prevent memory leaks).
+            - Nginx tuning: worker_connections 4096, multi_accept on, epoll,
+              rate limiting (10 req/s general, 30 req/s API, burst 20),
+              connection limit 50/IP, open file cache, HTTP/1.1 keepalive
+              to upstream.
+            - PostgreSQL tuning: max_connections=200, shared_buffers=512MB,
+              effective_cache_size=2GB, work_mem=16MB, maintenance_work_mem=128MB,
+              random_page_cost=1.1, effective_io_concurrency=200, wal_buffers=16MB,
+              checkpoint_completion_target=0.9.
+            - Memcached tuning: 128MB memory, 1024 max connections, 2 threads.
+        - /reports dashboard fix:
+            - Root cause: Reports controller requires cached JSON data from
+              bin/update-all-reports. Cache files were never generated.
+            - Fix: Ran bin/update-all-reports to generate all-reports.json and
+              all-reports-dashboard.json at /var/www/data/.
+            - Hourly cron job configured for automatic cache regeneration.
+        - Admin Duplicate Reports page:
+            - New controller at /admin/duplicate_reports showing all reports
+              marked as duplicates with Mark Duplicate / Dismiss actions.
+        - Geographic duplicate detection:
+            - 500m radius for public users, 1500m for inspectors.
+        - Language switcher UI polish:
+            - Fixed nav-menu span style inheritance causing oversized button.
+            - Added span resets in SCSS for .lang-dd__btn.
+        - New files: docker/start-server-tuned, conf/nginx-main.conf.
+        - Branch: Version-1.9 pushed to origin and private remotes.
     - InfraSignal Cobrand — February 20, 2026:
         - Multi-language support — Russian (complete):
             - Full Russian translation: 1,502 gettext UI strings (100%),
