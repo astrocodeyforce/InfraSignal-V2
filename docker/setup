@@ -18,13 +18,18 @@ if [ ! -f conf/general.yml ]; then
         conf/general.yml-example > conf/general.yml
 fi
 
+# Install required locales for multi-language support
+if command -v locale-gen &>/dev/null; then
+    locale-gen en_GB.UTF-8 tr_TR.UTF-8 es_ES.UTF-8 ru_RU.UTF-8
+fi
+
 script/update --development
 bin/update-all-reports
 
-# Install cron job to regenerate dashboard cache every 5 minutes
+# Install cron job to regenerate dashboard cache hourly, low priority
 cat > /etc/cron.d/fixmystreet-dashboard << 'CRON'
-# Regenerate dashboard cache every 5 minutes
-*/5 * * * * root cd /var/www/fixmystreet && bin/update-all-reports > /dev/null 2>&1
+# Regenerate dashboard cache hourly, low priority
+0 * * * * root cd /var/www/fixmystreet && nice -n 19 ionice -c 3 bin/update-all-reports > /dev/null 2>&1
 CRON
 chmod 644 /etc/cron.d/fixmystreet-dashboard
 service cron start || true

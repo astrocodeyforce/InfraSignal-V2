@@ -1,0 +1,200 @@
+[% INCLUDE 'admin/header.html' title=loc('Configuration') -%]
+
+[% BLOCK subsection %]
+<tr><td colspan=3><strong>[% heading %]</strong></td></tr>
+[% END %]
+
+[% BLOCK just_value %]
+[% SET conf = c.config.$value IF NOT conf;
+    conf = conf.join(', ') IF conf.size %]
+<tr>
+    <td>[% value %]</td>
+    <td colspan=2>[% conf or conf_default %]</td>
+</tr>
+[% END %]
+
+[% BLOCK with_cobrand %]
+[% SET conf = c.config.$value IF NOT conf;
+    conf = conf.join(', ') IF conf.size;
+    cob = cob.join(', ') IF conf.size %]
+<tr>
+    <td>[% value %]</td>
+    <td>[% conf %]</td>
+    <td>[% cob IF cob != conf %]</td>
+</tr>
+[% END %]
+
+<p>A summary of this site's configuration,
+running version <strong>[% git_version || 'unknown' %]</strong>.
+</p>
+
+[% IF c.config.COBRAND_FEATURES %]
+<p><a href="[% c.uri_for_action('admin/config/cobrand') %]">View <code>COBRAND_FEATURES</code> configuration</a></p>
+[% END %]
+
+<table class="admin--config">
+<tr><th>Variable</th>
+    <th>general.yml value</th>
+    <th>Cobrand module override</th>
+</tr>
+
+[% INCLUDE subsection heading="URLs" %]
+[% INCLUDE with_cobrand value="BASE_URL" cob=c.cobrand.base_url %]
+[% INCLUDE with_cobrand value="ADMIN_BASE_URL" cob=c.cobrand.admin_base_url %]
+[% INCLUDE just_value value="SECURE_PROXY_SSL_HEADER" %]
+
+[% INCLUDE subsection heading="Display" %]
+<tr>
+    <td>Site title</td>
+    <td colspan=2>[% site_name %]</td>
+</tr>
+[% allowed_conf = FOR k IN c.config.ALLOWED_COBRANDS %]
+    [% IF k.keys %][% k.items.join(':') %][% ELSE %][% k %][% END %]
+    [%- ',' IF NOT loop.last %]
+[% END %]
+[% INCLUDE just_value value="ALLOWED_COBRANDS" conf = allowed_conf %]
+<tr>
+<td>Web templates</td>
+<td colspan=2>
+    [% FOR path IN c.cobrand.path_to_web_templates %]
+        [% path %]
+        [% IF NOT loop.last %]<br>[% END %]
+    [% END %]
+</td>
+</tr>
+[% INCLUDE with_cobrand value="MAP_TYPE" cob=c.cobrand.map_type %]
+[% INCLUDE with_cobrand value="EXAMPLE_PLACES"
+    conf = c.config.EXAMPLE_PLACES.join(', ')
+    cob = c.cobrand.example_places %]
+[% INCLUDE with_cobrand value="LANGUAGES"
+    cob = c.cobrand.languages %]
+<tr><td>Language override</td>
+    <td>-</td>
+    <td>
+        [% 'domain=' _ c.cobrand.language_domain IF c.cobrand.language_domain %]
+        [% 'language=' _ c.cobrand.language_override IF c.cobrand.language_override %]
+    </td>
+</tr>
+[% INCLUDE with_cobrand value="ALL_REPORTS_PER_PAGE" cob=c.cobrand.reports_per_page %]
+[% INCLUDE just_value value="RSS_LIMIT" %]
+[% INCLUDE just_value value="OPEN311_LIMIT" conf_default = '<em>1000</em>' %]
+[% INCLUDE just_value value="AREA_LINKS_FROM_PROBLEMS" %]
+
+[% INCLUDE subsection heading="Geocoder" %]
+[% INCLUDE just_value value="GEOCODER"
+    conf_default = '<em>(None; default Nominatim OSM)</em>'
+%]
+[% disconf = FOR k IN c.config.GEOCODING_DISAMBIGUATION %]
+    [% k.key %]=[% k.value %][% ',' IF NOT loop.last %]
+[% END %]
+[% discob = FOR k IN c.cobrand.disambiguate_location %]
+    [% k.key %]=[% k.value %][% ',' IF NOT loop.last %]
+[% END %]
+[% INCLUDE with_cobrand value="GEOCODING_DISAMBIGUATION"
+    conf = disconf
+    cob = discob %]
+
+[% INCLUDE subsection heading="MapIt" %]
+
+<tr>
+    <td>MAPIT_URL</td>
+    <td colspan=2>
+    <a href="[% c.config.MAPIT_URL %]">[% c.config.MAPIT_URL %]</a>
+    </td>
+</tr>
+
+
+[% IF c.config.MAPIT_API_KEY %]
+    [% INCLUDE just_value value="MAPIT_API_KEY" %]
+[% END %]
+[% INCLUDE with_cobrand value="MAPIT_TYPES"
+    cob = c.cobrand.area_types %]
+<tr>
+    <td>MAPIT_ID_WHITELIST</td>
+    <td colspan=2>
+    [% FOR id IN c.config.MAPIT_ID_WHITELIST %]
+        <a href="[% c.config.MAPIT_URL %][%
+        '/' UNLESS c.config.MAPIT_URL.search('/$')
+        %]area/[% id %].html">[% id %]</a>[% ',' UNLESS loop.last %]
+    [% END %]
+    </td>
+</tr>
+[% INCLUDE just_value value="MAPIT_GENERATION" %]
+[% INCLUDE with_cobrand value="MAPIT_TYPES_CHILDREN"
+    cob = c.cobrand.area_types_children %]
+
+[% INCLUDE subsection heading="Database" %]
+[% INCLUDE just_value value="FMS_DB_HOST" %]
+[% INCLUDE just_value value="FMS_DB_PORT" %]
+[% INCLUDE just_value value="FMS_DB_NAME" %]
+[% INCLUDE just_value value="FMS_DB_USER" %]
+
+[% INCLUDE subsection heading="Email" %]
+[% INCLUDE just_value value="EMAIL_DOMAIN" %]
+[% INCLUDE with_cobrand value="CONTACT_NAME" cob=c.cobrand.contact_name %]
+[% INCLUDE with_cobrand value="CONTACT_EMAIL" cob=c.cobrand.contact_email %]
+[% INCLUDE with_cobrand value="DO_NOT_REPLY_EMAIL" cob=c.cobrand.do_not_reply_email %]
+
+[% INCLUDE subsection heading="Development" %]
+[% INCLUDE just_value value="STAGING_SITE" %]
+[% staging_conf = FOR k IN c.config.STAGING_FLAGS %]
+    [% k.key %]:[% k.value %]
+    [%- ',' IF NOT loop.last %]
+[% END %]
+[% INCLUDE just_value value="STAGING_FLAGS" conf = staging_conf %]
+[% INCLUDE just_value value="UPLOAD_DIR" %]
+[% INCLUDE just_value value="GEO_CACHE" %]
+[% INCLUDE just_value value="TESTING_COUNCILS" %]
+[% INCLUDE just_value value="SMTP_SMARTHOST" %]
+[% INCLUDE just_value value="TIME_ZONE" %]
+[% INCLUDE just_value value="GAZE_URL" %]
+
+</table>
+
+<h2 id="db">Database site configuration</h2>
+[% db_status_message %]
+<form method="post" action="#db">
+<table class="admin--config">
+<tr><th width="20%">Key</th>
+    <th>Value</th>
+</tr>
+[% FOREACH c IN db_config %]
+  [% SET value = c.value.size ? c.value.join(', ') : c.value %]
+    <tr>
+        <td>[% c.key %]</td>
+        <td>[% value %]
+            <details[% IF errors.${c.key} %] open[% END %]>
+            <summary>Edit</summary>
+        <p>
+            <label for="body_config">JSON:</label>
+            [% IF errors.${c.key} %]
+            <div class="form-error">[% errors.${c.key} %]</div>
+            [% END %]
+            <textarea cols="60" rows="10" required name="db-config-[% c.key %]" class="code">
+                [%~ c.json ~%]
+            </textarea>
+        </p>
+    </details>
+        </td>
+    </tr>
+[% END %]
+    <tr>
+        <td>
+            <input type="text" name="new-config-key"
+                   placeholder="new_config_key" size="30"
+                   value="[% new_config_key %]">
+        </td>
+        <td>
+            <textarea name="new-config-value" rows="3" cols="60"
+                   placeholder='e.g. true or ["value1","value2"]' class="code">[% new_config_value %]</textarea>
+            [% IF errors.new %]
+            <div class="form-error">[% errors.new %]</div>
+            [% END %]
+        </td>
+    </tr>
+</table>
+<input type="hidden" name="token" value="[% csrf_token %]">
+<input type="submit" class="btn" value="[% loc('Update') %]">
+</form>
+
+[% INCLUDE 'admin/footer.html' %]

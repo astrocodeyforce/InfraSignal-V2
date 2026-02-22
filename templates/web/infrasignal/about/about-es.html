@@ -1,0 +1,118 @@
+[% INCLUDE 'header.html',
+    title = loc('About InfraSignal'),
+    sidebar = 'about/_sidebar.html'
+%]
+
+<h1>Acerca de InfraSignal</h1>
+
+<p>InfraSignal es una plataforma de reporte de infraestructura cívica que
+facilita a los residentes reportar y dar seguimiento a problemas de
+infraestructura local &mdash; y a los gobiernos locales recibir,
+priorizar y resolver estos problemas.</p>
+
+<h2>Lo Que Hacemos</h2>
+
+<p>En todo Estados Unidos, problemas de infraestructura como baches,
+alumbrado público dañado, aceras deterioradas y vertidos ilegales no se
+reportan porque los residentes no saben a quién contactar o cómo
+comunicarse. InfraSignal resuelve esto proporcionando una plataforma
+única y fácil de usar que dirige automáticamente los reportes al
+gobierno municipal, del condado o estatal correcto según la ubicación
+geográfica del problema.</p>
+
+<p>Cuando un residente envía un reporte, InfraSignal:</p>
+<ol>
+    <li>Identifica el gobierno local responsable utilizando datos oficiales
+    de límites geográficos</li>
+    <li>Envía el reporte completo directamente al gobierno correspondiente,
+    incluyendo ubicación, categoría, descripción, fotos y nivel de
+    prioridad</li>
+    <li>Mantiene informado al reportero mediante notificaciones por correo
+    electrónico a medida que cambia el estado</li>
+    <li>Publica el reporte en un mapa público para que la comunidad pueda
+    ver los problemas locales y el progreso de su resolución</li>
+</ol>
+
+<h2>Cobertura</h2>
+
+<p>InfraSignal actualmente da servicio a todo Estados Unidos, dirigiendo
+reportes de infraestructura a:</p>
+<ul>
+    <li><strong>51 gobiernos estatales</strong> (los 50 estados y el
+    Distrito de Columbia)</li>
+    <li><strong>Más de 3.000 gobiernos de condado</strong></li>
+    <li><strong>Más de 25.000 gobiernos de ciudades y pueblos</strong></li>
+</ul>
+
+<p>Todas las jurisdicciones reciben reportes en 13 categorías
+estandarizadas de infraestructura, incluyendo baches/daño en carreteras,
+averías de alumbrado público, drenaje/inundación, grafiti/vandalismo,
+daño en aceras, daño en puentes/barandas, problemas de semáforos/
+señalización y más.</p>
+
+<h2>Cómo Funciona</h2>
+
+<table class="nicetable">
+    <tr>
+        <th scope="col">Paso</th>
+        <th scope="col">Qué Sucede</th>
+    </tr>
+    <tr>
+        <td><strong>1. Localizar</strong></td>
+        <td>Ingrese una dirección, ciudad o código postal. Coloque un
+        marcador en el mapa en el punto exacto del problema.</td>
+    </tr>
+    <tr>
+        <td><strong>2. Describir</strong></td>
+        <td>Seleccione una categoría, escriba una descripción y suba
+        hasta 3 fotos. Las fotos se verifican automáticamente para
+        detectar contenido inapropiado.</td>
+    </tr>
+    <tr>
+        <td><strong>3. Dirigir</strong></td>
+        <td>InfraSignal identifica el gobierno responsable usando datos
+        de límites geográficos y envía su reporte con todos los detalles
+        y clasificación de prioridad.</td>
+    </tr>
+    <tr>
+        <td><strong>4. Dar Seguimiento</strong></td>
+        <td>Reciba actualizaciones por correo electrónico mientras el
+        gobierno revisa el caso. Vea todos los reportes en el mapa
+        público. Envíe actualizaciones de seguimiento en cualquier
+        momento.</td>
+    </tr>
+</table>
+
+<h2>Para Gobiernos Locales</h2>
+
+<p>InfraSignal ofrece a las agencias públicas un canal gratuito y
+estandarizado para recibir reportes de infraestructura de los ciudadanos.
+Beneficios:</p>
+<ul>
+    <li>Reportes estructurados y geolocalizados con fotos y niveles de
+    prioridad</li>
+    <li>13 categorías estandarizadas alineadas con operaciones comunes de
+    obras públicas</li>
+    <li>Sistema de prioridad de cuatro niveles generado automáticamente
+    para cada jurisdicción (Urgente, Alta, Normal, Baja)</li>
+    <li>Compatibilidad con el estándar Open311 GeoReport v2 para futura
+    integración automatizada con sistemas CRM y de órdenes de
+    trabajo</li>
+    <li>Sin costo alguno para recibir, gestionar o responder a
+    reportes</li>
+</ul>
+
+<p>Para actualizar la información de contacto de su jurisdicción o
+discutir la integración, visite nuestra
+<a href="/contact">página de contacto</a>.</p>
+
+<h2>Contacto</h2>
+
+<p>¿Tiene preguntas, sugerencias o solicitudes de colaboración?
+Contáctenos:</p>
+<ul>
+    <li>Correo electrónico: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
+    <li>Web: <a href="/contact">Formulario de Contacto</a></li>
+</ul>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

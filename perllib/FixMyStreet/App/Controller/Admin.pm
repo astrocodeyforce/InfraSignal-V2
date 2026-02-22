@@ -174,6 +174,7 @@ sub fetch_languages : Private {
     my $lang_map = {};
     foreach my $lang (@{$c->cobrand->languages}) {
         my ($id, $name, $code) = split(',', $lang);
+        next if $id eq 'en-gb';  # Skip default English; base strings are already in English
         $lang_map->{$id} = { name => $name, code => $code };
     }
 

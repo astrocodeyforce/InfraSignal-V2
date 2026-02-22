@@ -1,0 +1,110 @@
+[% INCLUDE 'navigation/_report.html' %]
+
+[%~ IF c.user_exists ~%]
+    [%~ INCLUDE navitem uri='/my' label=loc('Your account') ~%]
+[%~ ELSE ~%]
+    [%~ INCLUDE navitem uri='/auth' label=loc('Sign in') ~%]
+[%~ END ~%]
+
+[%~ IF c.user_exists AND c.user.has_body_permission_to('planned_reports') ~%]
+    [%~ INCLUDE navitem always_url=1 uri='/my/planned' label=loc('Shortlist') ~%]
+[%~ END ~%]
+
+[%~ INCLUDE 'navigation/_all_reports.html' ~%]
+
+[%~
+  IF pc;
+    pc_uri = pc | uri;
+    pc_suffix = "/list?pc=" _ pc_uri;
+  END;
+
+  INCLUDE navitem uri='/alert' label=loc('Local alerts') suffix=pc_suffix;
+~%]
+
+[%~ INCLUDE navitem uri='/faq' label=loc('Help') ~%]
+
+[%~ UNLESS hide_privacy_link ~%]
+  [%~ INCLUDE navitem uri=c.cobrand.privacy_policy_url label=loc('Privacy') liattrs='class="nav-menu__item--privacy"' ~%]
+[%~ END ~%]
+
+[%~ IF c.user_exists AND c.cobrand.admin_allow_user(c.user) ~%]
+  [%~ INCLUDE navitem uri='/admin' label=loc('Admin') ~%]
+[%~ END ~%]
+
+<li id="lang-switcher">
+  <div class="lang-dd">
+    <button class="lang-dd__btn" type="button" aria-haspopup="true" aria-expanded="false">
+      [% IF lang_code == 'es' %]
+        <img src="/cobrands/infrasignal/flags/es.svg" class="lang-dd__flag" alt=""> <span>ES</span>
+      [% ELSIF lang_code == 'ru' %]
+        <img src="/cobrands/infrasignal/flags/ru.svg" class="lang-dd__flag" alt=""> <span>RU</span>
+      [% ELSIF lang_code == 'tr' %]
+        <img src="/cobrands/infrasignal/flags/tr.svg" class="lang-dd__flag" alt=""> <span>TR</span>
+      [% ELSE %]
+        <img src="/cobrands/infrasignal/flags/en.svg" class="lang-dd__flag" alt=""> <span>EN</span>
+      [% END %]
+      <span class="lang-dd__caret">&#9662;</span>
+    </button>
+    <ul class="lang-dd__list"></ul>
+  </div>
+  <script>
+  (function(){
+    var w=document.querySelector('.lang-dd'),
+        b=w.querySelector('.lang-dd__btn'),
+        m=w.querySelector('.lang-dd__list');
+    var langs=[
+      {code:'en-gb',flag:'/cobrands/infrasignal/flags/en.svg',label:'EN'},
+      {code:'es',flag:'/cobrands/infrasignal/flags/es.svg',label:'ES'},
+      {code:'ru',flag:'/cobrands/infrasignal/flags/ru.svg',label:'RU'},
+      {code:'tr',flag:'/cobrands/infrasignal/flags/tr.svg',label:'TR'}
+    ];
+    var curLang='[% lang_code %]'||'en-gb';
+    var portal=document.createElement('ul');
+    portal.className='lang-dd__portal';
+    portal.style.cssText='display:none;position:fixed;margin:0;padding:4px 0;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:5px;box-shadow:0 4px 12px rgba(0,0,0,0.15);list-style:none;z-index:99999;min-width:90px;list-style-type:none';
+    langs.forEach(function(l){
+      var li=document.createElement('li');
+      li.style.cssText='margin:0;padding:0;list-style:none;list-style-type:none;display:block';
+      if(l.code===curLang) li.className='lang-dd--sel';
+      var a=document.createElement('a');
+      a.href='?lang='+l.code;
+      a.style.cssText='display:flex;align-items:center;gap:8px;padding:7px 14px;color:#333;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;transition:background-color 0.1s';
+      a.innerHTML='<img src="'+l.flag+'" style="width:18px;height:18px;border-radius:50%;object-fit:cover;border:1px solid rgba(0,0,0,0.12)" alt="">'+l.label;
+      a.onmouseenter=function(){a.style.backgroundColor='#f0f4ff'};
+      a.onmouseleave=function(){a.style.backgroundColor=''};
+      if(l.code===curLang) a.style.backgroundColor='#e8edf5';
+      li.appendChild(a);
+      portal.appendChild(li);
+    });
+    document.body.appendChild(portal);
+    m.parentNode.removeChild(m);
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      if(portal.style.display==='block'){
+        portal.style.display='none';
+        b.setAttribute('aria-expanded','false');
+      } else {
+        var r=b.getBoundingClientRect();
+        portal.style.top=(r.bottom+4)+'px';
+        portal.style.right=(window.innerWidth-r.right)+'px';
+        portal.style.left='auto';
+        portal.style.display='block';
+        b.setAttribute('aria-expanded','true');
+      }
+    });
+    document.addEventListener('click',function(){
+      portal.style.display='none';
+      b.setAttribute('aria-expanded','false');
+    });
+    window.addEventListener('resize',function(){
+      portal.style.display='none';
+    });
+  })();
+  </script>
+</li>
+
+[%~ INCLUDE navitem uri='/report/new' liattrs='class="hidden js-continue-draft"' always_url=1 label=loc('Continue draft report...') ~%]
+
+
+
+

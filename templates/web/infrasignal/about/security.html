@@ -1,0 +1,68 @@
+[% INCLUDE 'header.html',
+    title = loc('Security'),
+    sidebar = 'about/_sidebar.html'
+%]
+
+<h1>Security</h1>
+
+<h2>Content Moderation &amp; Safety</h2>
+
+<p>Every photo uploaded to InfraSignal is automatically analyzed by our
+content moderation system before publication. This system screens for
+prohibited content including violence, nudity, weapons, drugs, offensive
+material, and other inappropriate imagery. Photos that violate our content
+policies are automatically rejected. This processing occurs in real time
+to ensure harmful content is never published on the platform.</p>
+
+<h2>Application Security</h2>
+
+<ul>
+    <li><strong>Input Validation:</strong> All user inputs are validated
+    and sanitized to prevent common web application attacks.</li>
+    <li><strong>Access Controls:</strong> Administrative functions are
+    restricted to authorized staff accounts with role-based permissions.</li>
+    <li><strong>Email Security:</strong> Outbound emails are sent using
+    TLS encryption, ensuring messages are delivered securely.</li>
+</ul>
+
+<h2>Responsible Disclosure</h2>
+
+<p>We value the work of independent security researchers. If you discover a
+security vulnerability in the InfraSignal platform, we ask that you:</p>
+<ol>
+    <li>Report the vulnerability privately to
+    <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a>
+    with the subject line &ldquo;Security Vulnerability Report&rdquo;</li>
+    <li>Provide sufficient detail to reproduce the issue, including steps,
+    URLs, and screenshots where applicable</li>
+    <li>Allow us a reasonable timeframe (at least 90 days) to investigate
+    and address the issue before any public disclosure</li>
+    <li>Do not access, modify, or delete data belonging to other users
+    during your research</li>
+</ol>
+
+<p>We will acknowledge receipt of your report within 48 hours and keep you
+informed of our progress toward a fix.</p>
+
+<h2>Incident Response</h2>
+
+<p>In the event of a security incident that compromises personal data, we
+will:</p>
+<ul>
+    <li>Investigate and contain the incident promptly</li>
+    <li>Notify affected users as required by applicable state data breach
+    notification laws</li>
+    <li>Report the incident to relevant regulatory authorities where
+    required</li>
+    <li>Take corrective measures to prevent recurrence</li>
+</ul>
+
+<h2>Contact</h2>
+
+<p>For security-related inquiries or to report a vulnerability:</p>
+<ul>
+    <li>Email: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
+    <li>Web: <a href="/contact">Contact Form</a></li>
+</ul>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

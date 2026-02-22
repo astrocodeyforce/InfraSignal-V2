@@ -4,6 +4,7 @@ use base 'FixMyStreet::Cobrand::Default';
 use strict;
 use warnings;
 use FixMyStreet::MapIt;
+use FixMyStreet::AIAssessment;
 
 =head1 NAME
 
@@ -118,5 +119,87 @@ sub report_new_munge_after_insert {
 
 # Disable the creation graph link — the PNG is not generated for this site
 sub admin_show_creation_graph { 0 }
+
+# Enable duplicate detection: when a user creates a new report, the system
+# searches for existing nearby reports in the same category and shows them
+# as "Already been reported?" suggestions before the report is submitted.
+sub suggest_duplicates { 1 }
+
+# Configurable nearby distances (in metres) for duplicate suggestions.
+# 'suggestions' = distance shown to public users during new report creation
+# 'inspector'   = distance shown to admin/inspectors when marking duplicates
+sub nearby_distances { {
+    suggestions => 500,   # 500m radius for public duplicate suggestions
+    inspector   => 1500,  # 1500m radius for inspector duplicate lookup
+} }
+
+# Add "Duplicate Reports" to admin sidebar navigation.
+# Extends the default admin_pages with our custom page.
+sub admin_pages {
+    my $self = shift;
+    my $pages = $self->SUPER::admin_pages();
+
+    # Add Duplicate Reports tab (visible to users who can edit reports)
+    my $user = $self->{c}->user;
+    if ($user && ($user->is_superuser || $user->has_body_permission_to('report_edit'))) {
+        $pages->{duplicate_reports} = [ 'Duplicate Reports', 2.5 ];
+    }
+
+    return $pages;
+}
+
+# Cookie-based language override for the language switcher UI.
+# Supports ?lang=<code> query parameter which sets a persistent cookie,
+# or reads from previously set cookie. Falls back to browser negotiation.
+sub language_override {
+    my $self = shift;
+    my $c = $self->{c};
+    return unless $c;
+
+    # Check for ?lang= query parameter — set cookie and use it
+    my $lang_param = $c->req->param('lang');
+    if ($lang_param) {
+        $c->res->cookies->{lang} = {
+            value   => $lang_param,
+            expires => '+1y',
+            path    => '/',
+        };
+        return $lang_param;
+    }
+
+    # Read from existing cookie
+    my $lang_cookie = $c->req->cookie('lang');
+    return $lang_cookie->value if $lang_cookie;
+
+    return;
+}
+
+# After template variables are built for the report email, call the AI
+# assessment engine to classify the damage and look up deterministic
+# cost/time/crew data.  Results are injected as template variables
+# ai_assessment_text and ai_assessment_html.
+sub process_additional_metadata_for_email {
+    my ($self, $report, $h) = @_;
+
+    # Build context hash with location and environmental data
+    my %context = (
+        closest_address => $h->{closest_address} || '',
+        latitude        => $report->latitude,
+        longitude       => $report->longitude,
+    );
+
+    my $assessment = eval {
+        FixMyStreet::AIAssessment->generate_assessment($report, \%context);
+    };
+    if ($@ || !$assessment) {
+        warn "AIAssessment hook error: " . ($@ || 'empty result') . "\n";
+        $h->{ai_assessment_text} = '';
+        $h->{ai_assessment_html} = '';
+        return;
+    }
+
+    $h->{ai_assessment_text} = $assessment->{ai_assessment_text} || '';
+    $h->{ai_assessment_html} = $assessment->{ai_assessment_html} || '';
+}
 
 1;

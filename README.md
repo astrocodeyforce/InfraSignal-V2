@@ -26,6 +26,10 @@ include built-in content moderation powered by
   title and description with sensible defaults that users can customise.
 - **US Coverage** — Pre-loaded with US states, counties, and cities from
   Census 2020 data.
+- **Multi-Language Support** — Cookie-based language switching with full
+  translation across UI strings (gettext), database content (categories,
+  states), and static pages. Currently available: English, Turkish (Türkçe).
+  See `PROJECT PLAN/LANGUAGE_TRANSLATION_GUIDE.md` for adding new languages.
 
 ## Installation
 

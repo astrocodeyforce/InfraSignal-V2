@@ -38,6 +38,7 @@
 
     .container {
         padding-left: 0;
+        position: relative;
     }
 }
 
@@ -182,6 +183,116 @@ input[type="text"].form-control[name="search"] {
 
     &:hover {
         opacity: 1;
+    }
+}
+
+/* Language dropdown — compact selector with flag icons */
+#lang-switcher {
+    float: right;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0 4px;
+
+    .lang-dd {
+        position: relative;
+    }
+
+    .lang-dd__flag {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        object-fit: cover;
+        vertical-align: middle;
+        border: 1px solid rgba(0,0,0,0.12);
+        flex-shrink: 0;
+    }
+
+    .lang-dd__btn {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        background: #fff;
+        color: #333;
+        border: 1.5px solid rgba(0,0,0,0.12);
+        border-radius: 6px;
+        padding: 5px 10px;
+        font-size: 13px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        cursor: pointer;
+        outline: none;
+        line-height: 1.4;
+        transition: background-color 0.15s, box-shadow 0.15s;
+        box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+
+        &:hover, &:focus {
+            background-color: #f5f5f5;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        span {
+            vertical-align: middle;
+            display: inline;
+            padding: 0;
+            font-size: inherit;
+            background: none;
+            border-bottom: none;
+            color: inherit;
+        }
+    }
+
+    .lang-dd__caret {
+        font-size: 9px;
+        opacity: 0.6;
+        margin-left: 1px;
+    }
+
+    .lang-dd__list {
+        display: none;
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 0;
+        margin: 0;
+        padding: 4px 0;
+        background: #fff;
+        border: 1px solid rgba(0,0,0,0.12);
+        border-radius: 5px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        list-style: none;
+        z-index: 9999;
+        min-width: 90px;
+
+        &.lang-dd__list--open {
+            display: block;
+        }
+
+        li {
+            margin: 0;
+            padding: 0;
+
+            a {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                padding: 7px 14px;
+                color: #333;
+                text-decoration: none;
+                font-size: 13px;
+                font-weight: 600;
+                white-space: nowrap;
+                transition: background-color 0.1s;
+
+                &:hover {
+                    background-color: #f0f4ff;
+                }
+            }
+
+            &.lang-dd--sel a {
+                background-color: #e8edf5;
+            }
+        }
     }
 }
 

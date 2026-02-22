@@ -1,10 +1,10 @@
 #!/bin/bash
 # Start cron for background dashboard cache updates, then launch the app server.
 
-# Install the cron job for dashboard cache regeneration (every 5 minutes)
+# Install the cron job for dashboard cache regeneration (hourly, low priority)
 cat > /etc/cron.d/fixmystreet-dashboard << 'CRON'
-# Regenerate dashboard cache every 5 minutes
-*/5 * * * * root cd /var/www/fixmystreet && bin/update-all-reports > /dev/null 2>&1
+# Regenerate dashboard cache hourly, low priority
+0 * * * * root cd /var/www/fixmystreet && nice -n 19 ionice -c 3 bin/update-all-reports > /dev/null 2>&1
 CRON
 chmod 644 /etc/cron.d/fixmystreet-dashboard
 

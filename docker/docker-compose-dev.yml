@@ -25,11 +25,13 @@ services:
     image: nginx:1.27.2
     depends_on:
       - fixmystreet
+    restart: always
     ports:
       - 3000:80
     volumes:
       - ../web:/var/www/fixmystreet/web:ro
       - ../conf/nginx.conf-dev:/etc/nginx/conf.d/default.conf:ro
+      - ../conf/nginx-main.conf:/etc/nginx/nginx.conf:ro
     networks:
       default:
         aliases:
@@ -38,8 +40,9 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile-development
-    command: docker/start-server ${SERVER_ARGUMENTS}
+    command: docker/start-server-tuned
     tty: true
+    restart: always
     depends_on:
       setup:
         condition: service_completed_successfully
@@ -69,6 +72,28 @@ services:
     environment:
       POSTGRES_PASSWORD: 'password'
       PGDATA: '/var/lib/postgresql/data/pgdata'
+    command:
+      - "postgres"
+      - "-c"
+      - "max_connections=200"
+      - "-c"
+      - "shared_buffers=512MB"
+      - "-c"
+      - "effective_cache_size=2GB"
+      - "-c"
+      - "work_mem=16MB"
+      - "-c"
+      - "maintenance_work_mem=128MB"
+      - "-c"
+      - "random_page_cost=1.1"
+      - "-c"
+      - "effective_io_concurrency=200"
+      - "-c"
+      - "checkpoint_completion_target=0.9"
+      - "-c"
+      - "wal_buffers=16MB"
+      - "-c"
+      - "default_statistics_target=100"
     networks:
       default:
         aliases:
@@ -81,7 +106,7 @@ services:
   memcached:
     image: memcached:1.6.32
     restart: always
-    command: memcached -m 128
+    command: memcached -m 128 -c 1024 -t 2
     networks:
       default:
         aliases:

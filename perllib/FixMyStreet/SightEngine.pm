@@ -7,6 +7,7 @@ use LWP::UserAgent;
 use JSON::MaybeXS;
 use Try::Tiny;
 use FixMyStreet;
+use mySociety::Locale;
 
 =head1 NAME
 
@@ -231,7 +232,7 @@ sub _evaluate_result {
         }
         if ($max_nudity >= $thresholds->{nudity}) {
             (my $label = $nudity_type) =~ s/_/ /g;
-            push @reasons, "Inappropriate content detected: $label (${\ sprintf('%.0f', $max_nudity * 100)}% confidence)";
+            push @reasons, sprintf(_('Inappropriate content detected: %s (%d%% confidence)'), $label, $max_nudity * 100);
         }
     }
 
@@ -251,7 +252,7 @@ sub _evaluate_result {
             $score = ref($weapon) eq 'HASH' ? ($weapon->{prob} || 0) : $weapon;
         }
         if ($score >= $thresholds->{weapon}) {
-            push @reasons, "Weapon detected: $weapon_type (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Weapon detected: %s (%d%% confidence)'), $weapon_type, $score * 100);
         }
     }
 
@@ -259,7 +260,7 @@ sub _evaluate_result {
     if (my $violence = $data->{violence}) {
         my $score = ref($violence) eq 'HASH' ? ($violence->{prob} || 0) : $violence;
         if ($score >= $thresholds->{violence}) {
-            push @reasons, "Violence detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Violence detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -267,7 +268,7 @@ sub _evaluate_result {
     if (my $offensive = $data->{offensive}) {
         my $score = ref($offensive) eq 'HASH' ? ($offensive->{prob} || 0) : $offensive;
         if ($score >= $thresholds->{offensive}) {
-            push @reasons, "Offensive/hate content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Offensive/hate content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -275,7 +276,7 @@ sub _evaluate_result {
     if (my $gore = $data->{gore}) {
         my $score = ref($gore) eq 'HASH' ? ($gore->{prob} || 0) : $gore;
         if ($score >= $thresholds->{gore}) {
-            push @reasons, "Graphic/gory content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Graphic/gory content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -283,7 +284,7 @@ sub _evaluate_result {
     if (my $self_harm = $data->{'self-harm'}) {
         my $score = ref($self_harm) eq 'HASH' ? ($self_harm->{prob} || 0) : $self_harm;
         if ($score >= $thresholds->{self_harm}) {
-            push @reasons, "Self-harm content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Self-harm content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -293,7 +294,7 @@ sub _evaluate_result {
     if (my $alcohol = $data->{alcohol}) {
         my $score = ref($alcohol) eq 'HASH' ? ($alcohol->{prob} || 0) : $alcohol;
         if ($score >= $thresholds->{alcohol}) {
-            push @reasons, "Alcohol content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Alcohol content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -301,7 +302,7 @@ sub _evaluate_result {
     if (my $drugs = $data->{recreational_drug}) {
         my $score = ref($drugs) eq 'HASH' ? ($drugs->{prob} || 0) : $drugs;
         if ($score >= $thresholds->{drugs}) {
-            push @reasons, "Drug-related content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Drug-related content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -309,7 +310,7 @@ sub _evaluate_result {
     if (my $tobacco = $data->{tobacco}) {
         my $score = ref($tobacco) eq 'HASH' ? ($tobacco->{prob} || 0) : $tobacco;
         if ($score >= $thresholds->{tobacco}) {
-            push @reasons, "Tobacco/smoking content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Tobacco/smoking content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -317,7 +318,7 @@ sub _evaluate_result {
     if (my $gambling = $data->{gambling}) {
         my $score = ref($gambling) eq 'HASH' ? ($gambling->{prob} || 0) : $gambling;
         if ($score >= $thresholds->{gambling}) {
-            push @reasons, "Gambling content detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Gambling content detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -325,7 +326,7 @@ sub _evaluate_result {
     if (my $money = $data->{money}) {
         my $score = ref($money) eq 'HASH' ? ($money->{prob} || 0) : $money;
         if ($score >= $thresholds->{money}) {
-            push @reasons, "Money/banknote display detected (${\ sprintf('%.0f', $score * 100)}% confidence)";
+            push @reasons, sprintf(_('Money/banknote display detected (%d%% confidence)'), $score * 100);
         }
     }
 
@@ -337,67 +338,67 @@ sub _evaluate_result {
         # Profanity in image text
         if ($text->{profanity} && ref($text->{profanity}) eq 'ARRAY' && @{$text->{profanity}}) {
             my @matches = map { $_->{match} || $_->{type} || 'profanity' } @{$text->{profanity}};
-            push @text_issues, "profanity found: " . join(', ', @matches);
+            push @text_issues, _('profanity found: ') . join(', ', @matches);
         }
 
         # Personal info (emails, phone numbers, SSN, IP)
         if ($text->{personal} && ref($text->{personal}) eq 'ARRAY' && @{$text->{personal}}) {
             my @types = map { $_->{type} || 'personal info' } @{$text->{personal}};
-            push @text_issues, "personal information found: " . join(', ', @types);
+            push @text_issues, _('personal information found: ') . join(', ', @types);
         }
 
         # Links/URLs
         if ($text->{link} && ref($text->{link}) eq 'ARRAY' && @{$text->{link}}) {
-            push @text_issues, "URL/link found in image";
+            push @text_issues, _('URL/link found in image');
         }
 
         # Social account references
         if ($text->{social} && ref($text->{social}) eq 'ARRAY' && @{$text->{social}}) {
-            push @text_issues, "social media account reference found";
+            push @text_issues, _('social media account reference found');
         }
 
         # Extremism
         if ($text->{extremism} && ref($text->{extremism}) eq 'ARRAY' && @{$text->{extremism}}) {
-            push @text_issues, "extremist content found in text";
+            push @text_issues, _('extremist content found in text');
         }
 
         # Drug references in text
         if ($text->{drug} && ref($text->{drug}) eq 'ARRAY' && @{$text->{drug}}) {
-            push @text_issues, "drug reference found in text";
+            push @text_issues, _('drug reference found in text');
         }
 
         # Weapon references in text
         if ($text->{weapon} && ref($text->{weapon}) eq 'ARRAY' && @{$text->{weapon}}) {
-            push @text_issues, "weapon reference found in text";
+            push @text_issues, _('weapon reference found in text');
         }
 
         # Violence in text
         if ($text->{violence} && ref($text->{violence}) eq 'ARRAY' && @{$text->{violence}}) {
-            push @text_issues, "violent language found in text";
+            push @text_issues, _('violent language found in text');
         }
 
         # Self-harm in text
         if ($text->{'self-harm'} && ref($text->{'self-harm'}) eq 'ARRAY' && @{$text->{'self-harm'}}) {
-            push @text_issues, "self-harm references found in text";
+            push @text_issues, _('self-harm references found in text');
         }
 
         # Spam / circumvention
         if ($text->{spam} && ref($text->{spam}) eq 'ARRAY' && @{$text->{spam}}) {
-            push @text_issues, "spam content found in text";
+            push @text_issues, _('spam content found in text');
         }
 
         # Content trading
         if ($text->{'content-trade'} && ref($text->{'content-trade'}) eq 'ARRAY' && @{$text->{'content-trade'}}) {
-            push @text_issues, "content trading solicitation found";
+            push @text_issues, _('content trading solicitation found');
         }
 
         # Money transaction solicitation
         if ($text->{'money-transaction'} && ref($text->{'money-transaction'}) eq 'ARRAY' && @{$text->{'money-transaction'}}) {
-            push @text_issues, "money transaction solicitation found";
+            push @text_issues, _('money transaction solicitation found');
         }
 
         if (@text_issues) {
-            push @reasons, "Text in image flagged: " . join('; ', @text_issues);
+            push @reasons, _('Text in image flagged: ') . join('; ', @text_issues);
         }
     }
 
@@ -407,7 +408,7 @@ sub _evaluate_result {
         if (ref($genai) eq 'HASH' && defined $genai->{ai_generated}) {
             my $score = $genai->{ai_generated} || 0;
             if ($score >= $thresholds->{genai}) {
-                push @reasons, "Image appears to be AI-generated (${\ sprintf('%.0f', $score * 100)}% confidence)";
+                push @reasons, sprintf(_('Image appears to be AI-generated (%d%% confidence)'), $score * 100);
             }
         }
     }
@@ -418,7 +419,7 @@ sub _evaluate_result {
         if (ref($quality) eq 'HASH' && defined $quality->{score}) {
             my $score = $quality->{score};
             if ($score < $thresholds->{quality}) {
-                push @reasons, "Image quality too low (${\ sprintf('%.0f', $score * 100)}% quality score, minimum ${\ sprintf('%.0f', $thresholds->{quality} * 100)}% required)";
+                push @reasons, sprintf(_('Image quality too low (%d%% quality score, minimum %d%% required)'), $score * 100, $thresholds->{quality} * 100);
             }
         }
     }
@@ -433,7 +434,7 @@ sub _evaluate_result {
                     my $score = $best_match->{score} || 0;
                     if ($score >= $thresholds->{duplicate}) {
                         push @reasons, sprintf(
-                            "Duplicate or near-duplicate image detected (%.0f%% similarity match)",
+                            _('Duplicate or near-duplicate image detected (%d%% similarity match)'),
                             $score * 100
                         );
                     }
@@ -534,7 +535,7 @@ sub _evaluate_text_result {
         for my $class (qw(sexual discriminatory insulting violent toxic self-harm)) {
             if (defined $classes->{$class} && $classes->{$class} > 0.70) {
                 (my $label = $class) =~ s/-/ /g;
-                push @reasons, sprintf("Text flagged as %s (%.0f%% confidence)", $label, $classes->{$class} * 100);
+                push @reasons, sprintf(_('Text flagged as %s (%d%% confidence)'), $label, $classes->{$class} * 100);
             }
         }
     }
@@ -543,20 +544,20 @@ sub _evaluate_text_result {
     if (my $profanity = $data->{profanity}) {
         if (ref($profanity) eq 'HASH' && $profanity->{matches} && @{$profanity->{matches}}) {
             my @matches = map { $_->{match} || 'profanity' } @{$profanity->{matches}};
-            push @reasons, "Profanity detected in text: " . join(', ', @matches);
+            push @reasons, _('Profanity detected in text: ') . join(', ', @matches);
         }
     }
 
     if (my $personal = $data->{personal}) {
         if (ref($personal) eq 'HASH' && $personal->{matches} && @{$personal->{matches}}) {
             my @types = map { $_->{type} || 'personal info' } @{$personal->{matches}};
-            push @reasons, "Personal information in text: " . join(', ', @types);
+            push @reasons, _('Personal information in text: ') . join(', ', @types);
         }
     }
 
     if (my $link = $data->{link}) {
         if (ref($link) eq 'HASH' && $link->{matches} && @{$link->{matches}}) {
-            push @reasons, "URL/link found in text";
+            push @reasons, _('URL/link found in text');
         }
     }
 

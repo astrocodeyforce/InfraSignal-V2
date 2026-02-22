@@ -104,7 +104,7 @@ sub index : Path( '' ) : Args(0) {
 sub git_version : Private {
     my ($self, $c) = @_;
     my $dir = FixMyStreet->path_to();
-    my $git_version = `cd $dir && git describe --tags 2>&1`;
+    my $git_version = `cd $dir && LANG=C git describe --tags 2>&1`;
     chomp $git_version;
     $c->stash(
         git_version => $git_version,
