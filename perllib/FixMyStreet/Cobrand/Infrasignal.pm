@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use FixMyStreet::MapIt;
 use FixMyStreet::AIAssessment;
+use LWP::UserAgent;
+use JSON::MaybeXS;
 
 =head1 NAME
 
@@ -119,6 +121,76 @@ sub report_new_munge_after_insert {
 
 # Disable the creation graph link — the PNG is not generated for this site
 sub admin_show_creation_graph { 0 }
+
+# --- Cloudflare Turnstile CAPTCHA ---
+
+# Returns true if the current request should show/require Turnstile CAPTCHA.
+# Skips for logged-in users and if TURNSTILE config is not set.
+sub requires_turnstile {
+    my $self = shift;
+    my $c = $self->{c};
+    return 0 if $c->user_exists;
+    return 0 if !FixMyStreet->config('TURNSTILE');
+    return 1;
+}
+
+# Hook called from Auth.pm general() on POST — validates Turnstile response.
+# Detaches to 400 error if the token is missing or invalid.
+sub check_captcha {
+    my ($self, $c) = @_;
+    return unless $self->requires_turnstile;
+
+    my $response_token = $c->get_param('cf-turnstile-response') || '';
+    if (!$response_token) {
+        $c->stash->{captcha_error} = 1;
+        $c->stash->{sign_in_error} = 1;
+        $c->stash->{username} = $c->get_param('username') || '';
+        $c->detach;
+    }
+
+    my $config = FixMyStreet->config('TURNSTILE');
+    my $url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    my $res = LWP::UserAgent->new->post($url, {
+        secret   => $config->{secret_key},
+        response => $response_token,
+        remoteip => $c->req->address,
+    });
+
+    my $result = eval { decode_json($res->content) } || {};
+    unless ($result->{success}) {
+        $c->stash->{captcha_error} = 1;
+        $c->stash->{sign_in_error} = 1;
+        $c->stash->{username} = $c->get_param('username') || '';
+        $c->detach;
+    }
+}
+
+# Also hook into check_recaptcha (called from check_csrf_token for
+# report/alert/contact forms) to validate Turnstile on those forms too.
+sub check_recaptcha {
+    my $self = shift;
+    my $c = $self->{c};
+    return unless $self->requires_turnstile;
+
+    my $response_token = $c->get_param('cf-turnstile-response') || '';
+    return unless $response_token || $c->req->method eq 'POST';
+
+    if (!$response_token) {
+        $c->detach('/page_error_400_bad_request', ['Please complete the CAPTCHA verification']);
+    }
+
+    my $config = FixMyStreet->config('TURNSTILE');
+    my $url = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
+    my $res = LWP::UserAgent->new->post($url, {
+        secret   => $config->{secret_key},
+        response => $response_token,
+        remoteip => $c->req->address,
+    });
+
+    my $result = eval { decode_json($res->content) } || {};
+    $c->detach('/page_error_400_bad_request', ['CAPTCHA verification failed'])
+        unless $result->{success};
+}
 
 # Enable duplicate detection: when a user creates a new report, the system
 # searches for existing nearby reports in the same category and shows them

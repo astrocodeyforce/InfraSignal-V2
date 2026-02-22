@@ -37,6 +37,9 @@ sub general : Path : Args(0) {
     # all done unless we have a form posted to us
     return unless $c->req->method eq 'POST';
 
+    # Check CAPTCHA (Turnstile/reCAPTCHA) if cobrand requires it
+    $c->cobrand->call_hook('check_captcha', $c);
+
     my $clicked_sign_in_by_code = $c->get_param('sign_in_by_code');
     my $data_username = $c->get_param('username');
     my $data_password = $c->get_param('password_sign_in');

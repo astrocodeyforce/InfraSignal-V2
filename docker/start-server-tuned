@@ -5,6 +5,15 @@
 set -e
 cd /var/www/fixmystreet
 
+# Ensure multilingual locales are available (TR, ES, RU)
+if ! locale -a 2>/dev/null | grep -q "tr_TR"; then
+    echo "Generating missing locales for multilingual support..."
+    for loc in tr_TR.UTF-8 es_ES.UTF-8 ru_RU.UTF-8 en_GB.UTF-8; do
+        grep -q "$loc" /etc/locale.gen 2>/dev/null || echo "$loc UTF-8" >> /etc/locale.gen
+    done
+    locale-gen 2>/dev/null || true
+fi
+
 # Install cron jobs for background tasks
 cat > /etc/cron.d/fixmystreet-dashboard << 'CRON'
 # Regenerate dashboard cache hourly, low priority
