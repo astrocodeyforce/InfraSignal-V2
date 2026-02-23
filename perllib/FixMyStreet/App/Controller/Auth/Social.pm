@@ -194,7 +194,7 @@ sub oidc_sign_in : Private {
 
     my $oidc = $c->forward('oidc');
     my $nonce = $self->generate_nonce();
-    my $redirect_uri = FixMyStreet->config('BASE_URL') . '/auth/OIDC';
+    my $redirect_uri = $c->uri_for('/auth/OIDC');
     my $url = $oidc->uri_to_redirect(
         redirect_uri => $redirect_uri,
         scope        => $cfg->{scope} || 'openid',
@@ -233,7 +233,7 @@ sub oidc_sign_in : Private {
     if ( my $password_change_uri = $cfg->{password_change_uri} ) {
         $oauth{change_password_uri} = $oidc->uri_to_redirect(
             uri          => $password_change_uri,
-            redirect_uri => FixMyStreet->config('BASE_URL') . '/auth/OIDC',
+            redirect_uri => $c->uri_for('/auth/OIDC'),
             scope        => 'openid',
             state        => 'password_change',
             extra        => {
@@ -257,7 +257,7 @@ sub oidc_callback: Path('/auth/OIDC') : Args(0) {
         if ($password_reset_uri && $error_desc =~ /^AADB2C90118:/) {
             my $url = $oidc->uri_to_redirect(
                 uri          => $password_reset_uri,
-                redirect_uri => FixMyStreet->config('BASE_URL') . '/auth/OIDC',
+                redirect_uri => $c->uri_for('/auth/OIDC'),
                 scope        => 'openid',
                 state        => 'password_reset',
                 extra        => {
@@ -306,7 +306,7 @@ sub oidc_callback: Path('/auth/OIDC') : Args(0) {
     my $token = eval {
         $oidc->get_access_token(
             code => $c->get_param('code'),
-            redirect_uri => FixMyStreet->config('BASE_URL') . '/auth/OIDC'
+            redirect_uri => $c->uri_for('/auth/OIDC')
         );
     };
     if ($@) {
