@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use FixMyStreet::MapIt;
 use FixMyStreet::AIAssessment;
+use FixMyStreet::OSM::PriorityClassifier;
 use LWP::UserAgent;
 use JSON::MaybeXS;
 
@@ -131,6 +132,12 @@ sub report_new_munge_after_insert {
             });
         }
     }
+
+    # Auto-classify by OSM priority zones (non-blocking: errors are logged, not thrown)
+    eval {
+        FixMyStreet::OSM::PriorityClassifier->classify_and_save($report);
+    };
+    warn "OSM PriorityClassifier error: $@\n" if $@;
 }
 
 # Disable the creation graph link — the PNG is not generated for this site
@@ -234,6 +241,7 @@ sub admin_pages {
     my $user = $self->{c}->user;
     if ($user && ($user->is_superuser || $user->has_body_permission_to('report_edit'))) {
         $pages->{duplicate_reports} = [ 'Duplicate Reports', 2.5 ];
+        $pages->{priority_zones} = [ 'Priority Zones', 2.6 ];
     }
 
     return $pages;
