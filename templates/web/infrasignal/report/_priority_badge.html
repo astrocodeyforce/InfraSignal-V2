@@ -1,0 +1,7 @@
+[%# Priority badge for reports classified by OSM zones %]
+[% IF problem.osm_zone_priority AND problem.osm_zone_priority != 'Low' %]
+<span class="priority-badge priority-badge--[% problem.osm_zone_priority | lower | html %]"
+      title="[% IF problem.osm_zone_label %]Near [% problem.osm_zone_label | html %][% END %][% IF problem.osm_zone_distance_m %] ([% problem.osm_zone_distance_m %]m)[% END %]">
+    [% problem.osm_zone_priority | html %]
+</span>
+[% END %]

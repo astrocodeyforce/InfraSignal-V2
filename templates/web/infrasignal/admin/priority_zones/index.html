@@ -1,0 +1,112 @@
+[% INCLUDE 'admin/header.html' title=loc('Priority Zone Configuration') %]
+
+<style>
+.pz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.pz-header h2 { margin: 0; }
+.pz-actions { display: flex; gap: 10px; }
+.pz-btn { padding: 8px 18px; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 13px; text-decoration: none; display: inline-block; }
+.pz-btn-primary { background: #ffd000; color: #333; }
+.pz-btn-primary:hover { background: #eec100; }
+.pz-btn-secondary { background: #6c757d; color: #fff; }
+.pz-btn-secondary:hover { background: #5a6268; }
+.pz-btn-sm { padding: 4px 12px; font-size: 12px; }
+.pz-flash { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 10px 15px; border-radius: 4px; margin-bottom: 15px; }
+.pz-group { margin-bottom: 25px; }
+.pz-group-title { font-size: 16px; font-weight: bold; padding: 8px 15px; border-radius: 4px 4px 0 0; margin: 0; }
+.pz-group-title.Emergency { background: #f8d7da; color: #721c24; }
+.pz-group-title.High { background: #fff3cd; color: #856404; }
+.pz-group-title.Normal { background: #d1ecf1; color: #0c5460; }
+.pz-group-title.Low { background: #e2e3e5; color: #383d41; }
+.pz-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid #dee2e6; }
+.pz-table th { background: #f8f9fa; padding: 8px 12px; text-align: left; font-size: 13px; border-bottom: 2px solid #dee2e6; }
+.pz-table td { padding: 8px 12px; border-bottom: 1px solid #eee; font-size: 13px; vertical-align: middle; }
+.pz-table tr:hover { background: #f5f5f0; }
+.pz-badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: 11px; font-weight: bold; }
+.pz-badge.enabled { background: #d4edda; color: #155724; }
+.pz-badge.disabled { background: #f8d7da; color: #721c24; }
+.pz-tag { display: inline-block; background: #e9ecef; padding: 2px 6px; border-radius: 3px; font-family: monospace; font-size: 12px; }
+.pz-stats { display: flex; gap: 15px; margin-bottom: 20px; }
+.pz-stat { background: #fff; border: 1px solid #ddd; border-radius: 6px; padding: 12px 20px; text-align: center; flex: 1; }
+.pz-stat .num { font-size: 24px; font-weight: bold; }
+.pz-stat .num.Emergency { color: #dc3545; }
+.pz-stat .num.High { color: #ffc107; }
+.pz-stat .num.Normal { color: #17a2b8; }
+.pz-stat .num.Low { color: #6c757d; }
+.pz-stat .lbl { font-size: 11px; color: #666; text-transform: uppercase; }
+</style>
+
+[% IF c.flash.status_message %]
+<div class="pz-flash">[% c.flash.status_message | html %]</div>
+[% END %]
+
+<div class="pz-header">
+    <h2>OSM Priority Zones</h2>
+    <div class="pz-actions">
+        <a href="[% c.uri_for('/admin/priority_zones/reclassify') %]" class="pz-btn pz-btn-primary" onclick="return confirm('Reclassify all unclassified reports? This may take a moment.')">
+            &#x1F504; Reclassify Unclassified
+        </a>
+        <a href="[% c.uri_for('/admin/priority_zones/reclassify', { force => 1 }) %]" class="pz-btn pz-btn-secondary" onclick="return confirm('Force reclassify ALL reports? This will re-run classification on all reports.')">
+            &#x26A0; Force Reclassify All
+        </a>
+    </div>
+</div>
+
+<div class="pz-stats">
+[% FOREACH level IN priority_order %]
+    [% count = 0 %]
+    [% FOREACH z IN zones %][% IF z.priority_level == level %][% count = count + 1 %][% END %][% END %]
+    <div class="pz-stat">
+        <div class="num [% level %]">[% count %]</div>
+        <div class="lbl">[% level %] zones</div>
+    </div>
+[% END %]
+</div>
+
+[% FOREACH level IN priority_order %]
+    [% level_zones = grouped_zones.$level %]
+    [% NEXT UNLESS level_zones.size %]
+    <div class="pz-group">
+        <div class="pz-group-title [% level %]">[% level %] Priority ([% level_zones.size %] zone types)</div>
+        <table class="pz-table">
+            <thead>
+                <tr>
+                    <th>Zone Type</th>
+                    <th>OSM Tag</th>
+                    <th>Radius</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            [% FOREACH zone IN level_zones %]
+                <tr>
+                    <td><strong>[% zone.label || zone.osm_value | html %]</strong></td>
+                    <td><span class="pz-tag">[% zone.osm_key | html %]=[% zone.osm_value | html %]</span></td>
+                    <td>[% zone.radius_m %]m</td>
+                    <td>
+                        [% IF zone.enabled %]
+                        <span class="pz-badge enabled">Enabled</span>
+                        [% ELSE %]
+                        <span class="pz-badge disabled">Disabled</span>
+                        [% END %]
+                    </td>
+                    <td>
+                        <a href="[% c.uri_for('/admin/priority_zones/' _ zone.id) %]" class="pz-btn pz-btn-primary pz-btn-sm">Edit</a>
+                        <a href="[% c.uri_for('/admin/priority_zones/toggle/' _ zone.id) %]" class="pz-btn pz-btn-secondary pz-btn-sm">
+                            [% IF zone.enabled %]Disable[% ELSE %]Enable[% END %]
+                        </a>
+                    </td>
+                </tr>
+            [% END %]
+            </tbody>
+        </table>
+    </div>
+[% END %]
+
+<p style="color:#666; font-size:12px; margin-top:20px;">
+    Zone configurations control how new reports are auto-classified based on nearby
+    OpenStreetMap features. The highest-priority match within the configured radius wins.
+    Priority mapping: Emergency &rarr; Emergency, High &rarr; High, Normal &rarr; Normal, Low &rarr; Low (default).
+</p>
+
+[% INCLUDE 'admin/footer.html' %]
