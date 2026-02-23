@@ -1,6 +1,29 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal Cobrand — February 23, 2026 (Version 1.9.3):
+        - OSM-based Priority Zone Auto-Classification:
+            - New reports are automatically classified by proximity to nearby
+              OpenStreetMap features (hospitals, schools, fire stations, parks, etc.).
+            - 30 zone types across 3 priority tiers:
+              Emergency (6): Hospital, School, Kindergarten, Fire Station
+              High (17): Police, Clinic, Playground, Library, Bus Station, etc.
+              Normal (7): Park, Sports Center, Retail, Residential, etc.
+            - Uses Overpass API with 7-day DB cache (osm_zone_cache table).
+            - Classification runs on report creation via report_new_munge_after_insert
+              hook in Infrasignal.pm cobrand. Also available via bin/classify-reports cron.
+            - Sets response_priority_id to matching body priority (Emergency/High/Normal/Low).
+            - Auto-populates "Extra details" field with hardcoded explanations for
+              Emergency and High priority reports (e.g. "EMERGENCY ZONE: Located near
+              a hospital. Infrastructure damage may impact emergency medical access...").
+            - New DB tables: priority_zone_config (30 rows), osm_zone_cache.
+            - 5 new columns on problem: osm_zone_priority, osm_zone_label,
+              osm_zone_classified_at, osm_zone_distance_m, osm_zone_admin_override.
+            - Admin page: /admin/priority_zones — view, edit, enable/disable zones,
+              trigger bulk reclassification.
+            - Priority badge CSS for report display (_priority.scss).
+            - bin/classify-reports cron script (--force, --limit, --body-id flags).
+            - bin/deploy updated with --migrate flag for DB migrations.
     - InfraSignal Cobrand — February 23, 2026 (Version 1.9.2):
         - Dev/Production environment separation:
             - Production: /opt/infrasignal-v2 on Version-1.9 branch

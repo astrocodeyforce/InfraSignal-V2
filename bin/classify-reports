@@ -1,0 +1,52 @@
+#!/usr/bin/env perl
+
+=head1 NAME
+
+classify-reports - Classify reports by OSM priority zones
+
+=head1 SYNOPSIS
+
+    bin/classify-reports [--force] [--limit N] [--body-id N]
+
+=head1 DESCRIPTION
+
+Runs OSM priority zone classification on unclassified reports (or all
+reports with --force). Intended to be run from cron (e.g. every 15 min).
+
+=cut
+
+use strict;
+use warnings;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use Getopt::Long;
+use FixMyStreet::OSM::PriorityClassifier;
+
+my $force   = 0;
+my $limit   = 100;
+my $body_id = 0;
+
+GetOptions(
+    'force'    => \$force,
+    'limit=i'  => \$limit,
+    'body-id=i'=> \$body_id,
+) or die "Usage: $0 [--force] [--limit N] [--body-id N]\n";
+
+my %opts = (
+    force => $force,
+    limit => $limit,
+);
+$opts{body_id} = $body_id if $body_id;
+
+print "Classifying reports (force=$force, limit=$limit" .
+      ($body_id ? ", body_id=$body_id" : "") . ")...\n";
+
+my $count = FixMyStreet::OSM::PriorityClassifier->reclassify_all(\%opts);
+
+print "Done. Classified $count reports.\n";
