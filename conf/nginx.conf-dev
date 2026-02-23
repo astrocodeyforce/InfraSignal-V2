@@ -4,6 +4,12 @@
 
 server {
     listen 80 default_server;
+    listen 443 ssl default_server;
+
+    ssl_certificate     /etc/nginx/ssl/infrasignal.org.pem;
+    ssl_certificate_key /etc/nginx/ssl/infrasignal.org.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
     root /var/www/fixmystreet/web;
 
     # ---- Gzip compression ----
@@ -65,6 +71,7 @@ server {
         limit_conn addr 50;
 
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Host $host;
         proxy_set_header Connection "";

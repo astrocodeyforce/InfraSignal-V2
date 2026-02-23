@@ -120,8 +120,11 @@ after 'prepare_headers' => sub {
     my $base_url = $self->config->{BASE_URL};
     my $ssl_header = $self->config->{SECURE_PROXY_SSL_HEADER};
     my $host = $self->req->headers->header('Host');
-    $self->req->secure(1) if $ssl_header && ref $ssl_header eq 'ARRAY'
-        && @$ssl_header == 2 && $self->req->header($ssl_header->[0]) eq $ssl_header->[1];
+    if ($ssl_header && ref $ssl_header eq 'ARRAY'
+        && @$ssl_header == 2 && $self->req->header($ssl_header->[0])
+        && $self->req->header($ssl_header->[0]) eq $ssl_header->[1]) {
+        $self->req->secure(1);
+    }
 };
 
 # disable debug logging unless in debug mode

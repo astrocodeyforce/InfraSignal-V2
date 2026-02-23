@@ -78,3 +78,4 @@ DATABASE_DIRECTORY.md
 cookie.txt
 cookie_*.txt
 cookie8*.txt
+conf/ssl/

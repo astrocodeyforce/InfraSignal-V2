@@ -20,6 +20,20 @@ Overrides area fetching to avoid slow global MapIt calls.
 
 =cut
 
+# Enable social auth (Google Sign-In via OIDC) if oidc_login is configured
+sub social_auth_enabled {
+    my $self = shift;
+    return $self->feature('oidc_login') ? 1 : $self->SUPER::social_auth_enabled();
+}
+
+# Extract user name and email from Google's OIDC id_token payload
+sub user_from_oidc {
+    my ($self, $payload) = @_;
+    my $name = $payload->{name} || '';
+    my $email = $payload->{email} || '';
+    return ($name, $email);
+}
+
 # Return a non-empty list so fetch_all_bodies skips its fallback that
 # would otherwise load all 28K bodies from the DB.
 # Our admin templates use AJAX cascading state→body dropdowns instead,
@@ -136,9 +150,14 @@ sub requires_turnstile {
 
 # Hook called from Auth.pm general() on POST — validates Turnstile response.
 # Detaches to 400 error if the token is missing or invalid.
+# Skips for social sign-in (Google OIDC) since Google handles auth.
 sub check_captcha {
     my ($self, $c) = @_;
     return unless $self->requires_turnstile;
+
+    # Skip CAPTCHA for social auth sign-in (Google, Facebook, etc.)
+    my $social = $c->get_param('social_sign_in') || '';
+    return if $social;
 
     my $response_token = $c->get_param('cf-turnstile-response') || '';
     if (!$response_token) {
