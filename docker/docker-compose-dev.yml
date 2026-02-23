@@ -27,11 +27,14 @@ services:
       - fixmystreet
     restart: always
     ports:
+      - 80:80
+      - 443:443
       - 3000:80
     volumes:
       - ../web:/var/www/fixmystreet/web:ro
       - ../conf/nginx.conf-dev:/etc/nginx/conf.d/default.conf:ro
       - ../conf/nginx-main.conf:/etc/nginx/nginx.conf:ro
+      - ../conf/ssl:/etc/nginx/ssl:ro
     networks:
       default:
         aliases:
