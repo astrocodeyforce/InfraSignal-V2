@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# ============================================================
+# deploy — Pull latest code and restart production containers
+# ============================================================
+# Usage:
+#   ./bin/deploy              # full deploy (pull + rebuild CSS + restart)
+#   ./bin/deploy --quick      # restart only (no git pull / CSS rebuild)
+#
+# Run from the production root: /opt/infrasignal-v2
+# ============================================================
+
+set -euo pipefail
+
+PROD_DIR="/opt/infrasignal-v2"
+COMPOSE_FILE="docker/docker-compose-dev.yml"
+BRANCH="Version-1.9"
+
+cd "$PROD_DIR"
+
+echo "============================================"
+echo "  InfraSignal Production Deploy"
+echo "  $(date '+%Y-%m-%d %H:%M:%S')"
+echo "============================================"
+
+if [[ "${1:-}" == "--quick" ]]; then
+    echo "[1/2] Skipping git pull (--quick mode)"
+else
+    echo "[1/4] Pulling latest from origin/$BRANCH ..."
+    git fetch origin
+    git checkout "$BRANCH"
+    git pull origin "$BRANCH"
+
+    echo "[2/4] Rebuilding CSS ..."
+    docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
+fi
+
+echo "[3/4] Rebuilding containers (if Dockerfile changed) ..."
+docker compose -f "$COMPOSE_FILE" build --quiet
+
+echo "[4/4] Restarting services ..."
+docker compose -f "$COMPOSE_FILE" down
+docker compose -f "$COMPOSE_FILE" up -d
+
+echo ""
+echo "============================================"
+echo "  Deploy complete!"
+echo "  Site: https://infrasignal.org"
+echo "============================================"
+docker compose -f "$COMPOSE_FILE" ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
