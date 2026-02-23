@@ -117,13 +117,22 @@ __PACKAGE__->setup();
 # SECURE_PROXY_SSL_HEADER configuration variable so this can be spotted.
 after 'prepare_headers' => sub {
     my $self = shift;
-    my $base_url = $self->config->{BASE_URL};
     my $ssl_header = $self->config->{SECURE_PROXY_SSL_HEADER};
-    my $host = $self->req->headers->header('Host');
     if ($ssl_header && ref $ssl_header eq 'ARRAY'
         && @$ssl_header == 2 && $self->req->header($ssl_header->[0])
         && $self->req->header($ssl_header->[0]) eq $ssl_header->[1]) {
         $self->req->secure(1);
+    }
+};
+
+# Override request base to match BASE_URL so $c->uri_for() generates correct
+# external URLs (without the internal Docker port leaking through).
+# Must run after prepare_path because req->base isn't set until then.
+after 'prepare_path' => sub {
+    my $self = shift;
+    my $base_url = $self->config->{BASE_URL};
+    if ($base_url) {
+        $self->req->base(URI->new($base_url . '/'));
     }
 };
 
