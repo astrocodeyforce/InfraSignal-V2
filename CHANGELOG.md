@@ -1,6 +1,35 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal Cobrand — February 23, 2026 (Version 1.9.2):
+        - Dev/Production environment separation:
+            - Production: /opt/infrasignal-v2 on Version-1.9 branch
+              — serves https://infrasignal.org via ports 80/443
+            - Development: /opt/infrasignal-dev on dev branch
+              — serves http://76.13.107.54:3000 (plain HTTP)
+            - Dev shares production DB/memcached/mailhog via Docker
+              external network (docker_default), no data duplication.
+            - Dev docker-compose-local.yml with project name "infrasignal-dev".
+            - Production port 3000 removed (only 80+443 exposed).
+            - Deploy script: bin/deploy (git pull + CSS rebuild + restart).
+            - Dev start script: bin/dev-start (checks prod network, starts dev).
+        - Google Sign-In via OpenID Connect (OIDC):
+            - Scope changed from hardcoded 'openid' to 'openid email profile'.
+            - user_from_oidc hook in Infrasignal.pm extracts name/email from
+              OIDC payload.
+            - redirect_uri fixed: replaced $c->uri_for('/auth/OIDC') with
+              BASE_URL-based URI in 4 places in Social.pm (avoids internal
+              port 3000 leaking into redirect).
+            - social_auth_enabled override checks oidc_login cobrand feature.
+            - CAPTCHA bypass: check_captcha skips Turnstile for social_sign_in
+              requests (Turnstile blocked the OIDC redirect flow).
+        - Cloudflare Full (Strict) SSL:
+            - Nginx SSL with Cloudflare Origin Certificate on port 443.
+            - SECURE_PROXY_SSL_HEADER configured for X-Forwarded-Proto.
+            - App.pm null-safety fix for SECURE_PROXY_SSL_HEADER.
+        - Logo optimization:
+            - New logo_web.png: 800×269px, 104KB (vs original 1536×1024, 2.1MB).
+            - CSS: 275×45px wrapper, background-size:contain, no overflow crop.
     - InfraSignal Cobrand — February 22, 2026 (Version 1.9):
         - Cloudflare Turnstile CAPTCHA (anti-spam):
             - Added CAPTCHA verification on login, signup, forgot-password,
