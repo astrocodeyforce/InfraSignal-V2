@@ -1,0 +1,82 @@
+# ============================================================
+# DEV Docker Compose — InfraSignal Development Environment
+# ============================================================
+# Shares DB, memcached, mailhog from PRODUCTION stack.
+# Runs its own app + nginx on port 3000 (HTTP only).
+#
+# Usage:
+#   cd /opt/infrasignal-dev/docker
+#   docker compose -f docker-compose-local.yml up -d
+#
+# Requires production stack running first:
+#   cd /opt/infrasignal-v2/docker
+#   docker compose -f docker-compose-dev.yml up -d
+# ============================================================
+
+services:
+  dev-setup:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-development
+    command: docker/setup
+    volumes:
+      - ../:/var/www/fixmystreet
+      - dev-local:/var/www/fixmystreet/local
+    networks:
+      - prod_net
+
+  dev-css-watcher:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-development
+    command: bin/make_css --watch
+    depends_on:
+      dev-setup:
+        condition: service_completed_successfully
+    volumes:
+      - ../:/var/www/fixmystreet
+      - dev-local:/var/www/fixmystreet/local
+    networks:
+      - prod_net
+
+  dev-nginx:
+    image: nginx:1.27.2
+    depends_on:
+      - dev-fixmystreet
+    restart: always
+    ports:
+      - 3000:80
+    volumes:
+      - ../web:/var/www/fixmystreet/web:ro
+      - ../conf/nginx-dev-local.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - prod_net
+
+  dev-fixmystreet:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile-development
+    command: docker/start-server
+    tty: true
+    restart: always
+    depends_on:
+      dev-setup:
+        condition: service_completed_successfully
+    volumes:
+      - ../:/var/www/fixmystreet
+      - dev-local:/var/www/fixmystreet/local
+    environment:
+      POSTGRES_PASSWORD: 'password'
+      LANG: "C.UTF-8"
+    networks:
+      prod_net:
+        aliases:
+          - dev-fixmystreet.svc
+
+volumes:
+  dev-local:
+
+networks:
+  prod_net:
+    external: true
+    name: docker_default

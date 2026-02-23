@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+# ============================================================
+# dev-start — Start the InfraSignal development environment
+# ============================================================
+# Usage:
+#   cd /opt/infrasignal-dev && ./bin/dev-start
+#
+# Prerequisites: Production stack must be running first
+# (so DB/memcached/mailhog are available on docker_default network)
+# ============================================================
+
+set -euo pipefail
+
+DEV_DIR="/opt/infrasignal-dev"
+COMPOSE_FILE="docker/docker-compose-local.yml"
+PROJECT_NAME="infrasignal-dev"
+
+cd "$DEV_DIR"
+
+echo "============================================"
+echo "  InfraSignal DEV Environment"
+echo "  $(date '+%Y-%m-%d %H:%M:%S')"
+echo "============================================"
+
+# Check production stack is running
+if ! docker network inspect docker_default &>/dev/null; then
+    echo "ERROR: Production network 'docker_default' not found."
+    echo "       Start production first:"
+    echo "         cd /opt/infrasignal-v2/docker"
+    echo "         docker compose -f docker-compose-dev.yml up -d"
+    exit 1
+fi
+
+echo "[1/2] Building dev containers ..."
+docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" build --quiet
+
+echo "[2/2] Starting dev stack ..."
+docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" up -d
+
+echo ""
+echo "============================================"
+echo "  Dev environment running!"
+echo "  URL: http://76.13.107.54:3000"
+echo "  MailHog: http://76.13.107.54:8025"
+echo "============================================"
+docker compose -p "$PROJECT_NAME" -f "$COMPOSE_FILE" ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
