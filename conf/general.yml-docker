@@ -18,7 +18,7 @@ FMS_DB_HOST: 'postgres.svc'
 FMS_DB_PORT: '5432'
 FMS_DB_NAME: 'infrasignal'
 FMS_DB_USER: 'fms'
-FMS_DB_PASS: 'fms'
+FMS_DB_PASS: 'CHANGE_ME'
 
 # The base URL of the install.
 BASE_URL: 'http://localhost:8000'

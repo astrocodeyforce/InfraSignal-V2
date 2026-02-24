@@ -162,9 +162,18 @@ sub check_captcha {
     my ($self, $c) = @_;
     return unless $self->requires_turnstile;
 
-    # Skip CAPTCHA for social auth sign-in (Google, Facebook, etc.)
+    # Skip CAPTCHA only for genuine social auth sign-in (Google OIDC, etc.)
+    # Validate that social_sign_in is combined with a real OIDC provider action,
+    # not just a user-submitted parameter that could bypass CAPTCHA.
     my $social = $c->get_param('social_sign_in') || '';
-    return if $social;
+    if ($social) {
+        # Only skip if the request is actually being forwarded to a social auth
+        # provider (i.e. the action path indicates OIDC/social flow).
+        my $action = $c->action->reverse || '';
+        return if $action =~ m{auth/social};
+        # For /auth POST with social_sign_in, the form posts to /auth/social/*
+        # so if we're still in /auth (general), reject the bypass attempt.
+    }
 
     my $response_token = $c->get_param('cf-turnstile-response') || '';
     if (!$response_token) {

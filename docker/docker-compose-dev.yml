@@ -56,7 +56,7 @@ services:
       - ../:/var/www/fixmystreet
       - fixmystreet-local:/var/www/fixmystreet/local
     environment:
-      POSTGRES_PASSWORD: 'password'
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       LANG: "C.UTF-8"
     networks:
       default:
@@ -72,7 +72,7 @@ services:
       - fixmystreet-local:/var/www/fixmystreet/local
       - fixmystreet-pgdata:/var/lib/postgresql/data/pgdata
     environment:
-      POSTGRES_PASSWORD: 'password'
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       PGDATA: '/var/lib/postgresql/data/pgdata'
     command:
       - "postgres"
@@ -117,8 +117,8 @@ services:
     image: mailhog/mailhog:v1.0.1
     restart: always
     ports:
-      - 1025:1025
-      - 8025:8025
+      - 127.0.0.1:1025:1025
+      - 127.0.0.1:8025:8025
     networks:
      default:
        aliases:

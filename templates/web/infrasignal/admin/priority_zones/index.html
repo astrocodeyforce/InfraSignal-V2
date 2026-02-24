@@ -42,12 +42,15 @@
 <div class="pz-header">
     <h2>OSM Priority Zones</h2>
     <div class="pz-actions">
-        <a href="[% c.uri_for('/admin/priority_zones/reclassify') %]" class="pz-btn pz-btn-primary" onclick="return confirm('Reclassify all unclassified reports? This may take a moment.')">
-            &#x1F504; Reclassify Unclassified
-        </a>
-        <a href="[% c.uri_for('/admin/priority_zones/reclassify', { force => 1 }) %]" class="pz-btn pz-btn-secondary" onclick="return confirm('Force reclassify ALL reports? This will re-run classification on all reports.')">
-            &#x26A0; Force Reclassify All
-        </a>
+        <form method="POST" action="[% c.uri_for('/admin/priority_zones/reclassify') %]" style="display:inline" onsubmit="return confirm('Reclassify all unclassified reports? This may take a moment.')">
+            <input type="hidden" name="token" value="[% csrf_token %]">
+            <button type="submit" class="pz-btn pz-btn-primary">&#x1F504; Reclassify Unclassified</button>
+        </form>
+        <form method="POST" action="[% c.uri_for('/admin/priority_zones/reclassify') %]" style="display:inline" onsubmit="return confirm('Force reclassify ALL reports? This will re-run classification on all reports.')">
+            <input type="hidden" name="token" value="[% csrf_token %]">
+            <input type="hidden" name="force" value="1">
+            <button type="submit" class="pz-btn pz-btn-secondary">&#x26A0; Force Reclassify All</button>
+        </form>
     </div>
 </div>
 
@@ -92,9 +95,12 @@
                     </td>
                     <td>
                         <a href="[% c.uri_for('/admin/priority_zones/' _ zone.id) %]" class="pz-btn pz-btn-primary pz-btn-sm">Edit</a>
-                        <a href="[% c.uri_for('/admin/priority_zones/toggle/' _ zone.id) %]" class="pz-btn pz-btn-secondary pz-btn-sm">
-                            [% IF zone.enabled %]Disable[% ELSE %]Enable[% END %]
-                        </a>
+                        <form method="POST" action="[% c.uri_for('/admin/priority_zones/toggle/' _ zone.id) %]" style="display:inline">
+                            <input type="hidden" name="token" value="[% csrf_token %]">
+                            <button type="submit" class="pz-btn pz-btn-secondary pz-btn-sm">
+                                [% IF zone.enabled %]Disable[% ELSE %]Enable[% END %]
+                            </button>
+                        </form>
                     </td>
                 </tr>
             [% END %]
