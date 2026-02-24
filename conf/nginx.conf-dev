@@ -12,6 +12,16 @@ server {
 
     root /var/www/fixmystreet/web;
 
+    # --- Security Headers ---
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(self)" always;
+
+    # Hide server version
+    server_tokens off;
+
     # ---- Gzip compression ----
     gzip on;
     gzip_disable "msie6";
@@ -37,6 +47,9 @@ server {
         expires 1h;
         add_header Cache-Control "public";
         add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
         access_log off;
         try_files $uri @app;
     }
@@ -44,6 +57,8 @@ server {
     location ~* \.(jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf|eot)$ {
         expires 1h;
         add_header Cache-Control "public";
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-Frame-Options "SAMEORIGIN" always;
         access_log off;
         try_files $uri @app;
     }
@@ -85,6 +100,12 @@ server {
         proxy_hide_header Cache-Control;
         add_header Cache-Control "no-cache, must-revalidate" always;
         add_header Vary "Cookie" always;
+        # Security headers (must repeat here - nginx doesn't inherit server-level add_header in location blocks)
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(self)" always;
 
         # Starman listens on port 3000 inside the fixmystreet container
         proxy_pass http://fixmystreet.svc:3000;

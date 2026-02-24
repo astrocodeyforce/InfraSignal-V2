@@ -11,6 +11,16 @@ server {
     root /var/www/fixmystreet/fixmystreet/web;
     error_page 503 /down.html;
 
+    # --- Security Headers ---
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(self)" always;
+
+    # Hide server version
+    server_tokens off;
+
     # Enable gzip compression for all text-based content
     gzip on;
     gzip_disable "msie6";

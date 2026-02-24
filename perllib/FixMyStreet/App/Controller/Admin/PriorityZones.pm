@@ -63,6 +63,7 @@ sub edit : Path : Args(1) {
         or $c->detach('/page_error_404_not_found');
 
     if ($c->req->method eq 'POST') {
+        $c->forward('/auth/check_csrf_token');
         my $label = $c->get_param('label') || $zone->label;
         my $priority_level = $c->get_param('priority_level') || $zone->priority_level;
         my $radius_m = $c->get_param('radius_m') || $zone->radius_m;
@@ -100,6 +101,13 @@ sub edit : Path : Args(1) {
 sub toggle : Path('toggle') : Args(1) {
     my ($self, $c, $id) = @_;
 
+    # Require POST to prevent CSRF via GET (e.g. hidden <img> tags)
+    unless ($c->req->method eq 'POST') {
+        $c->res->redirect($c->uri_for('/admin/priority_zones'));
+        $c->detach;
+    }
+    $c->forward('/auth/check_csrf_token');
+
     my $zone = $c->model('DB::PriorityZoneConfig')->find($id)
         or $c->detach('/page_error_404_not_found');
 
@@ -113,6 +121,13 @@ sub toggle : Path('toggle') : Args(1) {
 
 sub reclassify : Path('reclassify') : Args(0) {
     my ($self, $c) = @_;
+
+    # Require POST to prevent CSRF via GET
+    unless ($c->req->method eq 'POST') {
+        $c->res->redirect($c->uri_for('/admin/priority_zones'));
+        $c->detach;
+    }
+    $c->forward('/auth/check_csrf_token');
 
     require FixMyStreet::OSM::PriorityClassifier;
     my $force = $c->get_param('force') ? 1 : 0;
