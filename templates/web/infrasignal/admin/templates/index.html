@@ -45,7 +45,7 @@
 
 <p id="bodies_placeholder" style="color:#666;">[% loc('Select a state above to view its bodies.') %]</p>
 
-<script>
+<script nonce="[% csp_nonce %]">
 var i18n = {
   selectState: '[% loc("Select a state above to view its bodies.") %]',
   noBodies: '[% loc("No bodies found.") %]',
@@ -65,7 +65,7 @@ var i18n = {
 };
 </script>
 
-<script>
+<script nonce="[% csp_nonce %]">
 (function() {
   var US_STATES = [
     {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
