@@ -1,6 +1,23 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — February 24, 2026 (Version 2.1):
+        - Security Hardening:
+            - Fixed CAPTCHA bypass via social_sign_in POST parameter — now validates
+              actual OIDC request path instead of trusting user-supplied param.
+            - Added CSRF token validation to PriorityZones admin actions (edit,
+              toggle, reclassify). Converted toggle/reclassify from GET to POST-only.
+            - Fixed stored XSS: escaped problem.name and problem.nearest_address
+              in inspector template with | html filter.
+            - Added nginx security headers: X-Frame-Options, X-Content-Type-Options,
+              X-XSS-Protection, Referrer-Policy, Permissions-Policy.
+            - Disabled nginx server version disclosure (server_tokens off).
+            - Bound MailHog and dev ports to 127.0.0.1 (no longer internet-exposed).
+            - Externalized all secrets from docker-compose files to .env (gitignored).
+            - Changed default DB password to strong random credential.
+            - Enabled CHECK_HAVEIBEENPWNED and CONTENT_SECURITY_POLICY.
+            - Server: UFW firewall (deny all except 22/80/443), SSH hardened
+              (PermitRootLogin prohibit-password, PasswordAuthentication no).
     - InfraSignal Cobrand — February 23, 2026 (Version 1.9.3):
         - OSM-based Priority Zone Auto-Classification:
             - New reports are automatically classified by proximity to nearby
