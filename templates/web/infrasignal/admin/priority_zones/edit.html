@@ -24,6 +24,7 @@
     <h3>Edit Zone: [% zone.label || zone.osm_value | html %]</h3>
 
     <form method="POST" action="[% c.uri_for('/admin/priority_zones/' _ zone.id) %]">
+        <input type="hidden" name="token" value="[% csrf_token %]">
 
         <div class="pz-field">
             <label>OSM Tag (read-only)</label>

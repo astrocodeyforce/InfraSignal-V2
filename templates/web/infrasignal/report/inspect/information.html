@@ -33,7 +33,7 @@
             <strong>[% loc('Email:') %]</strong>
             <a href="mailto:[% problem.user.email %]">[% problem.user.email %]</a>
             <p>
-              <strong>[% loc('Name:') %]</strong> [% problem.name %]
+              <strong>[% loc('Name:') %]</strong> [% problem.name | html %]
             </p>
           [% END %]
           </p>
@@ -55,7 +55,7 @@
         [% IF problem.nearest_address %]
         <p>
             <strong>[% loc('Nearest calculated address:') %]</strong>
-            [% problem.nearest_address %]
+            [% problem.nearest_address | html %]
         </p>
         [% END %]
         <p>
