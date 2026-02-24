@@ -14,7 +14,7 @@ set -euo pipefail
 
 PROD_DIR="/opt/infrasignal-v2"
 COMPOSE_FILE="docker/docker-compose-dev.yml"
-BRANCH="Version-1.9"
+BRANCH="Version-2.1"
 
 cd "$PROD_DIR"
 
