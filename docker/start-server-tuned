@@ -15,11 +15,36 @@ if ! locale -a 2>/dev/null | grep -q "tr_TR"; then
 fi
 
 # Install cron jobs for background tasks
+FMS="/var/www/fixmystreet/fixmystreet"
+LOCK_DIR="/var/www/fixmystreet/lock"
+mkdir -p "$LOCK_DIR"
+
 cat > /etc/cron.d/fixmystreet-dashboard << 'CRON'
 # Regenerate dashboard cache hourly, low priority
 0 * * * * root cd /var/www/fixmystreet && nice -n 19 ionice -c 3 bin/update-all-reports > /dev/null 2>&1
 CRON
+
+cat > /etc/cron.d/fixmystreet-jobs << CRON
+SHELL=/bin/bash
+PATH=/usr/local/bin:/usr/bin:/bin
+FMS=$FMS
+LOCK_DIR=$LOCK_DIR
+
+# Send confirmed reports to government bodies every 5 minutes
+*/5 * * * * root \$FMS/commonlib/bin/run-with-lockfile.sh -n "\$LOCK_DIR/send-reports.lock" "\$FMS/bin/send-reports" >> /var/log/send-reports.log 2>&1
+
+# Send alert emails every hour at :02
+2 * * * * root \$FMS/commonlib/bin/run-with-lockfile.sh -n "\$LOCK_DIR/send-alerts.lock" "\$FMS/bin/send-alerts" >> /var/log/send-alerts.log 2>&1
+
+# Send questionnaires twice per hour
+22,52 * * * * root \$FMS/commonlib/bin/run-with-lockfile.sh -n "\$LOCK_DIR/send-questionnaires.lock" "\$FMS/bin/send-questionnaires" >> /var/log/send-questionnaires.log 2>&1
+
+# Daily failure summary at 8am UTC
+0 8 * * * root \$FMS/bin/send-failure-summary >> /var/log/send-failure-summary.log 2>&1
+CRON
+
 chmod 644 /etc/cron.d/fixmystreet-dashboard
+chmod 644 /etc/cron.d/fixmystreet-jobs
 
 # Start cron daemon for background jobs
 service cron start 2>/dev/null || true
