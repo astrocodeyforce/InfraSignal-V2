@@ -65,8 +65,7 @@
   [% IF loc_username_error %]
     <div class="form-error">[% loc_username_error %]</div>
   [% END %]
-    <input type="[% username_type %]" class="form-control required" id="username" name="username" value="[% username | html %]" autocomplete="username"
-    [%~ IF c.cobrand.moniker != 'borsetshire' %] autofocus[% END %]>
+    <input type="[% username_type %]" class="form-control required" id="username" name="username" value="[% username | html %]" autocomplete="username" autofocus>
 
     <div id="form_sign_in">
       [% IF oauth_need_email %]
