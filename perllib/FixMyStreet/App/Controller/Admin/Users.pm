@@ -590,7 +590,9 @@ sub user_alert_details : Private {
         $c->stash->{alert_areas} = FixMyStreet::MapIt::call('areas', join(',', @wards) );
     }
 
-    my %body_names = map { $_->{id} => $_->{name} } @{ $c->stash->{bodies} };
+    my %body_names = map {
+        ref $_ && $_->{id} ? ($_->{id} => $_->{name}) : ()
+    } @{ $c->stash->{bodies} || [] };
     $c->stash->{body_names} = \%body_names;
 }
 

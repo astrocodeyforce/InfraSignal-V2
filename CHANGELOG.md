@@ -1,7 +1,44 @@
 ## Releases
 
 * Unreleased
-    - InfraSignal — February 24, 2026 (Version 2.1):
+    - InfraSignal — February 25, 2026 (Version 2.1):
+        - Bug Fixes & Email Delivery:
+            - Fixed admin user edit 500 error (/admin/users/{id}): admin_fetch_all_bodies
+              returned bare scalar (0) causing "Can't use string as HASH ref" crash in
+              user_alert_details. Changed sentinel to hashref { id => 0, name => '' } in
+              Infrasignal.pm; added ref guard in Admin/Users.pm line 593.
+            - Fixed email delivery failure for all reports: SendGrid rejected emails with
+              "The from address does not match a verified Sender Identity" when report
+              submitter had a .local email domain (e.g. admin@infrasignal.local). The
+              DMARC rewrite only triggered for known public domains (gmail.com, etc.),
+              leaving .local addresses as the raw From header.
+            - Fix: Enabled always_use_reply_to cobrand feature in general.yml. All outgoing
+              report emails now use noreply@infrasignal.org as From (verified SendGrid
+              Sender Identity); reporter's email goes in Reply-To header instead.
+            - Installed IO::Socket::SSL (libio-socket-ssl-perl 2.069) in container for
+              SMTP STARTTLS support.
+        - Content & Branding Cleanup:
+            - Removed all PragmatTech references across 16 files (privacy ×4,
+              FAQ ×4, terms ×4 — both prose and ALL-CAPS legal sections).
+            - Renamed session cookie from fixmystreet_app_session to
+              infrasignal_session (App.pm Plugin::Session cookie_name override).
+            - Removed cost/pricing information from About pages ("No cost" bullet,
+              "free channel" phrasing) and FAQ (cost for authorities Q&A).
+            - Moved AGPL v3 license mention from FAQ to Terms (Section 7 IP).
+            - Removed redundant FAQ entries duplicating About page content:
+              "What is InfraSignal?", "Who operates InfraSignal?",
+              "What area does InfraSignal cover?", and entire
+              "For Local Authorities" FAQ section (3 Q&As) — all 4 languages.
+            - Removed OpenStreetMap attribution FAQ from all 4 languages.
+            - Updated cookie name in all 4 privacy policy pages.
+            - Cleared stale TTC template cache files.
+        - Template Audit (CSP & Branding):
+            - Added missing CSP nonces to 6 admin script tags.
+            - Fixed branding: @fixmystreet → @InfraSignal in confirm email.
+            - Removed dead fixmystreet.org link from admin bodies page.
+            - Fixed typo: "programatically" → "programmatically".
+            - Removed dead UK cobrand conditionals (bathnes, nottinghamshirepolice,
+              borsetshire) from 3 templates.
         - Security Hardening:
             - Fixed CAPTCHA bypass via social_sign_in POST parameter — now validates
               actual OIDC request path instead of trusting user-supplied param.
