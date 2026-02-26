@@ -39,8 +39,10 @@ sub user_from_oidc {
 # would otherwise load all 28K bodies from the DB.
 # Our admin templates use AJAX cascading state→body dropdowns instead,
 # so the 'bodies' stash variable is never iterated in our cobrand templates.
+# We return a hashref sentinel (not a plain scalar) so downstream code
+# that does $_->{id} won't crash with "Can't use string as HASH ref".
 sub admin_fetch_all_bodies {
-    return (0);  # truthy list (length 1) prevents the fallback query
+    return ({ id => 0, name => '' });  # truthy list prevents the fallback query
 }
 
 # Override the area_types used for admin to prevent fetching all global areas.
