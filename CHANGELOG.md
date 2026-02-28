@@ -7,6 +7,15 @@
               with 4 services (nginx, fixmystreet, db, memcached), resource limits, health checks,
               and json-file logging with rotation. Replaced the dev compose file that was
               incorrectly serving production traffic.
+            - Production hardening — system audit and remediation:
+              - Created `conf/nginx.conf-prod` (dedicated production nginx config); updated
+                `docker-compose-prod.yml` to reference it instead of the dev config.
+              - Restricted DB service volume mount from full source tree (read-write) to
+                `../db:/var/www/fixmystreet/db:ro` (read-only, migration scripts only).
+              - Secured backup permissions: `chmod 700` on backup directory, `chmod 600` on
+                backup files in `bin/backup-db`. Fixed existing backup file permissions.
+              - Pruned Docker: removed 38 orphan volumes, unused images, all build cache.
+                Recovered ~20 GB disk space (Docker usage from 38 GB to ~14 GB).
             - Rewrote `bin/deploy` for production: uses `docker-compose-prod.yml` and `main` branch.
               Features: automatic pre-deploy DB backup, post-deploy health check (10 retries),
               `--rollback` mode, `--dry-run` mode, `--quick` (skip backup), `--migrate` (DB migrations).
