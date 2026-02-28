@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+# ============================================================
+# healthcheck — Check InfraSignal service health
+# ============================================================
+# Usage:
+#   ./bin/healthcheck          # check all services
+#   ./bin/healthcheck --quiet  # exit code only (for cron/monitoring)
+# ============================================================
+
+set -euo pipefail
+
+COMPOSE_FILE="/opt/infrasignal-v2/docker/docker-compose-prod.yml"
+QUIET="${1:-}"
+FAILURES=0
+
+check() {
+    local name="$1"
+    local result="$2"
+    if [[ "$result" == "ok" ]]; then
+        [[ "$QUIET" != "--quiet" ]] && echo "  ✓ $name"
+    else
+        [[ "$QUIET" != "--quiet" ]] && echo "  ✗ $name — $result"
+        FAILURES=$((FAILURES + 1))
+    fi
+}
+
+[[ "$QUIET" != "--quiet" ]] && echo "InfraSignal Health Check — $(date '+%Y-%m-%d %H:%M:%S')"
+[[ "$QUIET" != "--quiet" ]] && echo "================================================"
+
+# 1. Check HTTPS response
+HTTP_CODE=$(curl -sk -o /dev/null -w "%{http_code}" --max-time 10 https://localhost/ -H "Host: infrasignal.org" 2>/dev/null || echo "000")
+if [[ "$HTTP_CODE" == "200" ]]; then
+    check "HTTPS homepage" "ok"
+else
+    check "HTTPS homepage" "HTTP $HTTP_CODE"
+fi
+
+# 2. Check each container is running and healthy
+for svc in nginx fixmystreet db memcached; do
+    STATUS=$(docker compose -f "$COMPOSE_FILE" ps --format json "$svc" 2>/dev/null | python3 -c "import sys,json; d=json.load(sys.stdin); print(d.get('Health','') or d.get('State',''))" 2>/dev/null || echo "unknown")
+    if [[ "$STATUS" == "healthy" || "$STATUS" == "running" ]]; then
+        check "Container: $svc" "ok"
+    else
+        check "Container: $svc" "$STATUS"
+    fi
+done
+
+# 3. Check database connectivity
+DB_CHECK=$(docker compose -f "$COMPOSE_FILE" exec -T db pg_isready -U postgres 2>/dev/null && echo "ok" || echo "fail")
+if [[ "$DB_CHECK" == *"ok"* || "$DB_CHECK" == *"accepting"* ]]; then
+    check "Database connectivity" "ok"
+else
+    check "Database connectivity" "unreachable"
+fi
+
+# 4. Check disk space (warn if <20% free)
+DISK_USE=$(df / | tail -1 | awk '{print $5}' | tr -d '%')
+if [[ "$DISK_USE" -lt 80 ]]; then
+    check "Disk space (${DISK_USE}% used)" "ok"
+else
+    check "Disk space" "${DISK_USE}% used — WARNING"
+fi
+
+# 5. Check memory (warn if <500MB free)
+FREE_MB=$(free -m | awk '/Mem:/{print $7}')
+if [[ "$FREE_MB" -gt 500 ]]; then
+    check "Memory (${FREE_MB}MB available)" "ok"
+else
+    check "Memory" "only ${FREE_MB}MB available — WARNING"
+fi
+
+# 6. Check backup freshness
+LATEST_BACKUP=$(ls -t /opt/backups/infrasignal/infrasignal_*.sql.gz 2>/dev/null | head -1)
+if [[ -n "$LATEST_BACKUP" ]]; then
+    BACKUP_AGE_HOURS=$(( ($(date +%s) - $(stat -c%Y "$LATEST_BACKUP")) / 3600 ))
+    if [[ "$BACKUP_AGE_HOURS" -lt 25 ]]; then
+        check "Latest backup (${BACKUP_AGE_HOURS}h ago)" "ok"
+    else
+        check "Latest backup" "${BACKUP_AGE_HOURS}h ago — STALE"
+    fi
+else
+    check "Latest backup" "NO BACKUPS FOUND"
+fi
+
+[[ "$QUIET" != "--quiet" ]] && echo "================================================"
+if [[ "$FAILURES" -eq 0 ]]; then
+    [[ "$QUIET" != "--quiet" ]] && echo "All checks passed."
+    exit 0
+else
+    [[ "$QUIET" != "--quiet" ]] && echo "$FAILURES check(s) failed!"
+    exit 1
+fi
