@@ -1,6 +1,52 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — February 28, 2026 (Version 2.3 — Production Professionalization):
+        - Infrastructure & Operations:
+            - Created dedicated production Docker Compose file (`docker/docker-compose-prod.yml`)
+              with 4 services (nginx, fixmystreet, db, memcached), resource limits, health checks,
+              and json-file logging with rotation. Replaced the dev compose file that was
+              incorrectly serving production traffic.
+            - Rewrote `bin/deploy` for production: uses `docker-compose-prod.yml` and `main` branch.
+              Features: automatic pre-deploy DB backup, post-deploy health check (10 retries),
+              `--rollback` mode, `--dry-run` mode, `--quick` (skip backup), `--migrate` (DB migrations).
+            - Created `bin/backup-db`: automated PostgreSQL backup with gzip compression,
+              30-day retention, file size validation. Installed as daily cron job at 3 AM UTC
+              (`/etc/cron.d/infrasignal-backup`).
+            - Created `bin/healthcheck`: 9-point health check — HTTPS reachability, 4 container
+              status checks, PostgreSQL connectivity, disk space, memory usage, backup freshness.
+              Installed as cron job every 5 minutes (`/etc/cron.d/infrasignal-healthcheck`).
+            - Configured logrotate (`/etc/logrotate.d/infrasignal`) for all InfraSignal logs:
+              14-day retention, daily rotation, gzip compression.
+            - External monitoring: UptimeRobot configured for https://infrasignal.org (5-min
+              interval, email alerts on downtime).
+        - Git & Branch Restructuring:
+            - Adopted standard branching: `main` (production), `dev` (development),
+              `feature/*` (short-lived).
+            - Merged `Version-2.2` into `main` and synced `dev`.
+            - Archived 11 old version branches (`Version-1` through `Version-2.2`) as
+              `archive/*` tags. Deleted local version branches.
+        - Data Cleanup:
+            - Removed all 59 test/junk reports from production database (owner decision:
+              clean start from zero).
+            - Removed 4 test user accounts. Kept `nazarmenov@gmail.com` (regular user).
+            - Created `admin@infrasignal.org` superuser with is_superuser flag.
+            - Pre-cleanup full backup preserved: `backup_20260228_pre-cleanup.sql` (137 MB).
+        - Documentation:
+            - Created `ARCHITECTURE.md`: full system architecture guide covering container
+              topology, technology stack, directory structure, git branching, environment
+              separation, backup system, monitoring, deployment, cron jobs, external services.
+            - Created `AI-RULES.md`: 10 mandatory rules for AI assistants working on the
+              codebase — environment verification, dev/prod separation, file identification,
+              change process, Docker operations, database rules, configuration handling,
+              documentation requirements, secret handling, communication standards. Includes
+              4 documented real incidents as lessons learned.
+            - Updated `README.md`: added version, production deployment section, key scripts
+              table, git branching guide, documentation index. Replaced dev-only installation
+              instructions with both production and development quick starts.
+            - Updated `PROJECT PLAN/PRODUCTION-PLAN.md`: marked all 8 phases complete with
+              verification results and completion summary.
+            - Updated `PROJECT PLAN/PROJECT_PLAN.md`: added Phase PROD status entry.
     - InfraSignal — February 25, 2026 (Version 2.1):
         - Bug Fixes & Email Delivery:
             - Fixed admin user edit 500 error (/admin/users/{id}): admin_fetch_all_bodies
