@@ -18,6 +18,7 @@ TIMESTAMP=$(date +%Y%m%d_%H%M%S)
 KEEP_DAYS=30
 
 mkdir -p "$BACKUP_DIR"
+chmod 700 "$BACKUP_DIR"
 
 BACKUP_FILE="${BACKUP_DIR}/infrasignal_${TIMESTAMP}.sql.gz"
 
@@ -26,6 +27,7 @@ echo "[$(date)] Starting database backup..."
 # Dump and compress
 docker compose -f "$COMPOSE_FILE" exec -T db \
     pg_dump -U postgres infrasignal | gzip > "$BACKUP_FILE"
+chmod 600 "$BACKUP_FILE"
 
 # Verify backup is not empty (minimum 1KB)
 FILESIZE=$(stat -c%s "$BACKUP_FILE" 2>/dev/null || echo "0")

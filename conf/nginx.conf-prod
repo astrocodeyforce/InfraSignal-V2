@@ -1,0 +1,114 @@
+# Nginx production config for InfraSignal
+# Serves static assets (CSS/JS/images/fonts) directly with gzip compression.
+# Proxies all dynamic requests to the Starman app server.
+# Rate limiting: 10 req/s per IP, burst 20. Connection limit: 50 per IP.
+
+server {
+    listen 80 default_server;
+    listen 443 ssl default_server;
+
+    ssl_certificate     /etc/nginx/ssl/infrasignal.org.pem;
+    ssl_certificate_key /etc/nginx/ssl/infrasignal.org.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    root /var/www/fixmystreet/web;
+
+    # --- Security Headers ---
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=(self)" always;
+
+    # Hide server version
+    server_tokens off;
+
+    # ---- Gzip compression ----
+    gzip on;
+    gzip_disable "msie6";
+    gzip_vary on;
+    gzip_proxied any;
+    gzip_comp_level 4;
+    gzip_min_length 256;
+    gzip_types
+        application/javascript
+        application/x-javascript
+        application/json
+        application/xml
+        text/css
+        text/plain
+        text/xml
+        text/javascript
+        image/svg+xml;
+
+    client_max_body_size 10m;
+
+    # ---- Static assets served by Nginx (bypass Starman) ----
+    location ~* \.(css|js)$ {
+        expires 1h;
+        add_header Cache-Control "public";
+        add_header X-Content-Type-Options nosniff;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        access_log off;
+        try_files $uri @app;
+    }
+
+    location ~* \.(jpg|jpeg|png|gif|ico|svg|webp|woff|woff2|ttf|eot)$ {
+        expires 1h;
+        add_header Cache-Control "public";
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        access_log off;
+        try_files $uri @app;
+    }
+
+    # ---- Rewrite rules ----
+    rewrite ^/rss/council/([0-9]+)$  /rss/reports/$1 permanent;
+    rewrite ^/report$                /reports        permanent;
+    rewrite '^/{/rss/(.*)}$'         /rss/$1         permanent;
+    rewrite '^/reports/{/rss/(.*)}$' /rss/$1         permanent;
+    rewrite ^/alerts/?$              /alert          permanent;
+
+    # ---- MapIt proxy ----
+    location /mapit {
+        proxy_pass https://mapit.mysociety.org/;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # ---- All other requests -> Starman ----
+    location / {
+        try_files $uri @app;
+    }
+
+    location @app {
+        limit_req zone=general burst=20 nodelay;
+        limit_conn addr 50;
+
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $http_x_forwarded_proto;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $host;
+        proxy_set_header Connection "";
+        proxy_http_version 1.1;
+        proxy_redirect off;
+        proxy_connect_timeout 5s;
+        proxy_read_timeout 60s;
+        proxy_send_timeout 30s;
+
+        # Language switching: browser must re-validate when cookie changes
+        proxy_hide_header Cache-Control;
+        add_header Cache-Control "no-cache, must-revalidate" always;
+        add_header Vary "Cookie" always;
+        # Security headers (must repeat here - nginx doesn't inherit server-level add_header in location blocks)
+        add_header X-Frame-Options "SAMEORIGIN" always;
+        add_header X-Content-Type-Options "nosniff" always;
+        add_header X-XSS-Protection "1; mode=block" always;
+        add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+        add_header Permissions-Policy "camera=(), microphone=(), geolocation=(self)" always;
+
+        # Starman listens on port 3000 inside the fixmystreet container
+        proxy_pass http://fixmystreet.svc:3000;
+    }
+}
