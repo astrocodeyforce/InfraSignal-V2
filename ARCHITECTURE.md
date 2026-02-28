@@ -93,6 +93,8 @@ All services log to `json-file` with 10 MB max size, 3 rotated files.
 │   ├── send-comments                 ← Send comment notifications
 │   └── classify-reports              ← OSM priority zone classification
 ├── conf/
+│   ├── nginx.conf-prod               ← Production nginx config (rate limiting, security headers)
+│   ├── nginx.conf-dev                ← Development nginx config
 │   └── general.yml                   ← App config (gitignored, contains API keys)
 ├── perllib/FixMyStreet/
 │   ├── Cobrand/Infrasignal.pm        ← Main cobrand module
@@ -174,7 +176,7 @@ All old version branches (`Version-1` through `Version-2.2`) have been archived 
 
 - Runs daily at 3 AM UTC via `/etc/cron.d/infrasignal-backup`
 - Produces: `infrasignal_YYYYMMDD_HHMMSS.sql.gz` (gzip-compressed `pg_dump`)
-- Location: `/opt/backups/infrasignal/`
+- Location: `/opt/backups/infrasignal/` (directory `chmod 700`, files `chmod 600`)
 - Retention: 30 days (older files auto-pruned)
 - Validation: File must be > 1 KB or the script reports failure
 
@@ -289,3 +291,6 @@ Log rotation: `/etc/logrotate.d/infrasignal` — 14-day retention, daily rotatio
 - **Nginx Headers:** X-Frame-Options, X-Content-Type-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy
 - **HTTPS:** Cloudflare Full (Strict) SSL with origin certificate
 - **DB Passwords:** Strong random credentials, not defaults
+- **Backup Permissions:** Backup directory `chmod 700`, backup files `chmod 600` — root-only access
+- **DB Mount Isolation:** Production DB container mounts only `db/` directory (read-only), not the full source tree
+- **Nginx Config Separation:** Dedicated `conf/nginx.conf-prod` for production, `conf/nginx.conf-dev` for development
