@@ -6,6 +6,8 @@
 #   ./bin/deploy              # full deploy (pull + rebuild CSS + restart)
 #   ./bin/deploy --quick      # restart only (no git pull / CSS rebuild)
 #   ./bin/deploy --migrate    # full deploy + run DB migrations
+#   ./bin/deploy --rollback   # revert to previous git state and restart
+#   ./bin/deploy --dry-run    # show what would happen without doing it
 #
 # Run from the production root: /opt/infrasignal-v2
 # ============================================================
@@ -13,49 +15,134 @@
 set -euo pipefail
 
 PROD_DIR="/opt/infrasignal-v2"
-COMPOSE_FILE="docker/docker-compose-dev.yml"
-BRANCH="Version-2.1"
+COMPOSE_FILE="docker/docker-compose-prod.yml"
+BRANCH="main"
+BACKUP_DIR="/opt/backups/infrasignal"
 
 cd "$PROD_DIR"
+
+# --- Helper functions ---
+
+log() { echo "[$(date '+%H:%M:%S')] $*"; }
+
+backup_db() {
+    local timestamp
+    timestamp=$(date +%Y%m%d_%H%M%S)
+    mkdir -p "$BACKUP_DIR"
+    log "Backing up database → ${BACKUP_DIR}/pre-deploy_${timestamp}.sql.gz"
+    docker compose -f "$COMPOSE_FILE" exec -T db \
+        pg_dump -U postgres infrasignal | gzip > "${BACKUP_DIR}/pre-deploy_${timestamp}.sql.gz"
+}
+
+health_check() {
+    log "Running health check..."
+    local retries=10
+    local delay=3
+    for ((i=1; i<=retries; i++)); do
+        local code
+        code=$(curl -sk -o /dev/null -w "%{http_code}" https://localhost/ -H "Host: infrasignal.org" 2>/dev/null || echo "000")
+        if [[ "$code" == "200" ]]; then
+            log "✓ Health check passed (HTTP $code)"
+            return 0
+        fi
+        log "  Attempt $i/$retries — HTTP $code, retrying in ${delay}s..."
+        sleep "$delay"
+    done
+    log "✗ Health check FAILED after $retries attempts"
+    return 1
+}
+
+# --- Main ---
 
 echo "============================================"
 echo "  InfraSignal Production Deploy"
 echo "  $(date '+%Y-%m-%d %H:%M:%S')"
 echo "============================================"
 
-if [[ "${1:-}" == "--quick" ]]; then
-    echo "[1/2] Skipping git pull (--quick mode)"
-elif [[ "${1:-}" == "--migrate" ]]; then
-    echo "[1/5] Pulling latest from origin/$BRANCH ..."
-    git fetch origin
-    git checkout "$BRANCH"
-    git pull origin "$BRANCH"
+MODE="${1:-full}"
 
-    echo "[2/5] Running DB migrations ..."
-    docker compose -f "$COMPOSE_FILE" exec fixmystreet bin/update-schema --commit
+case "$MODE" in
+    --dry-run)
+        log "[DRY RUN] Would deploy branch: $BRANCH"
+        log "[DRY RUN] Using compose file: $COMPOSE_FILE"
+        log "[DRY RUN] Current branch: $(git branch --show-current)"
+        log "[DRY RUN] Current commit: $(git log --oneline -1)"
+        git fetch origin 2>/dev/null
+        log "[DRY RUN] Latest remote: $(git log --oneline origin/$BRANCH -1 2>/dev/null || echo 'unknown')"
+        log "[DRY RUN] No changes made."
+        exit 0
+        ;;
 
-    echo "[3/5] Rebuilding CSS ..."
-    docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
-else
-    echo "[1/4] Pulling latest from origin/$BRANCH ..."
-    git fetch origin
-    git checkout "$BRANCH"
-    git pull origin "$BRANCH"
+    --quick)
+        log "[1/3] Skipping git pull (--quick mode)"
+        ;;
 
-    echo "[2/4] Rebuilding CSS ..."
-    docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
-fi
+    --rollback)
+        log "[1/3] Rolling back to previous commit..."
+        PREV_COMMIT=$(git rev-parse HEAD~1 2>/dev/null || { log "No previous commit to rollback to"; exit 1; })
+        backup_db
+        git checkout "$PREV_COMMIT"
+        log "Rolled back to: $(git log --oneline -1)"
+        ;;
 
-echo "[3/4] Rebuilding containers (if Dockerfile changed) ..."
+    --migrate)
+        backup_db
+
+        log "[1/5] Pulling latest from origin/$BRANCH ..."
+        git fetch origin
+        git checkout "$BRANCH"
+        git pull origin "$BRANCH"
+
+        log "[2/5] Running DB migrations ..."
+        docker compose -f "$COMPOSE_FILE" exec fixmystreet bin/update-schema --commit
+
+        log "[3/5] Rebuilding CSS ..."
+        docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
+        ;;
+
+    --full|full|"")
+        backup_db
+
+        log "[1/4] Pulling latest from origin/$BRANCH ..."
+        git fetch origin
+        git checkout "$BRANCH"
+        git pull origin "$BRANCH"
+
+        log "[2/4] Rebuilding CSS ..."
+        docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
+        ;;
+
+    *)
+        echo "Unknown option: $MODE"
+        echo "Usage: ./bin/deploy [--quick|--migrate|--rollback|--dry-run]"
+        exit 1
+        ;;
+esac
+
+log "Rebuilding containers (if Dockerfile changed) ..."
 docker compose -f "$COMPOSE_FILE" build --quiet
 
-echo "[4/4] Restarting services ..."
+log "Restarting services ..."
 docker compose -f "$COMPOSE_FILE" down
 docker compose -f "$COMPOSE_FILE" up -d
 
-echo ""
-echo "============================================"
-echo "  Deploy complete!"
-echo "  Site: https://infrasignal.org"
-echo "============================================"
-docker compose -f "$COMPOSE_FILE" ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
+# Wait for containers to be ready
+sleep 5
+
+if health_check; then
+    echo ""
+    echo "============================================"
+    echo "  Deploy complete!"
+    echo "  Site: https://infrasignal.org"
+    echo "  Commit: $(git log --oneline -1)"
+    echo "============================================"
+    docker compose -f "$COMPOSE_FILE" ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
+else
+    echo ""
+    echo "============================================"
+    echo "  ⚠ DEPLOY WARNING: Health check failed!"
+    echo "  Run: ./bin/deploy --rollback"
+    echo "============================================"
+    docker compose -f "$COMPOSE_FILE" ps --format "table {{.Name}}\t{{.Status}}\t{{.Ports}}"
+    exit 1
+fi
