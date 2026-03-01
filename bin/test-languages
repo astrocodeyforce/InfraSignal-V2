@@ -1,0 +1,187 @@
+#!/usr/bin/env bash
+# ============================================================
+# test-languages — Verify all InfraSignal language translations
+# ============================================================
+# Checks that all 4 supported languages (EN, TR, ES, RU) render
+# correctly across all key pages and navigation elements.
+#
+# Usage:
+#   ./bin/test-languages              # full test (verbose)
+#   ./bin/test-languages --quiet      # exit code only (for CI/deploy)
+#
+# Exit codes:
+#   0 = all checks passed
+#   1 = one or more checks failed
+#
+# This script is called automatically by bin/deploy after each
+# deployment. It can also be run manually at any time.
+# ============================================================
+
+set -euo pipefail
+
+BASE_URL="${INFRASIGNAL_URL:-https://infrasignal.org}"
+QUIET=false
+FAILED=0
+PASSED=0
+TOTAL=0
+
+[[ "${1:-}" == "--quiet" || "${1:-}" == "-q" ]] && QUIET=true
+
+# ---------- helpers ----------
+
+pass() {
+    ((PASSED++)) || true
+    ((TOTAL++)) || true
+    $QUIET || printf "  ✓ %s\n" "$1"
+}
+
+fail() {
+    ((FAILED++)) || true
+    ((TOTAL++)) || true
+    printf "  ✗ FAIL: %s\n" "$1" >&2
+}
+
+check_contains() {
+    local label="$1" url="$2" cookie="$3" expected="$4"
+    local body
+    body=$(curl -sf -b "lang=$cookie" --connect-timeout 5 --max-time 10 "$url" 2>/dev/null) || {
+        fail "$label — HTTP request failed"
+        return
+    }
+    if echo "$body" | grep -q "$expected"; then
+        pass "$label"
+    else
+        fail "$label — expected '$expected' not found"
+    fi
+}
+
+check_nav() {
+    local lang="$1" expected_sign_in="$2" expected_reports="$3" expected_alerts="$4" expected_help="$5" expected_privacy="$6"
+    local body
+    body=$(curl -sf -b "lang=$lang" --connect-timeout 5 --max-time 10 "$BASE_URL/" 2>/dev/null) || {
+        fail "[$lang] nav — HTTP request failed"
+        return
+    }
+    for item in "$expected_sign_in" "$expected_reports" "$expected_alerts" "$expected_help" "$expected_privacy"; do
+        if echo "$body" | grep -q "$item"; then
+            pass "[$lang] nav: '$item'"
+        else
+            fail "[$lang] nav: expected '$item' — got English fallback"
+        fi
+    done
+}
+
+# ---------- container locale check ----------
+
+$QUIET || echo ""
+$QUIET || echo "=== Container Locale Check ==="
+
+COMPOSE_FILE="docker/docker-compose-prod.yml"
+if [[ -f "$COMPOSE_FILE" ]]; then
+    LOCALES=$(docker compose -f "$COMPOSE_FILE" exec -T fixmystreet locale -a 2>/dev/null || echo "")
+    for loc in en_GB es_ES tr_TR ru_RU; do
+        if echo "$LOCALES" | grep -qi "$loc"; then
+            pass "system locale: $loc"
+        else
+            fail "system locale: $loc missing — run: docker compose exec fixmystreet localedef -i ${loc} -c -f UTF-8 -A /usr/share/locale/locale.alias ${loc}.UTF-8"
+        fi
+    done
+else
+    $QUIET || echo "  (skipping container locale check — compose file not found)"
+fi
+
+# ---------- .mo file check ----------
+
+$QUIET || echo ""
+$QUIET || echo "=== Translation File Check (.mo) ==="
+
+for mo_path in \
+    locale/tr_TR.UTF-8/LC_MESSAGES/FixMyStreet.mo \
+    locale/es.UTF-8/LC_MESSAGES/FixMyStreet.mo \
+    locale/ru_RU.UTF-8/LC_MESSAGES/FixMyStreet.mo; do
+    if [[ -f "$mo_path" ]]; then
+        size=$(stat -c%s "$mo_path" 2>/dev/null || echo "0")
+        if (( size > 1000 )); then
+            pass "$mo_path (${size} bytes)"
+        else
+            fail "$mo_path exists but too small (${size} bytes) — recompile with msgfmt"
+        fi
+    else
+        fail "$mo_path not found — run: msgfmt -o $mo_path ${mo_path%.mo}.po"
+    fi
+done
+
+# ---------- navigation translation check ----------
+
+$QUIET || echo ""
+$QUIET || echo "=== Navigation Items ==="
+
+check_nav "en-gb" "Sign in"         "All reports"      "Local alerts" "Help"    "Privacy"
+check_nav "tr"    "Giriş yap"       "Tüm bildirimler"  "Uyarılar"    "Yardım"  "Gizlilik"
+check_nav "es"    "Iniciar sesión"   "Reportes"         "Alertas"     "Ayuda"   "Privacidad"
+check_nav "ru"    "Вход"             "Все отчеты"       "Уведомления" "Помощь"  "Приватность"
+
+# ---------- page content check (h1 headings) ----------
+
+$QUIET || echo ""
+$QUIET || echo "=== Page Content (h1 headings) ==="
+
+# Privacy
+check_contains "[en] privacy h1" "$BASE_URL/about/privacy" "en-gb" "Privacy Policy"
+check_contains "[tr] privacy h1" "$BASE_URL/about/privacy" "tr"    "Gizlilik Politikası"
+check_contains "[es] privacy h1" "$BASE_URL/about/privacy" "es"    "Política de Privacidad"
+check_contains "[ru] privacy h1" "$BASE_URL/about/privacy" "ru"    "Политика конфиденциальности"
+
+# Terms
+check_contains "[en] terms h1" "$BASE_URL/about/terms" "en-gb" "Terms of Use"
+check_contains "[tr] terms h1" "$BASE_URL/about/terms" "tr"    "Kullanım Koşulları"
+check_contains "[es] terms h1" "$BASE_URL/about/terms" "es"    "Términos de Uso"
+check_contains "[ru] terms h1" "$BASE_URL/about/terms" "ru"    "Условия использования"
+
+# FAQ
+check_contains "[en] faq h1" "$BASE_URL/faq" "en-gb" "Frequently Asked Questions"
+check_contains "[tr] faq h1" "$BASE_URL/faq" "tr"    "Sıkça Sorulan Sorular"
+check_contains "[es] faq h1" "$BASE_URL/faq" "es"    "Preguntas Frecuentes"
+check_contains "[ru] faq h1" "$BASE_URL/faq" "ru"    "Часто задаваемые вопросы"
+
+# About
+check_contains "[en] about h1" "$BASE_URL/about" "en-gb" "About InfraSignal"
+check_contains "[tr] about h1" "$BASE_URL/about" "tr"    "InfraSignal Hakkında"
+check_contains "[es] about h1" "$BASE_URL/about" "es"    "Acerca de InfraSignal"
+check_contains "[ru] about h1" "$BASE_URL/about" "ru"    "Об InfraSignal"
+
+# ---------- language switcher check ----------
+
+$QUIET || echo ""
+$QUIET || echo "=== Language Switcher ==="
+
+BODY=$(curl -sf --connect-timeout 5 --max-time 10 "$BASE_URL/" 2>/dev/null || echo "")
+if echo "$BODY" | grep -q "lang-switcher"; then
+    pass "language switcher present in DOM"
+else
+    fail "language switcher missing from homepage"
+fi
+
+for flag in flags/en.svg flags/tr.svg flags/es.svg flags/ru.svg; do
+    if echo "$BODY" | grep -q "$flag"; then
+        pass "flag image: $flag"
+    else
+        fail "flag image: $flag missing from switcher"
+    fi
+done
+
+# ---------- summary ----------
+
+echo ""
+if (( FAILED == 0 )); then
+    echo "LANGUAGE TEST: ALL $TOTAL CHECKS PASSED ✓"
+    exit 0
+else
+    echo "LANGUAGE TEST: $FAILED FAILED out of $TOTAL checks ✗"
+    echo ""
+    echo "Common fixes:"
+    echo "  1. Missing locales:  docker compose -f docker/docker-compose-prod.yml exec fixmystreet localedef -i <LOCALE> -c -f UTF-8 -A /usr/share/locale/locale.alias <LOCALE>.UTF-8"
+    echo "  2. Stale .mo files:  docker compose -f docker/docker-compose-prod.yml exec fixmystreet msgfmt -o locale/<DIR>/LC_MESSAGES/FixMyStreet.mo locale/<DIR>/LC_MESSAGES/FixMyStreet.po"
+    echo "  3. After locale fix: docker compose -f docker/docker-compose-prod.yml restart fixmystreet"
+    exit 1
+fi
