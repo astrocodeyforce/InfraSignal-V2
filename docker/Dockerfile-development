@@ -5,7 +5,11 @@ RUN apt-get -qq update && apt-get -qq -y install git perl postgresql
 COPY conf/packages.docker /opt/
 RUN xargs -a "/opt/packages.docker" apt-get -qq -y install >/dev/null
 WORKDIR /var/www/fixmystreet
-# Locales needed by tests
+# Locales needed by tests and upstream
 RUN localedef -i en_GB -c -f UTF-8 -A /usr/share/locale/locale.alias en_GB.UTF-8
 RUN localedef -i de_CH -c -f UTF-8 -A /usr/share/locale/locale.alias de_CH.UTF-8
 RUN localedef -i sv_SE -c -f UTF-8 -A /usr/share/locale/locale.alias sv_SE.UTF-8
+# InfraSignal supported languages (Turkish, Spanish, Russian)
+RUN localedef -i tr_TR -c -f UTF-8 -A /usr/share/locale/locale.alias tr_TR.UTF-8
+RUN localedef -i es_ES -c -f UTF-8 -A /usr/share/locale/locale.alias es_ES.UTF-8
+RUN localedef -i ru_RU -c -f UTF-8 -A /usr/share/locale/locale.alias ru_RU.UTF-8
