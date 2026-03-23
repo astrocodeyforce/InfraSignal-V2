@@ -310,4 +310,15 @@ sub process_additional_metadata_for_email {
     $h->{ai_assessment_html} = $assessment->{ai_assessment_html} || '';
 }
 
+# PWA manifest extras — merged into the base manifest by Offline.pm.
+# The theme (name, colors, icons) is already configured in the
+# manifest_theme DB table; this adds fields the DB doesn't cover.
+sub manifest {
+    return {
+        description => 'Report infrastructure problems to your local government — potholes, streetlights, flooding, and more.',
+        id => '/?pwa',
+        categories => [{ name => 'Government' }, { name => 'Utilities' }],
+    };
+}
+
 1;
