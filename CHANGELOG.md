@@ -1,6 +1,21 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — March 26, 2026 (Version 2.4 — Viewer-Local Timestamps):
+        - Localization:
+            - Set server-side timezone to `America/Chicago` (`conf/general.yml TIME_ZONE`)
+              as fallback for non-JS clients. Previously UTC — reports showed wrong time.
+            - Added client-side timezone conversion (`localtime.js`): timestamps on report
+              detail and report list pages are converted to the viewer's browser timezone
+              using `Intl` API. Progressive enhancement — no-JS falls back to Chicago time.
+            - Cobrand-only change — zero modifications to core FixMyStreet files.
+        - Files added/modified:
+            - `web/cobrands/infrasignal/localtime.js` (new)
+            - `templates/web/infrasignal/report/_report_meta_info.html` (new)
+            - `templates/web/infrasignal/report/_item_small.html` (modified)
+            - `templates/web/infrasignal/footer_extra_js.html` (modified)
+            - `conf/general.yml` (TIME_ZONE: "America/Chicago")
+
     - InfraSignal — February 28, 2026 (Version 2.3 — Production Professionalization):
         - Infrastructure & Operations:
             - Created dedicated production Docker Compose file (`docker/docker-compose-prod.yml`)
