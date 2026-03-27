@@ -12,7 +12,7 @@
 [%- IF problem.days_ago > 0 AND problem.days_ago <= c.cobrand.display_days_ago_threshold %]
   [% tprintf( nget('Reported %d day ago', 'Reported %d days ago', problem.days_ago), problem.days_ago ) %]
 [%- ELSE %]
-  [% prettify_dt( problem.confirmed, 1 ) %]
+  <span class="js-localtime" data-epoch="[% problem.confirmed.epoch %]">[% prettify_dt( problem.confirmed, 1 ) %]</span>
 [%- END %]
 [%- IF dist %], [% dist %]km[% END %]
 [%- IF problem.confirmed != problem.lastupdate AND problem.whensent != problem.lastupdate %],
