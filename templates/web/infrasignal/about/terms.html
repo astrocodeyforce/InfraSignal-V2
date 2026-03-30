@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('Terms of Use'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('Terms of Use')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>Terms of Use</h1>
 
 <p><strong>Effective Date: February 15, 2026</strong><br>
@@ -257,5 +259,6 @@ use of the Service and supersede all prior agreements and understandings.</p>
     <li>Email: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Web: <a href="/contact">Contact Form</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

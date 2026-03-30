@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('Privacy Policy'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('Privacy Policy')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>Gizlilik Politikası</h1>
 
 <p><strong>Yürürlük Tarihi: 15 Şubat 2026</strong><br>
@@ -259,5 +261,6 @@ geçin:</p>
     <li>E-posta: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Web: <a href="/contact">İletişim Formu</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

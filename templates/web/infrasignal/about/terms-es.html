@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('Terms of Use'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('Terms of Use')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>Términos de Uso</h1>
 
 <p><strong>Fecha de Vigencia: 15 de febrero de 2026</strong><br>
@@ -280,5 +282,6 @@ anteriores.</p>
     <li>Correo electrónico: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Web: <a href="/contact">Formulario de Contacto</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

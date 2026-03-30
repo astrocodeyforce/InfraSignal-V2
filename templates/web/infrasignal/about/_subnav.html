@@ -1,0 +1,9 @@
+<nav class="page-subnav">
+    <div class="page-subnav__inner">
+        <a href="/about" class="page-subnav__link[% IF c.req.uri.path == '/about' %] page-subnav__link--active[% END %]">[% loc('About') %]</a>
+        <a href="/faq" class="page-subnav__link[% IF c.req.uri.path == '/faq' %] page-subnav__link--active[% END %]">[% loc('FAQ') %]</a>
+        <a href="/contact" class="page-subnav__link[% IF c.req.uri.path == '/contact' %] page-subnav__link--active[% END %]">[% loc('Contact') %]</a>
+        <a href="[% c.cobrand.privacy_policy_url %]" class="page-subnav__link[% IF c.req.uri.path.match('/privacy') %] page-subnav__link--active[% END %]">[% loc('Privacy') %]</a>
+        <a href="/about/terms" class="page-subnav__link[% IF c.req.uri.path.match('/terms') %] page-subnav__link--active[% END %]">[% loc('Terms') %]</a>
+    </div>
+</nav>

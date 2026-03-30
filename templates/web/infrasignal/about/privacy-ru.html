@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('Privacy Policy'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('Privacy Policy')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>Политика конфиденциальности</h1>
 
 <p><strong>Дата вступления в силу: 15 февраля 2026 г.</strong><br>
@@ -281,5 +283,6 @@
     <li>Email: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Веб: <a href="/contact">Форма обратной связи</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

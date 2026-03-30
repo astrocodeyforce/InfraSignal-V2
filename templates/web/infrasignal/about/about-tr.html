@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('About InfraSignal'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('About InfraSignal')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>InfraSignal Hakkında</h1>
 
 <p>InfraSignal, sakinlerin yerel altyapı sorunlarını bildirmesini ve takip
@@ -105,5 +107,6 @@ Bize ulaşın:</p>
     <li>E-posta: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Web: <a href="/contact">İletişim Formu</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

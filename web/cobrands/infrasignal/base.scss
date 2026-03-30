@@ -1195,6 +1195,224 @@ a[href="/report"] {
 }
 
 /* ===========================================================
+   FULL-BLEED LAYOUT SYSTEM
+   Break sections out of the .container max-width constraint
+   so backgrounds span edge-to-edge like a modern web app.
+   =========================================================== */
+
+// Container must allow overflow for full-bleed children
+.container {
+    overflow: visible;
+}
+
+// Full-bleed utility — use on any section that needs viewport-width bg
+.full-bleed {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+// Pages that should use the full width (no sidebar → full modern layout)
+.about-page,
+.faq-page,
+.contact-page {
+    max-width: none;
+    padding: 0;
+}
+
+// About page sections need full-bleed backgrounds
+.about-page {
+    .about-hero {
+        padding: 48px 16px 32px;
+        border-bottom: none;
+        margin-bottom: 0;
+    }
+
+    .about-section {
+        padding: 40px 16px;
+        border-bottom: none;
+        margin-bottom: 0;
+
+        > h2,
+        > p,
+        .about-what-we-do,
+        .about-stats,
+        .about-steps,
+        .about-benefits-card,
+        .about-contact {
+            max-width: 960px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        > h2 { margin-bottom: 16px; text-align: center; }
+    }
+
+    .about-section--alt {
+        background: $gray-100;
+        margin: 0;
+        padding: 48px 16px;
+    }
+}
+
+// FAQ full-width with centered content
+.faq-page {
+    max-width: none;
+    padding: 0 16px 48px;
+
+    .faq-page__title {
+        max-width: 720px;
+        margin: 0 auto 40px;
+        padding-top: 32px;
+    }
+
+    .faq-sections {
+        max-width: 720px;
+        margin: 0 auto;
+    }
+
+    .faq-cta {
+        max-width: 720px;
+        margin: 48px auto 0;
+    }
+}
+
+// Contact page full layout
+.contact-page {
+    max-width: none;
+    padding: 0 16px 48px;
+
+    .contact-page__title {
+        max-width: 960px;
+        margin: 0 auto 40px;
+        padding-top: 32px;
+    }
+
+    .contact-page__grid {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+}
+
+// Privacy & Terms — clean reading layout
+.content > h1:first-child {
+    // Legal pages need centered readable width
+}
+
+// Horizontal sub-navigation bar (replaces sidebar)
+.page-subnav {
+    background: #fff;
+    border-bottom: 1px solid $gray-300;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-bottom: 32px;
+}
+.page-subnav__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.page-subnav__link {
+    display: block;
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gray-500;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+
+    &:hover {
+        color: $gray-900;
+    }
+}
+.page-subnav__link--active {
+    color: $primary-700;
+    border-bottom-color: $primary-700;
+    font-weight: 600;
+}
+
+// Homepage full-bleed sections
+.category-grid,
+.social-proof,
+.gov-cta {
+    // Break out of .container
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+// Homepage hero should also be full-bleed
+.hero-section {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+// Coverage stats on homepage — full-bleed
+.coverage-stats {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    padding: 32px 16px;
+    background: $primary-900;
+
+    &__title {
+        color: #fff;
+    }
+
+    &__item {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,255,255,0.2);
+    }
+
+    &__number {
+        color: #fff;
+    }
+
+    &__label {
+        color: $primary-300;
+    }
+}
+
+// How-it-works section — make more spacious
+.how-it-works {
+    padding: 48px 16px;
+}
+
+// Footer full-bleed
+.site-footer {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-top: 0;
+}
+
+/* ===========================================================
    LOVABLE DESIGN — HOMEPAGE: Category Grid
    =========================================================== */
 .category-grid {
@@ -1865,4 +2083,55 @@ a[href="/report"] {
 }
 .mobile-tab-bar__icon {
     font-size: 1.25rem;
+}
+
+/* ===========================================================
+   LEGAL PAGES — Clean reading layout
+   =========================================================== */
+.legal-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+
+    h1 {
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $gray-900;
+        margin-bottom: 24px;
+        padding-top: 8px;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: $gray-900;
+        margin-top: 32px;
+        margin-bottom: 12px;
+    }
+
+    p, li {
+        font-size: 0.9375rem;
+        line-height: 1.7;
+        color: $gray-700;
+    }
+
+    ul, ol {
+        padding-left: 24px;
+    }
+
+    // FAQ dt/dd style in non-EN pages
+    dt {
+        font-weight: 600;
+        cursor: pointer;
+        padding: 12px 0;
+        border-bottom: 1px solid $gray-300;
+        color: $gray-900;
+        &:hover { color: $primary-700; }
+    }
+
+    dd {
+        padding: 12px 0;
+        color: $gray-700;
+        line-height: 1.6;
+    }
 }

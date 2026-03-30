@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('Privacy Policy'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('Privacy Policy')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>Privacy Policy</h1>
 
 <p><strong>Effective Date: February 15, 2026</strong><br>
@@ -254,5 +256,6 @@ personal information, or our data practices, please contact us:</p>
     <li>Email: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Web: <a href="/contact">Contact Form</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

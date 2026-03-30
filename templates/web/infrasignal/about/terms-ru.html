@@ -1,8 +1,10 @@
 [% INCLUDE 'header.html',
-    title = loc('Terms of Use'),
-    sidebar = 'about/_sidebar.html'
+    title = loc('Terms of Use')
 %]
 
+[% INCLUDE 'about/_subnav.html' %]
+
+<div class="legal-page">
 <h1>Условия использования</h1>
 
 <p><strong>Дата вступления в силу: 15 февраля 2026 г.</strong><br>
@@ -294,5 +296,6 @@ InfraSignal, её должностных лиц, руководителей,
     <li>Email: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
     <li>Веб: <a href="/contact">Форма обратной связи</a></li>
 </ul>
+</div>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]
