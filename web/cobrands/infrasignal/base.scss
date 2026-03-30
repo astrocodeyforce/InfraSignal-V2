@@ -1179,6 +1179,33 @@ img.img,
     color: $gray-700;
 }
 
+/* C3: Breadcrumb — "Back to all reports" link styling */
+.problem-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    margin-bottom: 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $primary-700;
+    background: $primary-50;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+
+    &:hover, &:focus {
+        background: $primary-300;
+        color: $primary-900;
+        text-decoration: none;
+    }
+
+    svg {
+        width: 14px;
+        height: 14px;
+    }
+}
+
 /* C4: Auth Pages — centered, branded feel */
 .authpage {
     .content {
