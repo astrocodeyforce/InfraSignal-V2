@@ -1,2 +1,41 @@
 @import "_colours";
 @import "../sass/layout";
+
+/* ======================================================
+   A12: Desktop Layout Polish (≥48em / 768px)
+   Card grid for report lists, wider content area.
+   ====================================================== */
+
+// Header — more room on desktop
+#site-logo-wrapper {
+    height: 54px;
+    margin: 3px 0;
+}
+
+// Content area
+.content {
+    max-width: 960px;
+}
+
+// Hero section desktop enhancement
+.frontpage #front-main {
+    padding: 48px 0;
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+// Report list — cards with spacing
+.item-list--reports {
+    .item-list__item {
+        margin-bottom: 16px;
+    }
+}
+
+// Nav items — horizontal spacing
+#main-nav {
+    a, span {
+        padding: 12px 16px;
+    }
+}

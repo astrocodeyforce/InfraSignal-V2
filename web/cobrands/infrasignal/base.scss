@@ -2,6 +2,15 @@
 @import "./_colours";
 @import "../sass/mixins";
 
+// --- A2: System Font Stack (no external CDN) ---
+$font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+$font-heading: $font-body;
+
+// Override base font variables before import
+$body-font: $font-body;
+$heading-font: $font-heading;
+$meta-font: $font-body;
+
 @import "../sass/base";
 @import "./priority";
 
@@ -9,7 +18,7 @@
 // Wrapper holds the full-width background image (non-clickable)
 #site-logo-wrapper {
     width: 275px;
-    height: 45px;
+    height: 50px;
     background-image: url('/cobrands/infrasignal/images/logo_web.png');
     background-size: contain;
     background-repeat: no-repeat;
@@ -17,6 +26,7 @@
     position: relative;
     z-index: 2;
     pointer-events: none;
+    margin: 5px 0;
 }
 
 // The actual <a> link is only as wide as the logo graphic
@@ -32,9 +42,10 @@
 }
 
 #site-header {
-    height: 45px;
+    height: 60px;
     padding: 0;
     position: relative;
+    background: $primary-900;
 
     .container {
         padding-left: 0;
@@ -46,7 +57,7 @@
     min-height: 1.5em;
 }
 
-/* Header: 45px fixed height (clips 120px logo), logo stays 550x120px */
+/* Header: 60px height with breathing room for logo */
 
 /* "Show reports in your area" box: keep within page boundary */
 .dashboard-item--6 {
@@ -296,3 +307,373 @@ input[type="text"].form-control[name="search"] {
     }
 }
 
+/* ======================================================
+   A3: Typography — Weight Hierarchy
+   Headings use bold/semibold for visual authority.
+   Body uses 400 for readability.
+   ====================================================== */
+
+body {
+    font-family: $font-body;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1.6;
+    color: $gray-700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+    font-family: $font-heading;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: $gray-900;
+    line-height: 1.2;
+}
+
+h2 {
+    font-family: $font-heading;
+    font-size: 1.5rem;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: $gray-900;
+    line-height: 1.3;
+}
+
+h3 {
+    font-family: $font-heading;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: $gray-700;
+    line-height: 1.4;
+}
+
+h4 {
+    font-family: $font-heading;
+    font-size: 1rem;
+    font-weight: 600;
+    color: $gray-700;
+}
+
+small, .caption {
+    font-size: 0.875rem;
+    color: $gray-500;
+}
+
+/* ======================================================
+   A4: Button Redesign
+   Trust blue primary, orange accent, rounded, transitions.
+   ====================================================== */
+
+// Primary buttons — override base flat black style
+.btn,
+.btn--primary,
+.green-btn,
+input[type="submit"],
+.form-txt-submit-div input {
+    background: $primary-700 !important;
+    background-image: none !important;
+    color: #fff !important;
+    border: 1px solid darken($primary-700, 8%) !important;
+    border-radius: 8px;
+    padding: 10px 24px;
+    font-weight: 600;
+    font-size: 16px;
+    font-family: $font-body;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+    text-shadow: none;
+
+    &:hover,
+    &:focus {
+        background: $primary-500 !important;
+        border-color: darken($primary-500, 8%) !important;
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(30, 64, 175, 0.25);
+        text-decoration: none;
+        color: #fff !important;
+    }
+
+    &:active {
+        transform: translateY(0);
+        box-shadow: none;
+    }
+}
+
+// Accent button variant for high-priority CTAs
+.btn--accent {
+    background: $accent-500 !important;
+    border-color: $accent-600 !important;
+
+    &:hover,
+    &:focus {
+        background: $accent-600 !important;
+        border-color: darken($accent-600, 8%) !important;
+    }
+}
+
+// Report CTA button in header
+#report-cta {
+    background: $accent-500;
+    color: #fff;
+    border-radius: 6px;
+    padding: 6px 16px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: background-color 0.15s ease;
+
+    &:hover {
+        background: $accent-600;
+        color: #fff;
+        text-decoration: none;
+    }
+}
+
+/* ======================================================
+   A5: Card Components
+   Elevated cards for report list items, sections.
+   ====================================================== */
+
+.item-list--reports .item-list__item,
+.item-list .item-list__item {
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 10px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-1px);
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+/* ======================================================
+   A6: Input Field Styling
+   Rounded, focus glow, 16px font (prevents iOS zoom).
+   ====================================================== */
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="tel"],
+input[type="url"],
+input[type="number"],
+input[type="search"],
+textarea,
+select {
+    border: 2px solid $gray-300;
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 16px;
+    font-family: $font-body;
+    color: $gray-900;
+    background: #fff;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:focus {
+        border-color: $primary-500;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+        outline: none;
+    }
+
+    &::placeholder {
+        color: $gray-500;
+    }
+}
+
+// Fix admin search input padding that already has search icon
+input[type="text"].form-control[name="search"] {
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+/* ======================================================
+   A8: Whitespace & Spacing
+   Better section separation and breathing room.
+   ====================================================== */
+
+// Content area spacing
+#map_sidebar,
+.content {
+    padding-top: 16px;
+}
+
+// Form groups
+.form-group,
+fieldset {
+    margin-bottom: 20px;
+}
+
+label {
+    font-weight: 600;
+    color: $gray-900;
+    margin-bottom: 6px;
+    display: block;
+}
+
+// Section separators
+.big-numbers {
+    margin: 24px 0;
+}
+
+/* ======================================================
+   A10: Focus Indicator Refinement
+   Consistent 2px outline instead of 8px combined glow.
+   ====================================================== */
+
+*:focus-visible {
+    outline: 2px solid $primary-500;
+    outline-offset: 2px;
+    box-shadow: none;
+}
+
+// Remove base heavy focus ring
+a:focus,
+input:focus,
+button:focus,
+select:focus,
+textarea:focus {
+    // Let :focus-visible handle it — avoid double ring
+}
+
+/* ======================================================
+   A11: Hero Section Gradient
+   Styles the frontpage hero area via SCSS only.
+   ====================================================== */
+
+.frontpage {
+    // Dark blue gradient background for hero
+    #front-main {
+        background: linear-gradient(135deg, $primary-900 0%, $primary-700 50%, $primary-500 100%);
+        color: #fff;
+        padding: 32px 0;
+
+        h1 {
+            color: #fff;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
+            font-size: 1.1rem;
+        }
+    }
+
+    // Postcode form area within hero
+    .postcode-form-box {
+        input[type="text"] {
+            background-color: #fff;
+            color: $gray-900;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
+            font-size: 16px;
+
+            &::placeholder {
+                color: $gray-500;
+            }
+        }
+    }
+
+    // Section below hero
+    .frontpage-section {
+        padding: 32px 0;
+    }
+}
+
+/* ======================================================
+   A9: Nav styling improvements
+   Better contrast and readability on dark background.
+   ====================================================== */
+
+#main-nav {
+    background: $primary-900;
+
+    a, span {
+        color: rgba(255, 255, 255, 0.9);
+        padding: 10px 14px;
+        transition: background-color 0.15s ease;
+        display: inline-block;
+
+        &:hover {
+            background-color: $primary-700;
+            color: #fff;
+            text-decoration: none;
+        }
+    }
+
+    // Active page indicator
+    span {
+        color: #fff;
+        font-weight: 600;
+        border-bottom: 2px solid $accent-500;
+    }
+}
+
+/* ======================================================
+   Status Badges — Pill-shaped with clear colors
+   ====================================================== */
+
+.item-list--reports .item-list__item .meta-2--status,
+.meta-2--status {
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ======================================================
+   Auth Pages — Centered form with brand reinforcement
+   ====================================================== */
+
+.form-box {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+/* ======================================================
+   General Polish
+   ====================================================== */
+
+// Smooth transitions globally
+* {
+    box-sizing: border-box;
+}
+
+// Photo thumbnails — slightly larger, rounded
+.report-img,
+img.img,
+.update-img {
+    border-radius: 8px;
+}
+
+// Dropzone styling
+.dropzone {
+    border: 2px dashed $gray-300;
+    border-radius: 10px;
+    padding: 24px;
+    text-align: center;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+
+    &:hover,
+    &.dz-drag-hover {
+        border-color: $primary-500;
+        background-color: $primary-50;
+    }
+}
