@@ -677,3 +677,218 @@ img.img,
         background-color: $primary-50;
     }
 }
+
+/* ======================================================
+   B1: How It Works — 3-Card Layout
+   ====================================================== */
+
+.how-it-works {
+    padding: 32px 0;
+    text-align: center;
+
+    h2 {
+        margin-bottom: 24px;
+    }
+
+    &__cards {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        max-width: 800px;
+        margin: 0 auto;
+
+        @media (min-width: 48em) {
+            flex-direction: row;
+            gap: 24px;
+        }
+    }
+
+    &__card {
+        flex: 1;
+        background: #fff;
+        border: 1px solid $gray-300;
+        border-radius: 12px;
+        padding: 24px 16px;
+        text-align: center;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+
+        &:hover {
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        h3 {
+            margin: 8px 0 4px;
+            font-size: 1.1rem;
+        }
+
+        p {
+            color: $gray-500;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+    }
+
+    &__icon {
+        font-size: 2rem;
+        margin-bottom: 4px;
+    }
+}
+
+/* ======================================================
+   B2: Brand Text in Header
+   ====================================================== */
+
+.brand-text {
+    display: none; // Hidden on mobile — logo is enough
+
+    @media (min-width: 48em) {
+        display: inline-block;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 700;
+        letter-spacing: 2px;
+        vertical-align: middle;
+        margin-left: 10px;
+        position: relative;
+        top: -15px;
+        pointer-events: none;
+    }
+}
+
+/* ======================================================
+   B3: Site Footer
+   ====================================================== */
+
+.site-footer {
+    background: $primary-900;
+    color: rgba(255, 255, 255, 0.85);
+    padding: 32px 16px;
+    margin-top: 32px;
+
+    &__inner {
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    &__brand {
+        margin-bottom: 20px;
+
+        strong {
+            display: block;
+            font-size: 1.25rem;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+    &__links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px 20px;
+        margin-bottom: 20px;
+
+        a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.15s ease;
+
+            &:hover {
+                color: #fff;
+                text-decoration: underline;
+            }
+        }
+    }
+
+    &__meta {
+        border-top: 1px solid rgba(255, 255, 255, 0.15);
+        padding-top: 16px;
+    }
+
+    &__langs {
+        font-size: 0.85rem;
+        color: rgba(255, 255, 255, 0.6);
+        margin: 0 0 4px;
+    }
+
+    &__copy {
+        font-size: 0.8rem;
+        color: rgba(255, 255, 255, 0.5);
+        margin: 0 0 4px;
+    }
+
+    &__gov {
+        font-size: 0.85rem;
+        margin: 8px 0 0;
+
+        a {
+            color: $primary-300;
+            text-decoration: underline;
+
+            &:hover {
+                color: #fff;
+            }
+        }
+    }
+}
+
+/* ======================================================
+   B5: Coverage Stats Grid
+   ====================================================== */
+
+.coverage-stats {
+    padding: 24px 0;
+    text-align: center;
+
+    &__title {
+        font-size: 1.25rem;
+        color: $gray-700;
+        margin-bottom: 16px;
+        font-weight: 600;
+    }
+
+    &__grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    &__item {
+        flex: 1;
+        min-width: 120px;
+        background: $primary-50;
+        border: 1px solid $primary-300;
+        border-radius: 10px;
+        padding: 16px 12px;
+    }
+
+    &__number {
+        display: block;
+        font-size: 1.75rem;
+        font-weight: 700;
+        color: $primary-700;
+        line-height: 1.2;
+    }
+
+    &__label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $gray-500;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-top: 2px;
+    }
+}
