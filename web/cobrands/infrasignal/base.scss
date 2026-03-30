@@ -892,3 +892,146 @@ img.img,
         margin-top: 2px;
     }
 }
+
+/* ======================================================
+   PHASE C: Presentational Polish
+   ====================================================== */
+
+/* C1: Nav Styling — better spacing, tap targets, active state */
+#main-nav {
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        list-style: none;
+        display: inline-block;
+    }
+
+    a, span {
+        min-height: 44px;
+        line-height: 44px;
+    }
+}
+
+/* C2: Report Detail — meta card, photo radius, badge consistency */
+.problem-header {
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.problem-header__title {
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: $gray-900;
+}
+
+// Report photos
+.photoset img,
+.report-img img {
+    border-radius: 8px;
+}
+
+// Sent-to info card
+.council_sent_info,
+.main_sent_info {
+    background: $gray-100;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    color: $gray-700;
+}
+
+/* C4: Auth Pages — centered, branded feel */
+.authpage {
+    .content {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 24px 16px;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 24px;
+
+        small {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: $gray-500;
+            margin-top: 4px;
+        }
+    }
+
+    // Social auth buttons
+    .btn--social {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: 100%;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 600;
+        margin-bottom: 10px;
+        background: #fff !important;
+        color: $gray-700 !important;
+        border: 2px solid $gray-300 !important;
+
+        &:hover {
+            background: $gray-100 !important;
+            border-color: $gray-500 !important;
+        }
+
+        img {
+            width: 20px;
+            height: auto;
+        }
+    }
+}
+
+/* C5: FAQ Accordion  — CSS styling for dt/dd or details/summary */
+.faq-section {
+    dt, summary {
+        font-weight: 600;
+        cursor: pointer;
+        padding: 12px 0;
+        border-bottom: 1px solid $gray-300;
+        color: $gray-900;
+
+        &:hover {
+            color: $primary-700;
+        }
+    }
+
+    dd, .faq-answer {
+        padding: 12px 0;
+        color: $gray-700;
+        line-height: 1.6;
+    }
+}
+
+/* C6: Empty State Messages */
+.item-list--empty,
+.no-reports {
+    text-align: center;
+    padding: 48px 16px;
+    color: $gray-500;
+
+    p {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
+}
+
+/* Report-a-problem link — make prominent everywhere */
+a[href="/report"] {
+    font-weight: 600;
+}
