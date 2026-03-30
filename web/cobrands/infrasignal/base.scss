@@ -758,88 +758,7 @@ img.img,
     }
 }
 
-/* ======================================================
-   B3: Site Footer
-   ====================================================== */
-
-.site-footer {
-    background: $primary-900;
-    color: rgba(255, 255, 255, 0.85);
-    padding: 32px 16px;
-    margin-top: 32px;
-
-    &__inner {
-        max-width: 960px;
-        margin: 0 auto;
-    }
-
-    &__brand {
-        margin-bottom: 20px;
-
-        strong {
-            display: block;
-            font-size: 1.25rem;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-    }
-
-    &__links {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px 20px;
-        margin-bottom: 20px;
-
-        a {
-            color: rgba(255, 255, 255, 0.85);
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.15s ease;
-
-            &:hover {
-                color: #fff;
-                text-decoration: underline;
-            }
-        }
-    }
-
-    &__meta {
-        border-top: 1px solid rgba(255, 255, 255, 0.15);
-        padding-top: 16px;
-    }
-
-    &__langs {
-        font-size: 0.85rem;
-        color: rgba(255, 255, 255, 0.6);
-        margin: 0 0 4px;
-    }
-
-    &__copy {
-        font-size: 0.8rem;
-        color: rgba(255, 255, 255, 0.5);
-        margin: 0 0 4px;
-    }
-
-    &__gov {
-        font-size: 0.85rem;
-        margin: 8px 0 0;
-
-        a {
-            color: $primary-300;
-            text-decoration: underline;
-
-            &:hover {
-                color: #fff;
-            }
-        }
-    }
-}
+/* B3: Site Footer — MOVED to Lovable Design section below */
 
 /* ======================================================
    B5: Coverage Stats Grid
@@ -1255,26 +1174,7 @@ img.img,
     }
 }
 
-/* C5: FAQ Accordion  — CSS styling for dt/dd or details/summary */
-.faq-section {
-    dt, summary {
-        font-weight: 600;
-        cursor: pointer;
-        padding: 12px 0;
-        border-bottom: 1px solid $gray-300;
-        color: $gray-900;
-
-        &:hover {
-            color: $primary-700;
-        }
-    }
-
-    dd, .faq-answer {
-        padding: 12px 0;
-        color: $gray-700;
-        line-height: 1.6;
-    }
-}
+/* C5: FAQ Accordion — MOVED to Lovable Design section below */
 
 /* C6: Empty State Messages */
 .item-list--empty,
@@ -1292,4 +1192,677 @@ img.img,
 /* Report-a-problem link — make prominent everywhere */
 a[href="/report"] {
     font-weight: 600;
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — HOMEPAGE: Category Grid
+   =========================================================== */
+.category-grid {
+    padding: 48px 0;
+    background: $gray-100;
+}
+.category-grid__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+    text-align: center;
+}
+.category-grid__subtitle {
+    color: $gray-500;
+    margin-top: 8px;
+    margin-bottom: 32px;
+}
+.category-grid__tiles {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+@media (min-width: 480px) {
+    .category-grid__tiles { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 768px) {
+    .category-grid__tiles { grid-template-columns: repeat(5, 1fr); }
+}
+@media (min-width: 960px) {
+    .category-grid__tiles { grid-template-columns: repeat(7, 1fr); }
+}
+.category-grid__tile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px;
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 12px;
+    text-decoration: none;
+    color: $gray-500;
+    transition: all 0.2s;
+
+    &:hover {
+        border-color: $primary-500;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transform: translateY(-2px);
+        color: $gray-900;
+    }
+}
+.category-grid__icon {
+    font-size: 1.75rem;
+    transition: transform 0.2s;
+
+    .category-grid__tile:hover & {
+        transform: scale(1.1);
+    }
+}
+.category-grid__label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.25;
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — HOMEPAGE: Social Proof
+   =========================================================== */
+.social-proof {
+    padding: 48px 0;
+    background: #fff;
+}
+.social-proof__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+    text-align: center;
+}
+.social-proof__quote {
+    max-width: 640px;
+    margin: 32px auto 0;
+    background: $gray-100;
+    border-radius: 16px;
+    padding: 32px;
+}
+.social-proof__star {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 16px;
+}
+.social-proof__quote blockquote {
+    font-size: 1.125rem;
+    font-weight: 500;
+    font-style: italic;
+    color: $gray-900;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+.social-proof__author {
+    margin-top: 16px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gray-500;
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — HOMEPAGE: Government CTA
+   =========================================================== */
+.gov-cta {
+    padding: 48px 0;
+    background: linear-gradient(135deg, $primary-900, $primary-500);
+    color: #fff;
+}
+.gov-cta__inner {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px;
+    text-align: center;
+}
+.gov-cta__subtitle {
+    color: $primary-300;
+    margin-top: 8px;
+    margin-bottom: 32px;
+}
+.gov-cta h2 {
+    color: #fff;
+    font-size: 1.5rem;
+}
+.gov-cta__features {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    max-width: 640px;
+    margin: 0 auto 32px;
+}
+@media (min-width: 768px) {
+    .gov-cta__features { grid-template-columns: repeat(3, 1fr); }
+    .gov-cta h2 { font-size: 1.875rem; }
+}
+.gov-cta__feature {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+    backdrop-filter: blur(4px);
+
+    h3 {
+        color: #fff;
+        font-size: 1rem;
+        font-weight: 600;
+        margin-top: 8px;
+    }
+    p {
+        color: $primary-300;
+        font-size: 0.875rem;
+        margin-top: 8px;
+    }
+}
+.gov-cta__feature-icon {
+    font-size: 2rem;
+}
+.gov-cta__pricing {
+    margin-top: 24px;
+}
+.gov-cta__price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+}
+.gov-cta__compare {
+    font-size: 0.875rem;
+    color: $primary-300;
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+.gov-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 32px;
+    background: $accent-500;
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background 0.2s;
+
+    &:hover {
+        background: $accent-600;
+        color: #fff;
+    }
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — FOOTER: 4-Column Grid
+   =========================================================== */
+.site-footer {
+    background: $primary-900;
+    color: $primary-300;
+    padding: 0;
+
+    a {
+        color: $primary-300;
+        text-decoration: none;
+        transition: color 0.2s;
+        &:hover { color: #fff; }
+    }
+}
+.site-footer__inner {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 48px 16px;
+}
+.site-footer__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+}
+@media (min-width: 768px) {
+    .site-footer__grid { grid-template-columns: repeat(4, 1fr); }
+}
+.site-footer__heading {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 16px;
+    font-size: 1rem;
+}
+.site-footer__desc {
+    font-size: 0.875rem;
+    line-height: 1.6;
+}
+.site-footer__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        margin-bottom: 8px;
+    }
+    a {
+        font-size: 0.875rem;
+    }
+}
+.site-footer__langs {
+    margin-top: 16px;
+    font-size: 0.75rem;
+    p { margin: 0; }
+    p + p { margin-top: 4px; }
+}
+.site-footer__bottom {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid rgba($primary-500, 0.3);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+@media (min-width: 640px) {
+    .site-footer__bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+.site-footer__copy {
+    font-size: 0.875rem;
+    margin: 0;
+}
+.site-footer__gov-link {
+    font-size: 0.875rem;
+    padding: 8px 16px;
+    border: 1px solid rgba($primary-300, 0.3);
+    border-radius: 8px;
+    transition: all 0.2s;
+    &:hover {
+        border-color: rgba($primary-300, 0.6);
+    }
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — FAQ PAGE
+   =========================================================== */
+.faq-page {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+}
+.faq-page__title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.faq-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.faq-section__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $gray-900;
+    margin-bottom: 12px;
+}
+.faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.faq-item {
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 12px;
+    padding: 0 20px;
+    transition: box-shadow 0.2s;
+
+    &[open] {
+        box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+}
+.faq-item__question {
+    padding: 16px 0;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gray-900;
+    cursor: pointer;
+    list-style: none;
+
+    &::-webkit-details-marker {
+        display: none;
+    }
+    &::after {
+        content: "▸";
+        float: right;
+        transition: transform 0.2s;
+        color: $gray-500;
+    }
+    [open] > & {
+        &::after { transform: rotate(90deg); }
+    }
+}
+.faq-item__answer {
+    font-size: 0.875rem;
+    color: $gray-500;
+    line-height: 1.6;
+    padding-bottom: 16px;
+    margin-top: 0;
+}
+.faq-cta {
+    margin-top: 48px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 16px;
+    padding: 32px;
+}
+.faq-cta p {
+    color: $gray-500;
+    font-size: 0.875rem;
+    margin-top: 8px;
+}
+.faq-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px 24px;
+    background: $primary-700;
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    &:hover { background: $primary-500; color: #fff; }
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — ABOUT PAGE (enhanced)
+   =========================================================== */
+.about-section--alt {
+    background: $gray-100;
+    padding: 48px 0;
+    margin: 0 -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+.about-what-we-do {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+}
+@media (min-width: 768px) {
+    .about-what-we-do { grid-template-columns: repeat(4, 1fr); }
+}
+.about-what-we-do__card {
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    transition: box-shadow 0.2s;
+    &:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+    h3 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: $gray-900;
+        margin-top: 8px;
+    }
+    p {
+        font-size: 0.875rem;
+        color: $gray-500;
+        margin-top: 4px;
+    }
+}
+.about-what-we-do__icon {
+    font-size: 2rem;
+    color: $primary-500;
+}
+
+.about-steps__emoji {
+    font-size: 1.5rem;
+    display: block;
+    margin-top: 8px;
+}
+
+.about-benefits-card {
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 16px;
+    padding: 32px;
+}
+.about-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        color: $gray-900;
+        font-size: 1rem;
+    }
+}
+.about-benefits__check {
+    color: $status-success;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+.about-benefits__pricing {
+    margin-top: 32px;
+    text-align: center;
+}
+.about-benefits__price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-900;
+}
+.about-benefits__per {
+    font-size: 0.875rem;
+    color: $gray-500;
+    margin-top: 4px;
+}
+.about-benefits__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px 24px;
+    background: $primary-700;
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    &:hover { background: $primary-500; color: #fff; }
+}
+
+.about-contact__link--outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border: 2px solid $gray-300;
+    border-radius: 12px;
+    text-decoration: none;
+    color: $gray-900;
+    transition: background 0.2s;
+    &:hover { background: $gray-100; }
+}
+.about-contact__link--primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: $primary-700;
+    color: #fff;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.2s;
+    &:hover { background: $primary-500; color: #fff; }
+}
+.about-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    margin-top: 16px;
+}
+@media (min-width: 640px) {
+    .about-contact { flex-direction: row; justify-content: center; }
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — CONTACT PAGE: 2-Column Layout
+   =========================================================== */
+.contact-page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 16px 48px;
+}
+.contact-page__title {
+    text-align: center;
+    margin-bottom: 40px;
+}
+.contact-page__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+}
+@media (min-width: 768px) {
+    .contact-page__grid { grid-template-columns: 1fr 1fr; }
+}
+.contact-page__card {
+    background: #fff;
+    border: 1px solid $gray-300;
+    border-radius: 16px;
+    padding: 24px;
+}
+.contact-page__card--highlight {
+    background: $primary-50;
+    border-color: rgba($primary-300, 0.3);
+}
+.contact-page__card-title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: $gray-900;
+    margin-bottom: 24px;
+}
+.contact-page__info-col {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+.contact-page__info-title {
+    font-weight: 600;
+    color: $gray-900;
+    margin-bottom: 16px;
+}
+.contact-page__info-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.contact-page__info-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: $primary-50;
+    border-radius: 8px;
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+.contact-page__info-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gray-900;
+    margin: 0;
+}
+.contact-page__info-value {
+    font-size: 0.875rem;
+    color: $gray-500;
+}
+.contact-page__info-text {
+    font-size: 0.875rem;
+    color: $gray-500;
+    line-height: 1.6;
+}
+.contact-page__info-cta {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $primary-700;
+    margin-top: 12px;
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — REPORT DETAIL: Sent-To Card Enhancement
+   =========================================================== */
+.council_sent_info {
+    background: $primary-50;
+    border: 1px solid rgba($primary-300, 0.3);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 16px;
+
+    strong {
+        color: $gray-900;
+    }
+}
+
+/* ===========================================================
+   LOVABLE DESIGN — MOBILE TAB BAR
+   =========================================================== */
+.mobile-tab-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    background: #fff;
+    border-top: 1px solid $gray-300;
+    box-shadow: 0 -1px 3px rgba(0,0,0,0.1);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+@media (max-width: 767px) {
+    .mobile-tab-bar { display: block; }
+    body { padding-bottom: 56px; }
+}
+.mobile-tab-bar__items {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 56px;
+}
+.mobile-tab-bar__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 4px 12px;
+    text-decoration: none;
+    color: $gray-500;
+    font-size: 0.625rem;
+    font-weight: 500;
+    transition: color 0.2s;
+
+    &:hover { color: $primary-700; }
+}
+.mobile-tab-bar__item--active {
+    color: $primary-700;
+}
+.mobile-tab-bar__item--accent {
+    color: $accent-500;
+    &:hover { color: $accent-600; }
+}
+.mobile-tab-bar__icon {
+    font-size: 1.25rem;
 }

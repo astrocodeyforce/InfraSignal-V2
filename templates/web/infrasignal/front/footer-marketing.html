@@ -1,20 +1,42 @@
 <footer class="site-footer">
     <div class="site-footer__inner">
-        <div class="site-footer__brand">
-            <strong>InfraSignal</strong>
-            <p>[% loc('Connecting residents with local government to fix infrastructure issues.') %]</p>
+        <div class="site-footer__grid">
+            <div class="site-footer__col">
+                <h4 class="site-footer__heading">InfraSignal</h4>
+                <p class="site-footer__desc">[% loc('Report infrastructure issues and get them fixed. Serving communities across all 51 US states.') %]</p>
+            </div>
+            <div class="site-footer__col">
+                <h4 class="site-footer__heading">[% loc('Platform') %]</h4>
+                <ul class="site-footer__list">
+                    <li><a href="/report/new">[% loc('Report an Issue') %]</a></li>
+                    <li><a href="/reports">[% loc('All Reports') %]</a></li>
+                    <li><a href="/alert">[% loc('Get Alerts') %]</a></li>
+                    <li><a href="/my">[% loc('My Reports') %]</a></li>
+                </ul>
+            </div>
+            <div class="site-footer__col">
+                <h4 class="site-footer__heading">[% loc('Company') %]</h4>
+                <ul class="site-footer__list">
+                    <li><a href="/about">[% loc('About') %]</a></li>
+                    <li><a href="/faq">[% loc('FAQ') %]</a></li>
+                    <li><a href="/contact">[% loc('Contact') %]</a></li>
+                </ul>
+            </div>
+            <div class="site-footer__col">
+                <h4 class="site-footer__heading">[% loc('Legal') %]</h4>
+                <ul class="site-footer__list">
+                    <li><a href="/about/privacy">[% loc('Privacy Policy') %]</a></li>
+                    <li><a href="/about/terms">[% loc('Terms of Use') %]</a></li>
+                </ul>
+                <div class="site-footer__langs">
+                    <p>[% loc('Available in:') %]</p>
+                    <p>&#127482;&#127480; English &middot; &#127466;&#127480; Espa&ntilde;ol &middot; &#127479;&#127482; &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; &middot; &#127481;&#127479; T&uuml;rk&ccedil;e</p>
+                </div>
+            </div>
         </div>
-        <nav class="site-footer__links" aria-label="[% loc('Footer navigation') %]">
-            <a href="/about">[% loc('About') %]</a>
-            <a href="/faq">[% loc('Help & FAQ') %]</a>
-            <a href="/about/privacy">[% loc('Privacy Policy') %]</a>
-            <a href="/about/terms">[% loc('Terms of Use') %]</a>
-            <a href="/contact">[% loc('Contact Us') %]</a>
-        </nav>
-        <div class="site-footer__meta">
-            <p class="site-footer__langs">[% loc('Available in:') %] English &middot; Espa&ntilde;ol &middot; &#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081; &middot; T&uuml;rk&ccedil;e</p>
-            <p class="site-footer__copy">&copy; 2026 InfraSignal. [% loc('Built in Illinois.') %]</p>
-            <p class="site-footer__gov">[% loc('For local government inquiries:') %] <a href="/contact">[% loc('Contact Us') %]</a></p>
+        <div class="site-footer__bottom">
+            <p class="site-footer__copy">&copy; 2026 InfraSignal. [% loc('All rights reserved.') %]</p>
+            <a href="/contact" class="site-footer__gov-link">[% loc('For Local Government') %] &rarr;</a>
         </div>
     </div>
 </footer>

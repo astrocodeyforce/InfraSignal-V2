@@ -5,112 +5,123 @@
 
 <div class="about-page">
 
+    <!-- Hero -->
     <div class="about-hero">
         <h1>[% loc('About InfraSignal') %]</h1>
-        <p class="about-hero__tagline">[% loc('A civic infrastructure reporting platform that makes it simple for residents to report and track local problems — and for local authorities to receive, prioritize, and resolve them.') %]</p>
+        <p class="about-hero__tagline">[% loc('The civic infrastructure reporting platform built for American communities.') %]</p>
     </div>
 
+    <!-- What We Do -->
     <section class="about-section">
         <h2>[% loc('What We Do') %]</h2>
-        <p>[% loc('Across the United States, infrastructure problems like potholes, broken streetlights, damaged sidewalks, and illegal dumping go unreported because residents don&rsquo;t know who to contact or how to reach them. InfraSignal solves this by providing a single, easy-to-use platform that automatically routes reports to the correct city, county, or state authority based on the geographic location of the problem.') %]</p>
-
-        <p>[% loc('When a resident submits a report, InfraSignal:') %]</p>
-        <div class="about-feature-list">
-            <div class="about-feature-list__item">
-                <span class="about-feature-list__icon">📍</span>
-                <span>[% loc('Identifies the responsible local authority using official geographic boundary data') %]</span>
+        <div class="about-what-we-do">
+            <div class="about-what-we-do__card">
+                <span class="about-what-we-do__icon">&#128205;</span>
+                <h3>[% loc('Locate') %]</h3>
+                <p>[% loc('GPS-precise location reporting') %]</p>
             </div>
-            <div class="about-feature-list__item">
-                <span class="about-feature-list__icon">📨</span>
-                <span>[% loc('Delivers the complete report — including location, category, description, photos, and priority level — directly to that authority') %]</span>
+            <div class="about-what-we-do__card">
+                <span class="about-what-we-do__icon">&#128232;</span>
+                <h3>[% loc('Route') %]</h3>
+                <p>[% loc('Auto-route to correct government') %]</p>
             </div>
-            <div class="about-feature-list__item">
-                <span class="about-feature-list__icon">🔔</span>
-                <span>[% loc('Keeps the reporter updated with email notifications as the status changes') %]</span>
+            <div class="about-what-we-do__card">
+                <span class="about-what-we-do__icon">&#128276;</span>
+                <h3>[% loc('Track') %]</h3>
+                <p>[% loc('Real-time status updates') %]</p>
             </div>
-            <div class="about-feature-list__item">
-                <span class="about-feature-list__icon">🗺️</span>
-                <span>[% loc('Publishes the report on a public map so the community has visibility into local issues and their resolution') %]</span>
+            <div class="about-what-we-do__card">
+                <span class="about-what-we-do__icon">&#128200;</span>
+                <h3>[% loc('Analyze') %]</h3>
+                <p>[% loc('Analytics for government staff') %]</p>
             </div>
         </div>
     </section>
 
-    <section class="about-section">
-        <h2>[% loc('Nationwide Coverage') %]</h2>
+    <!-- Coverage Stats -->
+    <section class="about-section about-section--alt">
+        <h2>[% loc('Coverage') %]</h2>
         <div class="about-stats">
             <div class="about-stats__item">
                 <span class="about-stats__number">51</span>
-                <span class="about-stats__label">[% loc('States') %]</span>
-                <span class="about-stats__detail">[% loc('All 50 states + D.C.') %]</span>
+                <span class="about-stats__label">[% loc('States + D.C.') %]</span>
             </div>
             <div class="about-stats__item">
                 <span class="about-stats__number">3,000+</span>
                 <span class="about-stats__label">[% loc('Counties') %]</span>
-                <span class="about-stats__detail">[% loc('County governments') %]</span>
             </div>
             <div class="about-stats__item">
                 <span class="about-stats__number">25,000+</span>
                 <span class="about-stats__label">[% loc('Cities & Towns') %]</span>
-                <span class="about-stats__detail">[% loc('Local governments') %]</span>
             </div>
             <div class="about-stats__item">
                 <span class="about-stats__number">13</span>
                 <span class="about-stats__label">[% loc('Categories') %]</span>
-                <span class="about-stats__detail">[% loc('Standardized report types') %]</span>
             </div>
         </div>
-        <p class="about-section__note">[% loc('All jurisdictions receive reports across 13 standardized infrastructure categories, including pothole / road damage, streetlight outage, drainage / flooding, graffiti / vandalism, sidewalk damage, bridge / guardrail damage, traffic signal / sign issues, and more.') %]</p>
     </section>
 
+    <!-- How It Works -->
     <section class="about-section">
         <h2>[% loc('How It Works') %]</h2>
         <div class="about-steps">
             <div class="about-steps__item">
                 <span class="about-steps__number">1</span>
-                <h3>[% loc('Locate') %]</h3>
-                <p>[% loc('Enter a street address, city, or ZIP code. Place a pin on the map at the problem location.') %]</p>
+                <span class="about-steps__emoji">&#128248;</span>
+                <h3>[% loc('Report') %]</h3>
+                <p>[% loc('Snap a photo and describe the issue') %]</p>
             </div>
             <div class="about-steps__item">
                 <span class="about-steps__number">2</span>
-                <h3>[% loc('Describe') %]</h3>
-                <p>[% loc('Select a category, write a description, and upload up to 3 photos. Photos are automatically checked for inappropriate content.') %]</p>
+                <span class="about-steps__emoji">&#128205;</span>
+                <h3>[% loc('Locate') %]</h3>
+                <p>[% loc('We pinpoint the GPS coordinates') %]</p>
             </div>
             <div class="about-steps__item">
                 <span class="about-steps__number">3</span>
+                <span class="about-steps__emoji">&#128232;</span>
                 <h3>[% loc('Route') %]</h3>
-                <p>[% loc('InfraSignal determines the responsible authority using geographic boundary data and sends your report with full details and priority classification.') %]</p>
+                <p>[% loc('Sent to the correct local government') %]</p>
             </div>
             <div class="about-steps__item">
                 <span class="about-steps__number">4</span>
+                <span class="about-steps__emoji">&#128276;</span>
                 <h3>[% loc('Track') %]</h3>
-                <p>[% loc('Receive email updates as the authority investigates. View all reports on the public map. Post follow-up updates at any time.') %]</p>
+                <p>[% loc('Get updates as the issue is resolved') %]</p>
             </div>
         </div>
     </section>
 
+    <!-- For Local Authorities -->
     <section class="about-section about-section--highlight">
         <h2>[% loc('For Local Authorities') %]</h2>
-        <p>[% loc('InfraSignal gives government agencies a standardized channel to receive infrastructure reports from constituents. Benefits include:') %]</p>
-        <ul class="about-benefits">
-            <li>[% loc('Structured, geolocated reports with photos and priority levels') %]</li>
-            <li>[% loc('13 standardized categories aligned with common public works operations') %]</li>
-            <li>[% loc('Four-tier priority system (Emergency, High, Normal, Low) created automatically for each jurisdiction') %]</li>
-            <li>[% loc('Compatibility with the Open311 GeoReport v2 standard for future automated integration with CRM and work order systems') %]</li>
-        </ul>
-        <p>[% loc('To update your jurisdiction&rsquo;s contact information or discuss integration, visit our <a href="/contact">contact page</a>.') %]</p>
+        <div class="about-benefits-card">
+            <ul class="about-benefits">
+                <li><span class="about-benefits__check">&#10003;</span> [% loc('AI-powered auto-classification of reports') %]</li>
+                <li><span class="about-benefits__check">&#10003;</span> [% loc('Priority zones near schools, hospitals, highways') %]</li>
+                <li><span class="about-benefits__check">&#10003;</span> [% loc('Multi-language support (EN/ES/RU/TR)') %]</li>
+                <li><span class="about-benefits__check">&#10003;</span> [% loc('Analytics dashboard with SLA tracking') %]</li>
+                <li><span class="about-benefits__check">&#10003;</span> [% loc('Affordable pricing at $3,588/year') %]</li>
+                <li><span class="about-benefits__check">&#10003;</span> [% loc('Standardized 13-category reporting system') %]</li>
+            </ul>
+            <div class="about-benefits__pricing">
+                <p class="about-benefits__price">$3,588/[% loc('year') %]</p>
+                <p class="about-benefits__per">[% loc('per jurisdiction') %]</p>
+                <a href="/contact" class="about-benefits__btn">[% loc('Get Started') %] &rarr;</a>
+            </div>
+        </div>
     </section>
 
+    <!-- Contact -->
     <section class="about-section">
-        <h2>[% loc('Contact') %]</h2>
-        <p>[% loc('Questions, suggestions, or partnership inquiries? Reach us at:') %]</p>
+        <h2>[% loc('Get in Touch') %]</h2>
         <div class="about-contact">
-            <a href="mailto:[% c.cobrand.contact_email %]" class="about-contact__link">
-                <span class="about-contact__icon">✉️</span>
+            <a href="mailto:[% c.cobrand.contact_email %]" class="about-contact__link about-contact__link--outline">
+                <span class="about-contact__icon">&#9993;&#65039;</span>
                 [% c.cobrand.contact_email %]
             </a>
-            <a href="/contact" class="about-contact__link">
-                <span class="about-contact__icon">💬</span>
-                [% loc('Contact Form') %]
+            <a href="/contact" class="about-contact__link about-contact__link--primary">
+                [% loc('Contact Form') %] &rarr;
             </a>
         </div>
     </section>

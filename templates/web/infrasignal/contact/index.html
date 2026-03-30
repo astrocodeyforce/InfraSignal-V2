@@ -1,0 +1,49 @@
+[% extra_js = [
+    version('/js/contact.js')
+] -%]
+[% INCLUDE 'header.html',
+    title = loc('Contact Us')
+    robots = 'noindex,nofollow'
+    sidebar = 'about/_sidebar.html'
+%]
+
+<div class="contact-page">
+    <h1 class="contact-page__title">[% loc('Contact Us') %]</h1>
+
+    <div class="contact-page__grid">
+        <!-- Form Column -->
+        <div class="contact-page__form-col">
+            <div class="contact-page__card">
+                <h2 class="contact-page__card-title">[% loc('Send a Message') %]</h2>
+                [% INCLUDE 'contact/form.html' %]
+            </div>
+        </div>
+
+        <!-- Info Column -->
+        <div class="contact-page__info-col">
+            <div class="contact-page__card">
+                <h3 class="contact-page__info-title">[% loc('Contact Information') %]</h3>
+                <div class="contact-page__info-item">
+                    <div class="contact-page__info-icon">&#9993;&#65039;</div>
+                    <div>
+                        <p class="contact-page__info-label">[% loc('Email') %]</p>
+                        <a href="mailto:[% c.cobrand.contact_email %]" class="contact-page__info-value">[% c.cobrand.contact_email %]</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-page__card contact-page__card--highlight">
+                <h3 class="contact-page__info-title">[% loc('For Local Government') %]</h3>
+                <p class="contact-page__info-text">[% loc('Interested in bringing InfraSignal to your city or county? We offer affordable plans starting at $3,588/year &mdash; a fraction of what competitors charge.') %]</p>
+                <p class="contact-page__info-cta">[% loc('Schedule a demo today') %] &rarr;</p>
+            </div>
+
+            <div class="contact-page__card">
+                <h3 class="contact-page__info-title">[% loc('Response Time') %]</h3>
+                <p class="contact-page__info-text">[% loc('We typically respond within 1 business day. For urgent infrastructure issues, please submit a report directly &mdash; it will be routed to the responsible government immediately.') %]</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]
