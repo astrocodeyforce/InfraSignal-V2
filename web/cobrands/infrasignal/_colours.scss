@@ -3,25 +3,112 @@
 // If you are wanting a right-to-left layout, uncomment the following line.
 // $direction: right;
 
-/* COLOURS */
+/* ======================================================
+   InfraSignal Color System — Trust Blue + Signal Orange
+   Replaces legacy orange/blue neon palette.
+   Blue = authority, reliability, government trust.
+   Orange = action accent for CTAs and alerts.
+   ====================================================== */
 
-$orange: #ff9900;
-$bluey: #6688ff;
+// --- PRIMARY: Trust Blue ---
+$primary-900:  #0F2444;
+$primary-700:  #1E40AF;
+$primary-500:  #3B82F6;
+$primary-300:  #93C5FD;
+$primary-50:   #EFF6FF;
 
-$primary: $orange;
-$primary_b: #000000;
-$primary_text: #222222;
+// --- ACCENT: Signal Orange ---
+$accent-600:   #EA580C;
+$accent-500:   #F97316;
+$accent-100:   #FFEDD5;
+$accent-50:    #FFF7ED;
 
-$base_bg: $bluey;
-$base_fg: #000;
+// --- NEUTRAL: Gray Scale ---
+$gray-900:     #111827;
+$gray-700:     #374151;
+$gray-500:     #6B7280;
+$gray-300:     #D1D5DB;
+$gray-100:     #F3F4F6;
 
-$nav_background_colour: $bluey;
-$nav_colour: #000;
-$nav_hover_background_colour: $primary;
+// --- STATUS ---
+$status-success:  #059669;
+$status-warning:  #D97706;
+$status-danger:   #DC2626;
+$status-info:     #2563EB;
 
-// Colour used for front page 'how to report a problem' steps
-$col_big_numbers: #ccc;
+/* ======================================================
+   FixMyStreet Base SCSS Variable Mappings
+   These map our design tokens to the !default variables
+   expected by web/cobrands/sass/_base.scss
+   ====================================================== */
 
-$col_click_map: $bluey;
+// Legacy aliases (used in base.scss references)
+$orange: $accent-500;
+$bluey: $primary-700;
 
-$front-main-background-desktop: $orange;
+// Core platform variables
+$primary: $primary-700;
+$primary_b: $primary-900;
+$primary_text: $gray-700;
+
+$base_bg: $primary-700;
+$base_fg: #fff;
+
+$nav_background_colour: $primary-900;
+$nav_colour: #fff;
+$nav_hover_background_colour: $primary-500;
+
+// Step numbers — must pass WCAG AA on white (4.5:1)
+$col_big_numbers: $primary-700;
+
+$col_click_map: $primary-500;
+
+// Hero section background
+$front-main-background-desktop: $primary-700;
+$front-main-color: #fff;
+$front-main-background: $primary-700;
+$front-main-h2-color: rgba(255, 255, 255, 0.85);
+
+// Postcode form on hero
+$postcodeform-background: rgba(255, 255, 255, 0.12);
+$postcodeform-color: #fff;
+$form-hint-color: rgba(255, 255, 255, 0.7);
+$geolocation-link: #fff;
+$geolocation-link-border: rgba(255, 255, 255, 0.3);
+$geolocation-link-background-color: rgba(255, 255, 255, 0.1);
+
+// Links
+$link-color: $primary-700;
+$link-hover-color: $primary-500;
+
+// Buttons — trust blue instead of black
+$button-primary-bg-top: $primary-700;
+$button-primary-bg-bottom: $primary-700;
+$button-primary-border: darken($primary-700, 8%);
+$button-primary-text: #fff;
+$button-primary-hover-bg-top: $primary-500;
+$button-primary-hover-bg-bottom: $primary-500;
+$button-primary-hover-border: darken($primary-500, 8%);
+$button-primary-hover-text: #fff;
+$button-primary-focus-bg-top: $primary-500;
+$button-primary-focus-bg-bottom: $primary-500;
+$button-primary-focus-border: $primary-300;
+$button-primary-focus-text: #fff;
+
+// Footer
+$footer-main-nav-background: $primary-900;
+$footer-main-nav-color: rgba(255, 255, 255, 0.85);
+
+// Forms
+$form-control-border-color: $gray-300;
+
+// Fixed label
+$col_fixed_label: $status-success;
+$col_fixed_label_light: lighten($status-success, 45%);
+
+// Item list
+$itemlist_item_background: #fff;
+$itemlist_item_background_hover: $primary-50;
+
+// Error
+$error_color: $status-danger;

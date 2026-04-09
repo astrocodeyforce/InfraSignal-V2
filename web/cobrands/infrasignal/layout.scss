@@ -1,2 +1,35 @@
 @import "_colours";
 @import "../sass/layout";
+
+/* ======================================================
+   A12: Desktop Layout Polish (≥48em / 768px)
+   Updated for community-connect design system.
+   ====================================================== */
+
+// Content area — default max-width for inner pages
+.content {
+    max-width: 960px;
+}
+
+// Frontpage content must be full-width so sections go edge-to-edge
+.frontpage .content {
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+// Hero section desktop enhancement
+.frontpage #front-main {
+    padding: 48px 0;
+
+    h1 {
+        font-size: 2.5rem;
+    }
+}
+
+// Report list — cards with spacing
+.item-list--reports {
+    .item-list__item {
+        margin-bottom: 16px;
+    }
+}
