@@ -150,14 +150,14 @@
         <form method="get" action="/reports">
           [% IF body %]
             <select id="ward" name="ward" class="js-autocomplete" required>
-              <option value="">[% loc('Pick your ward') %]</option>
+              <option value="">[% loc('Choose your neighborhood…') %]</option>
               [% FOR child IN children.values.sort('name') %]
                 <option>[% child.name | html ~%]</option>
               [% END %]
             </select>
           [% ELSE %]
             <select id="body" name="body" class="js-autocomplete" required>
-              <option value="">[% loc('Select a jurisdiction…') %]</option>
+              <option value="">[% loc('Choose your neighborhood…') %]</option>
               [% FOR b IN bodies %]
                 <option value="[% b.id %]">[% b.name | html ~%]
                     [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
@@ -165,8 +165,17 @@
               [% END %]
             </select>
           [% END %]
-          <button type="submit" class="area-picker__go-btn">[% loc('GO') %]</button>
+          <button type="submit" class="area-picker__go-btn">
+            [% loc('View Reports') %]
+            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+          </button>
         </form>
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var input = document.querySelector('.area-picker .autocomplete__input');
+            if (input) input.setAttribute('placeholder', '[% loc("Choose your neighborhood…") %]');
+          });
+        </script>
       </div>
     </div>
 
@@ -229,7 +238,10 @@
           [% END %]
 
           <div class="cat-list__footer">
-            <span>[% loc('Other categories') %]: [% tprintf(nget("%s report", "%s reports", other_categories), decode(other_categories_formatted)) %]</span>
+            <a href="/report/new">
+              [% loc('Report an issue') %]
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
           </div>
         </div>
       </div>
