@@ -1,7 +1,7 @@
 # InfraSignal — Architecture Guide
 
-**Last Updated:** 2026-02-28  
-**Version:** 2.3  
+**Last Updated:** 2026-04-12  
+**Version:** 2.5  
 **Live URL:** https://infrasignal.org  
 **Server:** `REDACTED-HOST` — 2 vCPU, 8 GB RAM, 96 GB disk (x86_64)
 
