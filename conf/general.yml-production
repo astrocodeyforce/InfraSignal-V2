@@ -1,0 +1,88 @@
+# ============================================================
+# InfraSignal — Production Environment Config
+# ============================================================
+# Used by: docker/docker-compose-prod.yml
+# Purpose: Live production site
+# ============================================================
+
+FMS_DB_HOST: 'postgres.svc'
+FMS_DB_PORT: '5432'
+FMS_DB_NAME: 'infrasignal'
+FMS_DB_USER: 'fms'
+FMS_DB_PASS: 'CHANGE_ME'
+
+BASE_URL: 'https://infrasignal.org'
+SECURE_PROXY_SSL_HEADER: [ 'X-Forwarded-Proto', 'https' ]
+CONTENT_SECURITY_POLICY: 1
+using_frontend_proxy: 1
+
+EMAIL_DOMAIN: 'infrasignal.org'
+CONTACT_EMAIL: 'help@infrasignal.org'
+CONTACT_NAME: 'InfraSignal'
+DO_NOT_REPLY_EMAIL: 'noreply@infrasignal.org'
+
+# NOT a staging site — sends real reports
+STAGING_SITE: 0
+STAGING_FLAGS:
+  send_reports: 1
+  skip_checks: 0
+  hide_staging_banner: 1
+
+EXAMPLE_PLACES: [ 'High Street', 'Main Street' ]
+
+LANGUAGES:
+  - 'en-gb,English,en_GB'
+  - 'tr,Türkçe,tr_TR'
+  - 'es,Español,es_ES'
+  - 'ru,Русский,ru_RU'
+
+DB_FULL_TEXT_SEARCH_CONFIG: 'english'
+TIME_ZONE: ""
+GEO_CACHE: '../cache/'
+PHOTO_STORAGE_BACKEND: 'FileSystem'
+PHOTO_STORAGE_OPTIONS:
+  UPLOAD_DIR: '../upload/'
+
+SIGHTENGINE_ENABLED: 1
+SIGHTENGINE_API_USER: ''
+SIGHTENGINE_API_SECRET: ''
+SIGHTENGINE_IMAGE_LIST_ID: ''
+
+MAPIT_URL: 'https://mapit.mysociety.org/'
+MAPIT_TYPES: [ 'DIS', 'LBO', 'MTD', 'UTA', 'CTY', 'COI', 'LGD' ]
+MAPIT_ID_WHITELIST: []
+MAPIT_GENERATION: 0
+MAPIT_TYPES_CHILDREN: [ 'DIW', 'LBW', 'MTW', 'UTE', 'UTW', 'CED', 'COP', 'LGW' ]
+
+GEOCODER: 'OSM'
+GOOGLE_MAPS_API_KEY: ''
+BING_MAPS_API_KEY: ''
+GEOCODING_DISAMBIGUATION: ''
+MAP_TYPE: 'OSM'
+
+ALLOWED_COBRANDS:
+  - infrasignal
+
+ADMIN_BASE_URL: ''
+RSS_LIMIT: '20'
+OPEN311_LIMIT: 1000
+ALL_REPORTS_PER_PAGE: 100
+
+FACEBOOK_APP_ID: ''
+FACEBOOK_APP_SECRET: ''
+TWITTER_KEY: ''
+TWITTER_SECRET: ''
+
+SMTP_SMARTHOST: 'smtp.sendgrid.net'
+SMTP_TYPE: 'tls'
+SMTP_PORT: '587'
+SMTP_USERNAME: 'apikey'
+SMTP_PASSWORD: ''
+
+CHECK_HAVEIBEENPWNED: 1
+GAZE_URL: 'https://gaze.mysociety.org/gaze'
+MEMCACHED_HOST: 'memcached.svc'
+CACHE_TIMEOUT: 3600
+AREA_LINKS_FROM_PROBLEMS: '0'
+LOGIN_REQUIRED: 0
+SIGNUPS_DISABLED: 0

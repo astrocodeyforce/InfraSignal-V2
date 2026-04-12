@@ -1,0 +1,383 @@
+// ============================================================
+// InfraSignal — Contact Page Styles
+// Production SCSS for Perl/Template Toolkit stack
+// ============================================================
+
+// Design tokens (should match your global _variables.scss)
+$primary-900: hsl(215, 64%, 16%);
+$primary-700: hsl(224, 71%, 40%);
+$primary-500: hsl(217, 91%, 60%);
+$primary-300: hsl(213, 97%, 78%);
+$primary-50:  hsl(214, 100%, 97%);
+
+$accent-500:  hsl(25, 95%, 53%);
+$accent-100:  hsl(33, 100%, 92%);
+$accent-50:   hsl(33, 100%, 96%);
+
+$gray-900: hsl(222, 47%, 11%);
+$gray-700: hsl(218, 20%, 27%);
+$gray-500: hsl(220, 9%, 46%);
+$gray-300: hsl(216, 12%, 84%);
+$gray-100: hsl(220, 14%, 96%);
+
+$danger:   hsl(0, 72%, 51%);
+$white:    #ffffff;
+$radius:   0.5rem;
+$radius-xl: 0.75rem;
+
+$gradient-hero: linear-gradient(135deg, $primary-900, $primary-500);
+$shadow-card: 0 1px 3px rgba(0, 0, 0, 0.06);
+$shadow-card-hover: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+$font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+             'Helvetica Neue', Arial, sans-serif;
+
+// ---- Hero ----
+.contact-hero {
+  padding: 3rem 0;
+  text-align: center;
+  background: $gradient-hero;
+
+  &__title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: $white;
+    letter-spacing: -0.025em;
+    @media (min-width: 640px) { font-size: 2.25rem; }
+  }
+
+  &__subtitle {
+    margin-top: 0.75rem;
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1rem;
+    color: $primary-300;
+  }
+}
+
+// ---- Two-column layout ----
+.contact-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+  }
+}
+
+// ---- Sidebar Navigation ----
+.contact-sidebar {
+  display: none;
+  width: 14rem;
+  flex-shrink: 0;
+
+  @media (min-width: 768px) { display: block; }
+
+  &__nav {
+    position: sticky;
+    top: 6rem;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__link {
+    display: block;
+    padding: 0.625rem 1rem;
+    border-radius: $radius-xl;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: $gray-500;
+    text-decoration: none;
+    transition: background-color 0.15s, color 0.15s;
+
+    &:hover {
+      background-color: $gray-100;
+      color: $gray-900;
+    }
+
+    &--active {
+      border-left: 3px solid $primary-700;
+      background-color: $primary-50;
+      color: $primary-700;
+      font-weight: 600;
+    }
+  }
+}
+
+// ---- Main content ----
+.contact-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 42rem;
+}
+
+// ---- Notice banners ----
+.contact-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: $radius-xl;
+  margin-bottom: 1.5rem;
+
+  &--info {
+    border: 1px solid $primary-300;
+    background-color: $primary-50;
+  }
+
+  &--warning {
+    border: 1px solid $accent-100;
+    background-color: $accent-50;
+    margin-bottom: 2rem;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &__icon--info  { color: $primary-700; }
+  &__icon--warn  { color: $accent-500; }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-900;
+  }
+
+  &__text {
+    margin-top: 0.125rem;
+    font-size: 0.875rem;
+    color: $gray-500;
+
+    a {
+      font-weight: 500;
+      color: $primary-700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+
+      &:hover { color: $primary-500; }
+    }
+  }
+}
+
+// ---- Form card ----
+.contact-form-card {
+  background: $white;
+  border: 1px solid $gray-300;
+  border-radius: $radius-xl;
+  padding: 1.5rem;
+  box-shadow: $shadow-card;
+
+  @media (min-width: 640px) { padding: 2rem; }
+
+  &__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $gray-900;
+  }
+
+  &__subtitle {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: $gray-500;
+  }
+}
+
+.contact-form {
+  margin-top: 1.5rem;
+
+  &__row {
+    display: grid;
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+
+    @media (min-width: 640px) { grid-template-columns: 1fr 1fr; }
+  }
+
+  &__group {
+    margin-bottom: 1.25rem;
+  }
+
+  &__label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-900;
+    margin-bottom: 0.375rem;
+
+    .required { color: $danger; }
+    .optional {
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: $gray-500;
+    }
+  }
+
+  &__input,
+  &__textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: $font-stack;
+    color: $gray-900;
+    background: $white;
+    border: 2px solid $gray-300;
+    border-radius: $radius;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+
+    &::placeholder { color: $gray-500; }
+
+    &:focus {
+      border-color: $primary-700;
+      box-shadow: 0 0 0 3px rgba($primary-500, 0.2);
+    }
+  }
+
+  &__textarea {
+    resize: none;
+    min-height: 140px;
+  }
+
+  &__captcha {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid $gray-300;
+    border-radius: $radius;
+    background: $gray-100;
+    margin-bottom: 1.25rem;
+
+    &-box {
+      width: 1.25rem;
+      height: 1.25rem;
+      border: 2px solid $gray-300;
+      border-radius: 0.25rem;
+    }
+
+    &-label {
+      font-size: 0.875rem;
+      color: $gray-500;
+    }
+  }
+
+  &__submit {
+    display: block;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: $font-stack;
+    color: $white;
+    background: $primary-700;
+    border: none;
+    border-radius: $radius;
+    cursor: pointer;
+    transition: background-color 0.15s, transform 0.1s;
+
+    &:hover {
+      background: $primary-500;
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    svg {
+      display: inline;
+      margin-left: 0.25rem;
+      vertical-align: middle;
+    }
+  }
+}
+
+// ---- "Don't like forms?" section ----
+.contact-alt {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border: 1px solid $gray-300;
+  border-radius: $radius-xl;
+  background: rgba($gray-100, 0.5);
+  text-align: center;
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-900;
+  }
+
+  &__text {
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+    color: $gray-500;
+
+    a {
+      font-weight: 500;
+      color: $primary-700;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      &:hover { color: $primary-500; }
+    }
+  }
+}
+
+// ---- Info cards row ----
+.contact-info-cards {
+  display: grid;
+  gap: 1rem;
+  margin-top: 2rem;
+
+  @media (min-width: 640px) { grid-template-columns: repeat(3, 1fr); }
+}
+
+.contact-info-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: $white;
+  border: 1px solid $gray-300;
+  border-radius: $radius-xl;
+  box-shadow: $shadow-card;
+  transition: box-shadow 0.2s, transform 0.2s;
+
+  &:hover {
+    box-shadow: $shadow-card-hover;
+    transform: translateY(-2px);
+  }
+
+  &__icon-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    border-radius: $radius;
+    background: $primary-50;
+
+    svg { color: $primary-700; width: 20px; height: 20px; }
+  }
+
+  &__label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-900;
+  }
+
+  &__value {
+    font-size: 0.875rem;
+    color: $gray-500;
+  }
+}
