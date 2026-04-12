@@ -1,6 +1,48 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — April 12, 2026 (Version 2.5 — Info Pages Redesign):
+        - Page Layouts:
+            - Added hero banner + sidebar navigation to all info pages (About, FAQ,
+              Privacy, Terms). Sidebar highlights active page. Applied `body.infopage`
+              class and `.infra-container` / `.contact-layout` / `.contact-main` grid.
+            - About page: redesigned with Lovable reference card layout — feature cards,
+              stats section, 3-step "How It Works", benefits checklist with checkmarks,
+              dual CTA (contact form + email).
+            - FAQ page: converted to collapsible accordion using `<details>/<summary>`
+              elements grouped by topic sections (Getting Started, Reporting, Account,
+              Platform, Legal).
+            - Privacy page: converted to collapsible accordion matching FAQ style,
+              with intro card, 10 grouped sections, and "Questions about your privacy?" CTA.
+            - Terms page: converted to collapsible accordion matching FAQ/Privacy style,
+              18 sections grouped into 5 categories (Getting Started, Usage Rules,
+              Content & IP, Legal, General Provisions).
+        - CSS & Theming:
+            - Added `$gray-50`, `$gray-200`, `$gray-600` color variables to `_colours.scss`.
+            - Added `.info-page-card` component styles for info page content cards.
+            - Added FAQ accordion styles: `.faq-sections`, `.faq-accordion`, `.faq-item`,
+              `.faq-item__question`, `.faq-item__answer`, `.faq-cta`, `.faq-cta__btn`.
+            - About page component styles: `.about-features`, `.about-stats`,
+              `.about-steps`, `.about-benefits`, `.about-contact`.
+        - Bug Fixes:
+            - Fixed invisible white-on-blue button text on About, FAQ, and Privacy
+              contact CTA buttons — platform link color override required `!important`.
+            - Fixed duplicate checkmarks on About page benefits list — removed
+              `::before` pseudo-element that duplicated inline `<span>` checkmark.
+            - Changed search bar button label from "Go" to "Report" on production
+              (`around/postcode_form.html`).
+            - Added `header-nav.js` to `footer_extra_js.html` (was missing on production).
+        - Files added/modified:
+            - `templates/web/infrasignal/about/about-en-gb.html` (redesigned)
+            - `templates/web/infrasignal/about/faq-en-gb.html` (redesigned)
+            - `templates/web/infrasignal/about/privacy.html` (redesigned)
+            - `templates/web/infrasignal/about/terms.html` (redesigned)
+            - `templates/web/infrasignal/around/postcode_form.html` (button label fix)
+            - `templates/web/infrasignal/footer_extra_js.html` (added header-nav.js)
+            - `web/cobrands/infrasignal/_colours.scss` (new gray variables)
+            - `web/cobrands/infrasignal/base.scss` (info page + accordion styles)
+            - `web/cobrands/infrasignal/layout.scss` (layout adjustments)
+
     - InfraSignal — March 26, 2026 (Version 2.4 — Viewer-Local Timestamps):
         - Localization:
             - Set server-side timezone to `America/Chicago` (`conf/general.yml TIME_ZONE`)
