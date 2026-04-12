@@ -90,8 +90,9 @@ body.dashboard .content footer {
     margin: 0 !important;
 }
 
-// Contact page — full-width
-body.contactpage .content {
+// Contact & Info pages — full-width
+body.contactpage .content,
+body.infopage .content {
     max-width: none !important;
     width: 100% !important;
     padding: 0 !important;
@@ -102,14 +103,17 @@ body.contactpage .content {
 }
 
 body.contactpage .container,
-body.contactpage .container--sidebar {
+body.contactpage .container--sidebar,
+body.infopage .container,
+body.infopage .container--sidebar {
     max-width: none !important;
     width: 100% !important;
     padding: 0 !important;
     display: block !important;
 }
 
-body.contactpage .content footer {
+body.contactpage .content footer,
+body.infopage .content footer {
     margin: 0 !important;
 }
 
