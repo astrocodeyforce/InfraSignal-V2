@@ -274,7 +274,6 @@
         var banner = sideReport.querySelector('.banner');
         var problemHeader = sideReport.querySelector('.problem-header');
         if (!banner && problemHeader && backLink) {
-            // Determine state from updates or default to "open"
             var stateText = 'Open';
             var stateClass = 'banner--open';
             var metaItems = sideReport.querySelectorAll('.meta-2');
@@ -295,120 +294,97 @@
         }
 
         // --- 4. Build status timeline ---
-        var existingTimeline = sideReport.querySelector('.status-timeline');
-        if (!existingTimeline && problemHeader) {
-            // Get current state
-            var currentBanner = sideReport.querySelector('.banner');
-            var currentState = 'reported'; // default
-            if (currentBanner) {
-                var bannerText = currentBanner.textContent.trim().toLowerCase();
-                if (bannerText.indexOf('fixed') !== -1 || bannerText.indexOf('closed') !== -1) currentState = 'resolved';
-                else if (bannerText.indexOf('in progress') !== -1 || bannerText.indexOf('action') !== -1) currentState = 'in-progress';
-                else if (bannerText.indexOf('investigating') !== -1 || bannerText.indexOf('acknowledged') !== -1) currentState = 'acknowledged';
-                else currentState = 'reported';
-            }
+        if (sideReport.querySelector('.status-timeline') || !problemHeader) return;
 
-            // Get report date from .report_meta_info
-            var metaInfo = problemHeader.querySelector('.report_meta_info');
-            var reportDate = '';
-            if (metaInfo) {
-                var localtime = metaInfo.querySelector('.js-localtime');
-                if (localtime) {
-                    var epoch = localtime.getAttribute('data-epoch');
-                    if (epoch) {
-                        var d = new Date(parseInt(epoch) * 1000);
-                        reportDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                    }
-                }
-            }
-
-            // Get latest update date
-            var updateDate = '';
-            var metaItems2 = sideReport.querySelectorAll('.meta-2');
-            for (var j = metaItems2.length - 1; j >= 0; j--) {
-                var metaText = metaItems2[j].textContent;
-                var dateMatch = metaText.match(/(\d{1,2}:\d{2},?\s+\w+\s+\d{1,2}\s+\w+\s+\d{4})/);
-                if (dateMatch) {
-                    // Parse the platform date format
-                    try {
-                        var parts = dateMatch[1].replace(/,/g, '').split(/\s+/);
-                        // Format: "14:07, Tuesday 17 March 2026" -> parts after time
-                        if (parts.length >= 4) {
-                            var dp = new Date(parts[parts.length - 3] + ' ' + parts[parts.length - 2] + ', ' + parts[parts.length - 1]);
-                            if (!isNaN(dp.getTime())) {
-                                updateDate = dp.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                            }
-                        }
-                    } catch(e) {}
-                    break;
-                }
-            }
-
-            var steps = [
-                { key: 'reported', label: 'Reported', date: reportDate },
-                { key: 'acknowledged', label: 'Acknowledged', date: '' },
-                { key: 'in-progress', label: 'In Progress', date: '' },
-                { key: 'resolved', label: 'Resolved', date: '' }
-            ];
-
-            // Mark which steps are complete
-            var stateOrder = ['reported', 'acknowledged', 'in-progress', 'resolved'];
-            var currentIdx = stateOrder.indexOf(currentState);
-            if (currentIdx === -1) currentIdx = 0;
-
-            // If we have an update date and state is beyond reported, assign it
-            if (currentIdx >= 1 && updateDate) {
-                steps[currentIdx].date = updateDate;
-            }
-
-            var timelineHTML = '<div class="status-timeline">';
-            timelineHTML += '<h3 class="status-timeline__heading">STATUS TIMELINE</h3>';
-            timelineHTML += '<div class="status-timeline__track">';
-
-            for (var s = 0; s < steps.length; s++) {
-                var isComplete = s <= currentIdx;
-                var isCurrent = s === currentIdx;
-                var stepClass = 'status-timeline__step';
-                if (isComplete) stepClass += ' status-timeline__step--complete';
-                if (isCurrent) stepClass += ' status-timeline__step--current';
-
-                timelineHTML += '<div class="' + stepClass + '">';
-                timelineHTML += '<div class="status-timeline__dot">';
-                if (isComplete) {
-                    timelineHTML += '<svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="white" stroke-width="2"/><path d="M4 7l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-                }
-                timelineHTML += '</div>';
-                if (s < steps.length - 1) {
-                    var lineClass = 'status-timeline__line';
-                    if (s < currentIdx) lineClass += ' status-timeline__line--complete';
-                    else lineClass += ' status-timeline__line--pending';
-                    timelineHTML += '<div class="' + lineClass + '"></div>';
-                }
-                timelineHTML += '</div>';
-
-                // Label row (built below track)
-            }
-            timelineHTML += '</div>'; // end track
-
-            // Labels row
-            timelineHTML += '<div class="status-timeline__labels">';
-            for (var l = 0; l < steps.length; l++) {
-                var labelComplete = l <= currentIdx;
-                timelineHTML += '<div class="status-timeline__label' + (labelComplete ? ' status-timeline__label--complete' : '') + '">';
-                timelineHTML += '<span class="status-timeline__label-text">' + steps[l].label + '</span>';
-                timelineHTML += '<span class="status-timeline__label-date">' + (steps[l].date || 'Pending') + '</span>';
-                timelineHTML += '</div>';
-            }
-            timelineHTML += '</div>'; // end labels
-
-            timelineHTML += '</div>'; // end timeline
-
-            // Insert after problem-header, before updates section or update_form
-            var insertPoint = problemHeader.nextElementSibling;
-            var timelineDiv = document.createElement('div');
-            timelineDiv.innerHTML = timelineHTML;
-            problemHeader.parentNode.insertBefore(timelineDiv.firstChild, insertPoint);
+        // Determine current state
+        var currentBanner = sideReport.querySelector('.banner');
+        var currentState = 'reported';
+        if (currentBanner) {
+            var bt = currentBanner.textContent.trim().toLowerCase();
+            if (bt.indexOf('fixed') !== -1 || bt.indexOf('closed') !== -1) currentState = 'resolved';
+            else if (bt.indexOf('in progress') !== -1 || bt.indexOf('action') !== -1) currentState = 'in-progress';
+            else if (bt.indexOf('investigating') !== -1 || bt.indexOf('acknowledged') !== -1) currentState = 'acknowledged';
         }
+
+        // Get report date
+        var reportDate = '';
+        var metaInfo = problemHeader.querySelector('.report_meta_info .js-localtime');
+        if (metaInfo) {
+            var epoch = metaInfo.getAttribute('data-epoch');
+            if (epoch) {
+                var d = new Date(parseInt(epoch) * 1000);
+                reportDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+            }
+        }
+
+        // Get latest update date
+        var updateDate = '';
+        var allMeta = sideReport.querySelectorAll('.meta-2');
+        for (var j = allMeta.length - 1; j >= 0; j--) {
+            var mt = allMeta[j].textContent;
+            var dm = mt.match(/(\d{1,2}:\d{2}),?\s+\w+\s+(\d{1,2})\s+(\w+)\s+(\d{4})/);
+            if (dm) {
+                try {
+                    var pd = new Date(dm[3] + ' ' + dm[2] + ', ' + dm[4]);
+                    if (!isNaN(pd.getTime())) {
+                        updateDate = pd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    }
+                } catch(e) {}
+                break;
+            }
+        }
+
+        var stateOrder = ['reported', 'acknowledged', 'in-progress', 'resolved'];
+        var currentIdx = stateOrder.indexOf(currentState);
+        if (currentIdx === -1) currentIdx = 0;
+
+        var steps = [
+            { label: 'Reported',     date: reportDate },
+            { label: 'Acknowledged', date: currentIdx >= 1 ? (updateDate || '') : '' },
+            { label: 'In Progress',  date: currentIdx >= 2 ? (updateDate || '') : '' },
+            { label: 'Resolved',     date: currentIdx >= 3 ? (updateDate || '') : '' }
+        ];
+
+        // Build HTML — each step is a column with dot on top and label below
+        var html = '<div class="status-timeline">';
+        html += '<div class="status-timeline__heading">STATUS TIMELINE</div>';
+        html += '<div class="status-timeline__row">';
+
+        for (var s = 0; s < steps.length; s++) {
+            var done = s <= currentIdx;
+            html += '<div class="status-timeline__col">';
+
+            // Dot
+            html += '<div class="status-timeline__dot' + (done ? ' --done' : '') + '">';
+            if (done) {
+                html += '<svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+            }
+            html += '</div>';
+
+            // Label
+            html += '<div class="status-timeline__text">';
+            html += '<div class="status-timeline__name' + (done ? ' --done' : '') + '">' + steps[s].label + '</div>';
+            html += '<div class="status-timeline__date' + (done ? ' --done' : '') + '">' + (steps[s].date || 'Pending') + '</div>';
+            html += '</div>';
+
+            html += '</div>'; // col
+
+            // Line between steps (not after last)
+            if (s < steps.length - 1) {
+                var lineDone = s < currentIdx;
+                html += '<div class="status-timeline__line' + (lineDone ? ' --solid' : ' --dashed') + '"></div>';
+            }
+        }
+
+        html += '</div>'; // row
+        html += '</div>'; // timeline
+
+        // Insert after problem-header
+        var insertTarget = problemHeader.nextElementSibling;
+        var wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+        var timelineEl = wrapper.firstChild;
+        problemHeader.parentNode.insertBefore(timelineEl, insertTarget);
     }
 
     if (document.readyState === 'loading') {
