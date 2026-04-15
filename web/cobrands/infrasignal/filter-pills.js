@@ -242,3 +242,23 @@
         setTimeout(init, 300);
     }
 })();
+
+// Report detail page enhancements (Lovable match)
+(function() {
+    'use strict';
+    if (!document.body.classList.contains('mappage')) return;
+
+    function enhanceReportDetail() {
+        // Add placeholder to update textarea
+        var textarea = document.getElementById('form_update');
+        if (textarea && !textarea.getAttribute('placeholder')) {
+            textarea.setAttribute('placeholder', 'Describe what you observed...');
+        }
+    }
+
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', enhanceReportDetail);
+    } else {
+        enhanceReportDetail();
+    }
+})();
