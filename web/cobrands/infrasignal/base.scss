@@ -6229,9 +6229,9 @@ body.mappage .banner {
   }
 }
 
-// --- 3. Report title section — proper spacing ---
+// --- 3. Report title section — proper spacing (Lovable match) ---
 body.mappage #side-report .problem-header {
-  padding: 20px !important;
+  padding: 24px 20px 20px !important;
   margin: 0 !important;
   border: none !important;
   border-bottom: 1px solid $gray-200 !important;
@@ -6240,11 +6240,11 @@ body.mappage #side-report .problem-header {
   background: #fff !important;
 
   h1 {
-    font-size: 1.35rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: $gray-900;
-    line-height: 1.4;
-    margin-bottom: 6px;
+    line-height: 1.35;
+    margin-bottom: 8px;
   }
 
   // Hide the admin checkbox
@@ -6256,21 +6256,39 @@ body.mappage #side-report .problem-header {
 
   // Meta info subtitle
   .report_meta_info {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     color: $gray-500;
     line-height: 1.5;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
+  }
+
+  // Photo displayed in report
+  .update-img {
+    float: right;
+    margin: 0 0 12px 16px;
+    max-width: 45%;
+
+    img {
+      border-radius: 10px;
+      width: 100%;
+      height: auto;
+    }
+
+    span {
+      font-size: 0.7rem;
+      color: $gray-400;
+    }
   }
 }
 
-// --- 4. Info cards — rounded bordered cards ---
+// --- 4. Info cards — rounded bordered cards (Lovable match) ---
 body.mappage #side-report .council_sent_info {
-  background: $gray-50 !important;
+  background: #fff !important;
   border: 1px solid $gray-200 !important;
-  border-radius: 10px !important;
-  padding: 14px 16px !important;
-  margin: 0 0 10px 0 !important;
-  font-size: 0.85rem !important;
+  border-radius: 12px !important;
+  padding: 16px 18px !important;
+  margin: 0 0 12px 0 !important;
+  font-size: 0.9rem !important;
   color: $gray-700 !important;
   display: flex;
   align-items: center;
@@ -6282,12 +6300,13 @@ body.mappage #side-report .council_sent_info {
   }
 }
 
-// --- 5. Report description ---
+// --- 5. Report description (Lovable match) ---
 body.mappage #side-report .problem-header .moderate-display {
+  clear: none;
   p {
-    font-size: 0.9rem;
-    color: $gray-700;
-    line-height: 1.65;
+    font-size: 0.95rem;
+    color: $gray-600;
+    line-height: 1.7;
     margin-top: 16px;
   }
 }
@@ -6381,36 +6400,80 @@ body.mappage #side-report #update_form {
   }
 }
 
-// --- 8. Photo upload — dashed dropzone ---
+// --- 8. Photo upload — dashed dropzone (Lovable match) ---
 body.mappage #side-report #form_photos {
   border: 2px dashed $gray-300 !important;
-  border-radius: 10px !important;
-  padding: 24px 16px !important;
+  border-radius: 12px !important;
+  padding: 32px 20px !important;
   text-align: center;
   background: $gray-50 !important;
   margin-bottom: 16px;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, background 0.2s;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
 
   &:hover, &:focus-within {
     border-color: $primary-500 !important;
-    background: rgba($primary-500, 0.03) !important;
+    background: $primary-50 !important;
   }
 
-  input[type="file"] {
-    display: block;
-    margin: 4px auto;
-    font-size: 0.8rem;
+  // "Drag photos here or" text via ::before
+  &::before {
+    content: 'Drag photos here or';
+    font-size: 0.875rem;
     color: $gray-500;
+    order: 1;
   }
 
-  // Hide extra photo file labels
-  label {
+  // Upload icon via ::after
+  &::after {
+    content: '\2191';
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid $gray-300;
+    color: $gray-500;
+    font-size: 1rem;
+    font-weight: 700;
+    order: 0;
+  }
+
+  // Style first file input as the "choose photos" button
+  input[type="file"]:first-of-type {
+    order: 2;
+    font-size: 0.8rem;
+    color: #fff;
+    background: $primary-900;
+    padding: 8px 18px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+
+    &::file-selector-button {
+      background: $primary-900;
+      color: #fff;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+
+  // Hide extra file inputs and labels
+  input[type="file"]:not(:first-of-type) {
     display: none;
   }
 
-  // Show only first input clearly
-  input[type="file"]:first-of-type {
-    margin-bottom: 8px;
+  label {
+    display: none;
   }
 }
 
@@ -6427,18 +6490,19 @@ body.mappage #side-report #photo-upload-label {
   }
 }
 
-// --- 9. Textarea — rounded, better styling ---
+// --- 9. Textarea — rounded, clean white (Lovable match) ---
 body.mappage #side-report #form_update {
   border: 1px solid $gray-300 !important;
-  border-radius: 10px !important;
-  padding: 12px 14px !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
   font-size: 0.875rem;
   color: $gray-900;
-  background: #fff;
+  background: #fff !important;
   transition: border-color 0.2s, box-shadow 0.2s;
   resize: vertical;
   width: 100%;
   box-sizing: border-box;
+  min-height: 120px;
 
   &:focus {
     border-color: $primary-500 !important;
@@ -6459,26 +6523,37 @@ body.mappage #side-report label[for="form_update"] {
   display: block;
 }
 
-// --- 10. Checkbox — rounded style ---
+// --- 10. Checkbox — rounded visible style (Lovable match) ---
 body.mappage #side-report .govuk-checkboxes {
-  margin: 12px 0;
+  margin: 14px 0;
+  padding-bottom: 14px;
+  border-bottom: 1px solid $gray-200;
 
   .govuk-checkboxes__item {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    min-height: 0;
+    padding: 0;
   }
 
   .govuk-checkboxes__input {
-    width: 18px;
-    height: 18px;
-    border-radius: 4px;
-    border: 2px solid $gray-300;
+    position: static !important;
+    width: 22px !important;
+    height: 22px !important;
+    min-width: 22px;
+    border-radius: 6px !important;
+    border: 2px solid $gray-300 !important;
     accent-color: $primary-500;
+    appearance: auto !important;
+    -webkit-appearance: checkbox !important;
+    opacity: 1 !important;
+    margin: 0 !important;
+    cursor: pointer;
   }
 
   .govuk-checkboxes__label {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: $gray-700;
     font-weight: 500;
     padding: 0 !important;
@@ -6495,85 +6570,72 @@ body.mappage #side-report .cf-turnstile {
   margin: 16px 0;
 }
 
-// --- 12. Auth section — gray background ---
+// --- 12. Auth section — separator line, no card bg (Lovable match) ---
 body.mappage #side-report .form-section-preview--next {
-  background: $gray-50;
-  border: 1px solid $gray-200;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 16px 0;
+  background: transparent;
+  border: none;
+  border-top: 1px solid $gray-200;
+  border-radius: 0;
+  padding: 20px 0 0 0;
+  margin: 16px 0 0 0;
 
   h2.form-section-heading {
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 700;
     color: $gray-900;
-    margin-bottom: 14px;
+    margin-bottom: 16px;
 
     &::before {
       content: '\1F512';
       margin-right: 6px;
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
   }
 }
 
-// --- 13. Google button — outlined ---
+// --- 13. Google button — outlined (Lovable match) ---
 body.mappage #side-report .btn--oidc,
 body.mappage #side-report #oidc_sign_in {
   background: #fff !important;
   color: $gray-700 !important;
   border: 1px solid $gray-300 !important;
-  border-radius: 10px !important;
-  padding: 12px 16px !important;
-  font-size: 0.875rem !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  font-size: 0.9rem !important;
   font-weight: 600 !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 10px;
   width: 100%;
   transition: border-color 0.2s, box-shadow 0.2s;
   cursor: pointer;
+  box-sizing: border-box;
 
   &:hover {
     border-color: $gray-500 !important;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
   }
-
-  // Add Google "G" icon via ::before
-  &::before {
-    content: 'G';
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background: #4285f4;
-    color: #fff;
-    font-size: 0.7rem;
-    font-weight: 700;
-    flex-shrink: 0;
-  }
 }
 
-// --- 14. Email login button — filled blue ---
+// --- 14. Email login button — filled blue (Lovable match) ---
 body.mappage #side-report .js-new-report-user-show {
   background: $primary-700 !important;
   color: #fff !important;
   border: none !important;
-  border-radius: 10px !important;
-  padding: 12px 16px !important;
-  font-size: 0.875rem !important;
+  border-radius: 12px !important;
+  padding: 14px 16px !important;
+  font-size: 0.9rem !important;
   font-weight: 600 !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  margin-top: 10px;
+  margin-top: 12px;
   cursor: pointer;
   transition: background 0.2s;
+  box-sizing: border-box;
 
   &:hover {
     background: $primary-900 !important;
@@ -6595,10 +6657,11 @@ body.mappage #key-tools {
   display: flex !important;
   align-items: center;
   justify-content: space-evenly !important;
-  padding: 14px 20px !important;
+  padding: 12px 16px !important;
   margin: 0 !important;
   list-style: none !important;
   background: $gray-50 !important;
+  border-top: 1px solid $gray-200;
 
   li {
     list-style: none !important;
@@ -6607,14 +6670,14 @@ body.mappage #key-tools {
   }
 
   a {
-    font-size: 0.75rem !important;
+    font-size: 0.8rem !important;
     font-weight: 600 !important;
     color: $gray-600 !important;
     text-decoration: none !important;
     display: inline-flex !important;
-    flex-direction: column !important;
+    flex-direction: row !important;
     align-items: center !important;
-    gap: 4px !important;
+    gap: 5px !important;
     padding: 0 !important;
     background: none !important;
     border: none !important;
@@ -6629,9 +6692,10 @@ body.mappage #key-tools {
     }
 
     svg {
-      width: 1.1rem !important;
-      height: 1.1rem !important;
-      color: $gray-400;
+      width: 1rem !important;
+      height: 1rem !important;
+      color: $gray-500;
+      order: -1;
     }
   }
 }
