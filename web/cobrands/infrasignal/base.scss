@@ -4882,3 +4882,1244 @@ body.infopage #mobile-sticky-sidebar-button { display: none; }
     margin: 0;
   }
 }
+
+/* ============================================================
+   ALERTS PAGE — Full-bleed layout (same approach as frontpage)
+   ============================================================ */
+
+// Break out of base .content/.container constraints
+body.alertpage .content {
+  margin: 0 !important;
+  padding: 0 !important;
+  background: transparent !important;
+  max-width: none !important;
+  color: inherit !important;
+  width: 100% !important;
+  float: none !important;
+}
+
+body.alertpage .container,
+body.alertpage .container--sidebar {
+  padding: 0 !important;
+  max-width: none !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+body.alertpage .content footer {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100vw !important;
+  margin-left: calc(-50vw + 50%) !important;
+}
+
+body.alertpage {
+  overflow-x: hidden;
+  background: $gray-50 !important;
+}
+
+body.alertpage .sticky-sidebar,
+body.alertpage #mobile-sticky-sidebar-button { display: none; }
+
+// Kill platform .postcode-form-box div styling that leaks into our wrapper
+body.alertpage .alerts-search__input-wrap {
+  background: #fff !important;
+  border: 2px solid $gray-200 !important;
+  border-radius: 9999px !important;
+  display: flex !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  padding: 0.15rem 0.15rem 0.15rem 0 !important;
+  max-width: 28rem !important;
+  width: 100% !important;
+}
+body.alertpage .alerts-search__btn {
+  flex-shrink: 0 !important;
+  display: inline-flex !important;
+  width: auto !important;
+  margin: 0 !important;
+  margin-left: auto !important;
+  align-self: stretch !important;
+  border: none !important;
+}
+body.alertpage .alerts-search__input-wrap:focus-within {
+  border-color: $primary-500 !important;
+  box-shadow: 0 0 0 3px rgba($primary-500, .15) !important;
+}
+
+// Override high-specificity platform #pc rules — input is borderless inside flex wrapper
+body.alertpage input#pc,
+body.alertpage input#pc[type="text"] {
+  border: none !important;
+  background: transparent !important;
+  width: 100% !important;
+  padding: 0.4rem 0.5rem 0.4rem 0.5rem !important;
+  font-size: 0.875rem !important;
+  color: $gray-900 !important;
+  box-sizing: border-box !important;
+  flex: 1 1 0% !important;
+  min-width: 0 !important;
+  line-height: 1.5 !important;
+  outline: none !important;
+  box-shadow: none !important;
+
+  &::placeholder { color: $gray-500 !important; }
+  &:focus {
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+}
+
+// --- Hero ---
+.alerts-hero {
+  background: linear-gradient(135deg, $primary-700 0%, $primary-900 100%);
+  padding: 3rem 0 2.5rem;
+  text-align: center;
+
+  &__icon {
+    display: inline-flex;
+    color: rgba(255,255,255,.85);
+    margin-right: 0.5rem;
+    vertical-align: middle;
+  }
+
+  &__title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #fff;
+    display: inline;
+    vertical-align: middle;
+    margin: 0;
+  }
+
+  &__subtitle {
+    margin-top: 0.75rem;
+    color: rgba(255,255,255,.7);
+    max-width: 40rem;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+}
+
+// --- Body Section ---
+.alerts-body {
+  padding: 2.5rem 0 3rem;
+}
+
+// --- Two-Column Layout ---
+.alerts-layout {
+  display: flex;
+  gap: 2rem;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
+}
+
+// --- Sidebar ---
+.alerts-sidebar {
+  width: 14rem;
+  flex-shrink: 0;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.alerts-sidebar__nav {
+  position: sticky;
+  top: 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.alerts-sidebar__link {
+  display: block;
+  padding: 0.625rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $gray-500;
+  text-decoration: none;
+  transition: all 0.15s ease;
+
+  &:hover {
+    background: $gray-100;
+    color: $gray-900;
+  }
+
+  &--active {
+    background: $primary-50;
+    color: $primary-500;
+    font-weight: 600;
+    border-left: 3px solid $primary-500;
+  }
+}
+
+// --- Main Content ---
+.alerts-main {
+  flex: 1;
+  min-width: 0;
+  max-width: 48rem;
+}
+
+// --- Intro ---
+.alerts-intro {
+  margin-bottom: 2rem;
+
+  &__title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 0.75rem;
+  }
+
+  &__text {
+    color: $gray-500;
+    line-height: 1.7;
+    font-size: 0.95rem;
+
+    & + & {
+      margin-top: 0.75rem;
+    }
+  }
+}
+
+// --- Search Card ---
+.alerts-search {
+  background: #fff;
+  border: 1px solid $gray-200;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+
+  &__label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-900;
+    margin-bottom: 0.25rem;
+
+    svg { color: $primary-500; }
+  }
+
+  &__hint {
+    font-size: 0.75rem;
+    color: $gray-500;
+    margin-bottom: 0.75rem;
+  }
+
+  &__row {
+    // form element wrapping the input
+  }
+
+  &__input-wrap {
+    display: flex !important;
+    align-items: center;
+    background: #fff;
+    border: 2px solid $gray-200;
+    border-radius: 9999px;
+    padding: 0.15rem 0.15rem 0.15rem 0;
+    max-width: 28rem;
+    width: 100%;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+
+    &:focus-within {
+      border-color: $primary-500;
+      box-shadow: 0 0 0 3px rgba($primary-500, .15);
+    }
+
+    > svg {
+      flex-shrink: 0;
+      margin-left: 1rem;
+      color: $gray-700;
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  &__input {
+    flex: 1 1 0% !important;
+    min-width: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    padding: 0.4rem 0.5rem 0.4rem 0.5rem !important;
+    font-size: 0.875rem !important;
+    color: $gray-900 !important;
+    box-sizing: border-box !important;
+    line-height: 1.5 !important;
+    outline: none !important;
+
+    &::placeholder { color: $gray-500 !important; }
+    &:focus {
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+
+  &__btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: $accent-500;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 1.2rem;
+    border: none;
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    letter-spacing: 0.01em;
+    align-self: stretch;
+    margin: 0;
+    margin-left: auto;
+
+    &:hover {
+      background: $accent-600;
+    }
+  }
+}
+
+// --- Info Cards ---
+.alerts-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  @media (max-width: 639px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.alerts-info-card {
+  background: #fff;
+  border: 1px solid $gray-200;
+  border-radius: 1rem;
+  padding: 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.06);
+
+  &__icon {
+    padding: 0.625rem;
+    border-radius: 0.75rem;
+    flex-shrink: 0;
+    display: flex;
+
+    &--rss  { background: $primary-50;  color: $primary-500; }
+    &--bell { background: $accent-50;   color: $accent-500; }
+  }
+
+  &__title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: $gray-900;
+    margin: 0;
+  }
+
+  &__text {
+    font-size: 0.8rem;
+    color: $gray-500;
+    margin-top: 0.25rem;
+    line-height: 1.5;
+  }
+
+  &__list {
+    font-size: 0.8rem;
+    color: $gray-500;
+    margin-top: 0.25rem;
+    line-height: 1.6;
+    list-style: none !important;
+    padding: 0 !important;
+    margin-left: 0 !important;
+
+    li {
+      list-style: none !important;
+
+      &::before {
+        content: "\2022";
+        color: $primary-500;
+        margin-right: 0.4rem;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+// --- Recent Photos ---
+.alerts-photos {
+  margin-bottom: 1.5rem;
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 0.25rem;
+
+    svg { color: $primary-500; }
+  }
+
+  &__subtitle {
+    font-size: 0.875rem;
+    color: $gray-500;
+    margin-bottom: 1rem;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+
+    @media (max-width: 639px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+}
+
+.photo-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  aspect-ratio: 4 / 3;
+  transition: box-shadow 0.2s ease;
+  cursor: pointer;
+  display: block;
+  text-decoration: none;
+
+  &:hover {
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,.1), 0 8px 10px -6px rgba(0,0,0,.08);
+
+    .photo-card__title { text-decoration: underline; }
+  }
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,.7) 0%, transparent 60%);
+  }
+
+  &__content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem;
+  }
+
+  &__badge {
+    display: inline-block;
+    background: rgba($primary-500, .85);
+    color: #fff;
+    font-size: 0.625rem;
+    font-weight: 500;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+    margin-bottom: 0.25rem;
+  }
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #fff;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  // Background color fallbacks when no photo
+  &--amber   .photo-card__bg { background-color: hsl(30, 50%, 35%); }
+  &--gray    .photo-card__bg { background-color: hsl(0, 0%, 38%); }
+  &--emerald .photo-card__bg { background-color: hsl(160, 40%, 25%); }
+  &--stone   .photo-card__bg { background-color: hsl(30, 10%, 45%); }
+  &--slate   .photo-card__bg { background-color: hsl(215, 15%, 38%); }
+  &--green   .photo-card__bg { background-color: hsl(130, 40%, 18%); }
+}
+
+// --- Footer Note ---
+.alerts-footer-note {
+  text-align: center;
+  font-size: 0.8rem;
+  color: $gray-500;
+  margin-top: 1.5rem;
+}
+
+/* ===========================================================
+   MAP VIEW (Around) Page — body.mappage
+   Reference: mapview design with sidebar + map pane
+   =========================================================== */
+
+// --- Full-bleed layout: sidebar + map ---
+body.mappage {
+  // Remove platform wrapper padding/constraints
+  .wrapper,
+  .wrapper > .table-cell {
+    display: block !important;
+    padding: 0 !important;
+  }
+
+  .container {
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .content {
+    margin: 0 !important;
+    padding: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    float: none !important;
+  }
+
+  // Hide platform footer on map page
+  #site-footer,
+  .footer,
+  .pagefooter {
+    display: none !important;
+  }
+}
+
+// --- CTA Banner (big-green-banner) ---
+body.mappage .big-green-banner {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1rem 0.85rem 1rem !important;
+  margin: 0 !important;
+  background: linear-gradient(135deg, $primary-900, $primary-700) !important;
+  color: #fff !important;
+  font-size: 0.85rem !important;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 0 !important;
+  border: none !important;
+  border-top: 3px solid $accent-500 !important;
+  text-align: left !important;
+  position: relative;
+
+  // Location pin icon
+  &::before {
+    content: "";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    min-width: 2.2rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.12);
+    margin-right: 0.75rem;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='22' viewBox='0 0 18 22' fill='none'%3E%3Cpath d='M9 0C4.03 0 0 4.03 0 9c0 6.75 9 13 9 13s9-6.25 9-13c0-4.97-4.03-9-9-9zm0 12.5a3.5 3.5 0 110-7 3.5 3.5 0 010 7z' fill='%23F97316'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: center !important;
+    background-size: 16px 20px !important;
+  }
+
+  // Orange arrow button
+  &::after {
+    content: "❯";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    min-width: 2.2rem;
+    border-radius: 0.5rem;
+    background: $accent-500;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-left: auto;
+  }
+}
+
+// --- Skip link below CTA ---
+body.mappage .map-alternatives {
+  padding: 0.5rem 1.25rem;
+  margin: 0;
+  font-size: 0.75rem;
+  color: $gray-500;
+  background: #fff;
+  border-bottom: 1px solid $gray-300;
+
+  a {
+    color: $primary-700;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// --- Sidebar container ---
+body.mappage #map_sidebar {
+  padding: 0 !important;
+  background: #fff;
+  border-right: 1px solid $gray-300;
+}
+
+body.mappage #side {
+  background: #fff;
+  padding: 0 !important;
+  border: none !important;
+  color: $gray-900;  // explicit text color for all sidebar children
+}
+
+// Reset full-width negative margin (sidebar padding is 0, so -1em pushes content off)
+body.mappage .full-width {
+  margin: 0 !important;
+}
+
+// --- Filters section ---
+body.mappage .report-list-filters-wrapper {
+  padding: 0.75rem 1rem !important;
+  margin: 0 !important;
+  background: #fff;
+  border-bottom: 1px solid $gray-300;
+  border-top: none !important;
+
+  fieldset {
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+  }
+
+  .filter-group {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    grid-template-columns: none !important;
+    gap: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    // Status + Category side by side (first group)
+    > .report-list-filters {
+      flex: 1 1 0% !important;
+      min-width: 0 !important;
+      padding: 0 !important;
+    }
+  }
+
+  // Only uppercase the filter field labels, not dropdown menu items
+  > fieldset > .filter-group > .report-list-filters > label,
+  > fieldset > .filter-group > .sort-container > label {
+    font-size: 0.65rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: $gray-500;
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .report-list-filters {
+    display: flex;
+    flex-direction: column;
+  }
+
+  select,
+  .form-control,
+  .govuk-select {
+    padding: 0.5rem 2rem 0.5rem 0.75rem !important;
+    border: 1.5px solid $gray-300 !important;
+    border-radius: 0.5rem !important;
+    font-size: 0.875rem !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    line-height: 1.4 !important;
+    color: $gray-900;
+    background: #fff !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.41.59L6 5.17 10.59.59 12 2l-6 6-6-6z' fill='%236B7280'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 12px !important;
+
+    &:focus {
+      border-color: $primary-500 !important;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($primary-500, 0.15) !important;
+    }
+  }
+
+  .multi-select-button {
+    padding: 0.5rem 2rem 0.5rem 0.75rem !important;
+    border: 1.5px solid $gray-300 !important;
+    border-radius: 0.5rem !important;
+    font-size: 0.875rem !important;
+    height: auto !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    line-height: 1.4 !important;
+    color: $gray-900;
+    background: #fff !important;
+    background-color: #fff !important;
+    box-shadow: none !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    // Chevron arrow
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1.41.59L6 5.17 10.59.59 12 2l-6 6-6-6z' fill='%236B7280'/%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 0.75rem center !important;
+    background-size: 12px !important;
+
+    &:focus {
+      border-color: $primary-500 !important;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($primary-500, 0.15) !important;
+    }
+  }
+
+  // Sort by + Show older on same row
+  .sort-container {
+    display: flex !important;
+    flex-direction: column !important;
+    margin: 0 !important;
+    flex: 0 0 auto !important;
+    min-width: 0 !important;
+
+    select {
+      width: auto !important;
+      min-width: 7rem;
+    }
+  }
+
+  // Show older checkbox — inline with sort
+  #show_old_reports_wrapper {
+    display: flex !important;
+    visibility: visible !important;
+    align-items: flex-end !important;
+    flex: 0 0 auto !important;
+    padding-bottom: 0.5rem;
+
+    .govuk-checkboxes__item {
+      display: flex !important;
+      align-items: center;
+      gap: 0.4rem;
+      float: none !important;
+      min-height: 0 !important;
+      padding-left: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .govuk-checkboxes__label {
+      font-size: 0.8rem !important;
+      font-weight: 400 !important;
+      text-transform: none !important;
+      letter-spacing: 0 !important;
+      color: $gray-900;
+      padding: 0 !important;
+
+      &::before,
+      &::after {
+        display: none !important;
+      }
+    }
+
+    .govuk-checkboxes__input {
+      width: 1rem !important;
+      height: 1rem !important;
+      position: static !important;
+      opacity: 1 !important;
+      accent-color: $primary-700;
+    }
+  }
+
+  // Hide the redundant submit button
+  input[type="submit"] {
+    display: none !important;
+  }
+
+  // --- Filter pills (injected by JS) ---
+  .js-filter-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-top: 0.5rem;
+    align-items: center;
+
+    &:empty {
+      display: none;
+    }
+  }
+
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border: 1px solid;
+
+    &--status {
+      background: $primary-700;
+      border-color: $primary-700;
+      color: #fff;
+
+      .filter-pill__x {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      &:hover {
+        background: $primary-900;
+        border-color: $primary-900;
+      }
+    }
+
+    &--category {
+      background: rgba($accent-500, 0.08);
+      border-color: rgba($accent-500, 0.3);
+      color: $accent-500;
+
+      .filter-pill__x {
+        color: $accent-500;
+      }
+
+      &:hover {
+        background: rgba($accent-500, 0.15);
+      }
+    }
+
+    .filter-pill__x {
+      font-size: 0.65rem;
+      font-weight: 700;
+      line-height: 1;
+    }
+  }
+
+  .filter-pills__clear {
+    font-size: 0.75rem;
+    color: $gray-500;
+    cursor: pointer;
+    margin-left: 0.25rem;
+    text-decoration: none;
+    border: none;
+    background: none;
+    padding: 0;
+
+    &:hover {
+      color: $gray-900;
+      text-decoration: underline;
+    }
+  }
+
+  // --- Compact multi-select dropdowns ---
+  .multi-select-container {
+    display: block !important;
+    width: 100% !important;
+    position: relative !important;
+  }
+
+  .multi-select-button {
+    display: block !important;
+    width: 100% !important;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .multi-select-menu {
+    border-radius: 0.5rem !important;
+    border: 1px solid $gray-300 !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12) !important;
+    margin-top: 0.25rem !important;
+    padding: 0.25rem 0 !important;
+    max-height: 16rem !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    width: 100% !important;
+    min-width: 100% !important;
+    box-sizing: border-box !important;
+    left: 0 !important;
+    right: 0 !important;
+  }
+
+  .multi-select-presets {
+    border-bottom: 1px solid $gray-200;
+    padding-bottom: 0;
+    margin-bottom: 0;
+  }
+
+  .govuk-multi-select__label {
+    padding: 0.4rem 0.75rem 0.4rem 2.25rem !important;
+    font-size: 0.8125rem !important;
+    line-height: 1.4 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    font-weight: 400 !important;
+    color: $gray-900 !important;
+    position: relative;
+    transition: background 0.15s ease;
+    white-space: normal !important;
+    word-wrap: break-word !important;
+
+    // Custom checkbox box (unchecked)
+    &::before {
+      content: '' !important;
+      box-sizing: border-box !important;
+      width: 16px !important;
+      height: 16px !important;
+      top: 0.45rem !important;
+      left: 0.6rem !important;
+      border: 1.5px solid $gray-300 !important;
+      border-radius: 3px !important;
+      background: #fff !important;
+      box-shadow: none !important;
+      transition: all 0.15s ease;
+      position: absolute !important;
+    }
+
+    // Checkmark (hidden by default)
+    &::after {
+      content: '' !important;
+      box-sizing: border-box !important;
+      position: absolute !important;
+      top: 0.45rem !important;
+      left: 0.6rem !important;
+      width: 16px !important;
+      height: 16px !important;
+      border: none !important;
+      clip-path: polygon(28% 38%, 41% 53%, 75% 24%, 86% 38%, 40% 78%, 15% 50%) !important;
+      background: #fff !important;
+      opacity: 0 !important;
+      transition: opacity 0.1s ease;
+    }
+
+    // ── Checked state (modern browsers with :has) ──
+    &:has(> input[type="checkbox"]:checked)::before {
+      background: $primary-500 !important;
+      border-color: $primary-500 !important;
+    }
+    &:has(> input[type="checkbox"]:checked)::after {
+      opacity: 1 !important;
+      background: #fff !important;
+    }
+
+    // ── Checked state (JS fallback class) ──
+    &.govuk-multi-select__label--checked::before {
+      background: $primary-500 !important;
+      border-color: $primary-500 !important;
+    }
+    &.govuk-multi-select__label--checked::after {
+      opacity: 1 !important;
+      background: #fff !important;
+    }
+
+    // ── Radio variant — circle ──
+    &:has(> input[type="radio"])::before {
+      border-radius: 50% !important;
+    }
+    &:has(> input[type="radio"])::after {
+      width: 8px !important;
+      height: 8px !important;
+      top: 0.7rem !important;
+      left: 0.85rem !important;
+      clip-path: circle(50%) !important;
+      background: $primary-500 !important;
+      border: none !important;
+    }
+    &:has(> input[type="radio"]:checked)::before {
+      border-color: $primary-500 !important;
+      background: #fff !important;
+    }
+    &:has(> input[type="radio"]:checked)::after {
+      opacity: 1 !important;
+    }
+
+    // Fallback for radio checked via JS class
+    &.govuk-multi-select__label--checked.govuk-multi-select__label--radio::before {
+      border-color: $primary-500 !important;
+      background: #fff !important;
+    }
+    &.govuk-multi-select__label--checked.govuk-multi-select__label--radio::after {
+      opacity: 1 !important;
+    }
+
+    // Input click-target sizing
+    input[type="checkbox"],
+    input[type="radio"] {
+      width: 16px !important;
+      height: 16px !important;
+      top: 0.45rem !important;
+      left: 0.6rem !important;
+    }
+  }
+
+  // Hover state for dropdown items
+  .govuk-multi-select__label:hover {
+    background: $primary-50;
+
+    &::before {
+      border-color: $primary-500 !important;
+      box-shadow: none !important;
+    }
+  }
+
+  // Focus-within state
+  .govuk-multi-select__label:focus-within {
+    &::before {
+      border-color: $primary-500 !important;
+      box-shadow: 0 0 0 2px rgba($primary-500, 0.2) !important;
+      outline: none !important;
+    }
+  }
+}
+
+// --- Results bar / pagination ---
+// Only style the <nav> inside .js-pagination, not the wrapper div
+body.mappage .js-pagination {
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border: none;
+}
+
+body.mappage .pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: $gray-100;
+  border-bottom: 1px solid $gray-300;
+  font-size: 0.7rem;
+  color: $gray-500;
+  position: relative;
+
+  .prev, .next {
+    position: static !important;
+    flex-shrink: 0;
+  }
+
+  a {
+    font-weight: 600;
+    color: $primary-700;
+    text-decoration: none;
+    font-size: 0.7rem;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+body.mappage .item-list--pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+  background: $gray-100;
+  border-bottom: 1px solid $gray-300;
+  font-size: 0.7rem;
+  color: $gray-500;
+
+  a {
+    font-weight: 600;
+    color: $primary-700;
+    text-decoration: none;
+
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// --- Report list ---
+
+// Hide "nearby reports" separator and the second nearby-reports list
+body.mappage .item-list__item--empty {
+  display: none !important;
+}
+body.mappage .item-list.item-list--reports:not([data-show-old-reports]) {
+  display: none !important;
+}
+
+body.mappage .item-list.item-list--reports {
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  gap: 0 !important;
+  border-bottom: none !important;  // override platform's 0.25em solid $primary
+
+  .item-list__item {
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    border-bottom: 1px solid $gray-300 !important;
+    border-left: 3px solid $primary-500 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    background: #fff;
+    transition: background-color 0.15s;
+
+    &:hover {
+      background: $gray-100 !important;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    > a {
+      display: block;
+      padding: 0.75rem 1rem;
+      text-decoration: none;
+      color: $gray-900;
+    }
+
+    // Photo thumbnail — float right
+    .img {
+      float: right;
+      width: 4.5rem;
+      height: 3.5rem;
+      object-fit: cover;
+      border-radius: 0.4rem;
+      margin-left: 0.75rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-list__heading {
+      font-size: 0.875rem !important;
+      font-weight: 700;
+      color: $gray-900;
+      margin: 0 0 0.25rem 0;
+    }
+
+    small {
+      display: block;
+      font-size: 0.75rem;
+      color: $gray-500;
+      line-height: 1.5;
+    }
+
+    .item-list__item__state {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 9999px;
+      padding: 0.125rem 0.5rem;
+      font-size: 0.65rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      background: hsl(152, 69%, 91%);
+      color: hsl(160, 60%, 30%);
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+// --- Key tools / Get updates bar ---
+body.mappage .shadow-wrap {
+  order: 99;
+  border-top: 1px solid $gray-300;
+  box-shadow: none !important;
+  background: $gray-100;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.mappage #key-tools {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.25rem;
+  margin: 0 !important;
+  list-style: none !important;
+  background: $gray-100;
+
+  li {
+    list-style: none !important;
+  }
+
+  a {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: $primary-700;
+    text-decoration: none;
+    display: inline-flex !important;
+    flex-direction: row !important;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+
+    &:hover { text-decoration: underline; }
+
+    span {
+      color: $primary-700;
+    }
+
+    svg {
+      width: 1rem;
+      height: 1rem;
+    }
+  }
+}
+
+// --- Mobile-map-banner ---
+body.mappage .mobile-map-banner {
+  background: $primary-900;
+  color: rgba(255,255,255,0.85);
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+// --- Hide skiplink within map page ---
+body.mappage a.skiplink[href="#report-list-filters"] {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+}
+
+// --- Filter announcement (screen-reader) ---
+body.mappage #filter-announcement {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0 0 0 0) !important;
+}
