@@ -18,17 +18,10 @@ BASE_LON = -87.983
 COBRAND = "infrasignal"
 
 # Bodies to distribute reports across (IL cities)
+# All reports are generated in the Buffalo Grove area, so they should all
+# be assigned to Buffalo Grove, IL — the body that covers this geography.
 BODIES = [
     (10588, "Buffalo Grove, IL"),
-    (10442, "Addison, IL"),
-    (10449, "Algonquin, IL"),
-    (10588, "Buffalo Grove, IL"),  # weighted toward Buffalo Grove
-    (10449, "Algonquin, IL"),
-    (103,   "Adams County, IL"),
-    (10447, "Aledo, IL"),
-    (10444, "Albany, IL"),
-    (10440, "Abingdon, IL"),
-    (10446, "Albion, IL"),
 ]
 
 CATEGORIES = [
