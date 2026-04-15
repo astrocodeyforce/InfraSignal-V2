@@ -6128,18 +6128,18 @@ body.mappage #filter-announcement {
    REPORT DETAIL PAGE — Lovable Reference Redesign (CSS-only)
    =========================================================== */
 
-// --- 1. Back link — clean separator ---
+// --- 1. Back link — clean separator (Lovable: ← arrow) ---
 body.mappage #side-report > a.problem-back {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   padding: 14px 20px;
   margin: 0;
   border-bottom: 1px solid $gray-200;
   border-radius: 0;
   background: transparent;
   color: $gray-600;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   text-decoration: none;
   transition: color 0.2s;
@@ -6150,10 +6150,16 @@ body.mappage #side-report > a.problem-back {
     text-decoration: none;
   }
 
+  // Hide the platform chevron SVG
   svg {
-    width: 0.75rem;
-    height: 0.75rem;
-    color: $gray-400;
+    display: none !important;
+  }
+
+  // Styled ← arrow injected by JS
+  .back-arrow-icon {
+    font-size: 1rem;
+    line-height: 1;
+    color: $gray-500;
   }
 }
 
@@ -6406,7 +6412,7 @@ body.mappage #side-report #form_photos {
   border-radius: 12px !important;
   padding: 32px 20px !important;
   text-align: center;
-  background: $gray-50 !important;
+  background: #f8f9fa !important;
   margin-bottom: 16px;
   transition: border-color 0.2s, background 0.2s;
   display: flex;
@@ -6793,5 +6799,122 @@ body.mappage #side-report {
         flex: 1;
       }
     }
+  }
+}
+
+/* ===========================================================
+   STATUS TIMELINE — Lovable Reference Component
+   =========================================================== */
+.status-timeline {
+  padding: 20px;
+  border-top: 1px solid $gray-200;
+  border-bottom: 1px solid $gray-200;
+  background: #fff;
+}
+
+.status-timeline__heading {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $gray-500;
+  margin: 0 0 20px 0;
+}
+
+.status-timeline__track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  margin-bottom: 8px;
+}
+
+.status-timeline__step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+
+  &:last-child {
+    flex: 0;
+  }
+}
+
+.status-timeline__dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: $gray-200;
+  border: 3px solid $gray-200;
+  transition: all 0.3s;
+
+  .status-timeline__step--complete & {
+    background: $primary-700;
+    border-color: $primary-700;
+  }
+
+  svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.status-timeline__line {
+  flex: 1;
+  height: 3px;
+  margin: 0 4px;
+  border-radius: 2px;
+
+  &--complete {
+    background: $primary-700;
+  }
+
+  &--pending {
+    background: repeating-linear-gradient(
+      90deg,
+      $gray-300 0,
+      $gray-300 6px,
+      transparent 6px,
+      transparent 10px
+    );
+  }
+}
+
+.status-timeline__labels {
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.status-timeline__label {
+  text-align: center;
+  flex: 1;
+
+  &:first-child { text-align: left; }
+  &:last-child { text-align: right; }
+}
+
+.status-timeline__label-text {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: $gray-500;
+  margin-bottom: 2px;
+
+  .status-timeline__label--complete & {
+    color: $gray-900;
+  }
+}
+
+.status-timeline__label-date {
+  display: block;
+  font-size: 0.65rem;
+  color: $gray-400;
+
+  .status-timeline__label--complete & {
+    color: $gray-500;
   }
 }
