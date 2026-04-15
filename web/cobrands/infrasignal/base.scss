@@ -6123,3 +6123,611 @@ body.mappage #filter-announcement {
   overflow: hidden !important;
   clip: rect(0 0 0 0) !important;
 }
+
+/* ===========================================================
+   REPORT DETAIL PAGE — Lovable Reference Redesign (CSS-only)
+   =========================================================== */
+
+// --- 1. Back link — clean separator ---
+body.mappage #side-report > a.problem-back {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 20px;
+  margin: 0;
+  border-bottom: 1px solid $gray-200;
+  border-radius: 0;
+  background: transparent;
+  color: $gray-600;
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover, &:focus {
+    color: $primary-700;
+    background: transparent;
+    text-decoration: none;
+  }
+
+  svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    color: $gray-400;
+  }
+}
+
+// --- 2. Status banner — dot + text row instead of colored banner ---
+body.mappage .banner {
+  border-radius: 0 !important;
+  padding: 12px 20px !important;
+  margin: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid $gray-200 !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center !important;
+
+  p {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+  }
+
+  // Hide the pin image, replace with a dot via ::before
+  img.pin {
+    display: none !important;
+  }
+
+  p::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  // Fixed — green
+  &.banner--fixed {
+    background: #f0fdf4 !important;
+    color: #166534 !important;
+    p::before { background: #22c55e; }
+  }
+
+  // Open / investigating — blue
+  &.banner--open, &.banner--investigating {
+    background: $primary-50 !important;
+    color: $primary-700 !important;
+    p::before { background: $primary-500; }
+  }
+
+  // Closed — gray
+  &.banner--closed {
+    background: $gray-100 !important;
+    color: $gray-700 !important;
+    p::before { background: $gray-500; }
+  }
+
+  // In progress — amber
+  &.banner--in-progress {
+    background: #fffbeb !important;
+    color: #92400e !important;
+    p::before { background: #f59e0b; }
+  }
+
+  // Unknown / default
+  &:not(.banner--fixed):not(.banner--open):not(.banner--closed):not(.banner--in-progress):not(.banner--investigating) {
+    background: #fffbeb !important;
+    color: #92400e !important;
+    p::before { background: #f59e0b; }
+  }
+}
+
+// --- 3. Report title section — proper spacing ---
+body.mappage #side-report .problem-header {
+  padding: 20px !important;
+  margin: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid $gray-200 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  background: #fff !important;
+
+  h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: $gray-900;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+
+  // Hide the admin checkbox
+  .moderate-edit {
+    font-size: 0.75rem;
+    color: $gray-500;
+    margin-bottom: 8px;
+  }
+
+  // Meta info subtitle
+  .report_meta_info {
+    font-size: 0.8rem;
+    color: $gray-500;
+    line-height: 1.5;
+    margin-bottom: 16px;
+  }
+}
+
+// --- 4. Info cards — rounded bordered cards ---
+body.mappage #side-report .council_sent_info {
+  background: $gray-50 !important;
+  border: 1px solid $gray-200 !important;
+  border-radius: 10px !important;
+  padding: 14px 16px !important;
+  margin: 0 0 10px 0 !important;
+  font-size: 0.85rem !important;
+  color: $gray-700 !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  strong {
+    color: $gray-900;
+    font-weight: 600;
+  }
+}
+
+// --- 5. Report description ---
+body.mappage #side-report .problem-header .moderate-display {
+  p {
+    font-size: 0.9rem;
+    color: $gray-700;
+    line-height: 1.65;
+    margin-top: 16px;
+  }
+}
+
+// --- 6. Updates section — uppercase heading + card style ---
+body.mappage #side-report section.full-width {
+  margin: 0 !important;
+  padding: 20px !important;
+  border-bottom: 1px solid $gray-200;
+
+  h2.static-with-rule {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $gray-500;
+    border: none !important;
+    padding: 0 !important;
+    margin-bottom: 14px !important;
+
+    &::after {
+      display: none !important;
+    }
+  }
+}
+
+body.mappage #side-report .item-list--updates {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+
+  .item-list__item {
+    background: #fff;
+    border: 1px solid $gray-200 !important;
+    border-left: 4px solid $primary-500 !important;
+    border-radius: 10px !important;
+    padding: 14px 16px !important;
+    margin-bottom: 10px !important;
+    margin-left: 0 !important;
+    position: relative;
+
+    // Remove the timeline dot from before
+    &::before {
+      display: none !important;
+    }
+
+    .item-list__update-text {
+      .moderate-display p {
+        font-size: 0.875rem;
+        color: $gray-700;
+        line-height: 1.6;
+        margin-bottom: 8px;
+      }
+    }
+
+    .meta-2 {
+      font-size: 0.75rem;
+      color: $gray-500;
+      margin: 4px 0 0 0;
+
+      strong {
+        color: $gray-700;
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+// --- 7. Update form — clean sections ---
+body.mappage #side-report #update_form {
+  padding: 20px;
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 4px;
+    padding-top: 0;
+    border-top: 1px solid $gray-200;
+    padding-top: 20px;
+  }
+
+  .general-notes {
+    margin-bottom: 16px;
+
+    p {
+      font-size: 0.8rem;
+      color: $gray-500;
+      line-height: 1.5;
+    }
+  }
+}
+
+// --- 8. Photo upload — dashed dropzone ---
+body.mappage #side-report #form_photos {
+  border: 2px dashed $gray-300 !important;
+  border-radius: 10px !important;
+  padding: 24px 16px !important;
+  text-align: center;
+  background: $gray-50 !important;
+  margin-bottom: 16px;
+  transition: border-color 0.2s;
+
+  &:hover, &:focus-within {
+    border-color: $primary-500 !important;
+    background: rgba($primary-500, 0.03) !important;
+  }
+
+  input[type="file"] {
+    display: block;
+    margin: 4px auto;
+    font-size: 0.8rem;
+    color: $gray-500;
+  }
+
+  // Hide extra photo file labels
+  label {
+    display: none;
+  }
+
+  // Show only first input clearly
+  input[type="file"]:first-of-type {
+    margin-bottom: 8px;
+  }
+}
+
+body.mappage #side-report #photo-upload-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $gray-700;
+  margin-bottom: 8px;
+  display: block;
+
+  .js-hide-if-category-photo-required {
+    font-weight: 400;
+    color: $gray-400;
+  }
+}
+
+// --- 9. Textarea — rounded, better styling ---
+body.mappage #side-report #form_update {
+  border: 1px solid $gray-300 !important;
+  border-radius: 10px !important;
+  padding: 12px 14px !important;
+  font-size: 0.875rem;
+  color: $gray-900;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  resize: vertical;
+  width: 100%;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $primary-500 !important;
+    box-shadow: 0 0 0 3px rgba($primary-500, 0.1) !important;
+    outline: none;
+  }
+
+  &::placeholder {
+    color: $gray-400;
+  }
+}
+
+body.mappage #side-report label[for="form_update"] {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: $gray-700;
+  margin-bottom: 6px;
+  display: block;
+}
+
+// --- 10. Checkbox — rounded style ---
+body.mappage #side-report .govuk-checkboxes {
+  margin: 12px 0;
+
+  .govuk-checkboxes__item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .govuk-checkboxes__input {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid $gray-300;
+    accent-color: $primary-500;
+  }
+
+  .govuk-checkboxes__label {
+    font-size: 0.85rem;
+    color: $gray-700;
+    font-weight: 500;
+    padding: 0 !important;
+    margin: 0 !important;
+
+    &::before, &::after {
+      display: none !important;
+    }
+  }
+}
+
+// --- 11. Turnstile captcha wrapper ---
+body.mappage #side-report .cf-turnstile {
+  margin: 16px 0;
+}
+
+// --- 12. Auth section — gray background ---
+body.mappage #side-report .form-section-preview--next {
+  background: $gray-50;
+  border: 1px solid $gray-200;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 16px 0;
+
+  h2.form-section-heading {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: $gray-900;
+    margin-bottom: 14px;
+
+    &::before {
+      content: '\1F512';
+      margin-right: 6px;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// --- 13. Google button — outlined ---
+body.mappage #side-report .btn--oidc,
+body.mappage #side-report #oidc_sign_in {
+  background: #fff !important;
+  color: $gray-700 !important;
+  border: 1px solid $gray-300 !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    border-color: $gray-500 !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  // Add Google "G" icon via ::before
+  &::before {
+    content: 'G';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #4285f4;
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+}
+
+// --- 14. Email login button — filled blue ---
+body.mappage #side-report .js-new-report-user-show {
+  background: $primary-700 !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: 10px !important;
+  padding: 12px 16px !important;
+  font-size: 0.875rem !important;
+  font-weight: 600 !important;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: $primary-900 !important;
+  }
+}
+
+// --- 15. Bottom action bar — report detail version ---
+body.mappage #side-report ~ .shadow-wrap,
+body.mappage .shadow-wrap {
+  background: $gray-50 !important;
+  border-top: 1px solid $gray-200 !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+body.mappage #side-report ~ .shadow-wrap #key-tools,
+body.mappage #key-tools {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-evenly !important;
+  padding: 14px 20px !important;
+  margin: 0 !important;
+  list-style: none !important;
+  background: $gray-50 !important;
+
+  li {
+    list-style: none !important;
+    flex: 1;
+    text-align: center;
+  }
+
+  a {
+    font-size: 0.75rem !important;
+    font-weight: 600 !important;
+    color: $gray-600 !important;
+    text-decoration: none !important;
+    display: inline-flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 4px !important;
+    padding: 0 !important;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    width: auto !important;
+    height: auto !important;
+    transition: color 0.2s;
+
+    &:hover {
+      color: $primary-700 !important;
+      text-decoration: none !important;
+    }
+
+    svg {
+      width: 1.1rem !important;
+      height: 1.1rem !important;
+      color: $gray-400;
+    }
+  }
+}
+
+// --- 16. Overall spacing & misc ---
+body.mappage #side-report {
+  // Remove any outer padding so sections control their own
+  > .problem-header {
+    &:first-of-type {
+      border-top: none;
+    }
+  }
+
+  // Ensure no double borders
+  .full-width + #update_form {
+    border-top: none;
+  }
+
+  // Form labels general
+  form label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: $gray-700;
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  // Form inputs general
+  form input.form-control,
+  form textarea.form-control {
+    border: 1px solid $gray-300;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.875rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &:focus {
+      border-color: $primary-500;
+      box-shadow: 0 0 0 3px rgba($primary-500, 0.1);
+      outline: none;
+    }
+  }
+
+  // Submit buttons
+  form .btn--primary {
+    background: $primary-700;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 12px 20px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.2s;
+
+    &:hover {
+      background: $primary-900;
+    }
+  }
+
+  // Hidden sections that expand
+  .js-new-report-user-shown {
+    padding: 0 20px 20px;
+
+    .form-section-heading {
+      font-size: 1rem;
+      font-weight: 700;
+      color: $gray-900;
+      margin-bottom: 12px;
+    }
+
+    .form-box {
+      background: $gray-50;
+      border: 1px solid $gray-200;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+  }
+
+  // Report updates dialog
+  #report-updates-data {
+    background: #fff;
+    border: 1px solid $gray-200;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 12px 20px;
+
+    .form-txt-submit-box {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+
+      input[type="email"] {
+        flex: 1;
+      }
+    }
+  }
+}
