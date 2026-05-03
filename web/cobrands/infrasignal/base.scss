@@ -5487,9 +5487,13 @@ body.mappage .map-alternatives {
 
 // --- Sidebar container ---
 body.mappage #map_sidebar {
+  position: absolute;
+  z-index: 20 !important;
   padding: 0 !important;
   background: #fff;
   border-right: 1px solid $gray-300;
+  box-shadow: none;
+  isolation: isolate;
 
   &::after {
     content: none !important;
@@ -5499,7 +5503,16 @@ body.mappage #map_sidebar {
 }
 
 body.mappage #map_box {
+  z-index: 1 !important;
   left: 23em !important;
+  overflow: hidden !important;
+  clip-path: inset(0);
+  contain: paint;
+}
+
+body.mappage #map_box #map,
+body.mappage #map_box .olMapViewport {
+  overflow: hidden !important;
 }
 
 body.mappage .shadow-wrap,
