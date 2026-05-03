@@ -2,18 +2,15 @@
 
 ## Current Mark
 
-InfraSignal uses the inline header mark shown in the app header:
+InfraSignal uses the pin + wordmark image logo in the app header. The optimized web asset is:
 
-- A rounded gradient square containing `IS`
-- Uppercase `INFRASIGNAL` wordmark text
-- No bitmap logo image is required for the primary site header
+- `web/cobrands/infrasignal/images/logo_web.png` — 800x269 PNG, displayed at up to 275x45 in the header
 
 The primary markup lives in `templates/web/infrasignal/header_site.html` and the fallback logo include in `templates/web/infrasignal/header_logo.html` should use the same structure:
 
 ```html
 <a href="/" class="header-logo" title="InfraSignal">
-   <span class="header-logo-icon" aria-hidden="true">IS</span>
-   <span class="brand-text">INFRASIGNAL</span>
+   <img src="/cobrands/infrasignal/images/logo_web.png" class="header-logo-image" alt="InfraSignal">
 </a>
 ```
 
@@ -25,35 +22,33 @@ Logo styling is defined in `web/cobrands/infrasignal/base.scss`:
 .header-logo {
    display: flex;
    align-items: center;
-   gap: 8px;
    text-decoration: none;
    flex-shrink: 0;
+   width: 275px;
+   height: 45px;
 }
 
-.header-logo-icon {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   width: 36px;
-   height: 36px;
-   border-radius: 10px;
-   background: linear-gradient(135deg, $primary-500, $accent-500);
-   color: #fff;
-   font-size: 14px;
-   font-weight: 800;
-}
-
-.brand-text {
-   color: #fff;
-   font-size: 17px;
-   font-weight: 700;
-   letter-spacing: 0.1em;
+.header-logo-image {
+   display: block;
+   width: 100%;
+   height: 100%;
+   object-fit: contain;
+   object-position: left center;
 }
 ```
 
-## Legacy Path
+## Icon Files
 
-Older `#site-logo-wrapper` / `#site-logo` image-based markup is intentionally hidden by the current header CSS and should not be used for InfraSignal's primary header. If a template include needs logo output, use `.header-logo` with `.header-logo-icon` and `.brand-text`.
+The browser/favicon and PWA icon files are:
+
+- `web/cobrands/infrasignal/favicon.ico`
+- `web/cobrands/infrasignal/images/favicon.ico`
+- `web/cobrands/infrasignal/images/192.png`
+- `web/cobrands/infrasignal/images/512.png`
+- `web/cobrands/infrasignal/images/apple-touch-icon.png`
+- Production theme copies: `web/theme/infrasignal/192.png` and `web/theme/infrasignal/512.png`
+
+Older `#site-logo-wrapper` / `#site-logo` markup is hidden by the current header CSS and should not be used for InfraSignal's primary header. If a template include needs logo output, use `.header-logo` with `.header-logo-image`.
 
 ## Build
 

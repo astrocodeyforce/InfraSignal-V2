@@ -195,34 +195,25 @@ $meta-font: $font-body;
     }
 }
 
-// Logo area — icon + text (a.header-logo wraps icon + brand text)
+// Logo area — pin + InfraSignal wordmark image
 .header-logo {
     display: flex;
     align-items: center;
-    gap: 8px;
     text-decoration: none;
     flex-shrink: 0;
+    width: 190px;
+    height: 45px;
+
+    @media (min-width: 640px) { width: 235px; }
+    @media (min-width: 1024px) { width: 275px; }
 }
 
-.header-logo-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    background: linear-gradient(135deg, $primary-500, $accent-500);
-    color: #fff;
-    font-size: 14px;
-    font-weight: 800;
-    flex-shrink: 0;
-    box-shadow: 0 2px 8px rgba($primary-500, 0.3);
-    transition: transform 0.2s, box-shadow 0.2s;
-
-    .header-logo:hover & {
-        transform: scale(1.05);
-        box-shadow: 0 4px 12px rgba($primary-500, 0.4);
-    }
+.header-logo-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: left center;
 }
 
 // Hide old logo wrapper if present
@@ -478,19 +469,6 @@ $meta-font: $font-body;
         text-decoration: none;
         text-align: center;
     }
-}
-
-// Brand text next to logo
-.brand-text {
-    color: #fff;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    pointer-events: none;
-    background: linear-gradient(135deg, #fff 60%, $primary-300);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
 }
 
 // Hide the old nav toggle label
@@ -3352,9 +3330,9 @@ body:not(.mappage) .item-list--updates .item-list__item {
         align-items: center;
         margin-bottom: 32px;
 
-        .header-logo-icon {
-            width: 48px;
-            height: 48px;
+        .header-logo-image {
+            width: 220px;
+            height: auto;
         }
 
         h1 {
