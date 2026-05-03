@@ -1,100 +1,63 @@
 # InfraSignal Logo Configuration
 
-## Final Specifications
+## Current Mark
 
-**Logo File**
-- Path: `/opt/infrasignal-v2/web/cobrands/infrasignal/images/logo.png`
-- Format: PNG (2.1MB, high-resolution)
-- Aspect Ratio: Edge-to-edge design (no padding)
-- Design: Unified pin graphic + text consolidated in single PNG
+InfraSignal uses the inline header mark shown in the app header:
+
+- A rounded gradient square containing `IS`
+- Uppercase `INFRASIGNAL` wordmark text
+- No bitmap logo image is required for the primary site header
+
+The primary markup lives in `templates/web/infrasignal/header_site.html` and the fallback logo include in `templates/web/infrasignal/header_logo.html` should use the same structure:
+
+```html
+<a href="/" class="header-logo" title="InfraSignal">
+   <span class="header-logo-icon" aria-hidden="true">IS</span>
+   <span class="brand-text">INFRASIGNAL</span>
+</a>
+```
 
 ## CSS Styling
 
-**Logo Wrapper (`#site-logo-wrapper`)** — holds the background image, NOT clickable
+Logo styling is defined in `web/cobrands/infrasignal/base.scss`:
+
 ```scss
-width: 550px;
-height: 120px;
-background-image: url('/cobrands/infrasignal/images/logo.png');
-background-size: contain;
-background-repeat: no-repeat;
-background-position: left -35px;
-pointer-events: none;
+.header-logo {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   text-decoration: none;
+   flex-shrink: 0;
+}
+
+.header-logo-icon {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   width: 36px;
+   height: 36px;
+   border-radius: 10px;
+   background: linear-gradient(135deg, $primary-500, $accent-500);
+   color: #fff;
+   font-size: 14px;
+   font-weight: 800;
+}
+
+.brand-text {
+   color: #fff;
+   font-size: 17px;
+   font-weight: 700;
+   letter-spacing: 0.1em;
+}
 ```
 
-**Logo Link (`#site-logo`)** — only the logo graphic area is clickable
-```scss
-display: block;
-width: 200px;
-height: 100%;
-background-image: none !important;
-pointer-events: auto;
-```
+## Legacy Path
 
-**Header Container (`#site-header`)**
-```scss
-height: 45px;
-overflow: hidden;
-padding: 0;
-position: relative;
-```
+Older `#site-logo-wrapper` / `#site-logo` image-based markup is intentionally hidden by the current header CSS and should not be used for InfraSignal's primary header. If a template include needs logo output, use `.header-logo` with `.header-logo-icon` and `.brand-text`.
 
-**Navigation (`#main-nav`)**
-```scss
-min-height: 1.5em;
-```
+## Build
 
-## Display Behavior
-
-- **Logo Display Size**: 550px wide × 120px tall (CSS dimensions)
-- **Visible Area**: Top 45px of the 120px logo (header clips the rest)
-- **Vertical Offset**: Logo shifted up by 35px (`background-position: left -35px`)
-- **Visible Logo Height**: ~45px (clipped by header overflow)
-- **Header Height**: 45px (compact, fixed)
-
-## Layout Architecture
-
-1. **Container Hierarchy**:
-   - `#site-header` (45px fixed height, overflow hidden)
-   - `#site-logo-wrapper` (550×120px, background image, non-clickable)
-   - `#site-logo` (200px wide link, clickable — navigates to home)
-   - `#main-nav` (1.5em min-height, flex layout)
-
-2. **CSS Inheritance**:
-   - Logo styling: Defined in `/opt/infrasignal-v2/web/cobrands/infrasignal/base.scss`
-   - Header base styles: Inherited from `/opt/infrasignal-v2/web/cobrands/sass/_base.scss`
-   - Layout rules: Inherited from `/opt/infrasignal-v2/web/cobrands/sass/_layout.scss`
-
-3. **Compilation**:
-   - Build tool: Docker container `docker_css_watcher_1`
-   - Build command: `docker exec docker_css_watcher_1 bin/make_css`
-   - Compiled output: `/opt/infrasignal-v2/web/cobrands/infrasignal/layout.css`
-
-## Size Evolution (Session History)
-
-| Width | Height | Offset | Status |
-|-------|--------|--------|--------|
-| 175px | 35px   | 0px    | Initial SVG logo |
-| 175px | 50px   | 0px    | First PNG test |
-| 280px | 70px   | 0px    | Increased |
-| 350px | 100px  | 0px    | Too tall header |
-| 400px | 55px   | 0px    | Header good, logo small |
-| 380px | 90px   | 0px    | Compact design approved |
-| 500px | 90px   | 0px    | Widened, kept height |
-| 550px | 120px  | -30px  | Larger, moved up |
-| 550px | 120px  | -35px  | Final (current) |
-
-## Visual Result
-
-- Logo appears **prominent and wider** (550px)
-- Header remains **compact and slim** (45px fixed)
-- Logo graphic is **visible but clipped**, showing top portion
-- No header expansion despite large logo CSS dimensions
-
-## Notes
-
-- The 120px logo height is intentionally larger than the 45px header to create visual depth
-- The -35px vertical offset positions the logo so the prominent graphic area appears in the visible header space
-- `background-size: contain` ensures the full PNG scales proportionally without distortion
-- The side navigation and menu items align below/around the compact header
-- **Clickable area**: Only the left 200px (logo graphic) is clickable; the rest of the blue header is inert
-- Template override: `templates/web/infrasignal/header_logo.html` wraps the logo link in a `#site-logo-wrapper` div
+- Compile CSS in production with:
+   `docker exec docker-fixmystreet-1 bash -c "cd /var/www/fixmystreet && rm -f web/cobrands/infrasignal/base.css && bin/make_css"`
+- Clear template cache after template edits with:
+   `docker exec docker-fixmystreet-1 bash -c "find /var/www/fixmystreet/templates -name '*.ttc' -delete"`
