@@ -1,119 +1,163 @@
 [% INCLUDE 'header.html', bodyclass='authpage', title = loc('Sign in or create an account') %]
 
-[% TRY %][% INCLUDE 'auth/_general_title.html' %][% CATCH file %]
-<h1>
-    [% loc('Sign in') %]
-    <small>
-        [% tprintf(loc('or <a href="%s">create an account</a>'), '/auth/create') %]
-    </small>
-</h1>
-[% END %]
-
-[% TRY %][% INCLUDE 'auth/_general_top.html' %][% CATCH file %][% END %]
-
-[% IF oauth_need_email %]
-    <p class="form-error">[% loc('We need your email address, please give it below.') %]</p>
-[% END %]
-[% IF oauth_failure %]
-    <p class="form-error">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
-[% END %]
-
-[% IF NOT oauth_need_email AND c.cobrand.social_auth_enabled %]
-<form action="/auth" method="post" name="sso_auth" class="validate">
-    <input type="hidden" name="r" value="[% c.req.params.r | html %]">
-    [% IF c.config.FACEBOOK_APP_ID %]
-      <div class="form-box">
-        <button name="social_sign_in" value="facebook" class="btn btn--block btn--social btn--facebook">
-            <img alt="" src="/i/facebook-icon-32.png" width="17" height="32">
-            [% loc('Log in with Facebook') %]
-        </button>
-      </div>
-    [% END %]
-    [% oidc_config = c.cobrand.call_hook('oidc_config') OR c.cobrand.feature('oidc_login') %]
-    [% IF oidc_config %]
-      <div class="form-box">
-        <button name="social_sign_in" value="oidc" class="btn btn--block btn--social btn--oidc">
-            [% tprintf(loc('Sign in with %s'), oidc_config.display_name) %]
-        </button>
-      </div>
-    [% END %]
-    [% IF c.config.TWITTER_KEY %]
-      <div class="form-box">
-        <button name="social_sign_in" value="twitter" class="btn btn--block btn--social btn--twitter">
-            <img alt="" src="/i/twitter-icon-32.png" width="17" height="32">
-            [% loc('Log in with Twitter') %]
-        </button>
-      </div>
-    [% END %]
-</form>
-[% END %]
-
-<form action="/auth" method="post" name="general_auth" class="validate">
-    <input type="hidden" name="r" value="[% c.req.params.r | html %]">
-
-    [% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
-
 [% IF c.cobrand.sms_authentication %]
-    [% SET username_label = loc('Your email or mobile') %]
-    [% SET username_type = 'text' %]
+  [% SET username_label = loc('Your email or mobile') %]
+  [% SET username_type = 'text' %]
 [% ELSE %]
-    [% SET username_label = loc('Your email') %]
-    [% SET username_type = 'email' %]
+  [% SET username_label = loc('Your email') %]
+  [% SET username_type = 'email' %]
 [% END %]
 
-    <label class="n" for="username">[% username_label %]</label>
-  [% IF loc_username_error %]
-    <div class="form-error">[% loc_username_error %]</div>
-  [% END %]
-    <input type="[% username_type %]" class="form-control required" id="username" name="username" value="[% username | html %]" autocomplete="username" autofocus>
+[% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
 
-    <div id="form_sign_in">
+<section class="auth-lovable auth-lovable--sign-in">
+  <div class="auth-lovable__shell">
+    <aside class="auth-lovable__brand">
+      <a href="/" class="auth-lovable__brand-logo" aria-label="[% site_name | html %]">
+        <img src="[% version('/cobrands/infrasignal/images/logo_web.png') %]" alt="[% site_name | html %]">
+      </a>
+      <div class="auth-lovable__brand-copy">
+        <h2>[% loc('Welcome back') %]</h2>
+        <p>[% loc('Sign in to manage your reports, follow updates, and stay connected with your municipality.') %]</p>
+      </div>
+      <div class="auth-lovable__checklist">
+        <p><span aria-hidden="true">&#10003;</span> [% loc('End-to-end encrypted reports') %]</p>
+        <p><span aria-hidden="true">&#10003;</span> [% loc('Real-time municipal SLA tracking') %]</p>
+        <p><span aria-hidden="true">&#10003;</span> [% loc('Verified citizen-government channel') %]</p>
+      </div>
+      <p class="auth-lovable__security">[% loc('GovCloud-grade security') %] &#183; [% loc('SOC 2 aligned') %]</p>
+    </aside>
+
+    <section class="auth-card" aria-labelledby="auth-title">
+      <div class="auth-card__mobile-logo">
+        <a href="/" aria-label="[% site_name | html %]"><img src="[% version('/cobrands/infrasignal/images/logo_web.png') %]" alt="[% site_name | html %]"></a>
+      </div>
+
+      <nav class="auth-tabs" aria-label="[% loc('Account options') %]">
+        <a href="/auth" class="auth-tabs__item auth-tabs__item--active">[% loc('Sign in') %]</a>
+        <a href="/auth/create" class="auth-tabs__item">[% loc('Create account') %]</a>
+      </nav>
+
+      <div class="auth-card__header">
+        <h1 id="auth-title">[% loc('Sign in to InfraSignal') %]</h1>
+        <p>[% loc('New here?') %] <a href="/auth/create">[% loc('Create an account') %]</a></p>
+      </div>
+
+      [% TRY %][% INCLUDE 'auth/_general_top.html' %][% CATCH file %][% END %]
+
       [% IF oauth_need_email %]
-        [% INCLUDE form_sign_in_no %]
-        <input type="hidden" name="oauth_need_email" value="1">
-      [% ELSE %]
-        [% INCLUDE form_sign_in_yes %]
-        [% INCLUDE form_sign_in_no %]
+        <p class="auth-alert auth-alert--error form-error">[% loc('We need your email address, please give it below.') %]</p>
       [% END %]
-    </div>
+      [% IF oauth_failure %]
+        <p class="auth-alert auth-alert--error form-error">[% loc('Sorry, we could not log you in. Please fill in the form below.') %]</p>
+      [% END %]
 
-    [%# Cloudflare Turnstile CAPTCHA widget %]
-    [% IF c.config.TURNSTILE AND NOT c.user_exists %]
-    [% IF captcha_error %]
-    <div class="form-error">[% loc('Please complete the CAPTCHA verification') %]</div>
-    [% END %]
-    <div class="cf-turnstile" data-sitekey="[% c.config.TURNSTILE.site_key %]" data-theme="light" data-language="[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]"></div>
-    <script nonce="[% csp_nonce %]" src="https://challenges.cloudflare.com/turnstile/v0/api.js?hl=[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]" async defer></script>
-    [% END %]
+      [% IF NOT oauth_need_email AND c.cobrand.social_auth_enabled %]
+      <form action="/auth" method="post" name="sso_auth" class="validate auth-card__social">
+        <input type="hidden" name="r" value="[% c.req.params.r | html %]">
+        [% IF c.config.FACEBOOK_APP_ID %]
+          <button type="submit" name="social_sign_in" value="facebook" class="auth-social auth-social--facebook btn btn--block btn--social btn--facebook">
+            <span class="auth-social__icon"><img alt="" src="/i/facebook-icon-32.png" width="17" height="32"></span>
+            <span>[% loc('Continue with Facebook') %]</span>
+          </button>
+        [% END %]
+        [% oidc_config = c.cobrand.call_hook('oidc_config') OR c.cobrand.feature('oidc_login') %]
+        [% IF oidc_config %]
+          <button type="submit" name="social_sign_in" value="oidc" class="auth-social auth-social--oidc btn btn--block btn--social btn--oidc">
+            <span class="auth-social__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" focusable="false"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.1c-.22-.66-.35-1.36-.35-2.1s.13-1.44.35-2.1V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06L5.84 9.9C6.71 7.3 9.14 5.38 12 5.38z"/></svg>
+            </span>
+            <span>[% tprintf(loc('Continue with %s'), oidc_config.display_name) %]</span>
+          </button>
+        [% END %]
+        [% IF c.config.TWITTER_KEY %]
+          <button type="submit" name="social_sign_in" value="twitter" class="auth-social auth-social--twitter btn btn--block btn--social btn--twitter">
+            <span class="auth-social__icon"><img alt="" src="/i/twitter-icon-32.png" width="17" height="32"></span>
+            <span>[% loc('Continue with Twitter') %]</span>
+          </button>
+        [% END %]
+      </form>
+      <div class="auth-divider"><span>[% loc('or continue with email') %]</span></div>
+      [% END %]
 
-</form>
+      <form action="/auth" method="post" name="general_auth" class="validate auth-form">
+        <input type="hidden" name="r" value="[% c.req.params.r | html %]">
+
+        <div class="auth-field">
+          <label for="username">[% username_label %]</label>
+          [% IF loc_username_error %]
+            <div class="auth-alert auth-alert--error form-error">[% loc_username_error %]</div>
+          [% END %]
+          <div class="auth-input-wrap">
+            <span class="auth-input-wrap__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </span>
+            <input type="[% username_type %]" class="auth-input form-control required" id="username" name="username" value="[% username | html %]" autocomplete="username" autofocus placeholder="you@city.gov">
+          </div>
+        </div>
+
+        <div id="form_sign_in" class="auth-form__actions">
+          [% IF oauth_need_email %]
+            [% INCLUDE form_sign_in_no %]
+            <input type="hidden" name="oauth_need_email" value="1">
+          [% ELSE %]
+            [% INCLUDE form_sign_in_yes %]
+            [% INCLUDE form_sign_in_no %]
+          [% END %]
+        </div>
+
+        [% IF c.config.TURNSTILE AND NOT c.user_exists %]
+          [% IF captcha_error %]
+            <div class="auth-alert auth-alert--error form-error">[% loc('Please complete the CAPTCHA verification') %]</div>
+          [% END %]
+          <div class="auth-turnstile">
+            <div class="cf-turnstile" data-sitekey="[% c.config.TURNSTILE.site_key %]" data-theme="light" data-language="[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]"></div>
+          </div>
+          <script nonce="[% csp_nonce %]" src="https://challenges.cloudflare.com/turnstile/v0/api.js?hl=[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]" async defer></script>
+        [% END %]
+      </form>
+
+      <p class="auth-card__fineprint">
+        [% loc('New to InfraSignal?') %] <a href="/auth/create">[% loc('Create an account') %]</a>
+      </p>
+    </section>
+  </div>
+</section>
 
 [% INCLUDE 'footer.html' %]
 
 [% BLOCK form_sign_in_yes %]
-    <p class="hidden-nojs js-sign-in-password-hide">
-        <input class="btn btn--primary btn--block js-sign-in-password-btn" type="submit" name="sign_in_by_password" value="[% loc('Sign in with a password') %]">
-    </p>
-    <div class="hidden-js js-sign-in-password">
-        <label for="password_sign_in">[% loc('Your password') %]</label>
-
-        <div class="form-txt-submit-box">
-            <input type="password" name="password_sign_in" class="form-control required" id="password_sign_in" value="" autocomplete="current-password">
-            <input class="btn btn--primary" type="submit" name="sign_in_by_password" value="[% loc('Sign in') %]">
-        </div>
-
-        <p>
-            <a href="/auth/forgot">[% loc('Forgotten your password?') %]</a>
-        </p>
+  <div class="auth-actions hidden-nojs js-sign-in-password-hide">
+    <input class="auth-button auth-button--primary btn btn--primary btn--block js-sign-in-password-btn" type="submit" name="sign_in_by_password" value="[% loc('Sign in with a password') %]">
+  </div>
+  <div class="auth-password hidden-js js-sign-in-password">
+    <div class="auth-field">
+      <div class="auth-field__row">
+        <label for="password_sign_in">[% loc('Password') %]</label>
+        <a class="auth-link" href="/auth/forgot">[% loc('Forgot password?') %]</a>
+      </div>
+      <div class="auth-input-wrap">
+        <span class="auth-input-wrap__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </span>
+        <input type="password" name="password_sign_in" class="auth-input form-control required" id="password_sign_in" value="" autocomplete="current-password" placeholder="********">
+        <button type="button" class="auth-input-wrap__trail auth-password-toggle" data-password-toggle="password_sign_in" data-label-show="[% loc('Show password') %]" data-label-hide="[% loc('Hide password') %]" aria-label="[% loc('Show password') %]" aria-pressed="false">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </button>
+      </div>
     </div>
+    <input class="auth-button auth-button--primary btn btn--primary" type="submit" name="sign_in_by_password" value="[% loc('Sign in') %]  &gt;">
+  </div>
 [% END %]
 
 [% BLOCK form_sign_in_no %]
-    <p><input class="fake-link" type="submit" name="sign_in_by_code" value="
+  <div class="auth-actions auth-actions--secondary">
+    <input class="auth-button auth-button--secondary fake-link" type="submit" name="sign_in_by_code" value="
       [%~ IF c.cobrand.sms_authentication %]
         [%~ loc('Email me a link or text me a code to sign in') %]
       [%~ ELSE %]
-        [%~ loc('Email me a link to sign in') %]
+        [%~ loc('Email me a magic sign-in link') %]
       [%~ END ~%]
-      "></p>
+    ">
+  </div>
 [% END %]

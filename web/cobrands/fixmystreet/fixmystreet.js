@@ -1318,8 +1318,12 @@ $.extend(fixmystreet.set_up, {
 
     var modal = document.getElementById('js-menu-open-modal'),
         nav = document.getElementById('main-nav'),
-        nav_checkbox = document.getElementById('main-nav-btn');
+        nav_checkbox = document.getElementById('main-nav-btn'),
         nav_link = document.querySelector('label[for="main-nav-btn"]');
+
+        if (!modal || !nav || !nav_checkbox || !nav_link) {
+            return;
+        }
 
     var toggle_menu = function(e) {
       if (!html.classList.contains('mobile')) {
@@ -1590,6 +1594,26 @@ $.extend(fixmystreet.set_up, {
         focusFirstVisibleInput();
     });
 
+    $(document).off('click.authPasswordToggle', '.auth-password-toggle').on('click.authPasswordToggle', '.auth-password-toggle', function(e) {
+        e.preventDefault();
+
+        var $button = $(this),
+            target_id = $button.data('password-toggle'),
+            input = target_id && document.getElementById(target_id),
+            show_label = $button.data('label-show') || 'Show password',
+            hide_label = $button.data('label-hide') || 'Hide password';
+
+        if (!input) {
+            return;
+        }
+
+        var is_hidden = input.type === 'password';
+        input.type = is_hidden ? 'text' : 'password';
+        $button.attr('aria-pressed', is_hidden ? 'true' : 'false');
+        $button.attr('aria-label', is_hidden ? hide_label : show_label);
+        $button.toggleClass('auth-password-toggle--visible', is_hidden);
+    });
+
     // XXX Is this still needed, should it be better done server side? Will need to spot multiple pages too
     var err = $('.form-error');
     if (err.length) {
@@ -1604,6 +1628,108 @@ $.extend(fixmystreet.set_up, {
             $('.js-new-report-user-hidden').addClass('hidden-js');
         }
     }
+  },
+
+  auth_brand_dots: function() {
+    var panels = document.querySelectorAll('.auth-lovable__brand');
+
+    if (!panels.length) {
+        return;
+    }
+
+    Array.prototype.forEach.call(panels, function(panel) {
+        if (panel.getAttribute('data-auth-dots-ready')) {
+            return;
+        }
+
+        var canvas = document.createElement('canvas'),
+            ctx = canvas.getContext && canvas.getContext('2d'),
+            dots = [],
+            mouse = { x: -1000, y: -1000, active: false },
+            animation_frame = null,
+            width = 0,
+            height = 0,
+            ratio = 1,
+            spacing = 32,
+            influence = 78;
+
+        if (!ctx) {
+            return;
+        }
+
+        panel.setAttribute('data-auth-dots-ready', '1');
+        panel.classList.add('auth-lovable__brand--interactive-dots');
+        canvas.className = 'auth-lovable__dot-canvas';
+        canvas.setAttribute('aria-hidden', 'true');
+        panel.insertBefore(canvas, panel.firstChild);
+
+        var resize = function() {
+            var rect = panel.getBoundingClientRect();
+            width = Math.max(1, Math.round(rect.width));
+            height = Math.max(1, Math.round(rect.height));
+            ratio = window.devicePixelRatio || 1;
+            canvas.width = Math.round(width * ratio);
+            canvas.height = Math.round(height * ratio);
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+
+            dots = [];
+            for (var y = 0; y <= height + spacing; y += spacing) {
+                for (var x = 0; x <= width + spacing; x += spacing) {
+                    dots.push({ x: x, y: y, dx: 0, dy: 0 });
+                }
+            }
+        };
+
+        var draw = function() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+
+            dots.forEach(function(dot) {
+                var offset_x = 0,
+                    offset_y = 0;
+
+                if (mouse.active) {
+                    var distance_x = dot.x - mouse.x,
+                        distance_y = dot.y - mouse.y,
+                        distance = Math.sqrt(distance_x * distance_x + distance_y * distance_y);
+
+                    if (distance < influence && distance > 0) {
+                        var force = Math.pow((influence - distance) / influence, 2) * 18;
+                        offset_x = (distance_x / distance) * force;
+                        offset_y = (distance_y / distance) * force;
+                    }
+                }
+
+                dot.dx += (offset_x - dot.dx) * 0.18;
+                dot.dy += (offset_y - dot.dy) * 0.18;
+
+                ctx.beginPath();
+                ctx.arc(dot.x + dot.dx, dot.y + dot.dy, 1.45, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            animation_frame = window.requestAnimationFrame(draw);
+        };
+
+        var update_mouse = function(e) {
+            var rect = panel.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
+            mouse.active = true;
+        };
+
+        panel.addEventListener('mousemove', update_mouse);
+        panel.addEventListener('mouseenter', update_mouse);
+        panel.addEventListener('mouseleave', function() {
+            mouse.active = false;
+        });
+        window.addEventListener('resize', resize);
+
+        resize();
+        draw();
+    });
   },
 
   toggle_visibility: function() {
