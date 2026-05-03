@@ -5,6 +5,7 @@
 InfraSignal uses the pin + wordmark image logo in the app header. The optimized web asset is:
 
 - `web/cobrands/infrasignal/images/logo_web.png` — 800x269 PNG, displayed at up to 275x45 in the header
+- The `Signal` wordmark uses light slate (`#F1F5F9`) so it remains readable on the dark navy site header.
 
 The primary markup lives in `templates/web/infrasignal/header_site.html` and the fallback logo include in `templates/web/infrasignal/header_logo.html` should use the same structure:
 
