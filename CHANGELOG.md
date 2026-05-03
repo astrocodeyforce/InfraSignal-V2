@@ -1,6 +1,12 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 3, 2026 (Logo assets and contrast):
+        - Branding:
+            - Documented the final image-based header logo path, using `logo_web.png` through the Template Toolkit `version()` helper for cache busting.
+            - Documented the high-resolution source logo (`images/logo.png`) and optimized header logo (`images/logo_web.png`), both with the `Signal` wordmark recolored to `#F1F5F9` for dark-header contrast.
+            - Documented responsive header logo sizing (190/235/275px by 45px) and the favicon/PWA icon asset locations.
+
     - InfraSignal — April 12, 2026 (Version 2.5 — Info Pages Redesign):
         - Page Layouts:
             - Added hero banner + sidebar navigation to all info pages (About, FAQ,
