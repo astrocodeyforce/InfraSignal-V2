@@ -257,6 +257,9 @@
         if (textarea && !textarea.getAttribute('placeholder')) {
             textarea.setAttribute('placeholder', 'Describe what you observed...');
         }
+        if (textarea) {
+            textarea.removeAttribute('cols');
+        }
 
         // --- 2. Replace back arrow SVG with simple ← arrow ---
         var backLink = sideReport.querySelector('a.problem-back');
@@ -276,27 +279,231 @@
         if (!banner && problemHeader && backLink) {
             var stateText = 'Open';
             var stateClass = 'banner--open';
+            var badgeText = 'AWAITING REVIEW';
             var metaItems = sideReport.querySelectorAll('.meta-2');
             for (var i = 0; i < metaItems.length; i++) {
                 var txt = metaItems[i].textContent.toLowerCase();
                 if (txt.indexOf('state changed to:') !== -1) {
-                    if (txt.indexOf('fixed') !== -1) { stateText = 'Fixed'; stateClass = 'banner--fixed'; }
-                    else if (txt.indexOf('investigating') !== -1) { stateText = 'Investigating'; stateClass = 'banner--investigating'; }
-                    else if (txt.indexOf('in progress') !== -1) { stateText = 'In Progress'; stateClass = 'banner--in-progress'; }
-                    else if (txt.indexOf('closed') !== -1) { stateText = 'Closed'; stateClass = 'banner--closed'; }
-                    else if (txt.indexOf('action scheduled') !== -1) { stateText = 'Action Scheduled'; stateClass = 'banner--in-progress'; }
+                    if (txt.indexOf('fixed') !== -1) { stateText = 'Fixed'; stateClass = 'banner--fixed'; badgeText = 'RESOLVED'; }
+                    else if (txt.indexOf('investigating') !== -1) { stateText = 'Investigating'; stateClass = 'banner--investigating'; badgeText = 'UNDER REVIEW'; }
+                    else if (txt.indexOf('in progress') !== -1) { stateText = 'In Progress'; stateClass = 'banner--in-progress'; badgeText = 'IN PROGRESS'; }
+                    else if (txt.indexOf('closed') !== -1) { stateText = 'Closed'; stateClass = 'banner--closed'; badgeText = 'CLOSED'; }
+                    else if (txt.indexOf('action scheduled') !== -1) { stateText = 'Action Scheduled'; stateClass = 'banner--in-progress'; badgeText = 'SCHEDULED'; }
                 }
             }
             var newBanner = document.createElement('div');
             newBanner.className = 'banner ' + stateClass;
-            newBanner.innerHTML = '<p>' + stateText + '</p>';
+            newBanner.innerHTML = '<p>' + stateText + '</p><span class="rpt-status-badge">' + badgeText + '</span>';
             backLink.parentNode.insertBefore(newBanner, backLink.nextSibling);
         }
 
-        // --- 4. Build status timeline ---
-        if (sideReport.querySelector('.status-timeline') || !problemHeader) return;
+        // Inject badge into existing banners that don't have one
+        var existingBanner = sideReport.querySelector('.banner');
+        if (existingBanner && !existingBanner.querySelector('.rpt-status-badge')) {
+            var bText = existingBanner.textContent.trim().toLowerCase();
+            var eBadge = 'AWAITING REVIEW';
+            if (bText.indexOf('fixed') !== -1) eBadge = 'RESOLVED';
+            else if (bText.indexOf('investigating') !== -1) eBadge = 'UNDER REVIEW';
+            else if (bText.indexOf('in progress') !== -1) eBadge = 'IN PROGRESS';
+            else if (bText.indexOf('closed') !== -1) eBadge = 'CLOSED';
+            var badgeEl = document.createElement('span');
+            badgeEl.className = 'rpt-status-badge';
+            badgeEl.textContent = eBadge;
+            existingBanner.appendChild(badgeEl);
+        }
 
-        // Determine current state
+        // --- 4. Inject icon box before h1 (Lovable reference: layers/stack icon in primary-10 box) ---
+        var h1 = problemHeader ? problemHeader.querySelector('h1') : null;
+        if (h1 && !problemHeader.querySelector('.rpt-icon-box')) {
+            // Wrap h1 + category in a .rpt-header-content div so layout matches reference (flex row)
+            var iconBox = document.createElement('div');
+            iconBox.className = 'rpt-icon-box';
+            iconBox.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>';
+
+            var contentWrap = document.createElement('div');
+            contentWrap.className = 'rpt-header-content';
+            // Move h1 into contentWrap
+            h1.parentNode.insertBefore(contentWrap, h1);
+            contentWrap.appendChild(h1);
+            // Insert icon box before contentWrap
+            contentWrap.parentNode.insertBefore(iconBox, contentWrap);
+        }
+
+        // --- 5. Inject category badge after h1 (inside header content wrapper) ---
+        if (h1 && !problemHeader.querySelector('.rpt-cat-badge')) {
+            var metaInfo = problemHeader.querySelector('.report_meta_info');
+            if (metaInfo) {
+                var metaText = metaInfo.textContent || '';
+                var catMatch = metaText.match(/in the (.+?) category/);
+                if (catMatch) {
+                    var catBadge = document.createElement('span');
+                    catBadge.className = 'rpt-cat-badge';
+                    catBadge.textContent = catMatch[1];
+                    // Append after h1 inside its parent (the rpt-header-content wrapper)
+                    if (h1.parentNode) {
+                        h1.parentNode.appendChild(catBadge);
+                    }
+                }
+            }
+        }
+
+        // --- 5b. Move report photo into its own section so it doesn't affect header spacing ---
+        if (problemHeader && !sideReport.querySelector('.rpt-photo-section')) {
+            var reportPhoto = problemHeader.querySelector('.update-img');
+            if (reportPhoto) {
+                problemHeader.classList.add('rpt-has-photo');
+                var photoSection = document.createElement('div');
+                photoSection.className = 'rpt-photo-section';
+                problemHeader.parentNode.insertBefore(photoSection, problemHeader.nextElementSibling);
+                photoSection.appendChild(reportPhoto);
+            }
+        }
+
+        // --- 5c. Photo lightbox fallback/override ---
+        // The report redesign moves the photo in the DOM; this keeps clicks in-page
+        // even if the original Fancybox binding is missed by the platform scripts.
+        if (!sideReport.getAttribute('data-rpt-photo-lightbox')) {
+            sideReport.setAttribute('data-rpt-photo-lightbox', '1');
+
+            function closePhotoLightbox() {
+                var existing = document.querySelector('.rpt-photo-lightbox');
+                if (existing) existing.parentNode.removeChild(existing);
+                document.documentElement.classList.remove('rpt-photo-lightbox-open');
+                document.removeEventListener('keydown', onPhotoLightboxKeydown);
+            }
+
+            function onPhotoLightboxKeydown(event) {
+                if (event.key === 'Escape' || event.keyCode === 27) {
+                    closePhotoLightbox();
+                }
+            }
+
+            function openPhotoLightbox(link) {
+                closePhotoLightbox();
+
+                var image = link.querySelector('img');
+                var overlay = document.createElement('div');
+                overlay.className = 'rpt-photo-lightbox';
+                overlay.setAttribute('role', 'dialog');
+                overlay.setAttribute('aria-modal', 'true');
+                overlay.setAttribute('aria-label', 'Report photo');
+
+                var frame = document.createElement('div');
+                frame.className = 'rpt-photo-lightbox__frame';
+
+                var closeButton = document.createElement('button');
+                closeButton.type = 'button';
+                closeButton.className = 'rpt-photo-lightbox__close';
+                closeButton.setAttribute('aria-label', 'Close photo');
+                closeButton.textContent = 'x';
+
+                var fullImage = document.createElement('img');
+                fullImage.className = 'rpt-photo-lightbox__image';
+                fullImage.src = link.href;
+                fullImage.alt = image ? image.alt : 'Report photo';
+
+                frame.appendChild(closeButton);
+                frame.appendChild(fullImage);
+                overlay.appendChild(frame);
+                document.body.appendChild(overlay);
+                document.documentElement.classList.add('rpt-photo-lightbox-open');
+                closeButton.focus();
+
+                overlay.addEventListener('click', function(event) {
+                    if (event.target === overlay) closePhotoLightbox();
+                });
+                closeButton.addEventListener('click', closePhotoLightbox);
+                document.addEventListener('keydown', onPhotoLightboxKeydown);
+            }
+
+            sideReport.addEventListener('click', function(event) {
+                var target = event.target;
+                var link = target && target.closest ? target.closest('.update-img a[rel="fancy"]') : null;
+                if (!link || !sideReport.contains(link)) return;
+
+                event.preventDefault();
+                event.stopPropagation();
+                openPhotoLightbox(link);
+            }, true);
+        }
+
+        // --- 6. Build 2×2 details grid (Lovable reference: icon + label/value pairs) ---
+        if (problemHeader && !sideReport.querySelector('.rpt-details-grid')) {
+            var refEl = problemHeader.querySelectorAll('.council_sent_info');
+            var metaEl = problemHeader.querySelector('.report_meta_info');
+
+            // Extract ref number
+            var refNum = '';
+            var authority = '';
+            for (var r = 0; r < refEl.length; r++) {
+                var rText = refEl[r].textContent.trim();
+                if (rText.indexOf('ref:') !== -1 || rText.indexOf('Ref:') !== -1) {
+                    var rMatch = rText.match(/ref:\s*(\S+)/i);
+                    if (rMatch) refNum = rMatch[1].replace(/\.$/, '');
+                } else if (rText.indexOf('Authority') !== -1 || rText.indexOf('Responsible') !== -1) {
+                    authority = rText.replace(/Responsible Authority:\s*/i, '').replace(/\s+/g, ' ').trim();
+                }
+            }
+
+            // Extract date from meta
+            var reportedDate = '';
+            var reportSource = 'Desktop';
+            if (metaEl) {
+                var localtime = metaEl.querySelector('.js-localtime');
+                if (localtime) {
+                    var epoch = localtime.getAttribute('data-epoch');
+                    if (epoch) {
+                        var dt = new Date(parseInt(epoch) * 1000);
+                        reportedDate = dt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    }
+                    var ltText = localtime.textContent || '';
+                    if (ltText.indexOf('desktop') !== -1) reportSource = 'Desktop';
+                    else if (ltText.indexOf('mobile') !== -1) reportSource = 'Mobile';
+                    else if (ltText.indexOf('app') !== -1) reportSource = 'App';
+                }
+            }
+
+            // Icons from the reference template
+            var svgRef       = '<svg class="rpt-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16"/><path d="M4 12h16"/><path d="M4 20h16"/></svg>';
+            var svgAuthority = '<svg class="rpt-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M8 6h8"/><path d="M8 10h8"/><path d="M8 14h4"/></svg>';
+            var svgReported  = '<svg class="rpt-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+            var svgSource    = '<svg class="rpt-detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0116 0Z"/><circle cx="12" cy="10" r="3"/></svg>';
+
+            var gridHTML = '<div class="rpt-details-grid">';
+            gridHTML += '<div class="rpt-detail-item">' + svgRef + '<div><p class="rpt-detail-label">Ref</p><p class="rpt-detail-value">' + (refNum || 'N/A') + '</p></div></div>';
+            gridHTML += '<div class="rpt-detail-item">' + svgAuthority + '<div><p class="rpt-detail-label">Authority</p><p class="rpt-detail-value">' + (authority || 'N/A') + '</p></div></div>';
+            gridHTML += '<div class="rpt-detail-item">' + svgReported + '<div><p class="rpt-detail-label">Reported</p><p class="rpt-detail-value">' + (reportedDate || 'N/A') + '</p></div></div>';
+            gridHTML += '<div class="rpt-detail-item">' + svgSource + '<div><p class="rpt-detail-label">Source</p><p class="rpt-detail-value">' + reportSource + '</p></div></div>';
+            gridHTML += '</div>';
+
+            // Insert grid after the photo section if one exists, otherwise after the header
+            var gridWrapper = document.createElement('div');
+            gridWrapper.innerHTML = gridHTML;
+            var gridAnchor = sideReport.querySelector('.rpt-photo-section') || problemHeader;
+            gridAnchor.parentNode.insertBefore(gridWrapper.firstChild, gridAnchor.nextElementSibling);
+
+            // Hide originals
+            for (var h = 0; h < refEl.length; h++) {
+                refEl[h].classList.add('rpt-details-moved');
+            }
+            if (metaEl) metaEl.classList.add('rpt-details-moved');
+
+            // Move description block after details grid (Lovable order: Header → Grid → Description)
+            var modDispEl = problemHeader.querySelector('.moderate-display');
+            var detailsGridEl = sideReport.querySelector('.rpt-details-grid');
+            if (modDispEl && detailsGridEl) {
+                var descBlock = document.createElement('div');
+                descBlock.className = 'rpt-description-block';
+                // Wrap the original content in a quote div per reference
+                descBlock.innerHTML = '<div class="rpt-description-quote">' + modDispEl.innerHTML + '</div>';
+                detailsGridEl.parentNode.insertBefore(descBlock, detailsGridEl.nextElementSibling);
+                modDispEl.style.display = 'none';
+            }
+        }
+
+        // --- 7. Build status timeline ---
+        if (sideReport.querySelector('.stl') || !problemHeader) return;
+
         var currentBanner = sideReport.querySelector('.banner');
         var currentState = 'reported';
         if (currentBanner) {
@@ -306,85 +513,247 @@
             else if (bt.indexOf('investigating') !== -1 || bt.indexOf('acknowledged') !== -1) currentState = 'acknowledged';
         }
 
-        // Get report date
         var reportDate = '';
-        var metaInfo = problemHeader.querySelector('.report_meta_info .js-localtime');
-        if (metaInfo) {
-            var epoch = metaInfo.getAttribute('data-epoch');
-            if (epoch) {
-                var d = new Date(parseInt(epoch) * 1000);
-                reportDate = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        var lt = problemHeader.querySelector('.report_meta_info .js-localtime');
+        if (lt) {
+            var ep = lt.getAttribute('data-epoch');
+            if (ep) {
+                var dd = new Date(parseInt(ep) * 1000);
+                reportDate = dd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
             }
         }
 
-        // Get latest update date
         var updateDate = '';
-        var allMeta = sideReport.querySelectorAll('.meta-2');
-        for (var j = allMeta.length - 1; j >= 0; j--) {
-            var mt = allMeta[j].textContent;
-            var dm = mt.match(/(\d{1,2}:\d{2}),?\s+\w+\s+(\d{1,2})\s+(\w+)\s+(\d{4})/);
+        var am = sideReport.querySelectorAll('.meta-2');
+        for (var j = am.length - 1; j >= 0; j--) {
+            var dm = am[j].textContent.match(/(\d{1,2}:\d{2}),?\s+\w+\s+(\d{1,2})\s+(\w+)\s+(\d{4})/);
             if (dm) {
                 try {
                     var pd = new Date(dm[3] + ' ' + dm[2] + ', ' + dm[4]);
-                    if (!isNaN(pd.getTime())) {
-                        updateDate = pd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                    }
+                    if (!isNaN(pd.getTime())) updateDate = pd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                 } catch(e) {}
                 break;
             }
         }
 
-        var stateOrder = ['reported', 'acknowledged', 'in-progress', 'resolved'];
-        var currentIdx = stateOrder.indexOf(currentState);
-        if (currentIdx === -1) currentIdx = 0;
+        var order = ['reported', 'acknowledged', 'in-progress', 'resolved'];
+        var ci = order.indexOf(currentState);
+        if (ci === -1) ci = 0;
 
         var steps = [
             { label: 'Reported',     date: reportDate },
-            { label: 'Acknowledged', date: currentIdx >= 1 ? (updateDate || '') : '' },
-            { label: 'In Progress',  date: currentIdx >= 2 ? (updateDate || '') : '' },
-            { label: 'Resolved',     date: currentIdx >= 3 ? (updateDate || '') : '' }
+            { label: 'Acknowledged', date: ci >= 1 ? (updateDate || '') : '' },
+            { label: 'In Progress',  date: ci >= 2 ? (updateDate || '') : '' },
+            { label: 'Resolved',     date: ci >= 3 ? (updateDate || '') : '' }
         ];
 
-        // Build HTML — each step is a column with dot on top and label below
-        var html = '<div class="status-timeline">';
-        html += '<div class="status-timeline__heading">STATUS TIMELINE</div>';
-        html += '<div class="status-timeline__row">';
+        // Check icon from reference template
+        var checkSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>';
+
+        // Horizontal flex timeline: each step is a column
+        // with a row containing [left-line, dot, right-line] and labels below
+        var html = '<div class="stl"><div class="stl-heading">Timeline</div><div class="stl-grid">';
 
         for (var s = 0; s < steps.length; s++) {
-            var done = s <= currentIdx;
-            html += '<div class="status-timeline__col">';
+            var done = s <= ci;
+            var prevDone = s - 1 >= 0 && s - 1 < ci;   // line BEFORE this step is done if previous step is done
+            var nextDone = s < ci;                      // line AFTER this step is done if this step is done
+
+            html += '<div class="stl-step">';
+            html += '<div class="stl-step__row">';
+
+            // Left line (except on first step)
+            if (s > 0) {
+                html += '<div class="stl-line' + (prevDone ? ' stl-line--done' : '') + '"></div>';
+            } else {
+                html += '<div class="stl-line" style="visibility:hidden"></div>';
+            }
 
             // Dot
-            html += '<div class="status-timeline__dot' + (done ? ' --done' : '') + '">';
-            if (done) {
-                html += '<svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-            }
+            html += '<div class="stl-dot' + (done ? ' stl-dot--done' : '') + '">';
+            if (done) html += checkSvg;
             html += '</div>';
 
-            // Label
-            html += '<div class="status-timeline__text">';
-            html += '<div class="status-timeline__name' + (done ? ' --done' : '') + '">' + steps[s].label + '</div>';
-            html += '<div class="status-timeline__date' + (done ? ' --done' : '') + '">' + (steps[s].date || 'Pending') + '</div>';
-            html += '</div>';
-
-            html += '</div>'; // col
-
-            // Line between steps (not after last)
+            // Right line (except on last step)
             if (s < steps.length - 1) {
-                var lineDone = s < currentIdx;
-                html += '<div class="status-timeline__line' + (lineDone ? ' --solid' : ' --dashed') + '"></div>';
+                html += '<div class="stl-line' + (nextDone ? ' stl-line--done' : '') + '"></div>';
+            } else {
+                html += '<div class="stl-line" style="visibility:hidden"></div>';
+            }
+
+            html += '</div>'; // end .stl-step__row
+
+            html += '<div class="stl-lbl-name">' + steps[s].label + '</div>';
+            html += '<div class="stl-lbl-date">' + (steps[s].date || 'Pending') + '</div>';
+
+            html += '</div>'; // end .stl-step
+        }
+
+        html += '</div></div>';
+
+        // Insert after details grid (or after problem-header)
+        var detailsGrid = sideReport.querySelector('.rpt-details-grid');
+        var timelineAnchor = detailsGrid || problemHeader;
+        var wrapper = document.createElement('div');
+        wrapper.innerHTML = html;
+        timelineAnchor.parentNode.insertBefore(wrapper.firstChild, timelineAnchor.nextElementSibling);
+
+        // --- 8. Enhance updates section ---
+        var updatesSection = sideReport.querySelector('section.full-width');
+        if (updatesSection) {
+            var updateItems = updatesSection.querySelectorAll('.item-list__item--updates');
+
+            // Inject chat icon + count badge into heading
+            var updatesH2 = updatesSection.querySelector('h2.static-with-rule');
+            if (updatesH2 && !updatesH2.querySelector('.rpt-updates-icon')) {
+                var chatIcon = '<span class="rpt-updates-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>';
+                var countBadge = updateItems.length > 0 ? '<span class="rpt-updates-count">' + updateItems.length + '</span>' : '';
+                updatesH2.innerHTML = chatIcon + 'Updates' + countBadge;
+            }
+
+            // Restructure each update card
+            for (var u = 0; u < updateItems.length; u++) {
+                var item = updateItems[u];
+                if (item.getAttribute('data-enhanced')) continue;
+                item.setAttribute('data-enhanced', '1');
+
+                var updateText = item.querySelector('.item-list__update-text');
+                if (!updateText) continue;
+
+                var modDisplay = updateText.querySelector('.moderate-display');
+                var bodyText = '';
+                if (modDisplay) {
+                    var bodyP = modDisplay.querySelector('p');
+                    if (bodyP) bodyText = bodyP.textContent.trim();
+                }
+
+                var metas = updateText.querySelectorAll('.meta-2');
+                var authorName = '';
+                var dateStr = '';
+                var stateChange = '';
+                var isOfficial = false;
+
+                for (var m = 0; m < metas.length; m++) {
+                    var metaText2 = metas[m].textContent.trim();
+                    if (metaText2.indexOf('State changed to:') !== -1) {
+                        stateChange = metaText2;
+                    }
+                    if (metaText2.indexOf('Posted by') !== -1) {
+                        var strongEl = metas[m].querySelector('strong');
+                        if (strongEl) {
+                            authorName = strongEl.textContent.trim();
+                            // Check if it's an official/authority update (has a comma = place name)
+                            if (authorName.indexOf(',') !== -1 || authorName.indexOf('Council') !== -1 || authorName.indexOf('Authority') !== -1) {
+                                isOfficial = true;
+                            }
+                        }
+                        var dMatch = metaText2.match(/at\s+\d{1,2}:\d{2},?\s+\w+\s+(\d{1,2})\s+(\w+)\s+(\d{4})/);
+                        if (dMatch) {
+                            try {
+                                var dp = new Date(dMatch[2] + ' ' + dMatch[1] + ', ' + dMatch[3]);
+                                if (!isNaN(dp.getTime())) {
+                                    dateStr = dp.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                                }
+                            } catch(e) {}
+                        }
+                    }
+                }
+
+                var newHTML = '';
+
+                // Official badge
+                if (isOfficial) {
+                    newHTML += '<div class="rpt-official-badge">\uD83C\uDFDB Official Response</div>';
+                }
+
+                // Header row
+                newHTML += '<div class="upd-header">';
+                newHTML += '<span class="upd-author">' + (authorName || 'Unknown') + '</span>';
+                newHTML += '<span class="upd-date">' + (dateStr || '') + '</span>';
+                newHTML += '</div>';
+
+                if (stateChange) {
+                    newHTML += '<div class="upd-state">' + stateChange + '</div>';
+                }
+
+                if (bodyText) {
+                    newHTML += '<div class="upd-body">\u201C' + bodyText + '\u201D</div>';
+                }
+
+                updateText.innerHTML = newHTML;
             }
         }
 
-        html += '</div>'; // row
-        html += '</div>'; // timeline
+        // --- 9. Inject "Step 1" label in form section ---
+        var updateForm = document.getElementById('update_form');
+        if (updateForm && !updateForm.querySelector('.rpt-step-label')) {
+            var formH2 = updateForm.querySelector('h2');
+            if (formH2) {
+                var step1Label = document.createElement('div');
+                step1Label.className = 'rpt-step-label';
+                step1Label.textContent = 'STEP 1';
+                formH2.parentNode.insertBefore(step1Label, formH2);
+            }
+        }
 
-        // Insert after problem-header
-        var insertTarget = problemHeader.nextElementSibling;
-        var wrapper = document.createElement('div');
-        wrapper.innerHTML = html;
-        var timelineEl = wrapper.firstChild;
-        problemHeader.parentNode.insertBefore(timelineEl, insertTarget);
+        // --- 9b. Inject "Step 2" label in auth section ---
+        var authSection = sideReport.querySelector('.form-section-preview--next');
+        if (authSection && !authSection.querySelector('.rpt-step-label')) {
+            var authHeading = authSection.querySelector('h2.form-section-heading');
+            if (authHeading) {
+                authHeading.textContent = authHeading.textContent.replace(/^\s*Next:\s*/i, '');
+            }
+            var stepLabel = document.createElement('div');
+            stepLabel.className = 'rpt-step-label';
+            stepLabel.textContent = 'STEP 2';
+            authSection.insertBefore(stepLabel, authSection.firstChild);
+        }
+
+        // --- 9c. Compact bottom action labels to match the reference ---
+        var nearbyLink = document.querySelector('#key-tools a[href*="/around"]');
+        if (nearbyLink && nearbyLink.textContent.indexOf('Problems nearby') !== -1) {
+            for (var nl = 0; nl < nearbyLink.childNodes.length; nl++) {
+                var node = nearbyLink.childNodes[nl];
+                if (node.nodeType === 3 && node.nodeValue.indexOf('Problems nearby') !== -1) {
+                    node.nodeValue = node.nodeValue.replace('Problems nearby', 'Nearby');
+                }
+            }
+        }
+
+        // --- 10. Fix dropzone: inject icon, fix text ---
+        function fixDropzoneText() {
+            var dzMessages = sideReport.querySelectorAll('.dropzone .dz-message');
+            for (var d = 0; d < dzMessages.length; d++) {
+                var msgEl = dzMessages[d];
+                if (msgEl.getAttribute('data-dz-fixed')) continue;
+
+                var span = msgEl.querySelector('span') || msgEl.querySelector('button');
+                if (!span) continue;
+
+                var uEl = span.querySelector('u');
+                if (!uEl) continue;
+
+                msgEl.setAttribute('data-dz-fixed', '1');
+
+                span.innerHTML = '';
+
+                var iconWrap = document.createElement('span');
+                iconWrap.className = 'dz-icon-circle';
+                iconWrap.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#6B7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>';
+                span.appendChild(iconWrap);
+
+                var textNode = document.createTextNode('Drag photos here or ');
+                span.appendChild(textNode);
+
+                var btn = document.createElement('u');
+                btn.textContent = 'choose photos';
+                span.appendChild(btn);
+            }
+        }
+
+        fixDropzoneText();
+        setTimeout(fixDropzoneText, 500);
+        setTimeout(fixDropzoneText, 1500);
     }
 
     if (document.readyState === 'loading') {

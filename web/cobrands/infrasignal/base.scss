@@ -3064,8 +3064,9 @@ a[href="/report"] {
 
 /* ===========================================================
    LOVABLE DESIGN — REPORT DETAIL: Sent-To Card Enhancement
+   (Scoped to non-mappage so it doesn't conflict with report detail redesign)
    =========================================================== */
-.council_sent_info {
+body:not(.mappage) .council_sent_info {
     background: $primary-50;
     border: 1px solid rgba($primary-300, 0.3);
     border-radius: 12px;
@@ -3318,8 +3319,9 @@ a[href="/report"] {
 
 /* ===========================================================
    REPORT DETAIL — Updates Section Enhancement
+   (Scoped to non-mappage so it doesn't conflict with report detail redesign)
    =========================================================== */
-.item-list--updates .item-list__item {
+body:not(.mappage) .item-list--updates .item-list__item {
     border-left: 4px solid $primary-500;
     border-radius: 8px;
     padding: 16px 16px 16px 20px;
@@ -5378,6 +5380,8 @@ body.alertpage input#pc[type="text"] {
 
 // --- Full-bleed layout: sidebar + map ---
 body.mappage {
+  background: #fff !important;
+
   // Remove platform wrapper padding/constraints
   .wrapper,
   .wrapper > .table-cell {
@@ -5486,6 +5490,49 @@ body.mappage #map_sidebar {
   padding: 0 !important;
   background: #fff;
   border-right: 1px solid $gray-300;
+
+  &::after {
+    content: none !important;
+    display: none !important;
+    height: 0 !important;
+  }
+}
+
+body.mappage #map_box {
+  left: 23em !important;
+}
+
+body.mappage .shadow-wrap,
+body.mappage .floating-button-wrapper {
+  width: calc(23em - 16px) !important;
+  max-width: calc(23em - 16px) !important;
+}
+
+@media (min-width: 63em) {
+  body.mappage #map_box { left: 25em !important; }
+  body.mappage .shadow-wrap,
+  body.mappage .floating-button-wrapper {
+    width: calc(25em - 16px) !important;
+    max-width: calc(25em - 16px) !important;
+  }
+}
+
+@media (min-width: 79em) {
+  body.mappage #map_box { left: 27em !important; }
+  body.mappage .shadow-wrap,
+  body.mappage .floating-button-wrapper {
+    width: calc(27em - 16px) !important;
+    max-width: calc(27em - 16px) !important;
+  }
+}
+
+@media (min-width: 90em) {
+  body.mappage #map_box { left: 28em !important; }
+  body.mappage .shadow-wrap,
+  body.mappage .floating-button-wrapper {
+    width: calc(28em - 16px) !important;
+    max-width: calc(28em - 16px) !important;
+  }
 }
 
 body.mappage #side {
@@ -5613,12 +5660,14 @@ body.mappage .report-list-filters-wrapper {
     display: flex !important;
     flex-direction: column !important;
     margin: 0 !important;
-    flex: 0 0 auto !important;
+    flex: 1 1 0% !important;
     min-width: 0 !important;
+    float: none !important;
+    padding: 0 !important;
 
     select {
-      width: auto !important;
-      min-width: 7rem;
+      width: 100% !important;
+      box-sizing: border-box !important;
     }
   }
 
@@ -6124,217 +6173,662 @@ body.mappage #filter-announcement {
   clip: rect(0 0 0 0) !important;
 }
 
+
 /* ===========================================================
-   REPORT DETAIL PAGE — Lovable Reference Redesign (CSS-only)
+   REPORT DETAIL PAGE — Lovable Reference Redesign (CSS+JS)
+   Aligned with: report_detail_sidebar (1).scss
    =========================================================== */
 
-// --- 1. Back link — clean separator (Lovable: ← arrow) ---
+// ── Lovable tokens (match reference) ──
+$lv-bg-white:        hsl(0, 0%, 100%);
+$lv-bg-subtle:       hsl(220, 14%, 96%);
+$lv-bg-secondary-30: hsla(220, 14%, 96%, 0.3);
+$lv-bg-secondary-40: hsla(220, 14%, 96%, 0.4);
+$lv-border:          hsl(220, 13%, 91%);
+$lv-text-fg:         hsl(222, 47%, 11%);
+$lv-text-muted:      hsl(215, 16%, 47%);
+$lv-text-muted-60:   hsla(215, 16%, 47%, 0.6);
+$lv-primary:         hsl(224, 71%, 40%);
+$lv-primary-fg:      hsl(0, 0%, 100%);
+$lv-primary-03:      hsla(224, 71%, 40%, 0.03);
+$lv-primary-06:      hsla(224, 71%, 40%, 0.06);
+$lv-primary-10:      hsla(224, 71%, 40%, 0.1);
+$lv-primary-15:      hsla(224, 71%, 40%, 0.15);
+$lv-primary-25:      hsla(224, 71%, 40%, 0.25);
+$lv-primary-40:      hsla(224, 71%, 40%, 0.4);
+$lv-primary-50:      hsla(224, 71%, 40%, 0.5);
+$lv-primary-90:      hsla(224, 71%, 40%, 0.9);
+$lv-destructive:     hsl(0, 84%, 60%);
+$lv-destructive-10:  hsla(0, 84%, 60%, 0.1);
+$lv-amber-50:        hsl(48, 100%, 96%);
+$lv-amber-400:       hsl(38, 92%, 50%);
+$lv-amber-500:       hsl(36, 93%, 46%);
+$lv-amber-700:       hsl(32, 95%, 28%);
+$lv-amber-500-15:    hsla(36, 93%, 46%, 0.15);
+$lv-amber-400-40:    hsla(38, 92%, 50%, 0.4);
+$lv-emerald-500:     hsl(160, 84%, 39%);
+$lv-shadow-sm:       0 1px 2px rgba(0, 0, 0, 0.06);
+$lv-shadow-md:       0 4px 12px rgba(0, 0, 0, 0.1);
+$lv-radius-lg:       8px;
+$lv-radius-xl:       12px;
+
+// Ping animation (status bar dot)
+@keyframes lv-status-ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+// ═══════════════════════════════════════════════════════
+// 1. BACK NAVIGATION
+// ═══════════════════════════════════════════════════════
 body.mappage #side-report > a.problem-back {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 14px 20px;
-  margin: 0;
-  border-bottom: 1px solid $gray-200;
-  border-radius: 0;
-  background: transparent;
-  color: $gray-600;
-  font-size: 0.9rem;
-  font-weight: 500;
+  padding: 8px 14px;
+  margin: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: $lv-text-fg !important;
+  background: rgba($lv-bg-white, 0.8);
+  border-radius: $lv-radius-lg;
+  box-shadow: $lv-shadow-sm;
+  border: 1px solid $lv-border;
   text-decoration: none;
-  transition: color 0.2s;
+  transition: all 0.2s ease;
+  cursor: pointer;
 
   &:hover, &:focus {
-    color: $primary-700;
-    background: transparent;
+    background: $lv-primary !important;
+    color: $lv-primary-fg !important;
+    box-shadow: $lv-shadow-md;
+    border-color: $lv-primary;
     text-decoration: none;
   }
 
-  // Hide the platform chevron SVG
-  svg {
-    display: none !important;
-  }
+  // Hide platform chevron SVG (JS replaces with ←)
+  svg { display: none !important; }
 
-  // Styled ← arrow injected by JS
   .back-arrow-icon {
     font-size: 1rem;
     line-height: 1;
-    color: $gray-500;
+    transition: transform 0.2s ease;
   }
+
+  &:hover .back-arrow-icon { transform: translateX(-2px); }
 }
 
-// --- 2. Status banner — dot + text row instead of colored banner ---
+// ═══════════════════════════════════════════════════════
+// 2. STATUS INDICATOR BAR
+// ═══════════════════════════════════════════════════════
 body.mappage .banner {
-  border-radius: 0 !important;
-  padding: 12px 20px !important;
-  margin: 0 !important;
-  border: none !important;
-  border-bottom: 1px solid $gray-200 !important;
-  font-size: 0.875rem !important;
-  font-weight: 600 !important;
   display: flex !important;
   align-items: center !important;
+  gap: 12px !important;
+  padding: 14px 20px !important;
+  margin: 0 !important;
+  background: $lv-amber-50 !important;
+  border: none !important;
+  border-bottom: 2px solid $lv-amber-400-40 !important;
+  border-radius: 0 !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
 
   p {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
     margin: 0;
     padding: 0;
-    font-size: 0.875rem;
-    font-weight: 600;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    color: $lv-amber-700;
   }
 
-  // Hide the pin image, replace with a dot via ::before
-  img.pin {
-    display: none !important;
-  }
+  img.pin { display: none !important; }
 
+  // Pinging dot
   p::before {
     content: '';
+    position: relative;
     display: inline-block;
-    width: 10px;
-    height: 10px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
+    background: $lv-amber-500;
+    box-shadow: $lv-shadow-sm;
     flex-shrink: 0;
   }
 
-  // Fixed — green
+  p::after {
+    content: '';
+    position: absolute;
+    margin-left: -16px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: $lv-amber-400;
+    animation: lv-status-ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+    opacity: 0.5;
+  }
+
+  .rpt-status-badge {
+    margin-left: auto;
+    padding: 3px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $lv-amber-700;
+    background: $lv-amber-500-15;
+    border-radius: 100px;
+    flex-shrink: 0;
+  }
+
+  // State-specific color overrides
   &.banner--fixed {
-    background: #f0fdf4 !important;
-    color: #166534 !important;
-    p::before { background: #22c55e; }
+    background: #ECFDF5 !important;
+    border-bottom-color: rgba($lv-emerald-500, 0.4) !important;
+    p { color: #065F46; }
+    p::before { background: $lv-emerald-500; }
+    p::after { background: $lv-emerald-500; }
+    .rpt-status-badge { background: rgba($lv-emerald-500, 0.15); color: #065F46; }
   }
 
-  // Open / investigating — blue
-  &.banner--open, &.banner--investigating {
-    background: $primary-50 !important;
-    color: $primary-700 !important;
-    p::before { background: $primary-500; }
+  &.banner--investigating {
+    background: $lv-primary-10 !important;
+    border-bottom-color: $lv-primary-40 !important;
+    p { color: $lv-primary; }
+    p::before { background: $lv-primary; }
+    p::after { background: $lv-primary; }
+    .rpt-status-badge { background: $lv-primary-15; color: $lv-primary; }
   }
 
-  // Closed — gray
   &.banner--closed {
-    background: $gray-100 !important;
-    color: $gray-700 !important;
-    p::before { background: $gray-500; }
-  }
-
-  // In progress — amber
-  &.banner--in-progress {
-    background: #fffbeb !important;
-    color: #92400e !important;
-    p::before { background: #f59e0b; }
-  }
-
-  // Unknown / default
-  &:not(.banner--fixed):not(.banner--open):not(.banner--closed):not(.banner--in-progress):not(.banner--investigating) {
-    background: #fffbeb !important;
-    color: #92400e !important;
-    p::before { background: #f59e0b; }
+    background: $lv-bg-subtle !important;
+    border-bottom-color: $lv-border !important;
+    p { color: $lv-text-muted; }
+    p::before { background: $lv-text-muted; }
+    p::after { background: $lv-text-muted; }
+    .rpt-status-badge { background: rgba($lv-text-muted, 0.15); color: $lv-text-muted; }
   }
 }
 
-// --- 3. Report title section — proper spacing (Lovable match) ---
+// ═══════════════════════════════════════════════════════
+// 3. REPORT HEADER — icon box + (title + category)
+// ═══════════════════════════════════════════════════════
 body.mappage #side-report .problem-header {
-  padding: 24px 20px 20px !important;
+  display: flex !important;
+  align-items: flex-start !important;
+  flex-wrap: wrap;
+  gap: 12px !important;
+  padding: 20px !important;
   margin: 0 !important;
   border: none !important;
-  border-bottom: 1px solid $gray-200 !important;
+  border-bottom: 1px solid $lv-border !important;
   border-radius: 0 !important;
   box-shadow: none !important;
-  background: #fff !important;
+  background: $lv-bg-white !important;
+
+  // Icon box (injected by JS)
+  .rpt-icon-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: $lv-primary-10;
+    border-radius: $lv-radius-xl;
+
+    svg {
+      width: 20px;
+      height: 20px;
+      color: $lv-primary;
+    }
+  }
+
+  // Content wrapper (injected by JS) — holds h1 + category badge
+  .rpt-header-content {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
   h1 {
-    font-size: 1.5rem;
+    font-size: 18px;
     font-weight: 700;
-    color: $gray-900;
-    line-height: 1.35;
-    margin-bottom: 8px;
+    line-height: 1.3;
+    color: $lv-text-fg;
+    margin: 0;
+    padding: 0;
   }
 
-  // Hide the admin checkbox
+  // Category badge (injected by JS) — destructive/red pill per reference
+  .rpt-cat-badge {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 6px;
+    padding: 2px 10px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: $lv-destructive;
+    background: $lv-destructive-10;
+    border-radius: 100px;
+  }
+
+  // Hide moderate-edit/meta when they're the restructured/moved ones
   .moderate-edit {
     font-size: 0.75rem;
-    color: $gray-500;
-    margin-bottom: 8px;
+    color: $lv-text-muted;
   }
 
-  // Meta info subtitle
   .report_meta_info {
     font-size: 0.85rem;
-    color: $gray-500;
+    color: $lv-text-muted;
     line-height: 1.5;
-    margin-bottom: 20px;
+    margin: 6px 0 0 0;
   }
 
-  // Photo displayed in report
+  // Photo
   .update-img {
-    float: right;
-    margin: 0 0 12px 16px;
-    max-width: 45%;
+    float: none;
+    flex: 0 0 calc(100% - 52px);
+    width: calc(100% - 52px);
+    max-width: calc(100% - 52px);
+    margin: 4px 0 0 52px;
+    display: block;
+
+    a {
+      display: inline-block;
+      width: 240px;
+      max-width: 100%;
+    }
 
     img {
-      border-radius: 10px;
+      border-radius: $lv-radius-lg;
       width: 100%;
       height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
     }
 
     span {
       font-size: 0.7rem;
-      color: $gray-400;
+      color: $lv-text-muted-60;
     }
   }
 }
 
-// --- 4. Info cards — rounded bordered cards (Lovable match) ---
-body.mappage #side-report .council_sent_info {
-  background: #fff !important;
-  border: 1px solid $gray-200 !important;
-  border-radius: 12px !important;
-  padding: 16px 18px !important;
-  margin: 0 0 12px 0 !important;
-  font-size: 0.9rem !important;
-  color: $gray-700 !important;
+body.mappage #side-report .problem-header.rpt-has-photo {
+  border-bottom: none !important;
+  padding-bottom: 8px !important;
+}
+
+body.mappage #side-report .rpt-photo-section {
+  padding: 0 20px 20px 72px;
+  border-bottom: 1px solid $lv-border;
+  background: $lv-bg-white;
+
+  .update-img {
+    float: none;
+    width: 240px;
+    max-width: 100%;
+    margin: 0;
+    display: block;
+
+    a {
+      display: block;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    img {
+      border-radius: $lv-radius-lg;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    span {
+      font-size: 0.7rem;
+      color: $lv-text-muted-60;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  body.mappage #side-report .rpt-photo-section {
+    padding-left: 20px;
+  }
+}
+
+html.rpt-photo-lightbox-open {
+  overflow: hidden;
+}
+
+.rpt-photo-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.46);
+  backdrop-filter: blur(9px);
+  -webkit-backdrop-filter: blur(9px);
+}
+
+.rpt-photo-lightbox__frame {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 720px;
+  max-height: calc(100vh - 96px);
+  border-radius: $lv-radius-xl;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
+}
+
+.rpt-photo-lightbox__image {
+  display: block;
+  width: auto;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 96px);
+  border-radius: $lv-radius-xl;
+  object-fit: contain;
+  background: $lv-bg-white;
+}
+
+.rpt-photo-lightbox__close {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.86);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: $lv-shadow-md;
+  cursor: pointer;
+}
+
+.rpt-photo-lightbox__close:hover,
+.rpt-photo-lightbox__close:focus {
+  background: $lv-primary;
+  outline: none;
+}
+
+@media (max-width: 640px) {
+  .rpt-photo-lightbox {
+    padding: 18px;
+  }
+
+  .rpt-photo-lightbox__image {
+    max-width: calc(100vw - 36px);
+    max-height: calc(100vh - 88px);
+  }
+
+  .rpt-photo-lightbox__close {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// 4. KEY DETAILS GRID — 2×2
+// ═══════════════════════════════════════════════════════
+body.mappage #side-report .rpt-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid $lv-border;
+  background: $lv-bg-white;
+
+  .rpt-detail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+
+    > div { min-width: 0; }
+
+    .rpt-detail-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      color: $lv-text-muted-60;
+    }
+
+    .rpt-detail-label {
+      font-size: 10px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: $lv-text-muted;
+      margin: 0;
+      line-height: 1.3;
+    }
+
+    .rpt-detail-value {
+      font-size: 14px;
+      font-weight: 700;
+      color: $lv-text-fg;
+      margin: 0;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+  }
+}
+
+// Hide originals after JS restructures them
+body.mappage #side-report .problem-header .council_sent_info.rpt-details-moved,
+body.mappage #side-report .problem-header .report_meta_info.rpt-details-moved {
+  display: none !important;
+}
+
+// Fallback styling for raw .council_sent_info (if JS hasn't run yet)
+body.mappage #side-report .council_sent_info:not(.rpt-details-moved) {
+  background: $lv-bg-subtle !important;
+  border: 1px solid $lv-border !important;
+  border-radius: $lv-radius-lg !important;
+  padding: 10px 14px !important;
+  margin: 0 20px 8px 20px !important;
+  font-size: 0.85rem !important;
+  color: $lv-text-fg !important;
+
+  strong {
+    color: $lv-text-fg;
+    font-weight: 700;
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// 5. DESCRIPTION — quoted block
+// ═══════════════════════════════════════════════════════
+body.mappage #side-report .rpt-description-block {
+  padding: 16px 20px;
+  border-bottom: 1px solid $lv-border;
+  background: $lv-bg-white;
+
+  .rpt-description-quote {
+    border-left: 3px solid $lv-primary-40;
+    background: $lv-bg-secondary-30;
+    border-radius: $lv-radius-lg;
+    padding: 12px 12px 12px 16px;
+    margin: 0;
+
+    p {
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba($lv-text-fg, 0.8);
+      margin: 0;
+      padding: 0;
+      border: none;
+      background: none;
+      font-style: normal;
+    }
+  }
+}
+
+// Hide the original .moderate-display (JS moves its content into .rpt-description-block)
+body.mappage #side-report .problem-header .moderate-display {
+  display: none !important;
+}
+
+// ═══════════════════════════════════════════════════════
+// 6. STATUS TIMELINE — horizontal flex with dots + lines
+// ═══════════════════════════════════════════════════════
+.stl {
+  padding: 20px;
+  border-bottom: 1px solid $lv-border;
+  background: $lv-bg-white;
+}
+
+.stl-heading {
   display: flex;
   align-items: center;
   gap: 8px;
+  margin: 0 0 16px 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: $lv-text-muted;
 
-  strong {
-    color: $gray-900;
-    font-weight: 600;
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: $lv-border;
   }
 }
 
-// --- 5. Report description (Lovable match) ---
-body.mappage #side-report .problem-header .moderate-display {
-  clear: none;
-  p {
-    font-size: 0.95rem;
-    color: $gray-600;
-    line-height: 1.7;
-    margin-top: 16px;
+// Horizontal steps layout (matches reference: .report-timeline__steps display:flex)
+.stl-grid {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0;
+}
+
+// Each step = column with (dot+lines row) above (label + date) below
+.stl-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.stl-step__row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.stl-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: $lv-bg-white;
+  border: 2px solid $lv-border;
+
+  svg { display: none; width: 16px; height: 16px; color: $lv-primary-fg; }
+
+  &.stl-dot--done {
+    background: $lv-primary;
+    border: none;
+    box-shadow: 0 0 0 4px $lv-primary-15;
+
+    svg { display: block; }
   }
 }
 
-// --- 6. Updates section — uppercase heading + card style ---
+.stl-line {
+  flex: 1;
+  height: 2px;
+  background: $lv-border;
+  border: none;
+
+  &.stl-line--done {
+    background: $lv-primary;
+  }
+}
+
+.stl-lbl-name {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: $lv-text-fg;
+  white-space: nowrap;
+}
+
+.stl-lbl-date {
+  font-size: 10px;
+  color: $lv-text-muted;
+  margin-top: 1px;
+}
+
+// ═══════════════════════════════════════════════════════
+// 7. UPDATES
+// ═══════════════════════════════════════════════════════
 body.mappage #side-report section.full-width {
   margin: 0 !important;
   padding: 20px !important;
-  border-bottom: 1px solid $gray-200;
+  border: none !important;
+  border-bottom: 1px solid $lv-border !important;
+  background: $lv-bg-white;
 
   h2.static-with-rule {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    color: $gray-500;
-    border: none !important;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0 0 12px 0 !important;
     padding: 0 !important;
-    margin-bottom: 14px !important;
+    border: none !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: $lv-text-muted !important;
 
-    &::after {
-      display: none !important;
+    &::after { display: none !important; }
+
+    .rpt-updates-icon svg {
+      width: 14px;
+      height: 14px;
+      color: $lv-text-muted;
+    }
+
+    .rpt-updates-count {
+      padding: 2px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: $lv-primary;
+      background: $lv-primary-10;
+      border-radius: 100px;
     }
   }
 }
@@ -6345,195 +6839,243 @@ body.mappage #side-report .item-list--updates {
   list-style: none !important;
 
   .item-list__item {
-    background: #fff;
-    border: 1px solid $gray-200 !important;
-    border-left: 4px solid $primary-500 !important;
-    border-radius: 10px !important;
-    padding: 14px 16px !important;
-    margin-bottom: 10px !important;
-    margin-left: 0 !important;
+    list-style: none !important;
+    padding: 16px !important;
+    margin: 0 0 10px 0 !important;
+    background: $lv-bg-white;
+    border: 1px solid $lv-border !important;
+    border-left: 4px solid $lv-emerald-500 !important;  // user update default
+    border-radius: $lv-radius-xl !important;
     position: relative;
 
-    // Remove the timeline dot from before
-    &::before {
-      display: none !important;
+    &::before { display: none !important; }
+
+    // Official / authority update — primary border
+    &:has(.rpt-official-badge) {
+      border-left-color: $lv-primary !important;
     }
 
-    .item-list__update-text {
-      .moderate-display p {
-        font-size: 0.875rem;
-        color: $gray-700;
-        line-height: 1.6;
-        margin-bottom: 8px;
-      }
+    .rpt-official-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      margin-right: 8px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: $lv-primary;
+      background: $lv-primary-10;
+      border-radius: 4px;
+    }
+
+    .upd-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .upd-author {
+      font-size: 14px;
+      font-weight: 700;
+      color: $lv-text-fg;
+    }
+
+    .upd-date {
+      font-size: 11px;
+      color: $lv-text-muted;
+      flex-shrink: 0;
+    }
+
+    .upd-state {
+      margin-top: 4px;
+      font-size: 11px;
+      font-weight: 600;
+      color: $lv-text-muted;
+      text-transform: capitalize;
+    }
+
+    .upd-body {
+      margin-top: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: $lv-text-muted;
+      font-style: normal;
     }
 
     .meta-2 {
-      font-size: 0.75rem;
-      color: $gray-500;
+      font-size: 11px;
+      color: $lv-text-muted;
       margin: 4px 0 0 0;
-
-      strong {
-        color: $gray-700;
-        font-weight: 600;
-      }
     }
   }
 }
 
-// --- 7. Update form — clean sections ---
+// ═══════════════════════════════════════════════════════
+// 8. UPDATE FORM
+// ═══════════════════════════════════════════════════════
 body.mappage #side-report #update_form {
   padding: 20px;
+  border: none;
+  border-bottom: 1px solid $lv-border;
+  background: $lv-bg-white;
+  overflow: hidden;
+
+  form, .js-new-report-user-hidden {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  // Remove old STEP labels if any injected
+  .rpt-step-label { display: none; }
 
   h2 {
-    font-size: 1.1rem;
+    font-size: 16px;
     font-weight: 700;
-    color: $gray-900;
-    margin-bottom: 4px;
-    padding-top: 0;
-    border-top: 1px solid $gray-200;
-    padding-top: 20px;
+    color: $lv-text-fg;
+    margin: 0 0 6px 0;
+    padding: 0;
+    border: none;
   }
 
   .general-notes {
     margin-bottom: 16px;
 
     p {
-      font-size: 0.8rem;
-      color: $gray-500;
+      font-size: 12px;
       line-height: 1.5;
+      color: $lv-text-muted;
+      margin: 0;
+
+      a {
+        font-weight: 600;
+        color: $lv-primary;
+        text-decoration: none;
+
+        &:hover { text-decoration: underline; }
+      }
     }
-  }
-}
-
-// --- 8. Photo upload — dashed dropzone (Lovable match) ---
-body.mappage #side-report #form_photos {
-  border: 2px dashed $gray-300 !important;
-  border-radius: 12px !important;
-  padding: 32px 20px !important;
-  text-align: center;
-  background: #f8f9fa !important;
-  margin-bottom: 16px;
-  transition: border-color 0.2s, background 0.2s;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-
-  &:hover, &:focus-within {
-    border-color: $primary-500 !important;
-    background: $primary-50 !important;
-  }
-
-  // "Drag photos here or" text via ::before
-  &::before {
-    content: 'Drag photos here or';
-    font-size: 0.875rem;
-    color: $gray-500;
-    order: 1;
-  }
-
-  // Upload icon via ::after
-  &::after {
-    content: '\2191';
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    border: 2px solid $gray-300;
-    color: $gray-500;
-    font-size: 1rem;
-    font-weight: 700;
-    order: 0;
-  }
-
-  // Style first file input as the "choose photos" button
-  input[type="file"]:first-of-type {
-    order: 2;
-    font-size: 0.8rem;
-    color: #fff;
-    background: $primary-900;
-    padding: 8px 18px;
-    border-radius: 8px;
-    cursor: pointer;
-    border: none;
-
-    &::file-selector-button {
-      background: $primary-900;
-      color: #fff;
-      border: none;
-      padding: 8px 18px;
-      border-radius: 8px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-  }
-
-  // Hide extra file inputs and labels
-  input[type="file"]:not(:first-of-type) {
-    display: none;
   }
 
   label {
-    display: none;
+    display: block;
+    margin: 16px 0 6px 0;
+    font-size: 12px;
+    font-weight: 600;
+    color: $lv-text-muted;
+  }
+
+  .dropzone,
+  #form_photos,
+  #form_update,
+  .form-section-preview--next {
+    display: block;
+    width: 100% !important;
+    max-width: 400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    box-sizing: border-box !important;
   }
 }
 
-body.mappage #side-report #photo-upload-label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: $gray-700;
-  margin-bottom: 8px;
-  display: block;
+// Dropzone
+body.mappage #side-report .dropzone {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px !important;
+  border: 2px dashed $lv-primary-25 !important;
+  border-radius: $lv-radius-xl !important;
+  background: $lv-primary-03 !important;
+  margin: 6px 0 16px 0 !important;
+  transition: all 0.2s ease;
+  flex-wrap: wrap;
+  gap: 10px;
+  min-height: auto !important;
+  cursor: pointer;
+  width: 100% !important;
+  box-sizing: border-box !important;
+  float: none !important;
 
-  .js-hide-if-category-photo-required {
-    font-weight: 400;
-    color: $gray-400;
+  &:hover, &:focus-within {
+    border-color: $lv-primary-40 !important;
+    background: $lv-primary-06 !important;
+  }
+
+  .dz-default.dz-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 0 !important;
+    width: 100%;
+
+    > span, > button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: $lv-text-muted;
+      font-weight: normal;
+    }
+
+    .dz-icon-circle svg {
+      display: block;
+      width: 16px;
+      height: 16px;
+      color: $lv-primary-50;
+    }
+
+    u {
+      text-decoration: none !important;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      color: $lv-primary-fg;
+      background: $lv-primary;
+      border: none;
+      border-radius: $lv-radius-lg;
+      box-shadow: $lv-shadow-sm;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      &:hover { background: $lv-primary-90; }
+
+      svg { display: none; }
+    }
   }
 }
 
-// --- 9. Textarea — rounded, clean white (Lovable match) ---
+// Textarea
 body.mappage #side-report #form_update {
-  border: 1px solid $gray-300 !important;
-  border-radius: 12px !important;
-  padding: 14px 16px !important;
-  font-size: 0.875rem;
-  color: $gray-900;
-  background: #fff !important;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  margin-top: 6px !important;
+  width: 100% !important;
   resize: vertical;
-  width: 100%;
-  box-sizing: border-box;
-  min-height: 120px;
+  padding: 12px 16px !important;
+  font-size: 14px !important;
+  color: $lv-text-fg !important;
+  background: $lv-bg-white !important;
+  border: 2px solid $lv-border !important;
+  border-radius: $lv-radius-xl !important;
+  transition: border-color 0.2s;
+  box-sizing: border-box !important;
+  min-height: 100px;
+
+  &::placeholder { color: $lv-text-muted; }
 
   &:focus {
-    border-color: $primary-500 !important;
-    box-shadow: 0 0 0 3px rgba($primary-500, 0.1) !important;
-    outline: none;
-  }
-
-  &::placeholder {
-    color: $gray-400;
+    border-color: $lv-primary !important;
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 
-body.mappage #side-report label[for="form_update"] {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: $gray-700;
-  margin-bottom: 6px;
-  display: block;
-}
-
-// --- 10. Checkbox — rounded visible style (Lovable match) ---
+// Checkbox
 body.mappage #side-report .govuk-checkboxes {
-  margin: 14px 0;
-  padding-bottom: 14px;
-  border-bottom: 1px solid $gray-200;
+  margin: 12px 0 0 0;
+  padding: 0;
+  border: none;
 
   .govuk-checkboxes__item {
     display: flex;
@@ -6541,16 +7083,17 @@ body.mappage #side-report .govuk-checkboxes {
     gap: 10px;
     min-height: 0;
     padding: 0;
+    cursor: pointer;
   }
 
   .govuk-checkboxes__input {
     position: static !important;
-    width: 22px !important;
-    height: 22px !important;
-    min-width: 22px;
+    width: 20px !important;
+    height: 20px !important;
+    min-width: 20px;
     border-radius: 6px !important;
-    border: 2px solid $gray-300 !important;
-    accent-color: $primary-500;
+    border: 2px solid $lv-border !important;
+    accent-color: $lv-primary;
     appearance: auto !important;
     -webkit-appearance: checkbox !important;
     opacity: 1 !important;
@@ -6559,100 +7102,130 @@ body.mappage #side-report .govuk-checkboxes {
   }
 
   .govuk-checkboxes__label {
-    font-size: 0.9rem;
-    color: $gray-700;
+    font-size: 12px;
     font-weight: 500;
+    color: $lv-text-fg;
     padding: 0 !important;
     margin: 0 !important;
 
-    &::before, &::after {
-      display: none !important;
-    }
+    &::before, &::after { display: none !important; }
   }
 }
 
-// --- 11. Turnstile captcha wrapper ---
+// Turnstile
 body.mappage #side-report .cf-turnstile {
-  margin: 16px 0;
-}
+  max-width: 400px;
+  margin: 16px auto 0 auto;
+  overflow: hidden;
 
-// --- 12. Auth section — separator line, no card bg (Lovable match) ---
-body.mappage #side-report .form-section-preview--next {
-  background: transparent;
-  border: none;
-  border-top: 1px solid $gray-200;
-  border-radius: 0;
-  padding: 20px 0 0 0;
-  margin: 16px 0 0 0;
-
-  h2.form-section-heading {
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: $gray-900;
-    margin-bottom: 16px;
-
-    &::before {
-      content: '\1F512';
-      margin-right: 6px;
-      font-size: 0.9rem;
-    }
+  iframe {
+    max-width: 100% !important;
   }
 }
 
-// --- 13. Google button — outlined (Lovable match) ---
-body.mappage #side-report .btn--oidc,
-body.mappage #side-report #oidc_sign_in {
-  background: #fff !important;
-  color: $gray-700 !important;
-  border: 1px solid $gray-300 !important;
-  border-radius: 12px !important;
-  padding: 14px 16px !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
-  display: flex !important;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+// ═══════════════════════════════════════════════════════
+// 9. AUTH SECTION
+// ═══════════════════════════════════════════════════════
+body.mappage #side-report .form-section-preview--next {
   width: 100%;
-  transition: border-color 0.2s, box-shadow 0.2s;
-  cursor: pointer;
+  max-width: 400px !important;
+  margin: 20px auto;
+  padding: 16px;
+  background: $lv-bg-secondary-40;
+  border: none;
+  border-radius: $lv-radius-xl;
   box-sizing: border-box;
 
-  &:hover {
-    border-color: $gray-500 !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+  .rpt-step-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: $lv-text-muted;
+    margin: 0 0 4px 0;
+  }
+
+  h2.form-section-heading {
+    font-size: 16px;
+    font-weight: 700;
+    color: $lv-text-fg;
+    margin: 0 0 12px 0;
+    line-height: 1.25;
+
+    &::before { display: none; }
   }
 }
 
-// --- 14. Email login button — filled blue (Lovable match) ---
-body.mappage #side-report .js-new-report-user-show {
-  background: $primary-700 !important;
-  color: #fff !important;
-  border: none !important;
-  border-radius: 12px !important;
-  padding: 14px 16px !important;
-  font-size: 0.9rem !important;
-  font-weight: 600 !important;
+body.mappage #side-report #update_form .form-section-preview--next.js-new-report-user-hidden {
+  width: 100% !important;
+  max-width: 400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+// Google / OIDC button (outlined)
+body.mappage #side-report .btn--oidc,
+body.mappage #side-report #oidc_sign_in {
   display: flex !important;
   align-items: center;
   justify-content: center;
   gap: 8px;
   width: 100%;
-  margin-top: 12px;
+  max-width: 100%;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  font-weight: 600 !important;
+  color: $lv-text-fg !important;
+  background: $lv-bg-white !important;
+  border: 2px solid $lv-border !important;
+  border-radius: $lv-radius-xl !important;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
   box-sizing: border-box;
 
   &:hover {
-    background: $primary-900 !important;
+    border-color: $lv-primary-50 !important;
+    background: $lv-bg-subtle !important;
   }
 }
 
-// --- 15. Bottom action bar — report detail version ---
+// Email button (filled primary)
+body.mappage #side-report .js-new-report-user-show {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 100%;
+  margin-top: 8px;
+  padding: 10px 16px !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  font-weight: 700 !important;
+  color: $lv-primary-fg !important;
+  background: $lv-primary !important;
+  border: none !important;
+  border-radius: $lv-radius-xl !important;
+  cursor: pointer;
+  box-shadow: $lv-shadow-md;
+  transition: background 0.2s;
+  box-sizing: border-box;
+
+  &:hover { background: $lv-primary-90 !important; }
+}
+
+// ═══════════════════════════════════════════════════════
+// 10. BOTTOM ACTIONS BAR
+// ═══════════════════════════════════════════════════════
 body.mappage #side-report ~ .shadow-wrap,
 body.mappage .shadow-wrap {
-  background: $gray-50 !important;
-  border-top: 1px solid $gray-200 !important;
+  position: static !important;
+  left: auto !important;
+  bottom: auto !important;
+  z-index: auto !important;
+  background: $lv-bg-secondary-30 !important;
+  border-top: 1px solid $lv-border !important;
   box-shadow: none !important;
   margin: 0 !important;
   padding: 0 !important;
@@ -6662,131 +7235,126 @@ body.mappage #side-report ~ .shadow-wrap #key-tools,
 body.mappage #key-tools {
   display: flex !important;
   align-items: center;
-  justify-content: space-evenly !important;
-  padding: 12px 16px !important;
-  margin: 0 !important;
+  justify-content: space-between !important;
+  width: 100%;
+  max-width: 440px;
+  min-height: 42px;
+  padding: 12px 36px 12px 20px !important;
+  margin: 0 auto !important;
   list-style: none !important;
-  background: $gray-50 !important;
-  border-top: 1px solid $gray-200;
+  background: transparent !important;
+  border: none !important;
+  box-sizing: border-box;
 
   li {
     list-style: none !important;
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     text-align: center;
   }
 
   a {
-    font-size: 0.8rem !important;
-    font-weight: 600 !important;
-    color: $gray-600 !important;
-    text-decoration: none !important;
     display: inline-flex !important;
-    flex-direction: row !important;
     align-items: center !important;
-    gap: 5px !important;
+    justify-content: center !important;
+    gap: 6px !important;
     padding: 0 !important;
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+    font-weight: 600 !important;
+    color: $lv-text-muted !important;
+    text-decoration: none !important;
     background: none !important;
     border: none !important;
     box-shadow: none !important;
     width: auto !important;
     height: auto !important;
-    transition: color 0.2s;
+    cursor: pointer;
+    transition: color 0.15s;
 
     &:hover {
-      color: $primary-700 !important;
+      color: $lv-primary !important;
       text-decoration: none !important;
     }
 
     svg {
-      width: 1rem !important;
-      height: 1rem !important;
-      color: $gray-500;
+      width: 11px !important;
+      height: 11px !important;
+      color: inherit !important;
       order: -1;
+    }
+
+    img {
+      width: 11px !important;
+      height: 11px !important;
+      max-width: 11px !important;
+      max-height: 11px !important;
+      object-fit: contain;
     }
   }
 }
 
-// --- 16. Overall spacing & misc ---
+// ═══════════════════════════════════════════════════════
+// 11. GLOBAL #side-report tweaks
+// ═══════════════════════════════════════════════════════
 body.mappage #side-report {
-  // Remove any outer padding so sections control their own
-  > .problem-header {
-    &:first-of-type {
-      border-top: none;
-    }
-  }
+  padding: 0 !important;
+  background: $lv-bg-white;
 
-  // Ensure no double borders
-  .full-width + #update_form {
-    border-top: none;
-  }
-
-  // Form labels general
-  form label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: $gray-700;
-    display: block;
-    margin-bottom: 6px;
-  }
-
-  // Form inputs general
+  // Fallback form inputs
   form input.form-control,
   form textarea.form-control {
-    border: 1px solid $gray-300;
-    border-radius: 10px;
+    border: 2px solid $lv-border;
+    border-radius: $lv-radius-xl;
     padding: 10px 14px;
-    font-size: 0.875rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    font-size: 14px;
+    transition: border-color 0.2s;
 
     &:focus {
-      border-color: $primary-500;
-      box-shadow: 0 0 0 3px rgba($primary-500, 0.1);
+      border-color: $lv-primary;
+      box-shadow: none;
       outline: none;
     }
   }
 
-  // Submit buttons
   form .btn--primary {
-    background: $primary-700;
-    color: #fff;
+    background: $lv-primary;
+    color: $lv-primary-fg;
     border: none;
-    border-radius: 10px;
-    padding: 12px 20px;
-    font-weight: 600;
-    font-size: 0.875rem;
+    border-radius: $lv-radius-xl;
+    padding: 10px 16px;
+    font-weight: 700;
+    font-size: 14px;
     cursor: pointer;
+    box-shadow: $lv-shadow-md;
     transition: background 0.2s;
 
-    &:hover {
-      background: $primary-900;
-    }
+    &:hover { background: $lv-primary-90; }
   }
 
-  // Hidden sections that expand
   .js-new-report-user-shown {
     padding: 0 20px 20px;
 
     .form-section-heading {
-      font-size: 1rem;
+      font-size: 16px;
       font-weight: 700;
-      color: $gray-900;
+      color: $lv-text-fg;
       margin-bottom: 12px;
     }
 
     .form-box {
-      background: $gray-50;
-      border: 1px solid $gray-200;
-      border-radius: 10px;
+      background: $lv-bg-subtle;
+      border: 1px solid $lv-border;
+      border-radius: $lv-radius-xl;
       padding: 16px;
       margin-bottom: 12px;
     }
   }
 
-  // Report updates dialog
   #report-updates-data {
-    background: #fff;
-    border: 1px solid $gray-200;
-    border-radius: 10px;
+    background: $lv-bg-white;
+    border: 1px solid $lv-border;
+    border-radius: $lv-radius-xl;
     padding: 16px 20px;
     margin: 12px 20px;
 
@@ -6795,118 +7363,7 @@ body.mappage #side-report {
       gap: 8px;
       margin-top: 10px;
 
-      input[type="email"] {
-        flex: 1;
-      }
+      input[type="email"] { flex: 1; }
     }
-  }
-}
-
-/* ===========================================================
-   STATUS TIMELINE — Lovable Reference Component
-   =========================================================== */
-.status-timeline {
-  padding: 24px 20px;
-  border-top: 1px solid $gray-200;
-  border-bottom: 1px solid $gray-200;
-  background: #fff;
-  overflow: hidden;
-}
-
-.status-timeline__heading {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: $gray-500;
-  margin: 0 0 24px 0;
-}
-
-// The main row: dots + lines + labels all inline
-.status-timeline__row {
-  display: flex;
-  align-items: flex-start;
-  width: 100%;
-}
-
-// Each step column — dot on top, label below
-.status-timeline__col {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  flex-shrink: 0;
-  z-index: 1;
-}
-
-// The dot circle
-.status-timeline__dot {
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: $gray-200;
-  border: 3px solid #fff;
-  box-shadow: 0 0 0 2px $gray-200;
-  flex-shrink: 0;
-
-  &.--done {
-    background: $primary-700;
-    box-shadow: 0 0 0 2px $primary-700;
-  }
-
-  svg {
-    width: 16px;
-    height: 16px;
-  }
-}
-
-// Connecting line between dots
-.status-timeline__line {
-  flex: 1;
-  height: 3px;
-  align-self: center;
-  // vertically center with the dot (dot is 36px, so center = 18px from top)
-  margin-top: 18px;
-  transform: translateY(-50%);
-  min-width: 20px;
-
-  &.--solid {
-    background: $primary-700;
-  }
-
-  &.--dashed {
-    background: transparent;
-    border-top: 3px dashed $gray-300;
-    height: 0;
-  }
-}
-
-// Text below each dot
-.status-timeline__text {
-  text-align: center;
-  margin-top: 8px;
-  max-width: 80px;
-}
-
-.status-timeline__name {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: $gray-400;
-  line-height: 1.3;
-
-  &.--done {
-    color: $gray-900;
-  }
-}
-
-.status-timeline__date {
-  font-size: 0.65rem;
-  color: $gray-400;
-  margin-top: 1px;
-
-  &.--done {
-    color: $gray-500;
   }
 }
