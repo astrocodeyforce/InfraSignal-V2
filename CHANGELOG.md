@@ -1,6 +1,14 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 3, 2026 (Lovable auth redesign):
+        - Authentication:
+            - Redesigned `/auth`, `/auth/create`, `/auth/forgot`, and expired-password flows with a Lovable-style split card while preserving FixMyStreet auth field names and form actions.
+            - Added a blue interactive brand panel with cursor-responsive dot motion, checklist messaging, and GovCloud/SOC 2 security copy.
+            - Added functional password visibility toggles for sign-in and account-creation password fields.
+            - Restyled client-side validation so magic-link errors appear below the email input instead of overlapping the icon and field.
+            - Guarded legacy mobile-nav setup when custom InfraSignal header markup does not include the base FixMyStreet mobile menu elements.
+
     - InfraSignal — May 3, 2026 (Logo assets and contrast):
         - Branding:
             - Documented the final image-based header logo path, using `logo_web.png` through the Template Toolkit `version()` helper for cache busting.
