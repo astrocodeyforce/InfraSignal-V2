@@ -6,6 +6,8 @@ BEGIN { extends 'Catalyst::Controller'; }
 
 use POSIX qw(strcoll);
 use List::Util 'first';
+use DateTime;
+use JSON::MaybeXS qw(encode_json);
 use FixMyStreet::SMS;
 
 =head1 NAME
@@ -58,6 +60,67 @@ Displays some summary information for the requests.
 
 =cut
 
+sub _admin_dashboard_json {
+    my ($self, $c) = @_;
+
+    my $reports = $c->cobrand->problems;
+    my $today = DateTime->today(time_zone => FixMyStreet->time_zone || FixMyStreet->local_time_zone);
+    my $start = $today->clone->subtract(days => 6);
+    my $end = $today->clone->add(days => 1);
+
+    my %daily_counts;
+    my $last7_reports = $reports->search({
+        created => { '>=' => $start, '<' => $end },
+    }, {
+        columns => [ 'created' ],
+    });
+
+    while (my $row = $last7_reports->next) {
+        my $created = $row->created->clone->set_time_zone(FixMyStreet->time_zone || FixMyStreet->local_time_zone);
+        $daily_counts{$created->ymd}++;
+    }
+
+    my @daily_reports = map {
+        my $day = $start->clone->add(days => $_);
+        +{
+            date => $day->ymd,
+            label => $day->strftime('%a'),
+            count => $daily_counts{$day->ymd} || 0,
+        }
+    } 0..6;
+
+    my @categories = map {
+        +{ name => $_->category || 'Other', count => 0 + $_->get_column('count') }
+    } $reports->search({}, {
+        columns => [ 'category', { count => { count => '*' } } ],
+        group_by => [ 'category' ],
+        order_by => [ { -desc => 'count' }, 'category' ],
+    })->all;
+
+    my @statuses = map {
+        my $state = $_->state || 'unknown';
+        +{
+            name => $state =~ /^fixed/ ? 'Fixed' : $state eq 'confirmed' ? 'Open' : ucfirst($state),
+            count => 0 + $_->get_column('count'),
+        }
+    } $reports->search({}, {
+        columns => [ 'state', { count => { count => '*' } } ],
+        group_by => [ 'state' ],
+        order_by => [ { -desc => 'count' }, 'state' ],
+    })->all;
+
+    my $json = encode_json({
+        dailyReports => \@daily_reports,
+        categories => \@categories,
+        statuses => \@statuses,
+    });
+    $json =~ s/&/\\u0026/g;
+    $json =~ s/</\\u003c/g;
+    $json =~ s/>/\\u003e/g;
+    $json =~ s/'/\\u0027/g;
+    return $json;
+}
+
 sub index : Path : Args(0) {
     my ( $self, $c ) = @_;
 
@@ -87,6 +150,13 @@ sub index : Path : Args(0) {
         order_by => 'confirmed',
     } )->all;
     $c->stash->{unsent_reports} = \@unsent;
+
+    my @recent_reports = $c->cobrand->problems->search({}, {
+        order_by => [ { -desc => 'created' }, { -desc => 'id' } ],
+        rows => 4,
+    })->all;
+    $c->stash->{admin_recent_reports} = \@recent_reports;
+    $c->stash->{admin_dashboard_json} = $self->_admin_dashboard_json($c);
 
     $c->forward('fetch_all_bodies');
 

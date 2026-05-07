@@ -1720,6 +1720,955 @@ textarea:focus {
     }
 }
 
+  /* ======================================================
+     InfraSignal Admin Console — Lovable-style shell
+     ====================================================== */
+
+  body.admin {
+    background: #f8fafc;
+
+    .wrapper,
+    .table-cell {
+      background: #f8fafc;
+    }
+
+    .container--sidebar {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 272px minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+      background: transparent;
+    }
+
+    .content {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+
+    .content > h1:first-child {
+      margin: 0 0 16px;
+      padding: 24px;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: #fff;
+      color: $gray-900;
+      font-size: 1.75rem;
+      line-height: 1.15;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    #mobile-sticky-sidebar-button {
+      display: none;
+    }
+
+    .sticky-sidebar.infra-admin-sidebar {
+      position: sticky;
+      top: 96px;
+      width: auto;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .infra-admin-sidebar__panel {
+      display: block;
+      width: 100%;
+      max-width: none;
+      box-sizing: border-box;
+      overflow: hidden;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: #fff;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    .container--sidebar .sticky-sidebar.infra-admin-sidebar aside.infra-admin-sidebar__panel {
+      position: static;
+      top: auto;
+      right: auto;
+      width: 100%;
+      max-width: none;
+      padding: 0;
+      background: #fff;
+    }
+
+    .infra-admin-sidebar__header {
+      padding: 18px 20px;
+      color: #fff;
+      background: linear-gradient(135deg, $primary-900 0%, $primary-500 100%);
+    }
+
+    .infra-admin-sidebar__eyebrow {
+      color: rgba(255, 255, 255, 0.74);
+      font-size: 0.66rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .infra-admin-sidebar__title {
+      margin-top: 4px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .infra-admin-sidebar__nav {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2px;
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px;
+    }
+
+    .infra-admin-sidebar__link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      width: 100%;
+      box-sizing: border-box;
+      min-height: 44px;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      color: $gray-700;
+      font-size: 0.94rem;
+      font-weight: 500;
+      line-height: 1.25;
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease;
+
+      &:hover {
+        background: $gray-100;
+        color: $gray-900;
+      }
+    }
+
+    .infra-admin-sidebar__link--active {
+      background: $primary-50;
+      color: $primary-700;
+      box-shadow: inset 3px 0 0 $primary-700;
+    }
+
+    .infra-admin-sidebar__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      color: currentColor;
+
+      svg {
+        width: 18px;
+        height: 18px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    }
+
+    .infra-admin-sidebar__label {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .infra-admin-sidebar__chevron {
+      display: none;
+      margin-left: auto;
+      color: $primary-700;
+      font-size: 1.2rem;
+      line-height: 1;
+    }
+
+    .infra-admin-sidebar__link--active .infra-admin-sidebar__chevron {
+      display: inline-flex;
+    }
+
+    .infra-admin-summary {
+      display: grid;
+      gap: 24px;
+      min-width: 0;
+      width: 100%;
+    }
+
+    .infra-admin-summary > * {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .infra-admin-page-header,
+    .infra-admin-card,
+    .infra-admin-kpi {
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: #fff;
+      min-width: 0;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 3px rgba(15, 23, 42, 0.06);
+    }
+
+    .infra-admin-page-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 24px 26px;
+    }
+
+    .infra-admin-page-header__eyebrow {
+      color: $primary-700;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.22em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .infra-admin-page-header__title {
+      margin: 8px 0 0;
+      border: 0;
+      padding: 0;
+      color: $gray-900;
+      font-size: 1.85rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 1.13;
+    }
+
+    .infra-admin-page-header__sub {
+      margin: 8px 0 0;
+      color: $gray-500;
+      font-size: 0.95rem;
+      line-height: 1.4;
+    }
+
+    .infra-admin-page-header__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .infra-admin-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    }
+
+    .infra-admin-btn__icon {
+      display: inline-flex;
+      width: 16px;
+      height: 16px;
+
+      svg {
+        width: 16px;
+        height: 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    }
+
+    .infra-admin-btn--ghost {
+      border-color: $gray-300;
+      background: #fff;
+      color: $gray-900;
+
+      &:hover {
+        border-color: $primary-300;
+        background: $gray-100;
+        color: $primary-700;
+      }
+    }
+
+    .infra-admin-btn--primary {
+      background: $primary-700;
+      color: #fff;
+
+      &:hover {
+        background: $primary-900;
+        color: #fff;
+      }
+    }
+
+    .infra-admin-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+    }
+
+    .infra-admin-kpi {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 130px;
+      padding: 24px;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+      }
+    }
+
+    .infra-admin-kpi__label {
+      color: $gray-500;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .infra-admin-kpi__value {
+      margin-top: 8px;
+      color: $gray-900;
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .infra-admin-kpi__delta {
+      margin-top: 8px;
+      color: $gray-500;
+      font-size: 0.86rem;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .infra-admin-kpi__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      flex: 0 0 48px;
+      border-radius: 8px;
+
+      svg {
+        width: 24px;
+        height: 24px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+    }
+
+    .infra-admin-kpi__icon--blue {
+      background: rgba($primary-500, 0.12);
+      color: $primary-700;
+    }
+
+    .infra-admin-kpi__icon--amber {
+      background: rgba(245, 158, 11, 0.12);
+      color: #b45309;
+    }
+
+    .infra-admin-kpi__icon--green {
+      background: rgba(16, 185, 129, 0.12);
+      color: #047857;
+    }
+
+    .infra-admin-card {
+      padding: 24px 26px;
+      scroll-margin-top: 96px;
+    }
+
+    .infra-admin-card__head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .infra-admin-card__title {
+      margin: 0;
+      border: 0;
+      padding: 0;
+      color: $gray-900;
+      font-size: 1rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .infra-admin-card__sub {
+      margin: 4px 0 0;
+      color: $gray-500;
+      font-size: 0.86rem;
+      line-height: 1.35;
+    }
+
+    .infra-admin-card__actions {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    .infra-admin-range,
+    .infra-admin-text-action {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 12px;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: #fff;
+      color: $gray-900;
+      font-size: 0.78rem;
+      font-weight: 800;
+      line-height: 1.2;
+      text-decoration: none;
+    }
+
+    .infra-admin-text-action {
+      color: $primary-700;
+
+      &:hover {
+        border-color: $primary-300;
+        background: $primary-50;
+        color: $primary-900;
+        text-decoration: none;
+      }
+    }
+
+    .infra-admin-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 28px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: $primary-50;
+      color: $primary-700;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .infra-admin-card--chart {
+      padding-bottom: 28px;
+    }
+
+    .infra-admin-bar-chart {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(28px, 1fr));
+      align-items: end;
+      gap: 14px;
+      min-height: 210px;
+      padding: 18px 24px 0;
+    }
+
+    .infra-admin-bar {
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      height: 168px;
+      padding-top: 8px;
+
+      &::before {
+        content: "";
+        display: block;
+        width: 100%;
+        height: var(--bar);
+        min-height: 24px;
+        border-radius: 8px 8px 0 0;
+        background: linear-gradient(180deg, $primary-500 0%, $primary-700 100%);
+      }
+
+      &.infra-admin-bar--empty::before {
+        height: 2px;
+        min-height: 2px;
+        border-radius: 999px;
+        background: $gray-300;
+      }
+
+      span {
+        position: absolute;
+        top: 100%;
+        margin-top: 9px;
+        color: $gray-500;
+        font-size: 0.78rem;
+        line-height: 1;
+      }
+
+      strong {
+        position: absolute;
+        bottom: calc(var(--bar) + 8px);
+        color: $gray-500;
+        font-size: 0.72rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+    }
+
+    .infra-admin-insights-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .infra-admin-card--donut {
+      display: grid;
+      gap: 18px;
+      min-height: 250px;
+    }
+
+    .infra-admin-donut-row {
+      display: grid;
+      grid-template-columns: minmax(120px, 170px) minmax(0, 1fr);
+      align-items: center;
+      gap: 22px;
+    }
+
+    .infra-admin-donut {
+      position: relative;
+      width: 148px;
+      height: 148px;
+      border-radius: 50%;
+
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 36px;
+        border-radius: 50%;
+        background: #fff;
+      }
+    }
+
+    .infra-admin-donut--category,
+    .infra-admin-donut--status {
+      background: #e5e7eb;
+    }
+
+    .infra-admin-legend {
+      display: grid;
+      gap: 10px;
+
+      div {
+        display: grid;
+        grid-template-columns: 10px minmax(0, 1fr) auto;
+        align-items: center;
+        gap: 10px;
+        color: $gray-900;
+        font-size: 0.84rem;
+        line-height: 1.2;
+      }
+
+      strong {
+        color: $gray-500;
+        font-weight: 800;
+      }
+    }
+
+    .infra-admin-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .infra-admin-dot--blue { background: $primary-700; }
+    .infra-admin-dot--sky { background: $primary-500; }
+    .infra-admin-dot--pale { background: #93c5fd; }
+    .infra-admin-dot--gray { background: #d1d5db; }
+    .infra-admin-dot--amber { background: #d97706; }
+    .infra-admin-dot--green { background: #10b981; }
+
+    .infra-admin-recent-list {
+      display: grid;
+      gap: 0;
+    }
+
+    .infra-admin-recent-item {
+      display: grid;
+      grid-template-columns: 20px auto minmax(0, 1fr) auto 16px;
+      align-items: center;
+      gap: 12px;
+      min-height: 54px;
+      padding: 10px 0;
+      border-bottom: 1px solid $gray-300;
+      color: $gray-900;
+      text-decoration: none;
+
+      &:last-child {
+        border-bottom: 0;
+      }
+
+      &:hover {
+        color: $gray-900;
+        text-decoration: none;
+      }
+    }
+
+    .infra-admin-recent-item__check,
+    .infra-admin-recent-item__chevron {
+      color: $gray-500;
+    }
+
+    .infra-admin-recent-item__check svg {
+      width: 18px;
+      height: 18px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .infra-admin-recent-item__id {
+      color: $primary-700;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .infra-admin-recent-item__title {
+      min-width: 0;
+      overflow: hidden;
+      color: $gray-900;
+      font-size: 0.92rem;
+      font-weight: 700;
+      line-height: 1.3;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .infra-admin-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 26px;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: #dbeafe;
+      color: $primary-700;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .infra-admin-badge--fixed,
+    .infra-admin-badge--closed {
+      background: #d1fae5;
+      color: #047857;
+    }
+
+    .infra-admin-badge--in_progress,
+    .infra-admin-badge--investigating,
+    .infra-admin-badge--confirmed {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .admin-index-search {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+      gap: 18px;
+      margin: 0;
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+
+    .admin-index-search::before,
+    .admin-index-search::after {
+      content: none;
+      display: none;
+    }
+
+    .admin-index-search form {
+      box-sizing: border-box;
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      margin: 0;
+      padding: 18px;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: $gray-50;
+      box-shadow: none;
+    }
+
+    .admin-index-search label {
+      display: block;
+      margin: 0 0 10px;
+      color: $gray-900;
+      font-size: 0.88rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .admin-index-search .form-txt-submit-box {
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+      min-width: 0;
+      width: 100%;
+      max-width: 100%;
+      gap: 12px;
+    }
+
+    .admin-index-search input[type="text"] {
+      box-sizing: border-box;
+      flex: 1 1 auto;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 44px;
+      padding: 10px 14px 10px 42px;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background-color: #fff;
+      background-image: url("data:image/svg+xml,%3Csvg fill='none' height='20' viewBox='0 0 20 20' width='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='m17.5 17.5-3.63-3.63m1.96-4.2a6.17 6.17 0 1 1-12.33 0 6.17 6.17 0 0 1 12.33 0Z' stroke='%236B7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2'/%3E%3C/svg%3E") !important;
+      background-position: 14px 50% !important;
+      background-repeat: no-repeat !important;
+      background-size: 18px 18px !important;
+      box-shadow: none;
+      color: $gray-900;
+      margin: 0;
+
+      &::placeholder {
+        color: $gray-500;
+      }
+    }
+
+    .admin-index-search .btn {
+      box-sizing: border-box;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex: 0 0 104px;
+      max-width: 100%;
+      min-width: 104px;
+      min-height: 44px;
+      border: 0;
+      border-radius: 8px;
+      background: $primary-700;
+      color: #fff;
+      font-weight: 800;
+      line-height: 1;
+      margin: 0;
+      padding: 10px 18px;
+
+      &:hover {
+        background: $primary-900;
+        color: #fff;
+      }
+    }
+
+    .infra-admin-table-wrap {
+      max-width: 100%;
+      max-height: 560px;
+      overflow: auto;
+      overscroll-behavior: contain;
+      border: 1px solid $gray-300;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    table.infra-admin-table {
+      min-width: 760px;
+      margin: 0;
+      border: 0 !important;
+      border-radius: 0;
+      box-shadow: none;
+
+      th {
+        position: sticky;
+        top: 0;
+        z-index: 2;
+        padding: 12px 14px;
+        border-bottom: 1px solid $gray-300;
+        background: $gray-100;
+        color: $gray-700;
+        font-size: 0.74rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      tr:first-child th:first-child {
+        border-top-left-radius: 8px;
+      }
+
+      tr:first-child th:last-child {
+        border-top-right-radius: 8px;
+      }
+
+      td {
+        padding: 14px;
+        border-bottom: 1px solid $gray-300;
+        color: $gray-700;
+        font-size: 0.86rem;
+        line-height: 1.45;
+        vertical-align: middle;
+      }
+
+      tr:last-child td {
+        border-bottom: 0;
+      }
+
+      a {
+        color: $primary-700;
+        font-weight: 700;
+        text-decoration: none;
+
+        &:hover {
+          color: $primary-900;
+          text-decoration: underline;
+        }
+      }
+
+      .record-id {
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        font-size: 0.8rem;
+        font-weight: 800;
+      }
+    }
+
+    .infra-admin-empty {
+      padding: 28px;
+    }
+  }
+
+  @media (max-width: 767px) {
+    body.admin {
+      .container--sidebar {
+        grid-template-columns: 1fr;
+        padding: 16px;
+      }
+
+      .sticky-sidebar.infra-admin-sidebar {
+        position: static;
+      }
+
+      .infra-admin-kpi-grid,
+      .infra-admin-insights-grid,
+      .admin-index-search {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .infra-admin-bar-chart {
+        grid-template-columns: repeat(7, minmax(18px, 1fr));
+        gap: 8px;
+        min-height: 170px;
+        padding: 12px 4px 0;
+      }
+
+      .infra-admin-bar {
+        height: 128px;
+      }
+
+      .infra-admin-donut-row {
+        grid-template-columns: 1fr;
+        justify-items: center;
+      }
+
+      .infra-admin-legend {
+        width: 100%;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    body.admin {
+      .container--sidebar {
+        padding: 12px;
+      }
+
+      .infra-admin-page-header,
+      .infra-admin-card,
+      .infra-admin-kpi {
+        padding: 18px;
+      }
+
+      .infra-admin-page-header__title {
+        font-size: 1.45rem;
+      }
+
+      .infra-admin-page-header__actions,
+      .infra-admin-btn {
+        width: 100%;
+      }
+
+      .infra-admin-sidebar__nav {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-index-search .form-txt-submit-box {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .admin-index-search input[type="text"],
+      .admin-index-search .btn {
+        width: 100%;
+        min-width: 0;
+      }
+
+      .admin-index-search .btn {
+        flex-basis: auto;
+      }
+
+      .infra-admin-card__head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .infra-admin-card__actions {
+        justify-content: flex-start;
+      }
+
+      .admin-index-search {
+        grid-template-columns: minmax(0, 1fr) !important;
+      }
+
+      .infra-admin-recent-item {
+        grid-template-columns: 20px auto minmax(0, 1fr) 16px;
+      }
+
+      .infra-admin-badge {
+        grid-column: 3 / 5;
+        justify-self: start;
+      }
+    }
+  }
+
 /* ======================================================
    General Polish
    ====================================================== */
@@ -2855,6 +3804,77 @@ a[href="/report"] {
 .about-what-we-do__icon {
     font-size: 2rem;
     color: $primary-500;
+}
+
+/* About page: align feature and stats card grids visually */
+body.infopage {
+  .about-what-we-do,
+  .about-stats {
+    grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+    gap: 16px;
+  }
+
+  @media (min-width: 768px) {
+    .about-what-we-do {
+      margin-left: -1.25rem;
+      margin-right: -1.25rem;
+    }
+
+    .about-stats {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+      box-sizing: border-box;
+    }
+  }
+
+  .about-what-we-do__card,
+  .about-stats__item {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    border-radius: 12px;
+  }
+
+  .about-what-we-do__card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 12rem;
+    padding: 1.5rem 0.875rem;
+    border-width: 2px;
+
+    h3 {
+      margin: 0 0 0.5rem;
+      line-height: 1.2;
+    }
+
+    p {
+      max-width: 8.5rem;
+      margin: 0;
+      line-height: 1.55;
+    }
+  }
+
+  .about-what-we-do__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    margin: 0 0 0.875rem;
+    font-size: 1.65rem;
+    line-height: 1;
+  }
+
+  .about-stats__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 8.75rem;
+    padding: 1.25rem 0.875rem;
+  }
 }
 
 .about-steps__emoji {

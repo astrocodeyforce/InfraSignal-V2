@@ -1,6 +1,24 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 7, 2026 (Lovable admin console and metrics correctness):
+        - Admin dashboard:
+            - Redesigned `/admin` summary into an InfraSignal/Lovable-style admin console with page header, permission-driven sidebar, KPI cards, weekly bar chart, category/status donuts, recent reports, search, and a bounded reports table.
+            - Preserved existing admin routes and forms: report search still submits to `/admin/reports`, user search still submits to `/admin/users`, and the reports waiting table still uses the existing `admin/problem_row.html` behavior.
+            - Moved the large reports-waiting list into an internal scroll area with sticky headers so admins can reach the rest of the page without scrolling through every report row.
+            - Reworked the admin search section to be responsive, full-width, and mobile-safe; removed the legacy `clearfix` class and suppressed clearfix pseudo-elements that were becoming unintended CSS grid items.
+        - Dashboard data:
+            - Added backend dashboard JSON in `Admin.pm` so visuals use explicit report data instead of scraping the rendered reports-waiting table.
+            - Changed "Reports this week" to real current-calendar last-seven-day created-report counts from `$c->cobrand->problems`.
+            - Changed category and status donuts to all-report backend totals, with labels updated to make the scope clear.
+            - Changed recent reports to show newest submissions by `created`/`id`, not the first rows from the awaiting-send queue.
+            - Changed the Access KPI from a static UI label to the real `admin_allow_user` permission result.
+        - Verification:
+            - Verified the dev database has zero reports created in the real May 1-May 7, 2026 window, and the live dev admin bar chart now displays seven zero-count days.
+            - Verified all-report category/status totals render from backend JSON: 582 reports total, with 440 Fixed and 142 Open.
+            - Rebuilt dev CSS, cleared Template Toolkit cache, restarted the dev FixMyStreet container, and confirmed the live `/admin` page has no horizontal overflow on the tested mobile viewport.
+            - Syntax/diagnostics checks passed for the Admin controller, dashboard JavaScript, admin template, and InfraSignal SCSS.
+
     - InfraSignal - May 3, 2026 (Lovable auth redesign):
         - Authentication:
             - Redesigned `/auth`, `/auth/create`, `/auth/forgot`, and expired-password flows with a Lovable-style split card while preserving FixMyStreet auth field names and form actions.

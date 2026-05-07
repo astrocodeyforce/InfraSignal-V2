@@ -1,15 +1,167 @@
-[% INCLUDE 'admin/header.html' title=loc('Summary') -%]
+[% INCLUDE 'admin/header.html' title=loc('Summary') suppress_title=1 -%]
 [% PROCESS 'admin/report_blocks.html' %]
 
-[% PROCESS 'admin/_index_intro.html' %]
+[% SET admin_name = c.user.name OR loc('Admin') %]
 
-<div class="admin-index-search clearfix">
+<div class="infra-admin-summary" data-admin-dashboard="[% admin_dashboard_json | html %]">
+    <header class="infra-admin-page-header">
+        <div>
+            <div class="infra-admin-page-header__eyebrow">[% loc('Dashboard') %]</div>
+            <h1 class="infra-admin-page-header__title">[% loc('Good morning') %], [% admin_name | html %]</h1>
+            <p class="infra-admin-page-header__sub">
+                [% unsent_reports.size | html %] [% loc('reports waiting to be sent') %] &middot;
+                [% allowed_links.size | html %] [% loc('admin sections available') %]
+            </p>
+        </div>
+        <div class="infra-admin-page-header__actions">
+            [% IF c.user.has_body_permission_to('report_edit') %]
+                <a class="infra-admin-btn infra-admin-btn--ghost" href="[% c.uri_for('reports') | html %]">
+                    <span class="infra-admin-btn__icon" aria-hidden="true">
+                        <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+                    </span>
+                    [% loc('View reports') %]
+                </a>
+            [% END %]
+            <a class="infra-admin-btn infra-admin-btn--primary" href="[% c.uri_for('/') | html %]">
+                <span class="infra-admin-btn__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+                </span>
+                [% loc('New report') %]
+            </a>
+        </div>
+    </header>
+
+    <div class="infra-admin-kpi-grid">
+        <section class="infra-admin-kpi">
+            <div>
+                <div class="infra-admin-kpi__label">[% loc('Awaiting send') %]</div>
+                <div class="infra-admin-kpi__value">[% unsent_reports.size | html %]</div>
+                <div class="infra-admin-kpi__delta">[% loc('Open reports pending delivery') %]</div>
+            </div>
+            <span class="infra-admin-kpi__icon infra-admin-kpi__icon--blue" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>
+            </span>
+        </section>
+        <section class="infra-admin-kpi infra-admin-kpi--warning">
+            <div>
+                <div class="infra-admin-kpi__label">[% loc('Admin sections') %]</div>
+                <div class="infra-admin-kpi__value">[% allowed_links.size | html %]</div>
+                <div class="infra-admin-kpi__delta">[% loc('Available for your account') %]</div>
+            </div>
+            <span class="infra-admin-kpi__icon infra-admin-kpi__icon--amber" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M12 8v5l3 2"/><circle cx="12" cy="12" r="9"/></svg>
+            </span>
+        </section>
+        <section class="infra-admin-kpi infra-admin-kpi--success">
+            <div>
+                <div class="infra-admin-kpi__label">[% loc('Access') %]</div>
+                <div class="infra-admin-kpi__value">[% IF c.user_exists AND c.cobrand.admin_allow_user(c.user) %][% loc('Granted') %][% ELSE %][% loc('Denied') %][% END %]</div>
+                <div class="infra-admin-kpi__delta">[% c.user.email | html %]</div>
+            </div>
+            <span class="infra-admin-kpi__icon infra-admin-kpi__icon--green" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>
+            </span>
+        </section>
+    </div>
+
+    <section class="infra-admin-card infra-admin-card--chart">
+        <div class="infra-admin-card__head">
+            <div>
+                <h2 class="infra-admin-card__title">[% loc('Reports this week') %]</h2>
+                <p class="infra-admin-card__sub">[% loc('Created reports per day') %] &middot; [% loc('last 7 days') %]</p>
+            </div>
+            <span class="infra-admin-range">[% loc('Last 7 days') %]</span>
+        </div>
+        <div class="infra-admin-bar-chart" data-admin-bar-chart aria-label="[% loc('Reports this week') %]">
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Mon</span></div>
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Tue</span></div>
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Wed</span></div>
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Thu</span></div>
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Fri</span></div>
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Sat</span></div>
+            <div class="infra-admin-bar" style="--bar:0%"><strong>0</strong><span>Sun</span></div>
+        </div>
+    </section>
+
+    <div class="infra-admin-insights-grid">
+        <section class="infra-admin-card infra-admin-card--donut">
+            <div>
+                <h2 class="infra-admin-card__title">[% loc('By Category') %]</h2>
+                <p class="infra-admin-card__sub">[% loc('All report issue types') %]</p>
+            </div>
+            <div class="infra-admin-donut-row">
+                <div class="infra-admin-donut infra-admin-donut--category" data-admin-category-donut aria-hidden="true"></div>
+                <div class="infra-admin-legend" data-admin-category-legend>
+                </div>
+            </div>
+        </section>
+
+        <section class="infra-admin-card infra-admin-card--donut">
+            <div>
+                <h2 class="infra-admin-card__title">[% loc('By Status') %]</h2>
+                <p class="infra-admin-card__sub">[% loc('All report lifecycle distribution') %]</p>
+            </div>
+            <div class="infra-admin-donut-row">
+                <div class="infra-admin-donut infra-admin-donut--status" data-admin-status-donut aria-hidden="true"></div>
+                <div class="infra-admin-legend" data-admin-status-legend>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <section class="infra-admin-card infra-admin-card--recent">
+        <div class="infra-admin-card__head">
+            <div>
+                <h2 class="infra-admin-card__title">[% loc('Recent reports') %]</h2>
+                <p class="infra-admin-card__sub">[% loc('Latest submissions') %]</p>
+            </div>
+            [% IF c.user.has_body_permission_to('report_edit') %]
+                <a class="infra-admin-text-action" href="[% c.uri_for('reports') | html %]">[% loc('View all') %]</a>
+            [% END %]
+        </div>
+
+        <div class="infra-admin-recent-list">
+            [% IF admin_recent_reports.size %]
+                [% FOREACH problem IN admin_recent_reports %]
+                    [% IF problem.is_visible %]
+                        [% SET report_uri = c.uri_for_email('/report', problem.id) %]
+                    [% ELSE %]
+                        [% SET report_uri = c.uri_for_action('/admin/reports/edit', [ problem.id ]) %]
+                    [% END %]
+                    [% SET badge_class = problem.is_fixed ? 'fixed' : problem.is_closed ? 'closed' : 'open' %]
+                    <a class="infra-admin-recent-item" href="[% report_uri | html %]">
+                        <span class="infra-admin-recent-item__check" aria-hidden="true">
+                            <svg viewBox="0 0 24 24"><path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+                        </span>
+                        <span class="infra-admin-recent-item__id">#[% problem.id | html %]</span>
+                        <span class="infra-admin-recent-item__title">[% problem.title | html %]</span>
+                        <span class="infra-admin-badge infra-admin-badge--[% badge_class %]">[% prettify_state(problem.state, 1) %]</span>
+                        <span class="infra-admin-recent-item__chevron" aria-hidden="true">&rsaquo;</span>
+                    </a>
+                [% END %]
+            [% ELSE %]
+                <p class="infra-admin-card__sub">[% loc('No recent reports to show.') %]</p>
+            [% END %]
+        </div>
+    </section>
+
+    [% PROCESS 'admin/_index_intro.html' %]
+
+    <section class="infra-admin-card infra-admin-card--search">
+        <div class="infra-admin-card__head">
+            <div>
+                <h2 class="infra-admin-card__title">[% loc('Search') %]</h2>
+                <p class="infra-admin-card__sub">[% loc('Find reports and users') %]</p>
+            </div>
+        </div>
+
+        <div class="admin-index-search">
 
 [% IF c.user.has_body_permission_to('report_edit') %]
 <form method="get" action="[% c.uri_for('reports') %]" accept-charset="utf-8">
     <label for="search_reports">[% loc('Search Reports') %]</label>
     <div class="form-txt-submit-box">
-        <input type="text" class="form-control" name="search" size="30" id="search_reports" value="[% searched | html %]">
+        <input type="text" class="form-control" name="search" size="30" id="search_reports" value="[% searched | html %]" placeholder="[% loc('Report ID, title, or email') %]" autocomplete="off">
         <input type="submit" class="btn" value="[% loc('Go') %]">
     </div>
 </form>
@@ -19,7 +171,7 @@
 <form method="get" action="[% c.uri_for('users') %]" accept-charset="utf-8">
     <label for="search_users">[% loc('Search Users') %]</label>
     <div class="form-txt-submit-box">
-        <input type="text" class="form-control" name="search" size="30" id="search_users" value="[% searched | html %]">
+        <input type="text" class="form-control" name="search" size="30" id="search_users" value="[% searched | html %]" placeholder="[% loc('Name or email address') %]" autocomplete="off">
         <input type="submit" class="btn" value="[% loc('Go') %]">
     </div>
 </form>
@@ -28,21 +180,44 @@
 [% TRY %][% PROCESS 'admin/_index_extra_search.html' %][% CATCH file %][% END %]
 
 </div>
+    </section>
 
 [% IF unsent_reports.size %]
-<h2>[% loc('Reports waiting to be sent') %]</h2>
+    <section class="infra-admin-card infra-admin-card--reports">
+        <div class="infra-admin-card__head">
+            <div>
+                <h2 class="infra-admin-card__title">[% loc('Reports waiting to be sent') %]</h2>
+                <p class="infra-admin-card__sub">[% loc('Scroll inside this table to review the full queue without stretching the page.') %]</p>
+            </div>
+            <div class="infra-admin-card__actions">
+                <span class="infra-admin-count">[% unsent_reports.size | html %]</span>
+                [% IF c.user.has_body_permission_to('report_edit') %]
+                    <a class="infra-admin-text-action" href="[% c.uri_for('reports') | html %]">[% loc('Open reports manager') %]</a>
+                [% END %]
+            </div>
+        </div>
 
-<table cellspacing="0" cellpadding="2" border="1">
-    <tr>
-        <th>[% loc('ID') %]</th>
-        <th>[% loc('Title') %]</th>
-        <th>[% loc('Name') %]</th>
-        <th>[% loc('Body') %]</th>
-        <th>[% loc('State') %]</th>
-        <th>*</th>
-    </tr>
-    [% INCLUDE 'admin/problem_row.html' problems = unsent_reports %]
-</table>
+        <div class="infra-admin-table-wrap">
+            <table class="infra-admin-table" cellspacing="0" cellpadding="2" border="1">
+                <tr>
+                    <th>[% loc('ID') %]</th>
+                    <th>[% loc('Title') %]</th>
+                    <th>[% loc('Name') %]</th>
+                    <th>[% loc('Body') %]</th>
+                    <th>[% loc('State') %]</th>
+                    <th>*</th>
+                </tr>
+                [% INCLUDE 'admin/problem_row.html' problems = unsent_reports %]
+            </table>
+        </div>
+    </section>
+[% ELSE %]
+    <section class="infra-admin-card infra-admin-empty">
+        <h2 class="infra-admin-card__title">[% loc('Reports waiting to be sent') %]</h2>
+        <p class="infra-admin-card__sub">[% loc('No reports are currently waiting to be sent.') %]</p>
+    </section>
 [% END %]
+
+</div>
 
 [% INCLUDE 'admin/footer.html' %]
