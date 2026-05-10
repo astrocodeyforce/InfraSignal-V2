@@ -27,7 +27,7 @@
         <div class="report-forms-wrapper">
 
             <form action="[% c.uri_for('/around') %]" method="get" name="postcodeForm" id="postcodeForm" class="postcode-form-box js-geolocate">
-                <label for="pc" class="visually-hidden">[% loc('Enter your address or ZIP code') %]</label>
+                <label for="pc" class="visually-hidden">[% loc('Enter your address or zipcode') %]</label>
                 [% INCLUDE 'around/_postcode_form_examples.html' %]
                 [% IF location_error_pc_lookup %]
                 <p id="pc-error" class="form-error">
@@ -37,8 +37,8 @@
                 [% END %]
                 <div>
                     <input type="text" name="pc" value="[% pc | html %]" id="pc" size="10" maxlength="200" required aria-describedby="pc-hint [% IF location_error_pc_lookup %]search-help pc-error[% END %]"
-                    placeholder="[% loc('Enter your address or ZIP code') %]" aria-label="[% loc('Enter your address or ZIP code') %]">
-                    <input type="submit" id="sub" value="[% loc('Report') %] &#x203A;">
+                    placeholder="[% loc('Enter your address or zipcode') %]" aria-label="[% loc('Enter your address or zipcode') %]">
+                    <input type="submit" id="sub" value="[% loc('Report an Issue') %]">
                 </div>
 
                 [% IF partial_token %]

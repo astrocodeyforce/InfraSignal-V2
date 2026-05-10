@@ -1048,7 +1048,8 @@ textarea:focus {
             display: flex;
             align-items: stretch;
             flex-wrap: nowrap !important;
-            max-width: 440px;
+            width: 100%;
+            max-width: 640px;
             margin: 0 auto;
             background: #fff !important;
             border: none !important;
@@ -1059,7 +1060,8 @@ textarea:focus {
 
         input[type="text"],
         input#pc[type="text"] {
-            flex: 1;
+            flex: 1 1 auto;
+            min-width: 17rem;
             width: auto !important;
             background-color: transparent !important;
             background: transparent !important;
@@ -1067,7 +1069,7 @@ textarea:focus {
             border: none !important;
             border-radius: 0;
             font-size: 16px;
-            padding: 14px 16px 14px 20px;
+            padding: 14px 10px 14px 34px !important;
             outline: none;
             line-height: normal;
 
@@ -1087,7 +1089,7 @@ textarea:focus {
             color: #fff !important;
             border: none !important;
             border-radius: 9999px;
-            padding: 14px 28px;
+            padding: 14px 20px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
@@ -1099,6 +1101,24 @@ textarea:focus {
 
             &:hover {
                 background: $accent-600 !important;
+            }
+        }
+
+        @media (max-width: 36em) {
+            input[type="text"],
+            input#pc[type="text"] {
+                min-width: 0;
+                font-size: 15px;
+
+                &::placeholder {
+                    font-size: 15px;
+                }
+            }
+
+            input[type="submit"],
+            input#sub {
+                padding: 14px 18px;
+                font-size: 15px;
             }
         }
     }

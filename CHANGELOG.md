@@ -1,6 +1,19 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 10, 2026 (Homepage hero refresh):
+        - Homepage:
+            - Added an InfraSignal-specific homepage intro override so the hero headline reads "Report issues. Improve your neighborhood with Infrasignal."
+            - Updated the hero subtext to "Residents report problems. Local authorities fix them. Track everything."
+            - Changed the address search placeholder to "Enter your address or zipcode" and the primary CTA to "Report an Issue".
+            - Adjusted the hero search pill, input padding, and small-screen fallback so the full zipcode placeholder remains visible beside the longer CTA.
+        - Verification:
+            - Rebuilt dev InfraSignal CSS, cleared Template Toolkit cache, and verified the live dev homepage hero at `http://REDACTED-IP:3001/`.
+        - Files added/modified:
+            - `templates/web/infrasignal/around/intro.html` (new homepage hero copy override)
+            - `templates/web/infrasignal/around/postcode_form.html` (placeholder and CTA copy)
+            - `web/cobrands/infrasignal/base.scss` (hero search field sizing)
+
     - InfraSignal - May 7, 2026 (Lovable admin console and metrics correctness):
         - Admin dashboard:
             - Redesigned `/admin` summary into an InfraSignal/Lovable-style admin console with page header, permission-driven sidebar, KPI cards, weekly bar chart, category/status donuts, recent reports, search, and a bounded reports table.
