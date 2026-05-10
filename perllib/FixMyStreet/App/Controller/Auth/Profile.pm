@@ -27,6 +27,39 @@ sub auto : Private {
     return 1;
 }
 
+sub change_name : Path('/auth/change_name') {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{template} = 'auth/change_name.html';
+
+    $c->forward('/auth/get_csrf_token');
+
+    # If not a post then no submission
+    return unless $c->req->method eq 'POST';
+
+    $c->forward('/auth/check_csrf_token');
+
+    my $name = $c->get_param('name') // '';
+    $name =~ s/^\s+//;
+    $name =~ s/\s+$//;
+    $c->stash->{profile_name} = $name;
+
+    if (!$name) {
+        $c->stash->{name_error} = 'missing';
+        return;
+    }
+
+    if (length $name > 100) {
+        $c->stash->{name_error} = 'too_long';
+        return;
+    }
+
+    $c->user->update({ name => $name });
+    $c->flash->{flash_message} = _('You have successfully updated your name.');
+    $c->res->redirect('/my');
+    $c->detach;
+}
+
 =head2 change_password
 
 Let the user change their password.
