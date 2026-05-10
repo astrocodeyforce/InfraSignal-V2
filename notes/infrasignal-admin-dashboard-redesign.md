@@ -98,3 +98,7 @@ Live `/admin` verification on DEV confirmed:
 ## Production Sync Notes
 
 This work has only been applied to DEV. To sync later, copy the changed admin templates, `Admin.pm`, `admin-dashboard.js`, `base.scss`, generated `base.css`, and this note to `/opt/infrasignal-v2`, then compile production CSS, clear Template Toolkit cache, restart/HUP the production app if controller code changes are included, and verify `/admin` on production. Do not deploy this to production unless explicitly requested.
+
+## May 10, 2026 Admin Polish Follow-Up
+
+The DEV account/admin follow-up pushed as commit `a6d3a90f1` also improved admin body-picker contrast in the bodies, response priorities, site messages, and response templates pages, plus targeted role select styling in the InfraSignal SCSS. These changes are documented in `notes/infrasignal-account-dashboard.md` and `PROJECT PLAN/CHANGE_LOG.md`.

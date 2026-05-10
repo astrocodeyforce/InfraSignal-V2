@@ -1,6 +1,23 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
+        - Account experience:
+            - Added an InfraSignal-specific `/my` account dashboard with profile details, notification preferences, report history, update history, and civic-impact summary cards.
+            - Added a `/auth/change_name` profile route plus base and InfraSignal templates so users can add or update the display name shown on their account and reports.
+            - Added account dashboard SCSS for the Lovable-style profile layout, report filters, report list, actions, and responsive mobile behavior.
+        - Admin polish:
+            - Improved contrast for admin body-picker tables used by bodies, response priorities, site messages, and response templates.
+            - Added targeted admin select styling so role dropdowns remain readable in the InfraSignal admin theme.
+        - Documentation and GitHub:
+            - Updated project planning notes for the May 2026 dev UI work and pushed the account/admin changes to GitHub `origin/dev` as commit `a6d3a90f1`.
+            - Left the local backup file `templates/web/base/alert/index.html.bak` uncommitted.
+        - Verification:
+            - Rebuilt dev InfraSignal CSS and cleared Template Toolkit cache.
+            - Verified `Profile.pm` syntax with app/commonlib include paths.
+            - Verified editor diagnostics for the changed docs, templates, controller, and SCSS.
+            - `t/template.t` passed; `t/app/controller/my.t` is currently blocked by the existing test database missing `problem.osm_zone_*` columns from `db/schema_0094-priority-zones.sql`.
+
     - InfraSignal - May 10, 2026 (Homepage hero refresh):
         - Homepage:
             - Added an InfraSignal-specific homepage intro override so the hero headline reads "Report issues. Improve your neighborhood with Infrasignal."

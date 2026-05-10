@@ -44,3 +44,7 @@ The InfraSignal authentication pages were redesigned to match the Lovable refere
 ## Production Sync Notes
 
 To sync this auth redesign to production, copy the changed auth templates, auth SCSS, shared JS, and this note to `/opt/infrasignal-v2`, compile production CSS, clear Template Toolkit cache, HUP Starman if needed, and verify `/auth`, `/auth/create`, and `/auth/forgot` on `https://infrasignal.org/`.
+
+## May 10, 2026 Account Follow-Up
+
+The account/profile experience was extended in DEV with a dedicated `/auth/change_name` flow and an InfraSignal `/my` account dashboard override. The follow-up was pushed to GitHub `origin/dev` as commit `a6d3a90f1`; see `notes/infrasignal-account-dashboard.md` for the detailed file list, verification, and rollback notes.
