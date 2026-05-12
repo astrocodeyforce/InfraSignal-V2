@@ -1,6 +1,23 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 12, 2026 (How It Works page):
+        - Public page:
+            - Added `/how-it-works` as an InfraSignal public route, forwarding through the existing static/about page template lookup.
+            - Created a new InfraSignal How It Works page from the supplied Lovable content, adapted to the repo's Template Toolkit layout, route structure, and inline icon approach.
+            - Included the required four-step resident flow: Report, Locate, Route, and Track, plus after-submit details, resident and local-authority benefits, tracking links, example journey, FAQ, and final CTA.
+            - Added How It Works links to the desktop header, mobile menu, shared info sidebar, and visible info/contact page sidebars.
+        - Styling:
+            - Added responsive `.hiw` SCSS components for the hero, step cards, benefit panels, tracking cards, FAQ accordion, and CTA block.
+            - Rebuilt `web/cobrands/infrasignal/base.css` for the dev app.
+        - Verification:
+            - `git diff --check` passed before the implementation commit.
+            - `Static.pm` syntax check passed in the dev container.
+            - Rebuilt dev InfraSignal CSS and cleared Template Toolkit cache.
+            - Verified `http://REDACTED-IP:3001/how-it-works` returns HTTP 200 and renders the required heading and four-step content.
+        - GitHub:
+            - Implementation committed as `9c105e69a` (`Add How It Works page`) on DEV before documentation/tracker updates.
+
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:
             - Added an InfraSignal-specific `/my` account dashboard with profile details, notification preferences, report history, update history, and civic-impact summary cards.
