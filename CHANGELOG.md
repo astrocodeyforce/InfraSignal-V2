@@ -23,6 +23,9 @@
             - Tightened section spacing and kept the four-step cards in a roomier two-column layout at normal desktop widths.
             - Added How It Works to the footer Company links and simplified the final CTA to two primary actions.
             - Visual polish committed as `4c6cc5133` (`Polish How It Works page layout`).
+        - Follow-up section removal:
+            - Removed the How It Works page sidebar, hero CTA row, Example Journey card, and FAQ block after screenshot review.
+            - Removal committed as `b833b8b9b` (`Remove extra How It Works sections`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:

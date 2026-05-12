@@ -47,6 +47,13 @@ Commit `4c6cc5133` tightened the page after screenshot review:
 - Added How It Works to the footer Company links.
 - Simplified the final CTA to `Report an Issue` and `View All Reports`.
 
+Commit `b833b8b9b` then removed the screenshot-highlighted sections entirely:
+
+- Page sidebar.
+- Hero CTA row.
+- Example Journey card.
+- FAQ block.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
