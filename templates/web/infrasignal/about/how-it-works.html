@@ -41,31 +41,12 @@
       <span class="hiw-eyebrow hiw-eyebrow--light">[% loc('How It Works') %]</span>
       <h1 class="hiw-hero__title">[% loc('How InfraSignal Works') %]</h1>
       <p class="hiw-hero__lead">[% loc('A simple way to report issues in your neighborhood and ensure they reach the right people.') %]</p>
-      <div class="hiw-actions hiw-hero__actions">
-        <a href="/" class="hiw-button hiw-button--accent">[% loc('Report an Issue') %] [% INCLUDE hiw_icon name='chevron-right' %]</a>
-        <a href="/reports" class="hiw-button hiw-button--ghost-light">[% loc('View All Reports') %]</a>
-        <a href="/contact" class="hiw-button hiw-button--text-light">[% loc('Contact Us') %]</a>
-      </div>
     </div>
   </section>
 
   <section class="contact-body hiw-body">
     <div class="infra-container">
       <div class="contact-layout">
-        <aside class="contact-sidebar">
-          <nav class="contact-sidebar__nav">
-            <ul class="contact-sidebar__list">
-              <li><a href="/about" class="contact-sidebar__link">[% loc('About') %]</a></li>
-              <li><a href="/how-it-works" class="contact-sidebar__link contact-sidebar__link--active">[% loc('How It Works') %]</a></li>
-              <li><a href="/faq" class="contact-sidebar__link">[% loc('FAQ') %]</a></li>
-              <li><a href="[% c.cobrand.privacy_policy_url %]" class="contact-sidebar__link">[% loc('Privacy') %]</a></li>
-              <li><a href="/about/terms" class="contact-sidebar__link">[% loc('Terms') %]</a></li>
-              <li><a href="/contact" class="contact-sidebar__link">[% loc('Contact Us') %]</a></li>
-              <li><a href="/alert" class="contact-sidebar__link">[% loc('Local Alerts') %]</a></li>
-            </ul>
-          </nav>
-        </aside>
-
         <div class="contact-main hiw-main">
           <section class="hiw-section hiw-section--first">
             <header class="hiw-section__head">
@@ -166,29 +147,6 @@
               <a href="/alert" class="hiw-link-card"><h3 class="hiw-link-card__title">[% loc('Local Alerts') %]</h3><p class="hiw-link-card__desc">[% loc('Subscribe to updates for reports near an address or area.') %]</p><span class="hiw-link-card__cta">[% loc('Open') %] [% INCLUDE hiw_icon name='chevron-right' %]</span></a>
               <a href="/my" class="hiw-link-card"><h3 class="hiw-link-card__title">[% loc('Your Account') %]</h3><p class="hiw-link-card__desc">[% loc('View your reports, manage notification preferences, and follow updates from one place.') %]</p><span class="hiw-link-card__cta">[% loc('Open') %] [% INCLUDE hiw_icon name='chevron-right' %]</span></a>
             </div>
-          </section>
-
-          <section class="hiw-section">
-            <div class="hiw-story">
-              <span class="hiw-eyebrow hiw-eyebrow--accent">[% loc('Example Journey') %]</span>
-              <h2 class="hiw-story__title">[% loc('A broken streetlight, reported and routed') %]</h2>
-              <p class="hiw-story__body">[% loc('A resident notices a broken streetlight. They open InfraSignal, enter the address, add a photo, choose the issue category, and submit the report. InfraSignal identifies the responsible local authority or service, routes the report, shows it on the public map, and lets the resident follow updates until the issue is addressed.') %]</p>
-            </div>
-          </section>
-
-          <section class="hiw-section hiw-section--tint">
-            <header class="hiw-section__head">
-              <h2 class="hiw-section__title">[% loc('Frequently asked') %]</h2>
-              <p class="hiw-section__lead">[% loc('Quick answers about how InfraSignal works.') %]</p>
-            </header>
-            <div class="hiw-faq">
-              <details class="hiw-faq__item"><summary class="hiw-faq__q"><span>[% loc('Does InfraSignal fix the issue directly?') %]</span>[% INCLUDE hiw_icon name='chevron-down' %]</summary><div class="hiw-faq__a">[% loc('No. InfraSignal helps residents report issues and helps route those reports to the right local authority or service. The responsible authority handles the repair or response.') %]</div></details>
-              <details class="hiw-faq__item"><summary class="hiw-faq__q"><span>[% loc('Do I need an account to report an issue?') %]</span>[% INCLUDE hiw_icon name='chevron-down' %]</summary><div class="hiw-faq__a">[% loc('Users can start reporting without first browsing through departments. An account helps track reports and manage updates.') %]</div></details>
-              <details class="hiw-faq__item"><summary class="hiw-faq__q"><span>[% loc('Can I see reports from other residents?') %]</span>[% INCLUDE hiw_icon name='chevron-down' %]</summary><div class="hiw-faq__a">[% loc('Yes. Public reports can be viewed through the All Reports page.') %]</div></details>
-              <details class="hiw-faq__item"><summary class="hiw-faq__q"><span>[% loc('How do local alerts work?') %]</span>[% INCLUDE hiw_icon name='chevron-down' %]</summary><div class="hiw-faq__a">[% loc('Residents can subscribe to receive updates about reports near a selected address or area.') %]</div></details>
-              <details class="hiw-faq__item"><summary class="hiw-faq__q"><span>[% loc('Can local governments use InfraSignal?') %]</span>[% INCLUDE hiw_icon name='chevron-down' %]</summary><div class="hiw-faq__a">[% loc('Yes. InfraSignal can provide structured reports, routing workflows, and admin tools for local service teams.') %]</div></details>
-            </div>
-            <p class="hiw-faq__more"><a href="/faq" class="hiw-link">[% loc('Read FAQ') %] [% INCLUDE hiw_icon name='chevron-right' %]</a></p>
           </section>
 
           <section class="hiw-cta">
