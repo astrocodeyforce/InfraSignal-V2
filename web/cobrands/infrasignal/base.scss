@@ -5630,6 +5630,14 @@ body.infopage #mobile-sticky-sidebar-button { display: none; }
     list-style: none;
     margin: 0;
     padding: 0;
+
+    > li {
+      margin: 0 0 0.35rem;
+      padding: 0;
+      list-style: none !important;
+
+      &::marker { content: ''; }
+    }
   }
 
   &__link {
@@ -7283,28 +7291,41 @@ body.mappage #filter-announcement {
   &__actions { margin-top: 1.75rem; }
 }
 
-.hiw-body { padding-top: 2.5rem; }
+.hiw-body { padding-top: 2rem; }
+
+.how-it-works-page .contact-sidebar__list {
+  list-style: none !important;
+  padding-left: 0 !important;
+
+  > li {
+    list-style: none !important;
+    margin: 0 0 0.35rem !important;
+    padding-left: 0 !important;
+
+    &::marker { content: ''; }
+  }
+}
 
 .hiw-main {
   max-width: none;
   display: grid;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .hiw-section {
-  padding: clamp(2rem, 5vw, 3.5rem);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
   border-radius: 16px;
   background: #fff;
   border: 1px solid $gray-200;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 
-  &--first { padding-top: clamp(2rem, 5vw, 3.5rem); }
+  &--first { padding-top: clamp(1.5rem, 3vw, 2.5rem); }
   &--tint { background: $primary-50; }
   &--muted { background: $gray-50; }
 
   &__head {
     max-width: 42rem;
-    margin: 0 auto 2rem;
+    margin: 0 auto 1.5rem;
     text-align: center;
   }
 
@@ -7416,10 +7437,18 @@ body.mappage #filter-announcement {
   gap: 1rem;
   margin: 0;
   padding: 0;
-  list-style: none;
+  list-style: none !important;
 
   @media (min-width: 640px) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  @media (min-width: 1040px) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  @media (min-width: 1320px) { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+  > li {
+    margin: 0;
+    padding: 0;
+    list-style: none !important;
+
+    &::marker { content: ''; }
+  }
 }
 
 .hiw-step,
@@ -7435,7 +7464,7 @@ body.mappage #filter-announcement {
 }
 
 .hiw-step {
-  padding: 1.25rem;
+  padding: 1.2rem;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 
   &:hover {
