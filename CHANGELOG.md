@@ -17,6 +17,12 @@
             - Verified `http://REDACTED-IP:3001/how-it-works` returns HTTP 200 and renders the required heading and four-step content.
         - GitHub:
             - Implementation committed as `9c105e69a` (`Add How It Works page`) on DEV before documentation/tracker updates.
+        - Follow-up polish:
+            - Removed visible sidebar and ordered-list marker artifacts from the How It Works layout.
+            - Replaced the repeated first-section heading with "Report, route, and track in four simple steps".
+            - Tightened section spacing and kept the four-step cards in a roomier two-column layout at normal desktop widths.
+            - Added How It Works to the footer Company links and simplified the final CTA to two primary actions.
+            - Visual polish committed as `4c6cc5133` (`Polish How It Works page layout`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:

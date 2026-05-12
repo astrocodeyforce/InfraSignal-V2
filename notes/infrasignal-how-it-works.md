@@ -37,6 +37,16 @@ Created the new `/how-it-works` page from the user-provided Lovable HTML/SCSS, a
 - Browser verification confirmed `http://REDACTED-IP:3001/how-it-works` renders.
 - `curl` verification returned HTTP 200 and found the required heading and four-step labels.
 
+## Visual Polish Follow-up
+
+Commit `4c6cc5133` tightened the page after screenshot review:
+
+- Removed visible sidebar and ordered-list marker artifacts.
+- Changed the repeated first section heading to "Report, route, and track in four simple steps".
+- Reduced section spacing and kept the step cards in a roomier two-column layout at normal desktop widths.
+- Added How It Works to the footer Company links.
+- Simplified the final CTA to `Report an Issue` and `View All Reports`.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
