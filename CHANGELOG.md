@@ -26,6 +26,9 @@
         - Follow-up section removal:
             - Removed the How It Works page sidebar, hero CTA row, Example Journey card, and FAQ block after screenshot review.
             - Removal committed as `b833b8b9b` (`Remove extra How It Works sections`).
+        - Follow-up label cleanup:
+            - Removed the repeated "How It Works" eyebrow labels from the hero and first content section.
+            - Cleanup committed as `1f1b1eba5` (`Remove repeated How It Works labels`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:
