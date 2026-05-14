@@ -15,6 +15,9 @@
             - Verified the dev homepage has the pulse root, local script, excluded content, and correct z-index layering.
             - Timed browser sampling confirmed pulse nodes appear and remove themselves over time.
             - Verified the local script asset returns HTTP 200 from the dev app.
+        - Follow-up cadence tuning:
+            - Reduced pulse spawn attempts from every 6-12 seconds to every 5-10 seconds so the background feels a little more active without increasing concurrent pulses.
+            - Cadence tuning committed as `bfb74810d` (`Tune homepage hero pulse cadence`).
         - GitHub:
             - Implementation committed as `135c56c35` (`Add homepage hero pulse background`) before documentation/tracker updates.
 

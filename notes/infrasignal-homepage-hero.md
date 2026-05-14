@@ -46,9 +46,14 @@ Commit: `135c56c35` (`Add homepage hero pulse background`)
 - Marked the hero content container with `data-hero-exclude` so pulses avoid the headline/search/CTA area.
 - Verification confirmed the pulse root and local script render on the dev homepage, the script asset returns HTTP 200, and timed browser sampling sees pulse nodes appear and remove themselves.
 
+Cadence tuning commit: `bfb74810d` (`Tune homepage hero pulse cadence`)
+
+- Reduced spawn attempts from every 6-12 seconds to every 5-10 seconds.
+- Left `MAX_PULSES` unchanged at 2 so the hero feels a little more active without getting crowded.
+
 ## Rollback Notes
 
 - Revert commit `9af1462f0` on the `dev` branch.
-- To roll back the pulse background only, revert `135c56c35` on the `dev` branch.
+- To roll back the pulse background only, revert `135c56c35` and `bfb74810d` on the `dev` branch.
 - Rebuild `web/cobrands/infrasignal/base.css` from SCSS and clear Template Toolkit cache.
 - Production is unchanged, so no production rollback is required for this DEV-only update.
