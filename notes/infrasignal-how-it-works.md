@@ -56,6 +56,8 @@ Commit `b833b8b9b` then removed the screenshot-highlighted sections entirely:
 
 Commit `1f1b1eba5` removed the repeated "How It Works" eyebrow labels from the hero and first content section after another screenshot review.
 
+Commit `6eb3e80f9` aligned the Residents and Local Authorities card buttons by making each pillar card a vertical flex container and pinning the CTA button to the bottom. Browser measurement confirmed both buttons share the same top and bottom positions at desktop width.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.

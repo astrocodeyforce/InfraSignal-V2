@@ -29,6 +29,9 @@
         - Follow-up label cleanup:
             - Removed the repeated "How It Works" eyebrow labels from the hero and first content section.
             - Cleanup committed as `1f1b1eba5` (`Remove repeated How It Works labels`).
+        - Follow-up button alignment:
+            - Aligned the Residents and Local Authorities card buttons to the same vertical level without changing the wording.
+            - Alignment committed as `6eb3e80f9` (`Align How It Works card buttons`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:
