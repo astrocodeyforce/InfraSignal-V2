@@ -1,6 +1,9 @@
 [% photo_upload = c.cobrand.feature('image_first') AND c.cobrand.allow_photo_upload AND c.req.uri.path == '/' ~%]
 <main id="front-main">
-    <div id="front-main-container">
+    [% IF c.req.uri.path == '/' %]
+        [% INCLUDE 'front/hero-pulse.html' %]
+    [% END %]
+    <div id="front-main-container" data-hero-exclude>
         [% UNLESS possible_location_matches %]
             [% PROCESS 'around/intro.html' %]
         [% END %]
