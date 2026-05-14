@@ -32,6 +32,9 @@
         - Follow-up button alignment:
             - Aligned the Residents and Local Authorities card buttons to the same vertical level without changing the wording.
             - Alignment committed as `6eb3e80f9` (`Align How It Works card buttons`).
+        - Follow-up button sizing:
+            - Matched the Residents and Local Authorities card button widths for a cleaner side-by-side presentation.
+            - Sizing committed as `f9d3760d2` (`Match How It Works card button widths`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:

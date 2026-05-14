@@ -58,6 +58,8 @@ Commit `1f1b1eba5` removed the repeated "How It Works" eyebrow labels from the h
 
 Commit `6eb3e80f9` aligned the Residents and Local Authorities card buttons by making each pillar card a vertical flex container and pinning the CTA button to the bottom. Browser measurement confirmed both buttons share the same top and bottom positions at desktop width.
 
+Commit `f9d3760d2` matched the two pillar CTA button widths with a scoped minimum width. Browser measurement confirmed both buttons render at 192px in the tested viewport.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
