@@ -5,8 +5,8 @@
 
   var PULSE_MS = 4000;
   var MAX_PULSES = 2;
-  var SPAWN_MIN = 6000;
-  var SPAWN_RAND = 6000;
+  var SPAWN_MIN = 5000;
+  var SPAWN_RAND = 5000;
   var CELL = 20;
   var EDGE_PROB = 0.55;
   var EXCL_PAD = 0.02;
