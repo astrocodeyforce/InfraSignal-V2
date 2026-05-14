@@ -1,6 +1,23 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 14, 2026 (Homepage hero pulse background):
+        - Homepage:
+            - Added a progressive-enhancement hero pulse background to the InfraSignal homepage.
+            - Added a small Template Toolkit component at `templates/web/infrasignal/front/hero-pulse.html` and included it only on `/` inside the existing homepage hero.
+            - Added local vanilla JavaScript at `web/cobrands/infrasignal/hero-pulse.js`; no CDN or external dependency was added.
+            - Marked the hero content with `data-hero-exclude` so pulses avoid the headline/search/CTA area.
+        - Styling:
+            - Added scoped `.hero-pulse` SCSS and rebuilt `web/cobrands/infrasignal/base.css`.
+            - Preserved reduced-motion behavior so pulse animations are disabled for users who prefer reduced motion.
+        - Verification:
+            - Rebuilt dev InfraSignal CSS and cleared Template Toolkit cache.
+            - Verified the dev homepage has the pulse root, local script, excluded content, and correct z-index layering.
+            - Timed browser sampling confirmed pulse nodes appear and remove themselves over time.
+            - Verified the local script asset returns HTTP 200 from the dev app.
+        - GitHub:
+            - Implementation committed as `135c56c35` (`Add homepage hero pulse background`) before documentation/tracker updates.
+
     - InfraSignal - May 12, 2026 (How It Works page):
         - Public page:
             - Added `/how-it-works` as an InfraSignal public route, forwarding through the existing static/about page template lookup.
