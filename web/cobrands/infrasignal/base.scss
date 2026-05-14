@@ -7568,6 +7568,8 @@ body.mappage #filter-announcement {
 }
 
 .hiw-pillar {
+  display: flex;
+  flex-direction: column;
   padding: 1.5rem;
   border-top: 4px solid $primary-700;
 
@@ -7596,6 +7598,8 @@ body.mappage #filter-announcement {
   padding: 0;
   list-style: none;
 
+  .hiw-pillar & { flex: 1; }
+
   li {
     display: flex;
     align-items: flex-start;
@@ -7613,6 +7617,11 @@ body.mappage #filter-announcement {
     margin-top: 0.15rem;
     color: $status-success;
   }
+}
+
+.hiw-pillar > .hiw-button {
+  align-self: flex-start;
+  margin-top: auto;
 }
 
 .hiw-link-card {
