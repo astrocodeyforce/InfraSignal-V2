@@ -7329,14 +7329,20 @@ body.mappage #filter-announcement {
 
 .hiw {
   color: $gray-900;
+}
 
-  svg {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
+.hiw-step__icon svg,
+.hiw-feature__icon svg,
+.hiw-checklist svg,
+.hiw-button svg,
+.hiw-link-card__cta svg,
+.hiw-link svg,
+.hiw-faq__q svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 .hiw-hero {
@@ -7609,12 +7615,242 @@ body.mappage #filter-announcement {
     line-height: 1.2;
   }
 
+  &__scene {
+    margin: 1rem 0 0.15rem;
+  }
+
   &__desc {
     margin: 0.85rem 0 0;
     color: $gray-600;
     font-size: 0.9rem;
     line-height: 1.6;
   }
+}
+
+.step-scene {
+  aspect-ratio: 240 / 120;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid rgba($primary-300, 0.45);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eff4fb, #fff);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  text {
+    font-family: $font-body;
+  }
+}
+
+.scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+
+  &.is-static * {
+    animation: none !important;
+  }
+
+  &--report {
+    .sc-tree { transform-box: view-box; transform-origin: 108px 62px; }
+    .sc-flash { opacity: 0; }
+    .sc-print { transform: translateY(40px); opacity: 0; }
+    .sc-sparkles { opacity: 0; }
+
+    &.is-playing {
+      .sc-tree { animation: sc-tree-fall 1.8s cubic-bezier(.55, .05, .7, .4) .2s 1 forwards; }
+      .sc-flash { animation: sc-flash 1s ease-out 2.3s 1 forwards; }
+      .sc-print { animation: sc-print-up .9s cubic-bezier(.22, 1, .36, 1) 2.8s 1 forwards; }
+      .sc-sparkles {
+        animation: sc-sparkle .7s ease-out 2.3s 1 forwards;
+        transform-origin: center;
+      }
+    }
+  }
+
+  &--locate {
+    .sc-cross-h { stroke-dashoffset: 200; }
+    .sc-cross-v { stroke-dashoffset: 92; }
+    .sc-scan { opacity: 0; }
+    .sc-pin { transform: translateY(-40px); opacity: 0; }
+    .sc-lock { transform: translate(0, -8px); opacity: 0; }
+
+    &.is-playing {
+      .sc-cross-h {
+        stroke-dasharray: 200;
+        animation: sc-cross-draw .6s ease-out .1s 1 forwards;
+      }
+
+      .sc-cross-v {
+        stroke-dasharray: 92;
+        animation: sc-cross-draw-v .6s ease-out .25s 1 forwards;
+      }
+
+      .sc-scan { animation: sc-scan-pulse 1.1s ease-out .7s 1 forwards; }
+
+      .sc-pin {
+        animation: sc-pin-drop .85s cubic-bezier(.34, 1.56, .64, 1) 1s 1 forwards;
+        transform-origin: 120px 78px;
+        transform-box: fill-box;
+      }
+
+      .sc-lock { animation: sc-lock-in .4s ease-out 1.7s 1 forwards; }
+    }
+  }
+
+  &--route {
+    .sc-doc { transform: translate(50px, 80px) scale(0); opacity: 0; }
+    .sc-glow { opacity: 0; }
+    .sc-flag { transform-origin: left center; transform-box: fill-box; }
+    .sc-path { stroke-dasharray: 4 5; stroke-dashoffset: 0; opacity: 0.55; }
+
+    &.is-playing {
+      .sc-doc {
+        offset-path: path("M70 80 Q 120 10 178 78");
+        offset-rotate: auto;
+        animation: sc-doc-fly 1.8s cubic-bezier(.4, 0, .2, 1) .3s 1 forwards;
+      }
+
+      .sc-glow { animation: sc-glow-pulse .9s ease-out 1.9s 1 forwards; }
+      .sc-path { animation: sc-path-dash 1.5s linear 0s infinite; }
+    }
+  }
+
+  &--track {
+    .sc-progress { stroke-dasharray: 130; stroke-dashoffset: 130; }
+    .sc-node { transform: scale(0); opacity: 0; transform-box: fill-box; }
+    .sc-node-1 { transform-origin: 40px 60px; }
+    .sc-node-2 { transform-origin: 105px 60px; }
+    .sc-node-3 { transform-origin: 170px 60px; }
+    .sc-bell { transform-origin: center top; transform-box: fill-box; }
+    .sc-badge { transform: scale(0); opacity: 0; transform-origin: center; transform-box: fill-box; }
+    .sc-waves { opacity: 0; }
+
+    &.is-playing {
+      .sc-progress { animation: sc-progress-fill 1.6s ease-out .4s 1 forwards; }
+      .sc-node-1 { animation: sc-node-pop .4s cubic-bezier(.34, 1.56, .64, 1) .2s 1 forwards; }
+      .sc-node-2 { animation: sc-node-pop .4s cubic-bezier(.34, 1.56, .64, 1) .9s 1 forwards; }
+      .sc-node-3 { animation: sc-node-pop .4s cubic-bezier(.34, 1.56, .64, 1) 1.6s 1 forwards; }
+      .sc-bell { animation: sc-bell-ring 1.4s ease-in-out 2.2s 1 forwards; }
+      .sc-badge { animation: sc-badge-pop .4s cubic-bezier(.34, 1.56, .64, 1) 2.4s 1 forwards; }
+      .sc-waves { animation: sc-wave-pulse .9s ease-out 2.3s 1 forwards; }
+    }
+  }
+}
+
+@keyframes sc-tree-fall {
+  0% { transform: rotate(0); }
+  20% { transform: rotate(-3deg); }
+  40% { transform: rotate(10deg); }
+  65% { transform: rotate(38deg); }
+  85% { transform: rotate(66deg); }
+  92% { transform: rotate(72deg); }
+  96% { transform: rotate(68deg); }
+  100% { transform: rotate(70deg); }
+}
+
+@keyframes sc-flash {
+  0%,
+  100% { opacity: 0; }
+  6% { opacity: 0.55; }
+  18% { opacity: 0; }
+}
+
+@keyframes sc-print-up {
+  0% { transform: translateY(40px); opacity: 0; }
+  30% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes sc-sparkle {
+  0%,
+  100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+@keyframes sc-cross-draw {
+  0% { stroke-dashoffset: 200; opacity: 0.4; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes sc-cross-draw-v {
+  0% { stroke-dashoffset: 92; opacity: 0.4; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+
+@keyframes sc-scan-pulse {
+  0% { r: 2; opacity: 0; stroke-width: 2; }
+  50% { opacity: 1; }
+  100% { r: 24; opacity: 0; stroke-width: 0.5; }
+}
+
+@keyframes sc-pin-drop {
+  0% { transform: translateY(-40px); opacity: 0; }
+  70% { transform: translateY(4px); opacity: 1; }
+  85% { transform: translateY(-2px); }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes sc-lock-in {
+  0% { transform: translate(8px, -4px); opacity: 0; }
+  100% { transform: translate(0, 0); opacity: 1; }
+}
+
+@keyframes sc-doc-fly {
+  0% { offset-distance: 0%; transform: scale(0.4); opacity: 0; }
+  10% { transform: scale(1); opacity: 1; }
+  90% { offset-distance: 100%; opacity: 1; }
+  100% { offset-distance: 100%; transform: scale(0.5); opacity: 0; }
+}
+
+@keyframes sc-glow-pulse {
+  0%,
+  100% { fill: hsla(140, 70%, 40%, 0); }
+  30% { fill: hsla(140, 70%, 40%, 0.25); }
+}
+
+@keyframes sc-path-dash {
+  0% { stroke-dashoffset: 27; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes sc-progress-fill {
+  0% { stroke-dashoffset: 130; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes sc-node-pop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes sc-bell-ring {
+  0%,
+  100% { transform: rotate(0); }
+  10% { transform: rotate(18deg); }
+  25% { transform: rotate(-16deg); }
+  40% { transform: rotate(12deg); }
+  55% { transform: rotate(-9deg); }
+  70% { transform: rotate(5deg); }
+  85% { transform: rotate(-2deg); }
+}
+
+@keyframes sc-badge-pop {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.4); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes sc-wave-pulse {
+  0% { opacity: 0; transform: scale(0.6); }
+  30% { opacity: 1; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.4); }
 }
 
 .hiw-grid {
@@ -7876,6 +8112,13 @@ body.mappage #filter-announcement {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .scene * {
+    animation: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    stroke-dashoffset: 0 !important;
+  }
+
   .hiw-step,
   .hiw-link-card,
   .hiw-button,
@@ -7889,6 +8132,7 @@ body.mappage #filter-announcement {
     transform: none;
   }
 }
+
 /* ===========================================================
    REPORT DETAIL PAGE — Lovable Reference Redesign (CSS+JS)
    Aligned with: report_detail_sidebar (1).scss

@@ -34,6 +34,133 @@
   [% END %]
 [%- END %]
 
+[% BLOCK hiw_scene -%]
+  [% IF name == 'report' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g class="sc-phone">
+        <rect x="92" y="14" width="56" height="84" rx="8" fill="#fff" stroke="#1E40AF" stroke-width="2.5"/>
+        <rect x="98" y="24" width="44" height="58" rx="3" fill="#EFF6FF"/>
+        <circle cx="120" cy="90" r="3.5" fill="#F97316"/>
+        <clipPath id="hiw-phone-screen">
+          <rect x="98" y="24" width="44" height="58" rx="3"/>
+        </clipPath>
+        <g clip-path="url(#hiw-phone-screen)">
+          <rect x="98" y="24" width="44" height="46" fill="#CFE3F7"/>
+          <rect x="98" y="70" width="44" height="12" fill="#DAC9A3"/>
+          <g>
+            <rect x="105" y="62" width="7" height="8" fill="#5A3A20"/>
+            <path d="M105 62 L107 60 L109 63 L111 60 L112 62 Z" fill="#3F2916"/>
+          </g>
+          <g class="sc-tree">
+            <rect x="106" y="30" width="5" height="32" fill="#6B4422"/>
+            <circle cx="108" cy="26" r="8" fill="#2F7A3A"/>
+            <circle cx="113" cy="30" r="6" fill="#266A32"/>
+            <circle cx="103" cy="30" r="5.5" fill="#3A8C45"/>
+            <circle cx="108" cy="22" r="4.5" fill="#3F9249"/>
+          </g>
+        </g>
+        <rect class="sc-flash" x="98" y="24" width="44" height="58" rx="3" fill="#fff"/>
+      </g>
+      <g class="sc-print">
+        <rect x="100" y="86" width="40" height="28" rx="2" fill="#fff" stroke="#D1D5DB" stroke-width="1.2"/>
+        <rect x="100" y="86" width="40" height="18" fill="#CFE3F7"/>
+        <rect x="100" y="104" width="40" height="10" fill="#DAC9A3"/>
+        <rect x="103" y="108" width="34" height="3" rx="0.5" fill="#F3F4F6"/>
+      </g>
+      <g class="sc-sparkles" fill="#F97316">
+        <circle cx="78" cy="34" r="1.8"/>
+        <circle cx="166" cy="32" r="1.4"/>
+        <circle cx="170" cy="56" r="1.6"/>
+        <circle cx="74" cy="62" r="1.2"/>
+      </g>
+    </svg>
+  [% ELSIF name == 'locate' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g class="sc-map">
+        <rect x="20" y="14" width="200" height="92" rx="6" fill="#EFF6FF"/>
+        <g stroke="rgba(59,130,246,.45)" stroke-width="0.6">
+          <line x1="20" y1="36" x2="220" y2="36"/>
+          <line x1="20" y1="60" x2="220" y2="60"/>
+          <line x1="20" y1="84" x2="220" y2="84"/>
+          <line x1="68" y1="14" x2="68" y2="106"/>
+          <line x1="120" y1="14" x2="120" y2="106"/>
+          <line x1="172" y1="14" x2="172" y2="106"/>
+        </g>
+        <path d="M20 78 Q 80 72 120 60 T 220 40" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+      <g class="sc-crosshair" stroke="#F97316" stroke-width="1.4" stroke-dasharray="3 3">
+        <line class="sc-cross-h" x1="20" y1="60" x2="220" y2="60"/>
+        <line class="sc-cross-v" x1="120" y1="14" x2="120" y2="106"/>
+      </g>
+      <circle class="sc-scan" cx="120" cy="60" r="2" fill="none" stroke="#F97316" stroke-width="1.5"/>
+      <g class="sc-pin">
+        <path d="M120 38 C 112 38 106 44 106 52 C 106 62 120 78 120 78 C 120 78 134 62 134 52 C 134 44 128 38 120 38 Z" fill="#F97316" stroke="#EA580C" stroke-width="1.2"/>
+        <circle cx="120" cy="52" r="4.5" fill="#fff"/>
+      </g>
+      <g class="sc-lock">
+        <circle cx="120" cy="29" r="10" fill="#16A34A"/>
+        <path d="M115 29 L119 33 L126 25" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </g>
+    </svg>
+  [% ELSIF name == 'route' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <line x1="10" y1="100" x2="230" y2="100" stroke="#D1D5DB" stroke-width="1.2"/>
+      <g class="sc-sender">
+        <path d="M28 100 L28 75 L46 60 L64 75 L64 100 Z" fill="#EFF6FF" stroke="#1E40AF" stroke-width="1.8"/>
+        <rect x="40" y="82" width="12" height="18" fill="#1E40AF"/>
+      </g>
+      <path class="sc-path" d="M70 80 Q 120 16 178 78" fill="none" stroke="#F97316" stroke-width="1.6" stroke-dasharray="3 4"/>
+      <g class="sc-doc">
+        <rect x="-7" y="-9" width="14" height="18" rx="1.5" fill="#fff" stroke="#EA580C" stroke-width="1.2"/>
+        <line x1="-4" y1="-5" x2="4" y2="-5" stroke="#F97316" stroke-width="0.8"/>
+        <line x1="-4" y1="-1" x2="4" y2="-1" stroke="#D1D5DB" stroke-width="0.8"/>
+        <line x1="-4" y1="3" x2="4" y2="3" stroke="#D1D5DB" stroke-width="0.8"/>
+      </g>
+      <g class="sc-receiver">
+        <line x1="200" y1="62" x2="200" y2="48" stroke="#374151" stroke-width="1"/>
+        <path class="sc-flag" d="M200 48 L210 51 L200 54 Z" fill="#F97316"/>
+        <path d="M178 70 L200 58 L222 70 Z" fill="#1E40AF"/>
+        <rect x="182" y="72" width="36" height="28" fill="#EFF6FF" stroke="#1E40AF" stroke-width="1.2"/>
+        <line x1="190" y1="74" x2="190" y2="100" stroke="#1E40AF" stroke-width="1.2"/>
+        <line x1="200" y1="74" x2="200" y2="100" stroke="#1E40AF" stroke-width="1.2"/>
+        <line x1="210" y1="74" x2="210" y2="100" stroke="#1E40AF" stroke-width="1.2"/>
+        <rect class="sc-glow" x="178" y="58" width="44" height="42" rx="2" fill="rgba(22,163,74,0)"/>
+      </g>
+    </svg>
+  [% ELSIF name == 'track' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <line x1="36" y1="58" x2="172" y2="58" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round"/>
+      <line class="sc-progress" x1="36" y1="58" x2="172" y2="58" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+      <g class="sc-node sc-node-1">
+        <circle cx="36" cy="58" r="10" fill="#16A34A"/>
+        <path d="M31 58 L35 62 L42 54" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="36" y="84" text-anchor="middle" fill="#374151" font-size="9" font-weight="600">Submitted</text>
+      </g>
+      <g class="sc-node sc-node-2">
+        <circle cx="104" cy="58" r="10" fill="#16A34A"/>
+        <path d="M99 58 L103 62 L110 54" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="104" y="84" text-anchor="middle" fill="#374151" font-size="9" font-weight="600">In Review</text>
+      </g>
+      <g class="sc-node sc-node-3">
+        <circle cx="172" cy="58" r="10" fill="#16A34A"/>
+        <path d="M167 58 L171 62 L178 54" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="172" y="84" text-anchor="middle" fill="#374151" font-size="9" font-weight="600">Resolved</text>
+      </g>
+      <g transform="translate(212 40)">
+        <g class="sc-waves" fill="none" stroke="#F97316" stroke-width="1.4" stroke-linecap="round">
+          <path d="M-16 -2 Q -19 2 -16 6"/>
+          <path d="M16 -2 Q 19 2 16 6"/>
+        </g>
+        <g class="sc-bell">
+          <path d="M0 -8 C -7 -8 -10 -3 -10 4 C -10 8 -12 10 -12 10 L 12 10 C 12 10 10 8 10 4 C 10 -3 7 -8 0 -8 Z" fill="#1E40AF"/>
+          <path d="M-3 12 C -3 14 3 14 3 12" stroke="#1E40AF" stroke-width="1.6" fill="none"/>
+          <circle class="sc-badge" cx="8" cy="-6" r="4" fill="#F97316"/>
+        </g>
+      </g>
+    </svg>
+  [% END %]
+[%- END %]
+
 <article class="hiw">
   <section class="hiw-hero">
     <div class="hiw-hero__bg" aria-hidden="true"></div>
@@ -59,12 +186,18 @@
                   <div class="hiw-step__icon">[% INCLUDE hiw_icon name='camera' %]<span class="hiw-step__num">1</span></div>
                   <h3 class="hiw-step__title">[% loc('Report') %]</h3>
                 </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--report is-playing">[% INCLUDE hiw_scene name='report' %]</div>
+                </div>
                 <p class="hiw-step__desc">[% loc('Snap a photo and describe the issue in a few words. Whether it&rsquo;s a pothole, broken streetlight, or trash overflow, reporting takes less than a minute.') %]</p>
               </li>
               <li class="hiw-step">
                 <div class="hiw-step__head">
                   <div class="hiw-step__icon">[% INCLUDE hiw_icon name='map-pin' %]<span class="hiw-step__num">2</span></div>
                   <h3 class="hiw-step__title">[% loc('Locate') %]</h3>
+                </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--locate is-playing">[% INCLUDE hiw_scene name='locate' %]</div>
                 </div>
                 <p class="hiw-step__desc">[% loc('We automatically detect and pinpoint the exact location of the issue, ensuring accuracy without extra effort from you.') %]</p>
               </li>
@@ -73,12 +206,18 @@
                   <div class="hiw-step__icon">[% INCLUDE hiw_icon name='send' %]<span class="hiw-step__num">3</span></div>
                   <h3 class="hiw-step__title">[% loc('Route') %]</h3>
                 </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--route is-playing">[% INCLUDE hiw_scene name='route' %]</div>
+                </div>
                 <p class="hiw-step__desc">[% loc('Your report is sent to the appropriate local authority or service responsible for resolving the issue.') %]</p>
               </li>
               <li class="hiw-step">
                 <div class="hiw-step__head">
                   <div class="hiw-step__icon">[% INCLUDE hiw_icon name='bell' %]<span class="hiw-step__num">4</span></div>
                   <h3 class="hiw-step__title">[% loc('Track') %]</h3>
+                </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--track is-playing">[% INCLUDE hiw_scene name='track' %]</div>
                 </div>
                 <p class="hiw-step__desc">[% loc('Stay informed with updates as your report is reviewed and addressed. Follow progress until the issue is resolved.') %]</p>
               </li>
