@@ -70,6 +70,15 @@ Commit `18a90ad81` (`Add animated How It Works scenes`) upgraded the four step c
 - `web/cobrands/infrasignal/base.scss` now scopes icon SVG styling more narrowly so the new scene SVGs keep their intended fills, strokes, and labels.
 - Dev verification confirmed the live page serves 4 scene blocks, loads the local script asset, and renders the scenes inside the existing step cards.
 
+Commit `41fcd06de` (`Polish How It Works scene cards`) refined the scene-card presentation after screenshot review:
+
+- Removed the older blue step icon tiles so the storyboard scenes are the primary visual element.
+- Simplified each card header to an orange number badge plus title.
+- Shortened the four step descriptions.
+- Kept the step grid in a calmer two-column desktop layout, narrowed the grid max width, softened the scene panel styling, and reduced mobile scene height.
+- Staggered JavaScript-driven scene restarts so visible cards do not restart simultaneously.
+- Dev verification confirmed 4 cards, 0 old icon tiles, 4 number badges, 4 scene blocks, and staggered playback on the live page.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commits, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.

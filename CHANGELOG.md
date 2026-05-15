@@ -60,6 +60,11 @@
             - Added local vanilla JavaScript at `web/cobrands/infrasignal/hiw-scenes.js` to restart scene animations every 5 seconds only while the cards are on screen, with reduced-motion support and no external dependency.
             - Scoped the existing `.hiw` SVG icon styling so the new inline scene SVGs render with their intended fills, strokes, and labels.
             - Storyboard scenes committed as `18a90ad81` (`Add animated How It Works scenes`).
+        - Follow-up scene-card polish:
+            - Removed the older blue icon tiles from the four How It Works step cards so the new storyboard scenes are the primary visual element.
+            - Changed each step header to a compact number badge beside the title, shortened the card descriptions, softened the scene panels, and kept the cards in a calmer two-column layout at desktop widths.
+            - Staggered the How It Works scene animation restarts so visible cards do not all restart at once.
+            - Scene-card polish committed as `41fcd06de` (`Polish How It Works scene cards`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:
