@@ -55,6 +55,11 @@
         - Follow-up button sizing:
             - Matched the Residents and Local Authorities card button widths for a cleaner side-by-side presentation.
             - Sizing committed as `f9d3760d2` (`Match How It Works card button widths`).
+        - Follow-up storyboard scenes:
+            - Added four inline animated storyboard scenes to the How It Works step cards so Report, Locate, Route, and Track each have a purpose-built visual sequence instead of a static icon-only treatment.
+            - Added local vanilla JavaScript at `web/cobrands/infrasignal/hiw-scenes.js` to restart scene animations every 5 seconds only while the cards are on screen, with reduced-motion support and no external dependency.
+            - Scoped the existing `.hiw` SVG icon styling so the new inline scene SVGs render with their intended fills, strokes, and labels.
+            - Storyboard scenes committed as `18a90ad81` (`Add animated How It Works scenes`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:

@@ -60,6 +60,16 @@ Commit `6eb3e80f9` aligned the Residents and Local Authorities card buttons by m
 
 Commit `f9d3760d2` matched the two pillar CTA button widths with a scoped minimum width. Browser measurement confirmed both buttons render at 192px in the tested viewport.
 
+## Storyboard Scenes Follow-up
+
+Commit `18a90ad81` (`Add animated How It Works scenes`) upgraded the four step cards with inline animated storyboard scenes:
+
+- `templates/web/infrasignal/about/how-it-works.html` now embeds four scene wrappers for Report, Locate, Route, and Track.
+- `web/cobrands/infrasignal/hiw-scenes.js` restarts the scene animations every 5 seconds only while the cards are visible.
+- Reduced-motion users get static scenes instead of looping animation.
+- `web/cobrands/infrasignal/base.scss` now scopes icon SVG styling more narrowly so the new scene SVGs keep their intended fills, strokes, and labels.
+- Dev verification confirmed the live page serves 4 scene blocks, loads the local script asset, and renders the scenes inside the existing step cards.
+
 ## Production Promotion
 
-When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
+When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commits, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
