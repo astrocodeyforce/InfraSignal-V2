@@ -1,6 +1,21 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 16, 2026 (UI cleanup batch 1):
+        - Structure and safety:
+            - Fixed the shared support sidebar markup by moving the `How It Works` item into the actual sidebar list.
+            - Removed duplicate shared-sidebar injection from English About, FAQ, Privacy, Terms, and Contact pages that already render their own inline support sidebar.
+            - Added InfraSignal-only hidden compatibility elements for the legacy `/js/front.js` mobile-nav listener so the custom header no longer triggers the null-reference homepage console error.
+        - Revert safety:
+            - Rollback checkpoint before starting: `a9612ab60` (`Add UI cleanup step plan`).
+            - Focused implementation commit: `06e123e8d` (`Clean support sidebars and header compatibility`).
+        - Verification:
+            - Cleared Template Toolkit caches on DEV.
+            - Editor diagnostics and `git diff --check` passed.
+            - Live DEV checks confirmed `/`, `/about`, `/faq`, `/contact`, `/about/privacy`, `/about/terms`, `/about/security`, and `/how-it-works` return HTTP 200.
+            - Live counts confirmed inline-sidebar pages no longer render the shared `sticky-sidebar`, while `/about/security` and `/how-it-works` still use the repaired shared sidebar.
+            - Browser snapshot of the homepage no longer reported the previous `/js/front.js` null-reference page error.
+
     - InfraSignal - May 16, 2026 (Local Alerts subscription page):
         - Public alert flow:
             - Added an InfraSignal-specific `/alert/list` template for the location-specific Local Alerts subscription step.
