@@ -91,3 +91,9 @@
     </div>
   </nav>
 </header>
+
+[%# Compatibility placeholders for legacy /js/front.js mobile-nav listeners. The visible InfraSignal menu is controlled by header-nav.js. %]
+<input type="checkbox" id="main-nav-btn" hidden aria-hidden="true" tabindex="-1">
+<label for="main-nav-btn" hidden aria-hidden="true">[% loc('Main Navigation') %]</label>
+<div id="js-menu-open-modal" hidden aria-hidden="true"></div>
+<nav id="main-nav" hidden aria-hidden="true"><span></span></nav>
