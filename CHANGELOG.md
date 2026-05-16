@@ -32,6 +32,10 @@
             - Updated the Local Alerts hero, alert-area meta text, page title, and radius label to use the selected address/ZIP or a named local area fallback.
             - Verified ZIP, chosen-address, and coordinate-only routes on DEV while keeping `/alert/subscribe` form fields and buttons unchanged.
             - Chosen-location display committed as `860fa37e4` (`Show chosen Local Alerts location`).
+        - Follow-up country trim:
+            - Trimmed country-level suffixes from Local Alerts chosen-location display labels and chooser links so addresses read as city, county, and state.
+            - Verified the chosen-address hero, alert-area badge, and radius label show `Buffalo Grove, Lake County, Illinois` while `/alert/subscribe` fields/buttons remain unchanged.
+            - Country trim committed as `1fe0ad2cb` (`Trim country from Local Alerts location`).
         - GitHub:
             - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
 

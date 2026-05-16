@@ -119,3 +119,25 @@ Fixed the Local Alerts display label so chosen addresses and ZIP codes appear on
 - `/alert/list?latitude=42.166774;longitude=-87.969752` returned HTTP 200 and showed `Lake County` instead of `this location`.
 - Ambiguous search results now generate `/alert/list?pc=...;latitude=...;longitude=...` links.
 - Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up Country Trim
+
+Date: 2026-05-16
+Implementation commit: `1fe0ad2cb` (`Trim country from Local Alerts location`)
+Production: not touched
+
+### Summary
+
+Trimmed country suffixes from the Local Alerts chosen-location display so selected locations show as city, county, and state.
+
+### Changes
+
+- Removed `United States of America`, `United States`, and `USA` suffixes from the displayed Local Alerts location label.
+- Applied the trim to the hero chip, alert-area meta text, radius label, and multiple-match chooser links.
+- Left the alert controller, subscribe endpoint, form field names, and submit button names unchanged.
+
+### Verification
+
+- Chosen-address URL returned HTTP 200 and showed `Buffalo Grove, Lake County, Illinois` in the hero chip, Alert area text, and radius label.
+- Ambiguous chooser links no longer carry `United States` in the selected `pc` value.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
