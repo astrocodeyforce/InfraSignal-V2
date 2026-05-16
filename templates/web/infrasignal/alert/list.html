@@ -15,6 +15,7 @@
   alert_location_label = alert_location_label.replace(', United States of America', '');
   alert_location_label = alert_location_label.replace(', United States', '');
   alert_location_label = alert_location_label.replace(', USA', '');
+  alert_location_label = alert_location_label.replace(',.*$', '');
 
   IF alert_location_label;
     title = tprintf( loc("Local RSS feeds and email alerts for '%s'"), alert_location_label );
