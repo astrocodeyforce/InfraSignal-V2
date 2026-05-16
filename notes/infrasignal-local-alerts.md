@@ -42,3 +42,32 @@ Updated the location-specific Local Alerts subscription page at `/alert/list` us
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and verifying `/alert` plus `/alert/list` on mobile and desktop.
+
+## Follow-up Visual Polish
+
+Date: 2026-05-16
+Implementation commit: `527564122` (`Polish Local Alerts subscription page`)
+Production: not touched
+
+### Summary
+
+Applied the newer enhanced Local Alerts design to `/alert/list`, keeping the existing alert controller, endpoint, and form field names intact.
+
+### Changes
+
+- Added a richer Local Alerts hero with location chip, alert-area meta panel, grid texture, and accent glow.
+- Added category tags to real nearby report preview cards, with tagged fallback preview cards retained.
+- Converted scope choices into clickable cards with selected-card styling and per-option RSS links.
+- Moved the custom radius input inside the radius card and preserved the existing `distance` field.
+- Reworked the email and RSS subscription actions into a responsive two-panel row.
+- Added a nonce-bearing inline script to keep the selected card state synchronized with the radio buttons while ignoring clicks on per-option RSS links.
+- Rebuilt `web/cobrands/infrasignal/base.css` and cleared Template Toolkit caches on DEV.
+
+### Verification
+
+- `git diff --check` passed before the implementation commit.
+- Editor diagnostics passed for the changed templates, SCSS, and generated CSS.
+- `/alert/list?pc=60089` returned HTTP 200 and served the hero chip, report tags, scope cards, email verification area, RSS panel, and card-selection script.
+- `/alert` returned HTTP 200 after the shared alert style changes.
+- Served form markup retained the required backend fields: `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+- Browser screenshot verification confirmed the polished hero and tagged nearby-report preview layout.

@@ -16,6 +16,13 @@
             - Live DEV checks confirmed `/alert/list?pc=60089` returns HTTP 200 and renders the title, photo strip, scope radios, email panel, and RSS action.
             - Live DEV checks confirmed `/alert` still returns HTTP 200 with the existing search page.
             - Browser checks confirmed the email verification widget is contained inside the Subscribe by email panel; Cloudflare Turnstile still reports its existing dev-host connectivity error in the widget.
+        - Follow-up visual polish:
+            - Reworked the `/alert/list` hero into the supplied richer Local Alerts treatment with a dark grid background, location chip, and alert-area meta panel.
+            - Added category tags to the nearby report preview cards and kept real controller-provided photos when available.
+            - Converted the scope chooser into clickable cards with per-option RSS links, the radius input nested inside the selected radius card, and a small script that keeps card selection in sync with the radios.
+            - Placed the email subscription and RSS subscription actions into a responsive two-panel row while preserving the existing `/alert/subscribe` backend fields.
+            - Rebuilt `web/cobrands/infrasignal/base.css`, cleared Template Toolkit caches, and verified `/alert/list?pc=60089` plus `/alert` on DEV.
+            - Visual polish committed as `527564122` (`Polish Local Alerts subscription page`).
         - GitHub:
             - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
 
