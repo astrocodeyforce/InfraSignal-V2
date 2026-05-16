@@ -1,12 +1,23 @@
 [% SET bodyclass = 'alertpage' %]
 [%
-    IF pretty_pc;
-        title = tprintf( loc("Local RSS feeds and email alerts for '%s'"), pretty_pc );
-    ELSE;
-        title = loc('Local RSS feeds and email alerts');
+  alert_area_fallback = '';
+  alert_area_fallback_type = '';
+  IF all_areas;
+    FOREACH area IN all_areas.values;
+      IF !alert_area_fallback OR (alert_area_fallback_type == 'O04' AND area.type != 'O04');
+        alert_area_fallback = area.name;
+        alert_area_fallback_type = area.type;
+      END;
     END;
+  END;
 
-    alert_location_label = pc || pretty_pc || loc('this location');
+  alert_location_label = c.get_param('pc') || pc || pretty_pc || alert_area_fallback || loc('selected area');
+
+  IF alert_location_label;
+    title = tprintf( loc("Local RSS feeds and email alerts for '%s'"), alert_location_label );
+  ELSE;
+    title = loc('Local RSS feeds and email alerts');
+  END;
 
     sidebar_links = [
       { url => '/about',         label => loc('About') },

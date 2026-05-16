@@ -1,4 +1,16 @@
-[% SET name_of_location = pc || pretty_pc || loc('this location') %]
+[%
+  SET name_of_location = alert_location_label || c.get_param('pc') || pc || pretty_pc;
+  IF !name_of_location AND all_areas;
+    SET name_of_location_type = '';
+    FOREACH area IN all_areas.values;
+      IF !name_of_location OR (name_of_location_type == 'O04' AND area.type != 'O04');
+        name_of_location = area.name;
+        name_of_location_type = area.type;
+      END;
+    END;
+  END;
+  SET name_of_location = name_of_location || loc('selected area');
+%]
 
 <input type="hidden" name="token" value="[% csrf_token %]">
 <input type="hidden" name="type" value="local">
