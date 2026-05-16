@@ -6851,17 +6851,6 @@ body.alertpage input#pc[type="text"] {
     text-align: left;
   }
 
-  .alerts-hero__pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 0.18;
-    background-image:
-      linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.16) 1px, transparent 1px);
-    background-size: 38px 38px;
-    mask-image: linear-gradient(to bottom, #000, transparent 82%);
-  }
-
   .alerts-hero__glow {
     position: absolute;
     right: 1rem;

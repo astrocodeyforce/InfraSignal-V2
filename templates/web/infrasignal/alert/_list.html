@@ -1,4 +1,4 @@
-[% SET name_of_location = pretty_pc || loc('this location') %]
+[% SET name_of_location = pc || pretty_pc || loc('this location') %]
 
 <input type="hidden" name="token" value="[% csrf_token %]">
 <input type="hidden" name="type" value="local">

@@ -6,7 +6,7 @@
         title = loc('Local RSS feeds and email alerts');
     END;
 
-    area_q = pretty_pc || pc || loc('this location');
+    alert_location_label = pc || pretty_pc || loc('this location');
 
     sidebar_links = [
       { url => '/about',         label => loc('About') },
@@ -30,7 +30,6 @@
 
 <article class="alerts alerts--list">
   <header class="alerts-hero alerts-hero--local">
-    <span class="alerts-hero__pattern" aria-hidden="true"></span>
     <span class="alerts-hero__glow" aria-hidden="true"></span>
     <div class="infra-container alerts-hero__inner">
       <div class="alerts-hero__text">
@@ -40,7 +39,7 @@
         </span>
         <h1 class="alerts-hero__title">
           [% loc('RSS & email alerts for') %]
-          <span class="alerts-hero__chip">[% area_q | html %]</span>
+          <span class="alerts-hero__chip">[% alert_location_label | html %]</span>
         </h1>
         <p class="alerts-hero__lead">
           [% loc('Subscribe to a quiet, useful feed of new infrastructure reports near you by radius, county, or state.') %]
@@ -48,7 +47,7 @@
       </div>
       <div class="alerts-hero__meta">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-        <span>[% loc('Alert area') %]: <strong>[% area_q | html %]</strong></span>
+        <span>[% loc('Alert area') %]: <strong>[% alert_location_label | html %]</strong></span>
       </div>
     </div>
   </header>
