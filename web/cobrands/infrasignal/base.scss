@@ -7660,7 +7660,6 @@ body.mappage #filter-announcement {
     .sc-cross-v { stroke-dashoffset: 92; }
     .sc-scan { opacity: 0; }
     .sc-pin { transform: translateY(-40px); opacity: 0; }
-    .sc-lock { transform: translate(0, -8px); opacity: 0; }
 
     &.is-playing {
       .sc-cross-h {
@@ -7680,8 +7679,6 @@ body.mappage #filter-announcement {
         transform-origin: 120px 78px;
         transform-box: fill-box;
       }
-
-      .sc-lock { animation: sc-lock-in .4s ease-out 1.7s 1 forwards; }
     }
   }
 
@@ -7776,11 +7773,6 @@ body.mappage #filter-announcement {
   70% { transform: translateY(4px); opacity: 1; }
   85% { transform: translateY(-2px); }
   100% { transform: translateY(0); opacity: 1; }
-}
-
-@keyframes sc-lock-in {
-  0% { transform: translate(8px, -4px); opacity: 0; }
-  100% { transform: translate(0, 0); opacity: 1; }
 }
 
 @keyframes sc-doc-fly {
