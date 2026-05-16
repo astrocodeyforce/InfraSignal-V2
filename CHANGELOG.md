@@ -36,6 +36,10 @@
             - Trimmed country-level suffixes from Local Alerts chosen-location display labels and chooser links so addresses read as city, county, and state.
             - Verified the chosen-address hero, alert-area badge, and radius label show `Buffalo Grove, Lake County, Illinois` while `/alert/subscribe` fields/buttons remain unchanged.
             - Country trim committed as `1fe0ad2cb` (`Trim country from Local Alerts location`).
+        - Follow-up city-only display:
+            - Shortened the Local Alerts hero, alert-area badge, and radius label to display only the first chosen place name, such as `Buffalo Grove`.
+            - Verified ZIP display and `/alert/subscribe` form fields/buttons remain unchanged.
+            - City-only display committed as `bbc807bc6` (`Show city only for Local Alerts location`).
         - GitHub:
             - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
 

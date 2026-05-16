@@ -141,3 +141,25 @@ Trimmed country suffixes from the Local Alerts chosen-location display so select
 - Chosen-address URL returned HTTP 200 and showed `Buffalo Grove, Lake County, Illinois` in the hero chip, Alert area text, and radius label.
 - Ambiguous chooser links no longer carry `United States` in the selected `pc` value.
 - Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up City-Only Display
+
+Date: 2026-05-16
+Implementation commit: `bbc807bc6` (`Show city only for Local Alerts location`)
+Production: not touched
+
+### Summary
+
+Shortened the Local Alerts chosen-location display to the first place name only.
+
+### Changes
+
+- Trimmed visible Local Alerts labels after the first comma so `Buffalo Grove, Lake County, Illinois` displays as `Buffalo Grove`.
+- Applied the trim to the hero chip, alert-area meta text, page title, and radius label.
+- Left the alert controller, subscribe endpoint, form field names, and submit button names unchanged.
+
+### Verification
+
+- Chosen-address URL returned HTTP 200 and showed `Buffalo Grove` in the hero chip, Alert area text, and radius label.
+- ZIP URL returned HTTP 200 and still showed `60089`.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
