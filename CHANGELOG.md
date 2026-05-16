@@ -65,6 +65,9 @@
             - Changed each step header to a compact number badge beside the title, shortened the card descriptions, softened the scene panels, and kept the cards in a calmer two-column layout at desktop widths.
             - Staggered the How It Works scene animation restarts so visible cards do not all restart at once.
             - Scene-card polish committed as `41fcd06de` (`Polish How It Works scene cards`).
+        - Follow-up Locate scene cleanup:
+            - Removed the green checkmark badge above the orange Locate map pin so the scene focuses on the pin itself.
+            - Cleanup committed as `a037b4e98` (`Remove Locate scene checkmark`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:

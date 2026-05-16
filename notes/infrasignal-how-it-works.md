@@ -79,6 +79,12 @@ Commit `41fcd06de` (`Polish How It Works scene cards`) refined the scene-card pr
 - Staggered JavaScript-driven scene restarts so visible cards do not restart simultaneously.
 - Dev verification confirmed 4 cards, 0 old icon tiles, 4 number badges, 4 scene blocks, and staggered playback on the live page.
 
+Commit `a037b4e98` (`Remove Locate scene checkmark`) removed the green checkmark badge above the orange Locate map pin:
+
+- Removed the `sc-lock` SVG group from the Locate scene.
+- Removed the unused `sc-lock` animation rules and keyframes.
+- Dev verification confirmed the live Locate scene keeps `sc-pin` and no longer includes `sc-lock` or the checkmark path.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commits, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
