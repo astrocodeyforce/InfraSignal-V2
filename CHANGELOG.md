@@ -23,6 +23,10 @@
             - Placed the email subscription and RSS subscription actions into a responsive two-panel row while preserving the existing `/alert/subscribe` backend fields.
             - Rebuilt `web/cobrands/infrasignal/base.css`, cleared Template Toolkit caches, and verified `/alert/list?pc=60089` plus `/alert` on DEV.
             - Visual polish committed as `527564122` (`Polish Local Alerts subscription page`).
+        - Follow-up header cleanup:
+            - Removed the decorative square grid from the Local Alerts hero header.
+            - Updated the visible hero and scope text to prefer the submitted location/ZIP value while preserving existing alert form actions and button fields.
+            - Header cleanup committed as `58e29b4fb` (`Remove Local Alerts header grid`).
         - GitHub:
             - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
 

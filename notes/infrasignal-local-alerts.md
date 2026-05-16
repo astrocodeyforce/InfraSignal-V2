@@ -71,3 +71,26 @@ Applied the newer enhanced Local Alerts design to `/alert/list`, keeping the exi
 - `/alert` returned HTTP 200 after the shared alert style changes.
 - Served form markup retained the required backend fields: `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
 - Browser screenshot verification confirmed the polished hero and tagged nearby-report preview layout.
+
+## Follow-up Header Cleanup
+
+Date: 2026-05-16
+Implementation commit: `58e29b4fb` (`Remove Local Alerts header grid`)
+Production: not touched
+
+### Summary
+
+Removed the visible square grid from the Local Alerts hero header and made visible location labels prefer the submitted location/ZIP value.
+
+### Changes
+
+- Removed the `alerts-hero__pattern` element from `templates/web/infrasignal/alert/list.html`.
+- Removed the matching square-grid SCSS from `web/cobrands/infrasignal/base.scss` and regenerated `base.css`.
+- Updated the hero chip, alert-area meta label, and scope text source to use `pc || pretty_pc || loc('this location')`.
+- Left the alert controller, routes, form endpoint, and submit button names unchanged.
+
+### Verification
+
+- `/alert/list?pc=60089` returned HTTP 200, no longer served `alerts-hero__pattern`, and showed `60089` in both the hero chip and Alert area text.
+- `/alert` returned HTTP 200.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
