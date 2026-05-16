@@ -163,3 +163,28 @@ Shortened the Local Alerts chosen-location display to the first place name only.
 - Chosen-address URL returned HTTP 200 and showed `Buffalo Grove` in the hero chip, Alert area text, and radius label.
 - ZIP URL returned HTTP 200 and still showed `60089`.
 - Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up Suggestions Page Redesign
+
+Date: 2026-05-16
+Implementation commit: `5e66e28ea` (`Redesign Local Alerts suggestion page`)
+Production: not touched
+
+### Summary
+
+Redesigned the ambiguous-location suggestions page shown when a Local Alerts search returns multiple matches.
+
+### Changes
+
+- Added `templates/web/infrasignal/alert/choose.html` as the InfraSignal override for the existing `alert/choose.html` flow.
+- Added a styled hero, Back to Local Alerts link, refine search box, sticky help sidebar, and clickable match cards.
+- Match cards show an icon, title, address detail, meta line, and chevron while keeping the existing `/alert/list` link targets with `pc`, `latitude`, and `longitude`.
+- Added scoped `.alerts--suggest` and `.alerts-suggest__*` SCSS and regenerated `web/cobrands/infrasignal/base.css`.
+- No new controller route, React page, or subscription behavior was added.
+
+### Verification
+
+- `/alert/list?pc=buffalo+gr` returned HTTP 200 with the new suggestions markup, 2 match cards, refine box, and no old `pc_alternatives` list.
+- First match-card destination returned HTTP 200 and reached the existing subscription page.
+- `/alert` and `/alert/list?pc=60089` returned HTTP 200 after the override.
+- Generated CSS includes a 16px refine input override.

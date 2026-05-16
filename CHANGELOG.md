@@ -40,6 +40,12 @@
             - Shortened the Local Alerts hero, alert-area badge, and radius label to display only the first chosen place name, such as `Buffalo Grove`.
             - Verified ZIP display and `/alert/subscribe` form fields/buttons remain unchanged.
             - City-only display committed as `bbc807bc6` (`Show city only for Local Alerts location`).
+        - Follow-up suggestions page redesign:
+            - Added an InfraSignal-specific ambiguous-location suggestions page for `/alert/list?pc=...` when geocoding returns multiple matches.
+            - Replaced the old plain list with the requested styled hero, try-again refine box, sidebar, and clickable match cards with icon, title, detail, meta text, and chevron.
+            - Preserved the existing choose flow: match cards still link to `/alert/list` with `pc`, `latitude`, and `longitude`; no new controller route or subscribe behavior was added.
+            - Rebuilt `web/cobrands/infrasignal/base.css`, cleared Template Toolkit caches, and verified `/alert/list?pc=buffalo+gr`, `/alert`, and `/alert/list?pc=60089` on DEV.
+            - Suggestions page redesign committed as `5e66e28ea` (`Redesign Local Alerts suggestion page`).
         - GitHub:
             - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
 
