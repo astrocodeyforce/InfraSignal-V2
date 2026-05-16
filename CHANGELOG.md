@@ -68,6 +68,9 @@
         - Follow-up Locate scene cleanup:
             - Removed the green checkmark badge above the orange Locate map pin so the scene focuses on the pin itself.
             - Cleanup committed as `a037b4e98` (`Remove Locate scene checkmark`).
+        - Follow-up Report scene photo match:
+            - Updated the small captured-photo card in the Report scene to show a miniature fallen tree that matches the phone camera view after the tree falls.
+            - Photo match committed as `01d7b27bd` (`Match Report scene photo to fallen tree`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:

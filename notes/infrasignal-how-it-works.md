@@ -85,6 +85,12 @@ Commit `a037b4e98` (`Remove Locate scene checkmark`) removed the green checkmark
 - Removed the unused `sc-lock` animation rules and keyframes.
 - Dev verification confirmed the live Locate scene keeps `sc-pin` and no longer includes `sc-lock` or the checkmark path.
 
+Commit `01d7b27bd` (`Match Report scene photo to fallen tree`) updated the Report scene's small captured-photo card:
+
+- Replaced the generic print-photo image area with a miniature fallen-tree scene.
+- Kept the existing phone camera animation intact.
+- Dev verification confirmed the live Report scene serves the `hiw-print-photo` clip and fallen-tree shapes inside `sc-print`.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commits, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.
