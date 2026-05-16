@@ -1,0 +1,81 @@
+[% SET bodyclass = 'alertpage' %]
+[%
+    IF pretty_pc;
+        title = tprintf( loc("Local RSS feeds and email alerts for '%s'"), pretty_pc );
+    ELSE;
+        title = loc('Local RSS feeds and email alerts');
+    END;
+
+    sidebar_links = [
+      { url => '/about',         label => loc('About') },
+      { url => '/faq',           label => loc('FAQ') },
+      { url => '/about/privacy', label => loc('Privacy') },
+      { url => '/about/terms',   label => loc('Terms') },
+      { url => '/contact',       label => loc('Contact Us') },
+      { url => '/alert',         label => loc('Local Alerts'), active => 1 },
+    ];
+
+    recent_photos = [
+      { id => 1, title => loc('Fallen Tree - Branch blocking road'),     color_class => 'alerts-photo--green' },
+      { id => 2, title => loc('School Zone - Road damage near school'),  color_class => 'alerts-photo--amber' },
+      { id => 3, title => loc('Intersection - Pothole at intersection'), color_class => 'alerts-photo--slate' },
+      { id => 4, title => loc('Pothole - Deep pothole on road'),         color_class => 'alerts-photo--stone' },
+      { id => 5, title => loc('Road Damage - Crumbling road surface'),   color_class => 'alerts-photo--rust'  },
+    ];
+%]
+
+[% INCLUDE 'header.html', title = title %]
+
+<article class="alerts alerts--list">
+  <section class="alerts-body">
+    <div class="infra-container alerts-body__grid">
+      <aside class="alerts-sidebar" aria-label="[% loc('Help & Info') %]">
+        <nav class="alerts-sidebar__nav">
+          <p class="alerts-sidebar__title">[% loc('Help & Info') %]</p>
+          [% FOREACH link IN sidebar_links %]
+            <a href="[% link.url | html %]"
+               class="alerts-sidebar__link[% IF link.active %] is-active[% END %]">
+              [% link.label | html %]
+            </a>
+          [% END %]
+        </nav>
+      </aside>
+
+      <div class="alerts-main">
+        <h1 class="alerts-title">
+          [% IF pretty_pc %]
+            [% loc('Local RSS feeds and email alerts for') %]
+            <span class="alerts-title__q">&lsquo;[% pretty_pc | html %]&rsquo;</span>
+          [% ELSE %]
+            [% loc('Local RSS feeds and email alerts') %]
+          [% END %]
+        </h1>
+
+        <section class="alerts-photos alerts-photos--strip">
+          <h2 class="alerts-photos__title">[% loc('Photos of recent nearby reports') %]</h2>
+          <div class="alerts-photos__strip">
+            [% IF photos.size %]
+              [% FOREACH p IN photos %]
+                <a href="/report/[% p.id %]" class="alerts-photo" style="background-image: url('[% p.photos.first.url_tn | html %]')">
+                  <span class="alerts-photo__caption">[% p.title | html %]</span>
+                </a>
+              [% END %]
+            [% ELSE %]
+              [% FOREACH p IN recent_photos %]
+                <a href="/report/[% p.id %]" class="alerts-photo [% p.color_class | html %]">
+                  <span class="alerts-photo__caption">[% p.title | html %]</span>
+                </a>
+              [% END %]
+            [% END %]
+          </div>
+        </section>
+
+        <form class="validate js-alert-list alerts-list-form" method="post" action="/alert/subscribe">
+          [% INCLUDE 'alert/_list.html' %]
+        </form>
+      </div>
+    </div>
+  </section>
+</article>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]
