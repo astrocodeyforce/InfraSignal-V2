@@ -91,6 +91,12 @@ Commit `01d7b27bd` (`Match Report scene photo to fallen tree`) updated the Repor
 - Kept the existing phone camera animation intact.
 - Dev verification confirmed the live Report scene serves the `hiw-print-photo` clip and fallen-tree shapes inside `sc-print`.
 
+Commit `79a04eadf` (`Refine Report scene tree artwork`) made the Report tree more recognizable:
+
+- Replaced the simple trunk/circle artwork with a fuller leafy tree, visible branches, and a tapered trunk.
+- Updated the matching captured-photo miniature with clearer fallen-tree branch and canopy detail.
+- Dev verification confirmed the live Report scene serves the updated tree artwork in both places.
+
 ## Production Promotion
 
 When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commits, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.

@@ -71,6 +71,9 @@
         - Follow-up Report scene photo match:
             - Updated the small captured-photo card in the Report scene to show a miniature fallen tree that matches the phone camera view after the tree falls.
             - Photo match committed as `01d7b27bd` (`Match Report scene photo to fallen tree`).
+        - Follow-up Report tree artwork:
+            - Refined the Report scene tree into a fuller leafy tree with visible branches and matching captured-photo detail.
+            - Artwork refinement committed as `79a04eadf` (`Refine Report scene tree artwork`).
 
     - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
         - Account experience:
