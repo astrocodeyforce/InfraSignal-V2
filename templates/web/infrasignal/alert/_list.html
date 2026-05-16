@@ -10,6 +10,9 @@
     END;
   END;
   SET name_of_location = name_of_location || loc('selected area');
+  SET name_of_location = name_of_location.replace(', United States of America', '');
+  SET name_of_location = name_of_location.replace(', United States', '');
+  SET name_of_location = name_of_location.replace(', USA', '');
 %]
 
 <input type="hidden" name="token" value="[% csrf_token %]">

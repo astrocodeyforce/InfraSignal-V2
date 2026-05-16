@@ -12,6 +12,9 @@
   END;
 
   alert_location_label = c.get_param('pc') || pc || pretty_pc || alert_area_fallback || loc('selected area');
+  alert_location_label = alert_location_label.replace(', United States of America', '');
+  alert_location_label = alert_location_label.replace(', United States', '');
+  alert_location_label = alert_location_label.replace(', USA', '');
 
   IF alert_location_label;
     title = tprintf( loc("Local RSS feeds and email alerts for '%s'"), alert_location_label );
