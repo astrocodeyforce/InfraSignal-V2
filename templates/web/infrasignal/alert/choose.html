@@ -1,0 +1,125 @@
+[% SET bodyclass = 'alertpage' %]
+[%
+  query = c.get_param('pc') || pc || '';
+  title = loc('Choose a location for Local Alerts');
+
+  sidebar_links = [
+    { url => '/about',         label => loc('About') },
+    { url => '/faq',           label => loc('FAQ') },
+    { url => '/about/privacy', label => loc('Privacy') },
+    { url => '/about/terms',   label => loc('Terms') },
+    { url => '/contact',       label => loc('Contact Us') },
+    { url => '/alert',         label => loc('Local Alerts'), active => 1 },
+  ];
+%]
+
+[% INCLUDE 'header.html', title = title %]
+
+<article class="alerts alerts--suggest">
+  <header class="alerts-hero alerts-hero--local">
+    <span class="alerts-hero__glow" aria-hidden="true"></span>
+    <div class="infra-container alerts-hero__inner">
+      <div class="alerts-hero__text">
+        <a class="alerts-hero__back" href="/alert">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+          [% loc('Local Alerts') %]
+        </a>
+        <span class="alerts-hero__eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          [% loc('Choose an alert area') %]
+        </span>
+        <h1 class="alerts-hero__title">
+          [% loc('Which location did you mean?') %]
+        </h1>
+        [% IF query %]
+          <p class="alerts-hero__lead">
+            [% tprintf(loc('We found more than one match for "%s".'), query) %]
+          </p>
+        [% ELSE %]
+          <p class="alerts-hero__lead">
+            [% loc('We found more than one matching location.') %]
+          </p>
+        [% END %]
+      </div>
+    </div>
+  </header>
+
+  <section class="alerts-body">
+    <div class="infra-container alerts-body__grid">
+      <aside class="alerts-sidebar" aria-label="[% loc('Help & Info') %]">
+        <nav class="alerts-sidebar__nav">
+          <p class="alerts-sidebar__title">[% loc('Help & Info') %]</p>
+          [% FOREACH link IN sidebar_links %]
+            <a href="[% link.url | html %]"
+               class="alerts-sidebar__link[% IF link.active %] is-active[% END %]">
+              [% link.label | html %]
+            </a>
+          [% END %]
+        </nav>
+      </aside>
+
+      <div class="alerts-main alerts-suggest__main">
+        <section class="alerts-suggest__refine" aria-labelledby="alerts-refine-title">
+          <div class="alerts-suggest__refine-head">
+            <span class="alerts-suggest__refine-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            </span>
+            <div>
+              <h2 id="alerts-refine-title" class="alerts-suggest__refine-title">[% loc('Try a more specific search') %]</h2>
+              <p class="alerts-suggest__refine-copy">[% loc('Add a street, ZIP code, or nearby landmark to narrow the results.') %]</p>
+            </div>
+          </div>
+          <form action="/alert/list" method="GET" class="alerts-suggest__form js-geolocate">
+            <label class="alerts-suggest__label" for="pc">[% loc('Address or ZIP code') %]</label>
+            <div class="alerts-suggest__input-row">
+              <input type="text" id="pc" name="pc" class="alerts-suggest__input" value="[% query | html %]" autocomplete="street-address" required>
+              <button type="submit" class="alerts-suggest__submit">
+                [% loc('Search') %]
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </form>
+        </section>
+
+        [% IF possible_location_matches %]
+          <section class="alerts-suggest__matches" aria-labelledby="alerts-matches-title">
+            <div class="alerts-suggest__matches-head">
+              <h2 id="alerts-matches-title" class="alerts-suggest__matches-title">[% loc('Select your location') %]</h2>
+              <p class="alerts-suggest__matches-copy">[% loc('Choose the area you want to use for Local Alerts.') %]</p>
+            </div>
+
+            <div class="alerts-suggest__list">
+              [% FOREACH match IN possible_location_matches %]
+                [%
+                  SET match_address = match.address.replace(', United States of America', '');
+                  SET match_address = match_address.replace(', United States', '');
+                  SET match_address = match_address.replace(', USA', '');
+                  SET match_title = match_address.replace(',.*$', '');
+                  SET match_detail = match_address.replace('^[^,]+,\\s*', '');
+                  IF match_detail == match_address;
+                    match_detail = loc('Location match');
+                  END;
+                %]
+                <a class="alerts-suggest__card" href="[% choose_target_uri %]?pc=[% match_address | uri %];latitude=[% match.latitude | uri %];longitude=[% match.longitude | uri %]">
+                  <span class="alerts-suggest__pin" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                  </span>
+                  <span class="alerts-suggest__card-body">
+                    <span class="alerts-suggest__card-title">[% match_title | html %]</span>
+                    <span class="alerts-suggest__card-detail">[% match_detail | html %]</span>
+                    <span class="alerts-suggest__card-meta">[% loc('Local Alerts match') %]</span>
+                  </span>
+                  <span class="alerts-suggest__chevron" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+                  </span>
+                </a>
+              [% END %]
+            </div>
+          </section>
+        [% END %]
+      </div>
+    </div>
+  </section>
+</article>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]
