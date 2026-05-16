@@ -27,6 +27,11 @@
             - Removed the decorative square grid from the Local Alerts hero header.
             - Updated the visible hero and scope text to prefer the submitted location/ZIP value while preserving existing alert form actions and button fields.
             - Header cleanup committed as `58e29b4fb` (`Remove Local Alerts header grid`).
+        - Follow-up chosen-location display:
+            - Preserved the selected address when users choose from multiple location matches so `/alert/list` can display the chosen area instead of falling back to generic text.
+            - Updated the Local Alerts hero, alert-area meta text, page title, and radius label to use the selected address/ZIP or a named local area fallback.
+            - Verified ZIP, chosen-address, and coordinate-only routes on DEV while keeping `/alert/subscribe` form fields and buttons unchanged.
+            - Chosen-location display committed as `860fa37e4` (`Show chosen Local Alerts location`).
         - GitHub:
             - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
 

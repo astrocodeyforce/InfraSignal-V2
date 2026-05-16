@@ -86,11 +86,36 @@ Removed the visible square grid from the Local Alerts hero header and made visib
 
 - Removed the `alerts-hero__pattern` element from `templates/web/infrasignal/alert/list.html`.
 - Removed the matching square-grid SCSS from `web/cobrands/infrasignal/base.scss` and regenerated `base.css`.
-- Updated the hero chip, alert-area meta label, and scope text source to use `pc || pretty_pc || loc('this location')`.
+- Updated the hero chip, alert-area meta label, and scope text source to prefer the submitted location/ZIP value.
 - Left the alert controller, routes, form endpoint, and submit button names unchanged.
 
 ### Verification
 
 - `/alert/list?pc=60089` returned HTTP 200, no longer served `alerts-hero__pattern`, and showed `60089` in both the hero chip and Alert area text.
 - `/alert` returned HTTP 200.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up Chosen Location Display
+
+Date: 2026-05-16
+Implementation commit: `860fa37e4` (`Show chosen Local Alerts location`)
+Production: not touched
+
+### Summary
+
+Fixed the Local Alerts display label so chosen addresses and ZIP codes appear on screen instead of the generic `this location` fallback.
+
+### Changes
+
+- Updated the alert choose page links to include the selected address in the existing `pc` query parameter while preserving latitude and longitude.
+- Updated the InfraSignal `/alert/list` hero chip, alert-area meta text, page title, and radius label to use the submitted `pc`, `pretty_pc`, or a named local area fallback.
+- Added a coordinate-only fallback that prefers a non-state local area when available.
+- Left the alert controller, subscribe endpoint, form field names, and submit button names unchanged.
+
+### Verification
+
+- `/alert/list?pc=60089` returned HTTP 200 and showed `60089`.
+- `/alert/list?pc=Buffalo%20Grove%2C%20IL;latitude=42.166774;longitude=-87.969752` returned HTTP 200 and showed `Buffalo Grove, IL`.
+- `/alert/list?latitude=42.166774;longitude=-87.969752` returned HTTP 200 and showed `Lake County` instead of `this location`.
+- Ambiguous search results now generate `/alert/list?pc=...;latitude=...;longitude=...` links.
 - Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
