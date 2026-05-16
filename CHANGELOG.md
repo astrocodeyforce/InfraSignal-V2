@@ -1,6 +1,24 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 16, 2026 (Local Alerts subscription page):
+        - Public alert flow:
+            - Added an InfraSignal-specific `/alert/list` template for the location-specific Local Alerts subscription step.
+            - Adapted the supplied Local Alerts design to the existing FixMyStreet alert backend, preserving the `feed`, `distance`, `rznvy`, `alert`, and `rss` fields used by `POST /alert/subscribe`.
+            - Restyled the post-search alert choices with compact radio rows, per-option RSS buttons, a radius distance input, an email subscription panel, and a final RSS button.
+            - Kept the existing `/alert` search page working as the entry point and reused real nearby report photos when the controller provides them.
+        - Styling:
+            - Added scoped InfraSignal alert-list SCSS for the sidebar, title, photo strip, scope chooser, email subscription panel, RSS controls, and reduced-motion handling.
+            - Rebuilt `web/cobrands/infrasignal/base.css` and cleared Template Toolkit caches on DEV.
+        - Verification:
+            - `git diff --check` passed before the implementation commit.
+            - Editor diagnostics passed for the changed templates, SCSS, and generated CSS.
+            - Live DEV checks confirmed `/alert/list?pc=60089` returns HTTP 200 and renders the title, photo strip, scope radios, email panel, and RSS action.
+            - Live DEV checks confirmed `/alert` still returns HTTP 200 with the existing search page.
+            - Browser checks confirmed the email verification widget is contained inside the Subscribe by email panel; Cloudflare Turnstile still reports its existing dev-host connectivity error in the widget.
+        - GitHub:
+            - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
+
     - InfraSignal - May 14, 2026 (Homepage hero pulse background):
         - Homepage:
             - Added a progressive-enhancement hero pulse background to the InfraSignal homepage.
