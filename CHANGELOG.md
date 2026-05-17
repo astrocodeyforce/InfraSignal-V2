@@ -33,6 +33,9 @@
         - Header navigation:
             - Follow-up navigation cleanup committed as `38eed5835` (`Remove Home from InfraSignal navigation`): removed the visible `Home` item from the desktop header, mobile menu, and RSS browser header while keeping the InfraSignal logo linked to the homepage.
             - Follow-up navigation/footer structure committed as `5b7535c8b` (`Update primary navigation and footer links`): changed the visible public header and RSS browser header to the requested `How It Works`, `View Reports`, `About Us`, `Contact Us`, language selector, `Start Reporting`, and `For Government` structure, and updated the standard/RSS footers to the requested footer link set and labels.
+        - Public sidebar consistency:
+            - Follow-up sidebar normalization committed as `ca9050eba` (`Normalize public sidebar navigation`): centralized the public secondary sidebar link set, applied the same `About`, `How It Works`, `For Local Government`, `FAQ`, `Privacy`, `Terms`, `Contact Us`, and `Local Alerts` labels across About, FAQ, Privacy, Terms, Contact, For Local Government, How It Works, Local Alerts, and fallback shared-sidebar pages, and added the missing sidebar to How It Works.
+            - Matched the For Local Government body surface/spacing and the For Local Government/How It Works main column width to the shared public-page layout.
         - Background color consistency:
             - Follow-up background pass committed as `48d64aae6` (`Unify public page background color`): added a shared InfraSignal page-surface token and applied it to Reports, Contact/Info, For Local Government, Local Alerts, alert subscription, alert suggestions, and the generated CSS output so these public pages match the RSS browser page surface.
             - Preserved white cards, footer color, and the shared blue hero gradient while removing nearby gray mismatches (`#f3f4f6` and `#f9fafb`) from page wrappers.
@@ -63,6 +66,7 @@
             - Live DEV `/alert/subscribe` POST checks confirmed missing-CAPTCHA Local Alerts submissions now render the new InfraSignal error page with HTTP 400, the old `confirmation-header` markup removed, a 226px hero, 30px/700 title, 14px lead, shared `rgb(248, 249, 251)` page background, and zero horizontal overflow.
             - Browser checks confirmed `/about`, the Buffalo Grove `/alert/list` page, and `/rss/area/974962` no longer show `Home` in the header navigation, the logo still links home, the first visible nav item is `All reports`, and each tested page has zero horizontal overflow.
             - Live DEV checks confirmed `/about`, the Buffalo Grove `/alert/list` page, `/rss/xsl`, and `/rss/area/974962` render the updated primary navigation and footer labels; browser checks confirmed the mobile header order and exact footer sequence `How It Works`, `View Reports`, `About Us`, `Contact Us`, `FAQ`, `Start Reporting`, `For Government`, `Privacy Policy`, and `Terms & Conditions` with zero horizontal overflow.
+            - Live DEV checks confirmed `/about`, `/how-it-works`, `/about/for-local-government`, `/alert`, the Buffalo Grove `/alert/list` page, and `/about/security` all render the same secondary/sidebar link order with no template errors; browser checks confirmed one sidebar source per tested page and zero horizontal overflow.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
@@ -77,6 +81,7 @@
                 - Error page redesign follow-up committed as `ec953162f` (`Redesign InfraSignal error page`) before documentation/tracker updates.
                 - Header Home-link removal follow-up committed as `38eed5835` (`Remove Home from InfraSignal navigation`) before documentation/tracker updates.
                 - Primary navigation/footer label follow-up committed as `5b7535c8b` (`Update primary navigation and footer links`) before documentation/tracker updates.
+                - Public sidebar consistency follow-up committed as `ca9050eba` (`Normalize public sidebar navigation`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
