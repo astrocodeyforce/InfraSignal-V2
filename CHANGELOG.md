@@ -1,6 +1,31 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 17, 2026 (UI cleanup batch 2: content ownership, local government, and RSS feed UI):
+        - Content ownership:
+            - Created `/about/for-local-government` as the dedicated authority-facing destination for government operations, intake, routing, integrations, and published civic-reporting proof points.
+            - Consolidated scattered government/authority material out of resident-first pages and updated About, How It Works, FAQ, Contact, legal/info pages, Reports, Local Alerts, homepage sections, sidebar links, and footer links so each page points users to the right destination instead of repeating full sections.
+            - Kept useful content by moving or summarizing it; no useful content was intentionally removed as a cleanup shortcut.
+        - For Local Government page:
+            - Added a full InfraSignal Template Toolkit page with shared info-page sidebar behavior, structured intake messaging, civic reporting reference examples, agency workflow, report anatomy, routing/setup tabs, and a final contact CTA.
+            - Added real public-sector proof slides using published SocietyWorks case-study excerpts and metrics, with a disclaimer that the councils are reference points rather than InfraSignal customers or endorsers.
+            - Removed visible workflow numbering while preserving the workflow icons/figures, and fixed the page layout so the shared sidebar remains sticky without clipping the carousel.
+        - RSS feed browser UI:
+            - Replaced the old table-style RSS XSL browser view with an InfraSignal-styled page for `/rss/l/...`, including branded header, compact hero, copyable feed URL, reader shortcuts, latest report cards, sticky help sidebar, and regular footer-style links.
+            - Matched the RSS browser UI to the shared info-page scale: 72rem outer container, 14rem desktop sidebar, 42rem main column, compact panels, and reduced oversized typography.
+            - Fixed the RSS sidebar scroll collision by making the whole sidebar stack sticky instead of only the link list, so the email CTA no longer slides under the nav.
+        - Styling:
+            - Added scoped `.page--gov` and RSS XSL styles and rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss`.
+        - Verification:
+            - Rebuilt InfraSignal CSS and cleared Template Toolkit caches on DEV.
+            - Editor diagnostics passed for all touched templates, SCSS, generated CSS, and XSL.
+            - `git diff --check` passed before commit.
+            - Live DEV smoke checks returned HTTP 200 for `/`, `/about`, `/how-it-works`, `/about/for-local-government`, `/faq`, `/contact`, `/about/privacy`, `/about/terms`, `/alert`, `/alert/list?pc=buffalo+gr`, and `/reports`.
+            - `/rss/xsl` parsed as XML and served the new RSS layout markers; `/rss/l/42.154421,-87.958962` kept the `/rss/xsl` stylesheet link and returned 20 feed items.
+            - Browser scroll checks confirmed the RSS sidebar email card stays below the nav at top, mid-scroll, and deep-scroll with no horizontal overflow.
+        - GitHub:
+            - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
+
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
             - Fixed the shared support sidebar markup by moving the `How It Works` item into the actual sidebar list.
