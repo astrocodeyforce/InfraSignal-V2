@@ -48,6 +48,7 @@
           .rss-topbar .rss-container {
             width: auto;
             max-width: 1200px;
+            height: 100%;
             padding: 0 16px;
           }
           .rss-topbar__inner {
@@ -121,6 +122,8 @@
           .rss-hero {
             position: relative;
             overflow: hidden;
+            margin-top: -64px;
+            padding: calc(64px + 2.5rem) 0 3.5rem;
             background: linear-gradient(135deg, #0f2444, #1e40af);
             color: #fff;
             line-height: 1.6;
@@ -136,7 +139,7 @@
             position: relative;
             z-index: 1;
             display: block;
-            padding: 2.5rem 0 3.5rem;
+            padding: 0;
           }
           .rss-hero__eyebrow,
           .rss-pill {
@@ -150,15 +153,11 @@
             line-height: 1.2;
           }
           .rss-hero__eyebrow {
-            padding: 0.3rem 0.75rem;
-            border: 1px solid rgba(255,255,255,0.22);
-            background: rgba(255,255,255,0.12);
-            color: #fff;
-            margin: 0 auto;
+            display: none;
           }
           .rss-hero__title {
             max-width: 42rem;
-            margin: 0.75rem auto 0;
+            margin: 0 auto;
             color: #fff;
             font-size: 1.875rem;
             line-height: 1.2;
@@ -173,7 +172,7 @@
             line-height: 1.6;
           }
           .rss-hero__actions {
-            display: flex;
+            display: none;
             flex-wrap: wrap;
             justify-content: center;
             gap: 0.75rem;
