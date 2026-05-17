@@ -15,6 +15,7 @@
             - Matched the RSS browser UI to the shared info-page scale: 72rem outer container, 14rem desktop sidebar, 42rem main column, compact panels, and reduced oversized typography.
             - Fixed the RSS sidebar scroll collision by making the whole sidebar stack sticky instead of only the link list, so the email CTA no longer slides under the nav.
             - Follow-up style parity committed as `0e916ff14` (`Align RSS page with site styling`): matched the RSS XSL header, navigation links, language/sign-in actions, hero gradient, hero typography, footer typography, language row, and footer CTA to the normal InfraSignal pages.
+            - Follow-up sizing parity committed as `171e12018` (`Match RSS hero sizing`): moved the RSS browser hero under the sticky header like the other public pages, removed the redundant hero pill/actions from the visual header, and matched the RSS hero spacing to the shared public-page header scale.
         - Local Alerts subscription style parity:
             - Follow-up style parity committed as `9938791ed` (`Align Local Alerts subscription styling`): normalized `/alert/list` to the same header-adjacent hero scale, typography, card treatment, and footer width used by the rest of the InfraSignal public pages.
             - Replaced the oversized Local Alerts-specific hero treatment with the Reports-style gradient, 30px/700 title, 14px lead, 42rem content column, restrained white panels, and a white RSS panel.
@@ -48,6 +49,7 @@
             - Live DEV checks confirmed the Buffalo Grove Local Alerts subscription page now renders `Buffalo Grove, IL`, the ambiguous Buffalo Grove suggestions include `Buffalo Grove, IL`, `/rss/area/1025717` now titles the feed with `Manchester, NH`, and ZIP-only labels such as `60089` remain unchanged.
             - Browser computed-style checks confirmed Reports, About, Contact, For Local Government, Local Alerts entry, Local Alerts subscription, Local Alerts suggestions, and `/rss/area/1025717` all use `rgb(248, 249, 251)` for the public page surface and retain matching blue hero gradients with zero horizontal overflow.
             - Browser computed-style checks confirmed `/how-it-works`, Reports, About, FAQ, Privacy, Terms, Contact, For Local Government, Local Alerts, alert subscription, alert suggestions, and `/rss/area/1025717` now share the same public hero title size/weight, lead size, hero gradient, page background, and no visible dot/glow overlays.
+            - Browser computed-style checks confirmed `/rss/l/42.154421,-87.958962` and `/rss/area/1025717` now share the same sticky-header overlap, 104px/56px hero spacing, 30px/700 title, 14px lead text, blue gradient, `rgb(248, 249, 251)` page background, hidden hero-only RSS controls, and zero horizontal overflow as the normal public pages.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
@@ -56,6 +58,7 @@
                 - Location-label state abbreviation follow-up committed as `9305a6056` (`Show state abbreviations in location labels`) before documentation/tracker updates.
                 - Public background color follow-up committed as `48d64aae6` (`Unify public page background color`) before documentation/tracker updates.
                 - How It Works hero styling follow-up committed as `92d46c63e` (`Align How It Works hero styling`) before documentation/tracker updates.
+                - RSS hero sizing follow-up committed as `171e12018` (`Match RSS hero sizing`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
