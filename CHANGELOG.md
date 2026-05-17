@@ -15,6 +15,10 @@
             - Matched the RSS browser UI to the shared info-page scale: 72rem outer container, 14rem desktop sidebar, 42rem main column, compact panels, and reduced oversized typography.
             - Fixed the RSS sidebar scroll collision by making the whole sidebar stack sticky instead of only the link list, so the email CTA no longer slides under the nav.
             - Follow-up style parity committed as `0e916ff14` (`Align RSS page with site styling`): matched the RSS XSL header, navigation links, language/sign-in actions, hero gradient, hero typography, footer typography, language row, and footer CTA to the normal InfraSignal pages.
+        - Local Alerts subscription style parity:
+            - Follow-up style parity committed as `9938791ed` (`Align Local Alerts subscription styling`): normalized `/alert/list` to the same header-adjacent hero scale, typography, card treatment, and footer width used by the rest of the InfraSignal public pages.
+            - Replaced the oversized Local Alerts-specific hero treatment with the Reports-style gradient, 30px/700 title, 14px lead, 42rem content column, restrained white panels, and a white RSS panel.
+            - Contained the recent-report photo scroller and removed the alert-page `100vw` footer breakout so the subscription page no longer creates document-level horizontal overflow.
         - Styling:
             - Added scoped `.page--gov` and RSS XSL styles and rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss`.
         - Verification:
@@ -25,8 +29,11 @@
             - `/rss/xsl` parsed as XML and served the new RSS layout markers; `/rss/l/42.154421,-87.958962` kept the `/rss/xsl` stylesheet link and returned 20 feed items.
             - Browser scroll checks confirmed the RSS sidebar email card stays below the nav at top, mid-scroll, and deep-scroll with no horizontal overflow.
             - Browser computed-style checks confirmed the RSS header/nav/hero/footer now match the normal Reports page values for colors, font sizes, weights, line heights, padding, border radii, and footer CTA sizing.
+            - Live DEV checks confirmed the Buffalo Grove `/alert/list` URL returned HTTP 200, rendered the expected location, and had no template error.
+            - Browser computed-style checks confirmed the Local Alerts subscription hero, lead, main column, cards, RSS panel, and footer match the shared page scale, with `scrollWidth` equal to `clientWidth` after the overflow fix.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
+            - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
