@@ -94,7 +94,7 @@
                   SET match_address = match.address.replace(', United States of America', '');
                   SET match_address = match_address.replace(', United States', '');
                   SET match_address = match_address.replace(', USA', '');
-                  SET match_title = match_address.replace(',.*$', '');
+                  SET match_title = c.cobrand.compact_us_location_label(match_address) || match_address.replace(',.*$', '');
                   SET match_detail = match_address.replace('^[^,]+,\\s*', '');
                   IF match_detail == match_address;
                     match_detail = loc('Location match');

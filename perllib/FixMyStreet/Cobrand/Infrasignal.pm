@@ -9,6 +9,61 @@ use FixMyStreet::OSM::PriorityClassifier;
 use LWP::UserAgent;
 use JSON::MaybeXS;
 
+my %US_STATE_ABBREVIATIONS = (
+    'alabama' => 'AL',
+    'alaska' => 'AK',
+    'arizona' => 'AZ',
+    'arkansas' => 'AR',
+    'california' => 'CA',
+    'colorado' => 'CO',
+    'connecticut' => 'CT',
+    'delaware' => 'DE',
+    'district of columbia' => 'DC',
+    'florida' => 'FL',
+    'georgia' => 'GA',
+    'hawaii' => 'HI',
+    'idaho' => 'ID',
+    'illinois' => 'IL',
+    'indiana' => 'IN',
+    'iowa' => 'IA',
+    'kansas' => 'KS',
+    'kentucky' => 'KY',
+    'louisiana' => 'LA',
+    'maine' => 'ME',
+    'maryland' => 'MD',
+    'massachusetts' => 'MA',
+    'michigan' => 'MI',
+    'minnesota' => 'MN',
+    'mississippi' => 'MS',
+    'missouri' => 'MO',
+    'montana' => 'MT',
+    'nebraska' => 'NE',
+    'nevada' => 'NV',
+    'new hampshire' => 'NH',
+    'new jersey' => 'NJ',
+    'new mexico' => 'NM',
+    'new york' => 'NY',
+    'north carolina' => 'NC',
+    'north dakota' => 'ND',
+    'ohio' => 'OH',
+    'oklahoma' => 'OK',
+    'oregon' => 'OR',
+    'pennsylvania' => 'PA',
+    'rhode island' => 'RI',
+    'south carolina' => 'SC',
+    'south dakota' => 'SD',
+    'tennessee' => 'TN',
+    'texas' => 'TX',
+    'utah' => 'UT',
+    'vermont' => 'VT',
+    'virginia' => 'VA',
+    'washington' => 'WA',
+    'west virginia' => 'WV',
+    'wisconsin' => 'WI',
+    'wyoming' => 'WY',
+);
+my %US_STATE_CODES = map { $_ => 1 } values %US_STATE_ABBREVIATIONS;
+
 =head1 NAME
 
 FixMyStreet::Cobrand::Infrasignal
@@ -49,6 +104,78 @@ sub admin_fetch_all_bodies {
 # Instead, we return an empty type list and handle areas via the hook below.
 sub area_types_for_admin {
     return [];
+}
+
+sub us_state_abbreviation {
+    my ($self, $state) = @_;
+    return '' unless defined $state;
+
+    $state =~ s/\A\s+|\s+\z//g;
+    $state =~ s/\A(?:State|Commonwealth)\s+of\s+//i;
+    $state =~ s/\s+\d{5}(?:-\d{4})?\z//;
+    return '' unless length $state;
+
+    my $code = uc $state;
+    return $code if $code =~ /\A[A-Z]{2}\z/ && $US_STATE_CODES{$code};
+
+    return $US_STATE_ABBREVIATIONS{lc $state} || '';
+}
+
+sub compact_us_location_label {
+    my ($self, $label) = @_;
+    return '' unless defined $label;
+
+    $label =~ s/\s+/ /g;
+    $label =~ s/\A\s+|\s+\z//g;
+    $label =~ s/,\s*(?:United States of America|United States|USA)\s*\z//i;
+    return $label unless $label =~ /,/;
+
+    my @parts = grep { length } map {
+        my $part = $_;
+        $part =~ s/\A\s+|\s+\z//g;
+        $part;
+    } split /,/, $label;
+    return $label unless @parts;
+
+    my $state_code = '';
+    for my $part (reverse @parts) {
+        next if $part =~ /\A\d{5}(?:-\d{4})?\z/;
+        $state_code = $self->us_state_abbreviation($part);
+        last if $state_code;
+    }
+
+    return $parts[0] unless $state_code;
+    return $parts[0] if uc($parts[0]) eq $state_code;
+    return "$parts[0], $state_code";
+}
+
+sub rss_area_title_name {
+    my ($self, $area) = @_;
+    return '' unless $area && ref $area eq 'HASH';
+
+    my $area_name = $area->{name} || '';
+    my $label = $area_name;
+
+    if (my $area_id = $area->{id}) {
+        if (my $c = $self->{c}) {
+            my @body_areas = eval {
+                $c->model('DB::BodyArea')->search(
+                    { area_id => $area_id },
+                    { prefetch => 'body' }
+                )->all;
+            };
+            for my $body_area (@body_areas) {
+                my $body_name = eval { $body_area->body->name } || '';
+                next unless $body_name;
+                if (!$label || index(lc $body_name, lc $area_name) == 0) {
+                    $label = $body_name;
+                    last;
+                }
+            }
+        }
+    }
+
+    return $self->compact_us_location_label($label) || $area_name;
 }
 
 # Instead of fetching all global areas (which times out), only fetch the

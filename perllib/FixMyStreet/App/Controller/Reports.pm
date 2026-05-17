@@ -263,7 +263,7 @@ sub rss_area_ward : Path('/rss/area') : Args(2) {
 
         $c->stash->{qs} = "";
         $c->stash->{type} = 'area_problems';
-        $c->stash->{title_params} = { NAME => $area->{name} };
+        $c->stash->{title_params} = { NAME => $c->cobrand->call_hook('rss_area_title_name', $area) || $area->{name} };
         $c->stash->{db_params} = [ $area->{id} ];
 
         $c->detach( '/rss/output' );
@@ -299,11 +299,11 @@ sub rss_area_ward : Path('/rss/area') : Args(2) {
     $c->stash->{type} = 'area_problems';
     if ( $c->stash->{ward} ) {
         # All problems within a particular ward
-        $c->stash->{title_params} = { NAME => $c->stash->{ward}{name} };
+        $c->stash->{title_params} = { NAME => $c->cobrand->call_hook('rss_area_title_name', $c->stash->{ward}) || $c->stash->{ward}{name} };
         $c->stash->{db_params}    = [ $c->stash->{ward}->{id} ];
     } else {
         # Problems within a particular area
-        $c->stash->{title_params} = { NAME => $c->stash->{area}->{name} };
+        $c->stash->{title_params} = { NAME => $c->cobrand->call_hook('rss_area_title_name', $c->stash->{area}) || $c->stash->{area}->{name} };
         $c->stash->{db_params}    = [ $c->stash->{area}->{id} ];
     }
 
