@@ -24,6 +24,9 @@
             - Normalized public hero headers to the same blue gradient, 30px/700 title, 14px lead, 42rem text column, `calc(64px + 2.5rem)` top padding, and 3.5rem bottom padding.
             - Removed the remaining Contact/Info page `100vw` hero/footer breakout and stacked the Local Alerts entry icon above its title so header text remains centered with no horizontal page overflow.
             - RSS area feed follow-up committed as `4ca99bde8` (`Center RSS area feed header`): centered the standalone XSL RSS browser hero, title, lead, eyebrow, and buttons for `/rss/area/1025717` while keeping the feed XML output unchanged.
+        - Background color consistency:
+            - Follow-up background pass committed as `48d64aae6` (`Unify public page background color`): added a shared InfraSignal page-surface token and applied it to Reports, Contact/Info, For Local Government, Local Alerts, alert subscription, alert suggestions, and the generated CSS output so these public pages match the RSS browser page surface.
+            - Preserved white cards, footer color, and the shared blue hero gradient while removing nearby gray mismatches (`#f3f4f6` and `#f9fafb`) from page wrappers.
         - Location labels:
             - Follow-up label clarity committed as `9305a6056` (`Show state abbreviations in location labels`): compacted US location labels to city plus state abbreviation, such as `Buffalo Grove, IL`, across Local Alerts subscription pages, ambiguous-location suggestion cards, and RSS area feed titles.
             - Kept ZIP-only alert searches unchanged while converting full geocoder labels like `Buffalo Grove, Lake County, Illinois` and MapIt/body labels like `Manchester, NH` into a consistent short display form.
@@ -42,12 +45,14 @@
             - Browser computed-style checks confirmed the public hero/header pass returns centered text, matching gradient, matching padding, matching title/lead sizes, and zero horizontal overflow on Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
             - `/rss/xsl` still parsed as XML and `/rss/area/1025717` still returned an RSS feed with the stylesheet link; browser checks confirmed the RSS area hero is centered with a 30px/700 title, 14px lead, centered actions, and zero horizontal overflow.
             - Live DEV checks confirmed the Buffalo Grove Local Alerts subscription page now renders `Buffalo Grove, IL`, the ambiguous Buffalo Grove suggestions include `Buffalo Grove, IL`, `/rss/area/1025717` now titles the feed with `Manchester, NH`, and ZIP-only labels such as `60089` remain unchanged.
+            - Browser computed-style checks confirmed Reports, About, Contact, For Local Government, Local Alerts entry, Local Alerts subscription, Local Alerts suggestions, and `/rss/area/1025717` all use `rgb(248, 249, 251)` for the public page surface and retain matching blue hero gradients with zero horizontal overflow.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
             - Public page header alignment committed as `03ead4fe4` (`Center public page headers`) before documentation/tracker updates.
                 - RSS area feed header alignment committed as `4ca99bde8` (`Center RSS area feed header`) before documentation/tracker updates.
                 - Location-label state abbreviation follow-up committed as `9305a6056` (`Show state abbreviations in location labels`) before documentation/tracker updates.
+                - Public background color follow-up committed as `48d64aae6` (`Unify public page background color`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
