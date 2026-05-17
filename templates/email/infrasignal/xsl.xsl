@@ -432,11 +432,11 @@
                 <img src="/cobrands/infrasignal/images/logo_web.png" alt="[% site_name %]" />
               </a>
               <nav class="rss-nav" aria-label="Primary">
-                <a href="[% c.cobrand.base_url %]/reports">All reports</a>
                 <a href="[% c.cobrand.base_url %]/how-it-works">How It Works</a>
-                <a href="[% c.cobrand.base_url %]/about">About</a>
-                <a href="[% c.cobrand.base_url %]/faq">Help</a>
-                <a href="[% c.cobrand.base_url %]/contact">Contact</a>
+                <a href="[% c.cobrand.base_url %]/reports">View Reports</a>
+                <a href="[% c.cobrand.base_url %]/about">About Us</a>
+                <a href="[% c.cobrand.base_url %]/contact">Contact Us</a>
+                <a href="[% c.cobrand.base_url %]/about/for-local-government">For Government</a>
               </nav>
               <div class="rss-header-actions">
                 <button class="rss-lang-btn" type="button" aria-label="Language">
@@ -444,7 +444,7 @@
                   <span>EN</span>
                   <span class="rss-lang-btn__caret">&#9662;</span>
                 </button>
-                <a class="rss-header-signin" href="[% c.cobrand.base_url %]/auth">Sign in</a>
+                <a class="rss-header-signin" href="[% c.cobrand.base_url %]/">Start Reporting</a>
               </div>
             </div>
           </header>
@@ -546,27 +546,25 @@
                 <div>
                   <h4 class="rss-footer__heading">Platform</h4>
                   <ul class="rss-footer__list">
-                    <li><a href="[% c.cobrand.base_url %]/">Report an Issue</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/reports">All Reports</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/alert">Get Alerts</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/my">My Reports</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/how-it-works">How It Works</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/reports">View Reports</a></li>
                   </ul>
                 </div>
                 <div>
                   <h4 class="rss-footer__heading">Company</h4>
                   <ul class="rss-footer__list">
-                    <li><a href="[% c.cobrand.base_url %]/about">About</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/how-it-works">How It Works</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/about/for-local-government">For Local Government</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/about">About Us</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/contact">Contact Us</a></li>
                     <li><a href="[% c.cobrand.base_url %]/faq">FAQ</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/contact">Contact</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/">Start Reporting</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/about/for-local-government">For Government</a></li>
                   </ul>
                 </div>
                 <div>
                   <h4 class="rss-footer__heading">Legal</h4>
                   <ul class="rss-footer__list">
                     <li><a href="[% c.cobrand.base_url %]/about/privacy">Privacy Policy</a></li>
-                    <li><a href="[% c.cobrand.base_url %]/about/terms">Terms of Use</a></li>
+                    <li><a href="[% c.cobrand.base_url %]/about/terms">Terms &amp; Conditions</a></li>
                   </ul>
                   <div class="rss-footer__langs">
                     <p>Available in:</p>
@@ -576,7 +574,7 @@
               </div>
               <div class="rss-footer__bottom">
                 <p class="rss-footer__copy">&#169; 2026 InfraSignal. All rights reserved.</p>
-                <a href="[% c.cobrand.base_url %]/about/for-local-government" class="rss-footer__gov-link">For Local Government &#8594;</a>
+                <a href="[% c.cobrand.base_url %]/" class="rss-footer__gov-link">Start Reporting &#8594;</a>
               </div>
             </div>
           </footer>
