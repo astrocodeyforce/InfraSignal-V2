@@ -8,16 +8,6 @@
 
   DEFAULT search_placeholder = "Enter address or ZIP code";
 
-  # Sidebar links
-  sidebar_links = [
-    { url => "/about",          label => "About" },
-    { url => "/faq",            label => "FAQ" },
-    { url => "/about/privacy",  label => "Privacy" },
-    { url => "/about/terms",    label => "Terms" },
-    { url => "/contact",        label => "Contact Us" },
-    { url => "/alert",          label => "Local Alerts" },
-  ];
-
 ~%]
 
 [% INCLUDE 'header.html', title = loc('Local RSS Feeds & Email Alerts – InfraSignal') %]
@@ -43,12 +33,11 @@
       <!-- Sidebar -->
       <aside class="alerts-sidebar">
         <nav class="alerts-sidebar__nav">
-          [% FOREACH link IN sidebar_links %]
-            <a href="[% link.url | html %]"
-               class="alerts-sidebar__link[% IF link.url == '/alert' %] alerts-sidebar__link--active[% END %]">
-              [% link.label | html %]
-            </a>
-          [% END %]
+          [% INCLUDE 'about/_public-sidebar-links.html'
+              public_sidebar_active = 'alerts'
+              public_sidebar_link_class = 'alerts-sidebar__link'
+              public_sidebar_active_class = 'is-active'
+          %]
         </nav>
       </aside>
 

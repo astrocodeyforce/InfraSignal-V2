@@ -65,14 +65,12 @@
       <aside class="contact-sidebar">
         <nav class="contact-sidebar__nav">
           <ul class="contact-sidebar__list">
-            <li><a href="/about" class="contact-sidebar__link">[% loc('About') %]</a></li>
-            <li><a href="/how-it-works" class="contact-sidebar__link">[% loc('How It Works') %]</a></li>
-            <li><a href="/about/for-local-government" class="contact-sidebar__link contact-sidebar__link--active">[% loc('For Local Government') %]</a></li>
-            <li><a href="/faq" class="contact-sidebar__link">[% loc('FAQ') %]</a></li>
-            <li><a href="[% c.cobrand.privacy_policy_url %]" class="contact-sidebar__link">[% loc('Privacy') %]</a></li>
-            <li><a href="/about/terms" class="contact-sidebar__link">[% loc('Terms') %]</a></li>
-            <li><a href="/contact" class="contact-sidebar__link">[% loc('Contact Us') %]</a></li>
-            <li><a href="/alert" class="contact-sidebar__link">[% loc('Local Alerts') %]</a></li>
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'government'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
           </ul>
         </nav>
       </aside>

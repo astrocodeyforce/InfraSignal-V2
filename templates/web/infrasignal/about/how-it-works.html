@@ -1,7 +1,6 @@
 [% INCLUDE 'header.html',
     title = loc('How InfraSignal Works'),
-    bodyclass = 'infopage how-it-works-page',
-    sidebar = 'about/_sidebar.html'
+  bodyclass = 'infopage how-it-works-page'
 %]
 
 [% BLOCK hiw_icon -%]
@@ -189,6 +188,19 @@
   <section class="contact-body hiw-body">
     <div class="infra-container">
       <div class="contact-layout">
+        <aside class="contact-sidebar">
+          <nav class="contact-sidebar__nav">
+            <ul class="contact-sidebar__list">
+              [% INCLUDE 'about/_public-sidebar-links.html'
+                  public_sidebar_active = 'how'
+                  public_sidebar_link_class = 'contact-sidebar__link'
+                  public_sidebar_active_class = 'contact-sidebar__link--active'
+                  public_sidebar_list_items = 1
+              %]
+            </ul>
+          </nav>
+        </aside>
+
         <div class="contact-main hiw-main">
           <section class="hiw-section hiw-section--first">
             <header class="hiw-section__head">

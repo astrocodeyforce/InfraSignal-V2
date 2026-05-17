@@ -4082,8 +4082,8 @@ body.infopage.govpage .content footer {
 
   .gov-body {
     position: relative;
-    padding: 5rem 0 1rem;
-    background: #fff;
+    padding: 2.5rem 0 4rem;
+    background: $surface-page;
   }
 
   .gov-body__grid {
@@ -4111,7 +4111,7 @@ body.infopage.govpage .content footer {
     gap: 2rem;
     min-width: 0;
     width: 100%;
-    max-width: 100%;
+    max-width: 42rem;
   }
 
   .gov-section-card {
@@ -10035,7 +10035,7 @@ body.mappage #filter-announcement {
 }
 
 .hiw-main {
-  max-width: none;
+  max-width: 42rem;
   display: grid;
   gap: 1.25rem;
 }

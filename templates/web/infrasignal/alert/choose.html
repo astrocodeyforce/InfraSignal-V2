@@ -3,14 +3,6 @@
   query = c.get_param('pc') || pc || '';
   title = loc('Choose a location for Local Alerts');
 
-  sidebar_links = [
-    { url => '/about',         label => loc('About') },
-    { url => '/faq',           label => loc('FAQ') },
-    { url => '/about/privacy', label => loc('Privacy') },
-    { url => '/about/terms',   label => loc('Terms') },
-    { url => '/contact',       label => loc('Contact Us') },
-    { url => '/alert',         label => loc('Local Alerts'), active => 1 },
-  ];
 %]
 
 [% INCLUDE 'header.html', title = title %]
@@ -49,12 +41,11 @@
       <aside class="alerts-sidebar" aria-label="[% loc('Help & Info') %]">
         <nav class="alerts-sidebar__nav">
           <p class="alerts-sidebar__title">[% loc('Help & Info') %]</p>
-          [% FOREACH link IN sidebar_links %]
-            <a href="[% link.url | html %]"
-               class="alerts-sidebar__link[% IF link.active %] is-active[% END %]">
-              [% link.label | html %]
-            </a>
-          [% END %]
+          [% INCLUDE 'about/_public-sidebar-links.html'
+              public_sidebar_active = 'alerts'
+              public_sidebar_link_class = 'alerts-sidebar__link'
+              public_sidebar_active_class = 'is-active'
+          %]
         </nav>
       </aside>
 
