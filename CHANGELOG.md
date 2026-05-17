@@ -32,6 +32,7 @@
             - RSS area feed follow-up committed as `4ca99bde8` (`Center RSS area feed header`): centered the standalone XSL RSS browser hero, title, lead, eyebrow, and buttons for `/rss/area/1025717` while keeping the feed XML output unchanged.
         - Header navigation:
             - Follow-up navigation cleanup committed as `38eed5835` (`Remove Home from InfraSignal navigation`): removed the visible `Home` item from the desktop header, mobile menu, and RSS browser header while keeping the InfraSignal logo linked to the homepage.
+            - Follow-up navigation/footer structure committed as `5b7535c8b` (`Update primary navigation and footer links`): changed the visible public header and RSS browser header to the requested `How It Works`, `View Reports`, `About Us`, `Contact Us`, language selector, `Start Reporting`, and `For Government` structure, and updated the standard/RSS footers to the requested footer link set and labels.
         - Background color consistency:
             - Follow-up background pass committed as `48d64aae6` (`Unify public page background color`): added a shared InfraSignal page-surface token and applied it to Reports, Contact/Info, For Local Government, Local Alerts, alert subscription, alert suggestions, and the generated CSS output so these public pages match the RSS browser page surface.
             - Preserved white cards, footer color, and the shared blue hero gradient while removing nearby gray mismatches (`#f3f4f6` and `#f9fafb`) from page wrappers.
@@ -61,6 +62,7 @@
             - Live DEV checks confirmed `/rss/xsl` and `/rss/area/974962` still parse as XML and the browser-rendered RSS sidebar `What is RSS?` link now carries `target="_blank"` and `rel="noopener noreferrer"`.
             - Live DEV `/alert/subscribe` POST checks confirmed missing-CAPTCHA Local Alerts submissions now render the new InfraSignal error page with HTTP 400, the old `confirmation-header` markup removed, a 226px hero, 30px/700 title, 14px lead, shared `rgb(248, 249, 251)` page background, and zero horizontal overflow.
             - Browser checks confirmed `/about`, the Buffalo Grove `/alert/list` page, and `/rss/area/974962` no longer show `Home` in the header navigation, the logo still links home, the first visible nav item is `All reports`, and each tested page has zero horizontal overflow.
+            - Live DEV checks confirmed `/about`, the Buffalo Grove `/alert/list` page, `/rss/xsl`, and `/rss/area/974962` render the updated primary navigation and footer labels; browser checks confirmed the mobile header order and exact footer sequence `How It Works`, `View Reports`, `About Us`, `Contact Us`, `FAQ`, `Start Reporting`, `For Government`, `Privacy Policy`, and `Terms & Conditions` with zero horizontal overflow.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
@@ -74,6 +76,7 @@
                 - RSS help-link new-tab follow-up committed as `26c77c1bb` (`Open RSS help link in new tab`) before documentation/tracker updates.
                 - Error page redesign follow-up committed as `ec953162f` (`Redesign InfraSignal error page`) before documentation/tracker updates.
                 - Header Home-link removal follow-up committed as `38eed5835` (`Remove Home from InfraSignal navigation`) before documentation/tracker updates.
+                - Primary navigation/footer label follow-up committed as `5b7535c8b` (`Update primary navigation and footer links`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
