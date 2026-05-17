@@ -9461,49 +9461,50 @@ body.mappage #filter-announcement {
 .hiw-hero {
   position: relative;
   overflow: hidden;
-  padding: calc(64px + 3rem) 0 3.5rem;
+  padding: calc(64px + 2.5rem) 0 3.5rem;
   margin-top: -64px;
   text-align: center;
   color: #fff;
   background: linear-gradient(135deg, $primary-900, $primary-700);
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  width: 100%;
+  left: auto;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
+  line-height: 1.6;
 
   &__bg {
-    position: absolute;
-    inset: 0;
-    opacity: 0.12;
-    background-image: radial-gradient(circle at center, #fff 1px, transparent 1px);
-    background-size: 44px 44px;
-    pointer-events: none;
+    display: none;
   }
 
-  &__inner { position: relative; }
+  &__inner {
+    position: relative;
+    max-width: 42rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
   &__title {
-    margin: 1rem 0 0.75rem;
+    margin: 0;
     color: #fff;
-    font-size: clamp(2rem, 5vw, 3rem);
-    font-weight: 800;
-    line-height: 1.08;
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.2;
     letter-spacing: 0;
   }
 
   &__lead {
-    max-width: 40rem;
-    margin: 0 auto;
-    color: rgba(255, 255, 255, 0.82);
-    font-size: clamp(1rem, 2vw, 1.15rem);
+    max-width: 42rem;
+    margin: 0.5rem auto 0;
+    color: $primary-300;
+    font-size: 0.875rem;
     line-height: 1.6;
   }
 
   &__actions { margin-top: 1.75rem; }
 }
 
-.hiw-body { padding-top: 2rem; }
+.hiw-body { padding-top: 2.5rem; }
 
 .how-it-works-page .contact-sidebar__list {
   list-style: none !important;
