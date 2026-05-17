@@ -8,7 +8,6 @@
 
     [%# ── Desktop Navigation ── %]
     <nav class="header-nav" aria-label="[% loc('Main Navigation') %]">
-      <a href="/" [% IF c.req.uri.path == '/' %]class="is-active"[% END %]>[% loc('Home') %]</a>
       <a href="/reports" [% IF c.req.uri.path.match('^/reports') %]class="is-active"[% END %]>[% loc('All reports') %]</a>
       <a href="/how-it-works" [% IF c.req.uri.path == '/how-it-works' %]class="is-active"[% END %]>[% loc('How It Works') %]</a>
       <a href="/about" [% IF c.req.uri.path.match('^/about') %]class="is-active"[% END %]>[% loc('About') %]</a>
@@ -58,7 +57,6 @@
   [%# ── Mobile Slide-Down Menu ── %]
   <nav class="header-mobile-menu" aria-label="Mobile Navigation">
     <div class="infra-container">
-      <a href="/" [% IF c.req.uri.path == '/' %]class="is-active"[% END %]>[% loc('Home') %]</a>
       <a href="/reports" [% IF c.req.uri.path.match('^/reports') %]class="is-active"[% END %]>[% loc('All reports') %]</a>
       <a href="/how-it-works" [% IF c.req.uri.path == '/how-it-works' %]class="is-active"[% END %]>[% loc('How It Works') %]</a>
       <a href="/" class="mobile-menu__report-btn">[% loc('Report a problem') %]</a>

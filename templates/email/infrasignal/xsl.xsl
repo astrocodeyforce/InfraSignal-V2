@@ -432,7 +432,6 @@
                 <img src="/cobrands/infrasignal/images/logo_web.png" alt="[% site_name %]" />
               </a>
               <nav class="rss-nav" aria-label="Primary">
-                <a href="[% c.cobrand.base_url %]/">Home</a>
                 <a href="[% c.cobrand.base_url %]/reports">All reports</a>
                 <a href="[% c.cobrand.base_url %]/how-it-works">How It Works</a>
                 <a href="[% c.cobrand.base_url %]/about">About</a>
