@@ -23,6 +23,7 @@
             - Follow-up header alignment committed as `03ead4fe4` (`Center public page headers`): centered the hero/header text and matched header sizing across Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
             - Normalized public hero headers to the same blue gradient, 30px/700 title, 14px lead, 42rem text column, `calc(64px + 2.5rem)` top padding, and 3.5rem bottom padding.
             - Removed the remaining Contact/Info page `100vw` hero/footer breakout and stacked the Local Alerts entry icon above its title so header text remains centered with no horizontal page overflow.
+            - RSS area feed follow-up committed as `4ca99bde8` (`Center RSS area feed header`): centered the standalone XSL RSS browser hero, title, lead, eyebrow, and buttons for `/rss/area/1025717` while keeping the feed XML output unchanged.
         - Styling:
             - Added scoped `.page--gov` and RSS XSL styles and rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss`.
         - Verification:
@@ -36,10 +37,12 @@
             - Live DEV checks confirmed the Buffalo Grove `/alert/list` URL returned HTTP 200, rendered the expected location, and had no template error.
             - Browser computed-style checks confirmed the Local Alerts subscription hero, lead, main column, cards, RSS panel, and footer match the shared page scale, with `scrollWidth` equal to `clientWidth` after the overflow fix.
             - Browser computed-style checks confirmed the public hero/header pass returns centered text, matching gradient, matching padding, matching title/lead sizes, and zero horizontal overflow on Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
+            - `/rss/xsl` still parsed as XML and `/rss/area/1025717` still returned an RSS feed with the stylesheet link; browser checks confirmed the RSS area hero is centered with a 30px/700 title, 14px lead, centered actions, and zero horizontal overflow.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
             - Public page header alignment committed as `03ead4fe4` (`Center public page headers`) before documentation/tracker updates.
+                - RSS area feed header alignment committed as `4ca99bde8` (`Center RSS area feed header`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
