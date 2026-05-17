@@ -2,6 +2,7 @@
 <xsl:stylesheet version="1.1" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:georss="http://www.georss.org/georss">
   <xsl:output method="html" encoding="UTF-8" />
   <xsl:variable name="title" select="/rss/channel/title" />
+  <xsl:variable name="area_title" select="substring-before(substring-after($title, 'New problems within '), &quot;'s boundary&quot;)" />
   <xsl:variable name="uri" select="/rss/channel/atom:link/@href" />
   <xsl:variable name="site_link" select="/rss/channel/link" />
   <xsl:variable name="item_count" select="count(/rss/channel/item)" />
@@ -454,8 +455,13 @@
               <div class="rss-container rss-hero__inner">
                 <div>
                   <span class="rss-hero__eyebrow">RSS feed</span>
-                  <h1 class="rss-hero__title"><xsl:value-of select="$title" /></h1>
-                  <p class="rss-hero__lead">This live feed lets you follow new infrastructure reports without giving us your email address. Copy the feed URL into Feedly, Inoreader, Thunderbird, NetNewsWire, or any RSS reader.</p>
+                  <h1 class="rss-hero__title">
+                    <xsl:choose>
+                      <xsl:when test="string-length($area_title) &gt; 0">New problems in <xsl:value-of select="$area_title" /></xsl:when>
+                      <xsl:otherwise><xsl:value-of select="$title" /></xsl:otherwise>
+                    </xsl:choose>
+                  </h1>
+                  <p class="rss-hero__lead">Follow new reports in this RSS feed.</p>
                   <div class="rss-hero__actions">
                     <a class="rss-button rss-button--primary" href="{$uri}">Open XML feed</a>
                     <a class="rss-button rss-button--secondary" href="[% c.cobrand.base_url %]/alert">Create another alert</a>
