@@ -124,7 +124,7 @@
             background: linear-gradient(135deg, #0f2444, #1e40af);
             color: #fff;
             line-height: 1.6;
-            text-align: left;
+            text-align: center;
           }
           .rss-hero:before {
             content: none;
@@ -154,10 +154,11 @@
             border: 1px solid rgba(255,255,255,0.22);
             background: rgba(255,255,255,0.12);
             color: #fff;
+            margin: 0 auto;
           }
           .rss-hero__title {
             max-width: 42rem;
-            margin: 0.75rem 0 0;
+            margin: 0.75rem auto 0;
             color: #fff;
             font-size: 1.875rem;
             line-height: 1.2;
@@ -166,7 +167,7 @@
           }
           .rss-hero__lead {
             max-width: 42rem;
-            margin: 0.5rem 0 0;
+            margin: 0.5rem auto 0;
             color: #93c5fd;
             font-size: 0.875rem;
             line-height: 1.6;
@@ -174,7 +175,7 @@
           .rss-hero__actions {
             display: flex;
             flex-wrap: wrap;
-            justify-content: flex-start;
+            justify-content: center;
             gap: 0.75rem;
             margin-top: 1.25rem;
           }
@@ -394,7 +395,7 @@
           @media (min-width: 768px) {
             .rss-nav { display: flex; }
             .rss-header-signin { display: inline-block; }
-            .rss-hero__inner { padding: 3rem 0; }
+            .rss-hero__inner { padding: 2.5rem 0 3.5rem; }
             .rss-body { padding-top: 2.5rem; }
             .rss-grid { flex-direction: row; }
             .rss-side {
