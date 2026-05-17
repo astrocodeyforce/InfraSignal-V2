@@ -14,6 +14,7 @@
             - Replaced the old table-style RSS XSL browser view with an InfraSignal-styled page for `/rss/l/...`, including branded header, compact hero, copyable feed URL, reader shortcuts, latest report cards, sticky help sidebar, and regular footer-style links.
             - Matched the RSS browser UI to the shared info-page scale: 72rem outer container, 14rem desktop sidebar, 42rem main column, compact panels, and reduced oversized typography.
             - Fixed the RSS sidebar scroll collision by making the whole sidebar stack sticky instead of only the link list, so the email CTA no longer slides under the nav.
+            - Follow-up style parity committed as `0e916ff14` (`Align RSS page with site styling`): matched the RSS XSL header, navigation links, language/sign-in actions, hero gradient, hero typography, footer typography, language row, and footer CTA to the normal InfraSignal pages.
         - Styling:
             - Added scoped `.page--gov` and RSS XSL styles and rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss`.
         - Verification:
@@ -23,6 +24,7 @@
             - Live DEV smoke checks returned HTTP 200 for `/`, `/about`, `/how-it-works`, `/about/for-local-government`, `/faq`, `/contact`, `/about/privacy`, `/about/terms`, `/alert`, `/alert/list?pc=buffalo+gr`, and `/reports`.
             - `/rss/xsl` parsed as XML and served the new RSS layout markers; `/rss/l/42.154421,-87.958962` kept the `/rss/xsl` stylesheet link and returned 20 feed items.
             - Browser scroll checks confirmed the RSS sidebar email card stays below the nav at top, mid-scroll, and deep-scroll with no horizontal overflow.
+            - Browser computed-style checks confirmed the RSS header/nav/hero/footer now match the normal Reports page values for colors, font sizes, weights, line heights, padding, border radii, and footer CTA sizing.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
 
