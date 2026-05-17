@@ -22,6 +22,7 @@
           <ul class="contact-sidebar__list">
             <li><a href="/about" class="contact-sidebar__link">[% loc('About') %]</a></li>
             <li><a href="/how-it-works" class="contact-sidebar__link">[% loc('How It Works') %]</a></li>
+            <li><a href="/about/for-local-government" class="contact-sidebar__link">[% loc('For Local Government') %]</a></li>
             <li><a href="/faq" class="contact-sidebar__link contact-sidebar__link--active">[% loc('FAQ') %]</a></li>
             <li><a href="[% c.cobrand.privacy_policy_url %]" class="contact-sidebar__link">[% loc('Privacy') %]</a></li>
             <li><a href="/about/terms" class="contact-sidebar__link">[% loc('Terms') %]</a></li>
@@ -55,14 +56,8 @@
               <details class="faq-item">
                 <summary class="faq-item__question">[% loc('How do I report a problem?') %]</summary>
                 <div class="faq-item__answer">
-                  <ol>
-                    <li>[% loc('Enter a street address, city name, or ZIP code on the <a href="/">home page</a>') %]</li>
-                    <li>[% loc('Click on the map at the location of the problem') %]</li>
-                    <li>[% loc('Select the category that best describes the issue') %]</li>
-                    <li>[% loc('Provide a description and optionally upload up to 3 photos') %]</li>
-                    <li>[% loc('Enter your name and email address') %]</li>
-                    <li>[% loc('Submit &mdash; InfraSignal routes your report to the responsible local authority') %]</li>
-                  </ol>
+                  <p>[% loc('Start from the <a href="/">home page</a>, enter the location, place the pin on the map, choose the best category, add details and photos, then submit the report for routing.') %]</p>
+                  <p>[% loc('For the full report journey, see <a href="/how-it-works">How It Works</a>.') %]</p>
                 </div>
               </details>
 

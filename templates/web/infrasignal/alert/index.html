@@ -18,15 +18,6 @@
     { url => "/alert",          label => "Local Alerts" },
   ];
 
-  # Fallback recent photos (used when no DB photos available)
-  recent_photos = [
-    { id => 1, title => "Pothole on Main Street",  category => "Road Damage",     color_class => "photo-card--amber" },
-    { id => 2, title => "Broken Street Light",      category => "Street Lighting", color_class => "photo-card--gray" },
-    { id => 3, title => "Blocked Drain",            category => "Drainage",        color_class => "photo-card--emerald" },
-    { id => 4, title => "Damaged Sidewalk",          category => "Sidewalks",       color_class => "photo-card--stone" },
-    { id => 5, title => "Graffiti on Wall",          category => "Vandalism",       color_class => "photo-card--slate" },
-    { id => 6, title => "Fallen Tree Branch",        category => "Trees",           color_class => "photo-card--green" },
-  ];
 ~%]
 
 [% INCLUDE 'header.html', title = loc('Local RSS Feeds & Email Alerts – InfraSignal') %]
@@ -133,39 +124,18 @@
           </div>
         </div>
 
-        <!-- Recent photos -->
-        <div class="alerts-photos">
-          <h3 class="alerts-photos__heading">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
-            [% loc('Some Photos of Recent Reports') %]
-          </h3>
-          <p class="alerts-photos__subtitle">
-            [% loc('Browse photos from recently submitted infrastructure reports in your area.') %]
-          </p>
-          <div class="alerts-photos__grid">
-            [% IF photos.size %]
-              [% FOREACH p IN photos %]
-                <a href="/report/[% p.id %]" class="photo-card">
-                  <div class="photo-card__bg" style="background-image: url('[% p.photos.first.url_tn | html %]')"></div>
-                  <div class="photo-card__overlay"></div>
-                  <div class="photo-card__content">
-                    <span class="photo-card__badge">[% p.category | html %]</span>
-                    <p class="photo-card__title">[% p.title | html %]</p>
-                  </div>
-                </a>
-              [% END %]
-            [% ELSE %]
-              [% FOREACH photo IN recent_photos %]
-                <a href="/report/[% photo.id %]" class="photo-card [% photo.color_class | html %]">
-                  <div class="photo-card__bg"></div>
-                  <div class="photo-card__overlay"></div>
-                  <div class="photo-card__content">
-                    <span class="photo-card__badge">[% photo.category | html %]</span>
-                    <p class="photo-card__title">[% photo.title | html %]</p>
-                  </div>
-                </a>
-              [% END %]
-            [% END %]
+        <div class="alerts-info-grid">
+          <div class="alerts-info-card">
+            <div class="alerts-info-card__icon alerts-info-card__icon--bell">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            </div>
+            <div>
+              <h4 class="alerts-info-card__title">[% loc('Want to browse first?') %]</h4>
+              <p class="alerts-info-card__text">
+                [% loc('Use All Reports to browse public report activity. Return here when you are ready to subscribe to alerts for a specific place.') %]
+              </p>
+              <p class="alerts-info-card__text"><a href="/reports">[% loc('View all reports') %]</a></p>
+            </div>
           </div>
         </div>
 

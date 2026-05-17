@@ -1,0 +1,343 @@
+[% INCLUDE 'header.html',
+    title = loc('For Local Government'),
+    bodyclass = 'infopage govpage'
+%]
+
+[% BLOCK gov_icon -%]
+  [% IF name == 'building' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4"/><path d="M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+  [% ELSIF name == 'cone' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.3 6.2 5 18h14L14.7 6.2a2 2 0 0 0-1.9-1.2h-1.6a2 2 0 0 0-1.9 1.2Z"/><path d="M7 14h10"/><path d="M3 18h18"/></svg>
+  [% ELSIF name == 'phone' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92Z"/></svg>
+  [% ELSIF name == 'user-cog' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="7" r="4"/><path d="M3 21v-2a4 4 0 0 1 4-4h4"/><circle cx="18" cy="15" r="3"/><path d="m21.7 16.4-.9-.3M15.2 13.9l-.9-.3M16.6 18.7l.3-.9M13.9 13l-.3-.9"/></svg>
+  [% ELSIF name == 'zap' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+  [% ELSIF name == 'flag' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 22V4a2 2 0 0 1 2-2h11l-3 6 3 6H6"/></svg>
+  [% ELSIF name == 'map' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>
+  [% ELSIF name == 'globe' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+  [% ELSIF name == 'inbox' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 16 12 14 15 10 15 8 12 2 12"/><path d="M5.45 5.11 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11Z"/></svg>
+  [% ELSIF name == 'network' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="16" y="16" width="6" height="6" rx="1"/><rect x="2" y="16" width="6" height="6" rx="1"/><rect x="9" y="2" width="6" height="6" rx="1"/><path d="M5 16v-3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3M12 12V8"/></svg>
+  [% ELSIF name == 'mailbox' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9.5C2 7 4 5 6.5 5H18c2.2 0 4 1.8 4 4Z"/><polyline points="15 9 18 9 18 11"/><path d="M6.5 5C9 5 11 7 11 9.5V17a2 2 0 0 1-2 2"/><path d="M6 10h.01"/></svg>
+  [% ELSIF name == 'code' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+  [% ELSIF name == 'shield' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+  [% ELSIF name == 'check' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+  [% ELSIF name == 'arrow-right' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+  [% ELSIF name == 'chevron-left' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
+  [% ELSIF name == 'chevron-right' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+  [% ELSIF name == 'pin' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+  [% ELSIF name == 'camera' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+  [% ELSIF name == 'list-checks' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 17 2 2 4-4M3 7l2 2 4-4M13 6h8M13 12h8M13 18h8"/></svg>
+  [% ELSIF name == 'activity' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+  [% ELSIF name == 'alert' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+  [% END %]
+[%- END %]
+
+<main class="page--gov" id="for-local-government">
+  <section class="gov-hero">
+    <span class="gov-hero__dots" aria-hidden="true"></span>
+    <div class="infra-container gov-hero__inner">
+      <h1 class="gov-hero__title">[% loc('For Local Government') %]</h1>
+      <p class="gov-hero__sub">[% loc('A structured public reporting channel for infrastructure teams.') %]</p>
+    </div>
+  </section>
+
+  <section class="gov-body">
+    <div class="infra-container gov-body__grid">
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            <li><a href="/about" class="contact-sidebar__link">[% loc('About') %]</a></li>
+            <li><a href="/how-it-works" class="contact-sidebar__link">[% loc('How It Works') %]</a></li>
+            <li><a href="/about/for-local-government" class="contact-sidebar__link contact-sidebar__link--active">[% loc('For Local Government') %]</a></li>
+            <li><a href="/faq" class="contact-sidebar__link">[% loc('FAQ') %]</a></li>
+            <li><a href="[% c.cobrand.privacy_policy_url %]" class="contact-sidebar__link">[% loc('Privacy') %]</a></li>
+            <li><a href="/about/terms" class="contact-sidebar__link">[% loc('Terms') %]</a></li>
+            <li><a href="/contact" class="contact-sidebar__link">[% loc('Contact Us') %]</a></li>
+            <li><a href="/alert" class="contact-sidebar__link">[% loc('Local Alerts') %]</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <div class="gov-main">
+        <section class="gov-section-card">
+          <span class="gov-eyebrow">[% loc('Intake') %]</span>
+          <h2 class="gov-section-card__title">[% loc('Structured reports, cleaner intake') %]</h2>
+          <div class="gov-section-card__body">
+            <p>[% loc('InfraSignal helps public teams receive resident reports with location, category, details, photos, and follow-up context in a consistent format.') %]</p>
+            <p>[% loc('The public reporting experience stays simple for residents, while agencies receive cleaner information for triage, routing, and response.') %]</p>
+          </div>
+        </section>
+
+        <section class="gov-section-card">
+          <span class="gov-eyebrow">[% loc('Model') %]</span>
+          <h2 class="gov-section-card__title">[% loc('Proven civic reporting model') %]</h2>
+          <div class="gov-section-card__body">
+            <p>[% loc('InfraSignal follows a public reporting pattern already used by civic reporting services internationally: residents submit location-based reports, agencies receive structured intake, and communities can follow public updates over time.') %]</p>
+            <p>[% loc('These examples are included as reference points for the wider civic reporting model, not as InfraSignal customers or endorsements.') %]</p>
+
+            <div class="gov-ref-grid">
+              <a href="https://www.zueriwieneu.ch/" class="gov-ref-card" target="_blank" rel="noopener noreferrer">
+                <span class="gov-ref-card__country"><span aria-hidden="true">&#127464;&#127469;</span> [% loc('Switzerland') %]</span>
+                <h3 class="gov-ref-card__name">Z&uuml;ri wie neu</h3>
+                <p class="gov-ref-card__desc">[% loc('City infrastructure reporting service for Z&uuml;rich.') %]</p>
+                <div class="gov-ref-card__foot"><span class="gov-ref-card__stat">[% loc('City-wide &middot; since 2013') %]</span><span class="gov-ref-card__cta">[% loc('Visit') %] &#8599;</span></div>
+              </a>
+              <a href="https://www.fixamingata.se/" class="gov-ref-card" target="_blank" rel="noopener noreferrer">
+                <span class="gov-ref-card__country"><span aria-hidden="true">&#127480;&#127466;</span> [% loc('Sweden') %]</span>
+                <h3 class="gov-ref-card__name">FixaMinGata</h3>
+                <p class="gov-ref-card__desc">[% loc('National local issue reporting service for Sweden.') %]</p>
+                <div class="gov-ref-card__foot"><span class="gov-ref-card__stat">[% loc('National &middot; 290 cities') %]</span><span class="gov-ref-card__cta">[% loc('Visit') %] &#8599;</span></div>
+              </a>
+              <a href="https://www.societyworks.org/case-studies/" class="gov-ref-card" target="_blank" rel="noopener noreferrer">
+                <span class="gov-ref-card__country"><span aria-hidden="true">&#127468;&#127463;</span> [% loc('United Kingdom') %]</span>
+                <h3 class="gov-ref-card__name">[% loc('SocietyWorks') %]</h3>
+                <p class="gov-ref-card__desc">[% loc('Public-sector civic reporting deployments and integrations.') %]</p>
+                <div class="gov-ref-card__foot"><span class="gov-ref-card__stat">[% loc('30+ UK councils live') %]</span><span class="gov-ref-card__cta">[% loc('Visit') %] &#8599;</span></div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="gov-section-card gov-section-card--tint">
+          <span class="gov-eyebrow">[% loc('Audience') %]</span>
+          <h2 class="gov-section-card__title">[% loc('Who this is for') %]</h2>
+          <div class="gov-section-card__body">
+            <p>[% loc('This page is for public teams that receive, review, route, or respond to resident infrastructure reports.') %]</p>
+            <div class="gov-persona-grid">
+              <div class="gov-persona"><span class="gov-persona__icon">[% INCLUDE gov_icon name='building' %]</span><span>[% loc('City & County Public Works') %]</span></div>
+              <div class="gov-persona"><span class="gov-persona__icon">[% INCLUDE gov_icon name='cone' %]</span><span>[% loc('Transportation, Streets, Parks & Facilities') %]</span></div>
+              <div class="gov-persona"><span class="gov-persona__icon">[% INCLUDE gov_icon name='phone' %]</span><span>[% loc('Service Coordinators & Intake Teams') %]</span></div>
+              <div class="gov-persona"><span class="gov-persona__icon">[% INCLUDE gov_icon name='user-cog' %]</span><span>[% loc('Local Admins for Routing & Updates') %]</span></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="gov-feature-grid">
+          <div class="gov-feature-card"><span class="gov-feature-card__icon">[% INCLUDE gov_icon name='zap' %]</span><h3>[% loc('AI-assisted intake') %]</h3><p>[% loc('Category suggestions and photo moderation support cleaner report review.') %]</p></div>
+          <div class="gov-feature-card"><span class="gov-feature-card__icon">[% INCLUDE gov_icon name='flag' %]</span><h3>[% loc('Priority context') %]</h3><p>[% loc('Emergency, high, normal, and low priority levels help teams triage.') %]</p></div>
+          <div class="gov-feature-card"><span class="gov-feature-card__icon">[% INCLUDE gov_icon name='map' %]</span><h3>[% loc('Boundary routing') %]</h3><p>[% loc('Geographic data helps route reports to the right public authority.') %]</p></div>
+          <div class="gov-feature-card"><span class="gov-feature-card__icon">[% INCLUDE gov_icon name='globe' %]</span><h3>[% loc('Multi-language access') %]</h3><p>[% loc('English, Spanish, Russian, and Turkish support are built in.') %]</p></div>
+        </div>
+
+        <section class="gov-section-card">
+          <span class="gov-eyebrow">[% loc('Workflow') %]</span>
+          <h2 class="gov-section-card__title">[% loc('Agency workflow') %]</h2>
+          <div class="gov-section-card__body">
+            <p>[% loc('How a resident report moves through your team &mdash; from inbox to public update.') %]</p>
+            <ol class="gov-workflow" role="list">
+              <li class="gov-workflow__item"><div class="gov-workflow__node"><span class="gov-workflow__dot">[% INCLUDE gov_icon name='inbox' %]</span></div><div class="gov-workflow__card"><div class="gov-workflow__head"><h3>[% loc('Receive') %]</h3></div><p>[% loc('Structured reports from residents with location, category, details, and photos.') %]</p></div></li>
+              <li class="gov-workflow__item"><div class="gov-workflow__node"><span class="gov-workflow__dot">[% INCLUDE gov_icon name='list-checks' %]</span></div><div class="gov-workflow__card"><div class="gov-workflow__head"><h3>[% loc('Triage') %]</h3></div><p>[% loc('Review by category, priority, location, and available contact context.') %]</p></div></li>
+              <li class="gov-workflow__item"><div class="gov-workflow__node"><span class="gov-workflow__dot">[% INCLUDE gov_icon name='network' %]</span></div><div class="gov-workflow__card"><div class="gov-workflow__head"><h3>[% loc('Route') %]</h3></div><p>[% loc('Send issues to the right department, inbox, or integration channel.') %]</p></div></li>
+              <li class="gov-workflow__item"><div class="gov-workflow__node"><span class="gov-workflow__dot">[% INCLUDE gov_icon name='activity' %]</span></div><div class="gov-workflow__card"><div class="gov-workflow__head"><h3>[% loc('Respond') %]</h3></div><p>[% loc('Post public updates so residents can follow progress without submitting again.') %]</p></div></li>
+              <li class="gov-workflow__item"><div class="gov-workflow__node"><span class="gov-workflow__dot">[% INCLUDE gov_icon name='shield' %]</span></div><div class="gov-workflow__card"><div class="gov-workflow__head"><h3>[% loc('Review') %]</h3></div><p>[% loc('Review repeated categories, locations, and response patterns over time.') %]</p></div></li>
+            </ol>
+          </div>
+        </section>
+
+        <section class="gov-section-card">
+          <span class="gov-eyebrow">[% loc('Anatomy') %]</span>
+          <h2 class="gov-section-card__title">[% loc('What each report includes') %]</h2>
+          <div class="gov-section-card__body">
+            <p>[% loc('Each submitted report is intended to give staff enough context to decide who should review it and what should happen next.') %]</p>
+            <div class="gov-anatomy">
+              <ul class="gov-check-list">
+                <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Public report link and update history') %]</span></li>
+                <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Map position, coordinates, and address context') %]</span></li>
+                <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Selected category and report description') %]</span></li>
+                <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Uploaded photos where provided') %]</span></li>
+                <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Priority context for triage') %]</span></li>
+                <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Resident contact details where required') %]</span></li>
+              </ul>
+              <div class="gov-mock-report">
+                <div class="gov-mock-report__bar"><span>#REP-2419</span><span class="gov-chip gov-chip--accent gov-chip--xs">[% INCLUDE gov_icon name='alert' %] [% loc('High priority') %]</span></div>
+                <div class="gov-mock-report__photo">[% INCLUDE gov_icon name='camera' %]</div>
+                <div class="gov-mock-report__body">
+                  <div class="gov-mock-report__meta"><span>[% loc('Pothole') %]</span><span>[% INCLUDE gov_icon name='pin' %] 4th &amp; Elm St</span></div>
+                  <p>[% loc('Large pothole near pedestrian crossing &mdash; water pooling after rain.') %]</p>
+                  <div class="gov-mock-report__steps" aria-hidden="true"><span class="is-done"></span><span class="is-done"></span><span></span></div>
+                  <div class="gov-mock-report__labels"><span>[% loc('Submitted') %]</span><span>[% loc('Review') %]</span><span>[% loc('Routed') %]</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="gov-section-card gov-section-card--tint">
+          <span class="gov-eyebrow">[% loc('Operations') %]</span>
+          <h2 class="gov-section-card__title">[% loc('Operations and integration') %]</h2>
+          <div class="gov-section-card__body">
+            <ul class="gov-check-list gov-check-list--primary">
+              <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Structured, geolocated reports with photos and resident contact context.') %]</span></li>
+              <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Standardized categories aligned with common public works operations.') %]</span></li>
+              <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Priority levels for emergency, high, normal, and low reports.') %]</span></li>
+              <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Email and Open311 GeoReport v2-compatible routing where configured.') %]</span></li>
+              <li>[% INCLUDE gov_icon name='check' %]<span>[% loc('Public visibility that can reduce duplicate reports and clarify status.') %]</span></li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="gov-section-card" id="setup">
+          <span class="gov-eyebrow">[% loc('Setup') %]</span>
+          <h2 class="gov-section-card__title">[% loc('Routing and setup options') %]</h2>
+          <div class="gov-section-card__body">
+            <p>[% loc('Implementation can be aligned around the way an agency already receives and assigns work.') %]</p>
+            <div class="gov-tabs" role="tablist" aria-label="[% loc('Setup options') %]" data-gov-tabs>
+              <button type="button" role="tab" class="gov-tabs__btn is-active" aria-selected="true" data-tab-target="email">[% INCLUDE gov_icon name='mailbox' %] [% loc('Email intake') %]</button>
+              <button type="button" role="tab" class="gov-tabs__btn" aria-selected="false" data-tab-target="category">[% INCLUDE gov_icon name='list-checks' %] [% loc('Category routing') %]</button>
+              <button type="button" role="tab" class="gov-tabs__btn" aria-selected="false" data-tab-target="boundary">[% INCLUDE gov_icon name='map' %] [% loc('Boundary matching') %]</button>
+              <button type="button" role="tab" class="gov-tabs__btn" aria-selected="false" data-tab-target="admin">[% INCLUDE gov_icon name='user-cog' %] [% loc('Staff admin') %]</button>
+            </div>
+            <div class="gov-tab-panel is-active" role="tabpanel" data-tab-panel="email"><span class="gov-tab-panel__icon">[% INCLUDE gov_icon name='mailbox' %]</span><div><h3>[% loc('Email intake') %]</h3><p>[% loc('Receive reports directly into a shared inbox for teams that manage requests via email today.') %]</p></div></div>
+            <div class="gov-tab-panel" role="tabpanel" data-tab-panel="category"><span class="gov-tab-panel__icon">[% INCLUDE gov_icon name='list-checks' %]</span><div><h3>[% loc('Category routing') %]</h3><p>[% loc('Route reports to the right service area or department based on the resident-selected category.') %]</p></div></div>
+            <div class="gov-tab-panel" role="tabpanel" data-tab-panel="boundary"><span class="gov-tab-panel__icon">[% INCLUDE gov_icon name='map' %]</span><div><h3>[% loc('Boundary matching') %]</h3><p>[% loc('Jurisdiction and boundary matching for location-based assignment to the responsible authority.') %]</p></div></div>
+            <div class="gov-tab-panel" role="tabpanel" data-tab-panel="admin"><span class="gov-tab-panel__icon">[% INCLUDE gov_icon name='user-cog' %]</span><div><h3>[% loc('Staff admin') %]</h3><p>[% loc('Staff and admin access for reviewing reports, posting updates, and managing routing rules.') %]</p></div></div>
+          </div>
+        </section>
+
+        <section class="gov-quotes" aria-label="[% loc('Council references') %]" data-gov-quotes-carousel>
+          <div class="gov-quotes__head">
+            <span class="gov-chip gov-chip--accent">[% loc('Public-sector proof points') %]</span>
+            <span class="gov-quotes__hint">[% loc('Short excerpts and published outcomes from real SocietyWorks case studies.') %]</span>
+          </div>
+          <div class="gov-quotes__wrap">
+            <span class="gov-quotes__fade gov-quotes__fade--left" aria-hidden="true"></span>
+            <span class="gov-quotes__fade gov-quotes__fade--right" aria-hidden="true"></span>
+            <div class="gov-quotes__scroller" data-gov-quotes-scroller tabindex="0" aria-label="[% loc('Council reference quotes') %]">
+              <article class="gov-quotes__slide" data-gov-quote-slide><div class="gov-quote-card"><span class="gov-quote-card__mark" aria-hidden="true">&ldquo;</span><div class="gov-quote-card__top"><span class="gov-chip gov-chip--primary gov-chip--xs">[% loc('Public adoption') %]</span><span class="gov-quote-card__metric">[% loc('92% resolution rate shown') %]</span></div><blockquote>[% loc('&ldquo;It has been a resounding success.&rdquo;') %]</blockquote><p class="gov-quote-card__context">[% loc('Northumberland used public updates, asset mapping, and workflow messages to handle heavy drainage demand more clearly.') %]</p><div class="gov-quote-card__foot"><div class="gov-quote-card__name">Northumberland County Council</div><a href="https://www.societyworks.org/case-studies/northumberland-county-council/" target="_blank" rel="noopener noreferrer">[% loc('Read the case study') %] &#8599;</a></div></div></article>
+              <article class="gov-quotes__slide" data-gov-quote-slide><div class="gov-quote-card"><span class="gov-quote-card__mark" aria-hidden="true">&ldquo;</span><div class="gov-quote-card__top"><span class="gov-chip gov-chip--primary gov-chip--xs">[% loc('Channel shift') %]</span><span class="gov-quote-card__metric">[% loc('+45% online reporting') %]</span></div><blockquote>[% loc('&ldquo;a catalyst for change.&rdquo;') %]</blockquote><p class="gov-quote-card__context">[% loc('Gloucestershire saw a 45% increase in online reporting within four months while improving transparency for residents.') %]</p><div class="gov-quote-card__foot"><div class="gov-quote-card__name">Gloucestershire County Council</div><a href="https://www.societyworks.org/case-studies/gloucestershire-county-council/" target="_blank" rel="noopener noreferrer">[% loc('Read the case study') %] &#8599;</a></div></div></article>
+              <article class="gov-quotes__slide" data-gov-quote-slide><div class="gov-quote-card"><span class="gov-quote-card__mark" aria-hidden="true">&ldquo;</span><div class="gov-quote-card__top"><span class="gov-chip gov-chip--primary gov-chip--xs">[% loc('Scale') %]</span><span class="gov-quote-card__metric">[% loc('200,000+ updates each year') %]</span></div><blockquote>[% loc('&ldquo;Members of the public are choosing to use the platform...&rdquo;') %]</blockquote><p class="gov-quote-card__context">[% loc('Lincolnshire reports around 80% online reporting and automatic status updates at county scale.') %]</p><div class="gov-quote-card__foot"><div class="gov-quote-card__name">Lincolnshire County Council</div><a href="https://www.societyworks.org/case-studies/lincolnshire-county-council/" target="_blank" rel="noopener noreferrer">[% loc('Read the case study') %] &#8599;</a></div></div></article>
+              <article class="gov-quotes__slide" data-gov-quote-slide><div class="gov-quote-card"><span class="gov-quote-card__mark" aria-hidden="true">&ldquo;</span><div class="gov-quote-card__top"><span class="gov-chip gov-chip--primary gov-chip--xs">[% loc('Resident experience') %]</span><span class="gov-quote-card__metric">[% loc('-24% reporting costs') %]</span></div><blockquote>[% loc('&ldquo;easier, faster to use, and more interactive&rdquo;') %]</blockquote><p class="gov-quote-card__context">[% loc('Central Bedfordshire reported a 46% increase in online reports and a 24% reduction in reporting costs.') %]</p><div class="gov-quote-card__foot"><div class="gov-quote-card__name">Central Bedfordshire Council</div><a href="https://www.societyworks.org/case-studies/central-bedfordshire-council/" target="_blank" rel="noopener noreferrer">[% loc('Read the case study') %] &#8599;</a></div></div></article>
+              <article class="gov-quotes__slide" data-gov-quote-slide><div class="gov-quote-card"><span class="gov-quote-card__mark" aria-hidden="true">&ldquo;</span><div class="gov-quote-card__top"><span class="gov-chip gov-chip--primary gov-chip--xs">[% loc('Smart routing') %]</span><span class="gov-quote-card__metric">[% loc('Fewer irrelevant reports') %]</span></div><blockquote>[% loc('&ldquo;simple for the user, but deal with some complex routing behind the scenes&rdquo;') %]</blockquote><p class="gov-quote-card__context">[% loc('Transport for London uses smart routing so residents do not need to know which body owns each street asset.') %]</p><div class="gov-quote-card__foot"><div class="gov-quote-card__name">Transport for London</div><a href="https://www.societyworks.org/case-studies/transport-for-london/" target="_blank" rel="noopener noreferrer">[% loc('Read the case study') %] &#8599;</a></div></div></article>
+              <article class="gov-quotes__slide" data-gov-quote-slide><div class="gov-quote-card gov-quote-card--result"><div class="gov-quote-card__top"><span class="gov-chip gov-chip--primary gov-chip--xs">[% loc('Cost efficiency') %]</span><span class="gov-quote-card__metric">[% loc('99.5% fewer duplicates') %]</span></div><p class="gov-quote-card__proof">[% loc('Up to 98.69% savings per report.') %]</p><p class="gov-quote-card__context">[% loc('Buckinghamshire reported fewer calls, fewer emails, fewer duplicate reports, and lower handling costs.') %]</p><div class="gov-quote-card__foot"><div class="gov-quote-card__name">Buckinghamshire Council</div><a href="https://www.societyworks.org/case-studies/buckinghamshire/" target="_blank" rel="noopener noreferrer">[% loc('Read the case study') %] &#8599;</a></div></div></article>
+            </div>
+          </div>
+          <div class="gov-quotes__controls">
+            <button type="button" class="gov-quotes__btn" data-gov-quotes-prev aria-label="[% loc('Previous quote') %]">[% INCLUDE gov_icon name='chevron-left' %]</button>
+            <div class="gov-quotes__dots" role="tablist" aria-label="[% loc('Quote slides') %]">
+              <button type="button" class="gov-quotes__dot is-active" data-gov-quotes-dot aria-label="[% loc('Go to quote 1') %]" aria-current="true"></button>
+              <button type="button" class="gov-quotes__dot" data-gov-quotes-dot aria-label="[% loc('Go to quote 2') %]"></button>
+              <button type="button" class="gov-quotes__dot" data-gov-quotes-dot aria-label="[% loc('Go to quote 3') %]"></button>
+              <button type="button" class="gov-quotes__dot" data-gov-quotes-dot aria-label="[% loc('Go to quote 4') %]"></button>
+              <button type="button" class="gov-quotes__dot" data-gov-quotes-dot aria-label="[% loc('Go to quote 5') %]"></button>
+              <button type="button" class="gov-quotes__dot" data-gov-quotes-dot aria-label="[% loc('Go to quote 6') %]"></button>
+            </div>
+            <button type="button" class="gov-quotes__btn" data-gov-quotes-next aria-label="[% loc('Next quote') %]">[% INCLUDE gov_icon name='chevron-right' %]</button>
+          </div>
+          <p class="gov-quotes__disclaimer">[% loc('Short quote excerpts and published figures from publicly available SocietyWorks case studies, shown as reference points for the civic reporting model. These councils are not InfraSignal customers or endorsers.') %]</p>
+        </section>
+
+        <div class="gov-trust-strip">
+          <div class="gov-trust-strip__label">[% loc('Built for government') %]</div>
+          <div class="gov-trust-strip__row">
+            <span class="gov-trust-badge">[% INCLUDE gov_icon name='shield' %] [% loc('WCAG 2.1 AA') %]</span>
+            <span class="gov-trust-badge">[% INCLUDE gov_icon name='shield' %] [% loc('SOC 2-ready') %]</span>
+            <span class="gov-trust-badge">[% INCLUDE gov_icon name='shield' %] [% loc('GDPR-aligned') %]</span>
+            <span class="gov-trust-badge">[% INCLUDE gov_icon name='code' %] [% loc('Open311 v2') %]</span>
+            <span class="gov-trust-badge">[% INCLUDE gov_icon name='globe' %] [% loc('4 languages') %]</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script nonce="[% csp_nonce %]">
+(function () {
+  document.querySelectorAll('[data-gov-tabs]').forEach(function (tablist) {
+    var root = tablist.closest('.gov-section-card') || document;
+    var buttons = Array.prototype.slice.call(tablist.querySelectorAll('.gov-tabs__btn'));
+    var panels = Array.prototype.slice.call(root.querySelectorAll('.gov-tab-panel'));
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        var target = button.getAttribute('data-tab-target');
+        buttons.forEach(function (candidate) {
+          var activeButton = candidate === button;
+          candidate.classList.toggle('is-active', activeButton);
+          candidate.setAttribute('aria-selected', activeButton ? 'true' : 'false');
+        });
+        panels.forEach(function (panel) {
+          panel.classList.toggle('is-active', panel.getAttribute('data-tab-panel') === target);
+        });
+      });
+    });
+  });
+
+  var root = document.querySelector('[data-gov-quotes-carousel]');
+  if (!root) { return; }
+  var scroller = root.querySelector('[data-gov-quotes-scroller]');
+  var slides = Array.prototype.slice.call(root.querySelectorAll('[data-gov-quote-slide]'));
+  var dots = Array.prototype.slice.call(root.querySelectorAll('[data-gov-quotes-dot]'));
+  var prev = root.querySelector('[data-gov-quotes-prev]');
+  var next = root.querySelector('[data-gov-quotes-next]');
+  if (!scroller || !slides.length) { return; }
+  var active = 0;
+
+  function clamp(index) { return Math.max(0, Math.min(slides.length - 1, index)); }
+  function setActive(index) {
+    active = clamp(index);
+    dots.forEach(function (dot, i) {
+      dot.classList.toggle('is-active', i === active);
+      if (i === active) { dot.setAttribute('aria-current', 'true'); } else { dot.removeAttribute('aria-current'); }
+    });
+    if (prev) { prev.disabled = active === 0; }
+    if (next) { next.disabled = active === slides.length - 1; }
+  }
+  function goTo(index) {
+    setActive(index);
+    scroller.scrollTo({ left: active * scroller.clientWidth, behavior: 'smooth' });
+  }
+  dots.forEach(function (dot, i) { dot.addEventListener('click', function () { goTo(i); }); });
+  if (prev) { prev.addEventListener('click', function () { goTo(active - 1); }); }
+  if (next) { next.addEventListener('click', function () { goTo(active + 1); }); }
+  scroller.addEventListener('scroll', function () {
+    var width = scroller.clientWidth;
+    if (!width) { return; }
+    setActive(Math.round(scroller.scrollLeft / width));
+  }, { passive: true });
+
+  var down = false, startX = 0, startLeft = 0;
+  scroller.addEventListener('pointerdown', function (event) {
+    if (event.target.closest('a,button')) { return; }
+    down = true;
+    startX = event.clientX;
+    startLeft = scroller.scrollLeft;
+    try { scroller.setPointerCapture(event.pointerId); } catch (e) {}
+    scroller.classList.add('is-grabbing');
+  });
+  scroller.addEventListener('pointermove', function (event) {
+    if (!down) { return; }
+    scroller.scrollLeft = startLeft - (event.clientX - startX);
+  });
+  function endDrag(event) {
+    if (!down) { return; }
+    down = false;
+    try { scroller.releasePointerCapture(event.pointerId); } catch (e) {}
+    scroller.classList.remove('is-grabbing');
+  }
+  scroller.addEventListener('pointerup', endDrag);
+  scroller.addEventListener('pointercancel', endDrag);
+  scroller.addEventListener('pointerleave', endDrag);
+  setActive(0);
+}());
+</script>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

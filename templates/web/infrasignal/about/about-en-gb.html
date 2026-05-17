@@ -22,6 +22,7 @@
           <ul class="contact-sidebar__list">
             <li><a href="/about" class="contact-sidebar__link contact-sidebar__link--active">[% loc('About') %]</a></li>
             <li><a href="/how-it-works" class="contact-sidebar__link">[% loc('How It Works') %]</a></li>
+            <li><a href="/about/for-local-government" class="contact-sidebar__link">[% loc('For Local Government') %]</a></li>
             <li><a href="/faq" class="contact-sidebar__link">[% loc('FAQ') %]</a></li>
             <li><a href="[% c.cobrand.privacy_policy_url %]" class="contact-sidebar__link">[% loc('Privacy') %]</a></li>
             <li><a href="/about/terms" class="contact-sidebar__link">[% loc('Terms') %]</a></li>
@@ -87,43 +88,29 @@
           </div>
         </div>
 
-        [%# How It Works — Step Cards %]
+        [%# How It Works — Teaser %]
         <div class="info-page-card" style="margin-bottom: 1.5rem">
           <h2 style="margin-top: 0">[% loc('How It Works') %]</h2>
-          <div class="about-steps">
-            <div class="about-steps__item">
-              <span class="about-steps__number">1</span>
-              <h3>[% loc('Locate') %]</h3>
-              <p>[% loc('Enter a street address, city, or ZIP code. Place a pin on the map at the problem location.') %]</p>
-            </div>
-            <div class="about-steps__item">
-              <span class="about-steps__number">2</span>
-              <h3>[% loc('Describe') %]</h3>
-              <p>[% loc('Select a category, write a description, and upload up to 3 photos. Photos are automatically checked for inappropriate content.') %]</p>
-            </div>
-            <div class="about-steps__item">
-              <span class="about-steps__number">3</span>
-              <h3>[% loc('Route') %]</h3>
-              <p>[% loc('InfraSignal determines the responsible authority using geographic boundary data and sends your report with full details and priority classification.') %]</p>
-            </div>
-            <div class="about-steps__item">
-              <span class="about-steps__number">4</span>
-              <h3>[% loc('Track') %]</h3>
-              <p>[% loc('Receive email updates as the authority investigates. View all reports on the public map. Post follow-up updates at any time.') %]</p>
-            </div>
+          <p>[% loc('Reports move through a clear lifecycle: residents add a location and details, InfraSignal helps route the report, and everyone can follow public updates over time.') %]</p>
+          <div class="about-contact">
+            <a href="/how-it-works" class="about-contact__link--primary">
+              [% loc('See the full process') %] &rarr;
+            </a>
           </div>
         </div>
 
-        [%# For Local Authorities — Benefits Card %]
+        [%# For Local Authorities — Summary Card %]
         <div class="about-benefits-card" style="margin-bottom: 1.5rem">
           <h2 style="margin-top: 0; font-size: 1.125rem; font-weight: 600">[% loc('For Local Authorities') %]</h2>
-          <p style="font-size: 0.875rem; color: #6b7280">[% loc('InfraSignal gives government agencies a standardized channel to receive infrastructure reports from constituents.') %]</p>
-          <ul class="about-benefits">
-            <li><span class="about-benefits__check">✓</span> [% loc('Structured, geolocated reports with photos and priority levels') %]</li>
-            <li><span class="about-benefits__check">✓</span> [% loc('13 standardized categories aligned with common public works operations') %]</li>
-            <li><span class="about-benefits__check">✓</span> [% loc('Four-tier priority system (Emergency, High, Normal, Low)') %]</li>
-            <li><span class="about-benefits__check">✓</span> [% loc('Open311 GeoReport v2 compatible for CRM integration') %]</li>
-          </ul>
+          <p style="font-size: 0.875rem; color: #6b7280">[% loc('InfraSignal gives public teams a standardized channel for receiving structured, location-based reports from residents. Operational, integration, and partnership details now live on the local government page.') %]</p>
+          <div class="about-contact">
+            <a href="/about/for-local-government" class="about-contact__link--outline">
+              [% loc('For Local Government') %]
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              [% loc('Contact Form') %] &rarr;
+            </a>
+          </div>
         </div>
 
         [%# Contact CTA %]
