@@ -19,6 +19,10 @@
             - Follow-up style parity committed as `9938791ed` (`Align Local Alerts subscription styling`): normalized `/alert/list` to the same header-adjacent hero scale, typography, card treatment, and footer width used by the rest of the InfraSignal public pages.
             - Replaced the oversized Local Alerts-specific hero treatment with the Reports-style gradient, 30px/700 title, 14px lead, 42rem content column, restrained white panels, and a white RSS panel.
             - Contained the recent-report photo scroller and removed the alert-page `100vw` footer breakout so the subscription page no longer creates document-level horizontal overflow.
+        - Public page header consistency:
+            - Follow-up header alignment committed as `03ead4fe4` (`Center public page headers`): centered the hero/header text and matched header sizing across Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
+            - Normalized public hero headers to the same blue gradient, 30px/700 title, 14px lead, 42rem text column, `calc(64px + 2.5rem)` top padding, and 3.5rem bottom padding.
+            - Removed the remaining Contact/Info page `100vw` hero/footer breakout and stacked the Local Alerts entry icon above its title so header text remains centered with no horizontal page overflow.
         - Styling:
             - Added scoped `.page--gov` and RSS XSL styles and rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss`.
         - Verification:
@@ -31,9 +35,11 @@
             - Browser computed-style checks confirmed the RSS header/nav/hero/footer now match the normal Reports page values for colors, font sizes, weights, line heights, padding, border radii, and footer CTA sizing.
             - Live DEV checks confirmed the Buffalo Grove `/alert/list` URL returned HTTP 200, rendered the expected location, and had no template error.
             - Browser computed-style checks confirmed the Local Alerts subscription hero, lead, main column, cards, RSS panel, and footer match the shared page scale, with `scrollWidth` equal to `clientWidth` after the overflow fix.
+            - Browser computed-style checks confirmed the public hero/header pass returns centered text, matching gradient, matching padding, matching title/lead sizes, and zero horizontal overflow on Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
+            - Public page header alignment committed as `03ead4fe4` (`Center public page headers`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
