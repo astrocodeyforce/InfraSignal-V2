@@ -137,24 +137,28 @@ $meta-font: $font-body;
 
 // Hero banner pattern for secondary pages
 .page-hero {
-    background: var(--gradient-hero);
-    padding: 48px 0;
+    background: linear-gradient(135deg, $primary-900, $primary-700);
+    margin-top: -64px;
+    padding: calc(64px + 2.5rem) 0 3.5rem;
     text-align: center;
     color: #fff;
-
-    @media (min-width: 640px) { padding: 64px 0; }
+    line-height: 1.6;
 
     h1 {
         color: #fff;
         font-size: 1.875rem;
         font-weight: 700;
-
-        @media (min-width: 640px) { font-size: 2.25rem; }
+        line-height: 1.2;
+        letter-spacing: 0;
+        margin: 0;
     }
 
     p {
         color: $primary-300;
-        margin-top: 8px;
+        margin: 0.5rem auto 0;
+        max-width: 42rem;
+        font-size: 0.875rem;
+        line-height: 1.6;
     }
 }
 
@@ -4038,45 +4042,41 @@ body.infopage.govpage .content footer {
     position: relative;
     width: 100%;
     overflow: hidden;
-    padding: calc(64px + 3rem) 0 4rem;
+    padding: calc(64px + 2.5rem) 0 3.5rem;
     margin-top: -64px;
-    background: linear-gradient(135deg, $primary-900 0%, $primary-700 68%, darken($primary-700, 8%) 100%);
+    background: linear-gradient(135deg, $primary-900, $primary-700);
     color: #fff;
     text-align: center;
+    line-height: 1.6;
   }
 
   .gov-hero__dots {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(255,255,255,0.18) 1px, transparent 1px);
-    background-size: 22px 22px;
-    opacity: 0.45;
-    pointer-events: none;
+    display: none;
   }
 
   .gov-hero__inner {
     position: relative;
-    max-width: 900px;
+    max-width: 42rem;
     margin-left: auto;
     margin-right: auto;
   }
 
   .gov-hero__title {
-    margin: 1rem 0 0;
+    margin: 0;
     color: #fff;
-    font-size: 2.25rem;
-    line-height: 1.05;
-    font-weight: 800;
+    font-size: 1.875rem;
+    line-height: 1.2;
+    font-weight: 700;
     letter-spacing: 0;
   }
 
   .gov-hero__sub {
-    margin: 1rem 0 0;
-    max-width: 38rem;
+    margin: 0.5rem 0 0;
+    max-width: 42rem;
     margin-left: auto;
     margin-right: auto;
-    color: rgba(255,255,255,0.82);
-    font-size: 1rem;
+    color: $primary-300;
+    font-size: 0.875rem;
     line-height: 1.6;
   }
 
@@ -4912,7 +4912,7 @@ body.infopage.govpage .content footer {
   .gov-button--full { width: 100%; }
 
   @media (min-width: 640px) {
-    .gov-hero__title { font-size: 2.5rem; }
+    .gov-hero__title { font-size: 1.875rem; }
 
     .gov-section-card,
     .gov-quotes,
@@ -5906,17 +5906,19 @@ img {
   &__hero {
     background: linear-gradient(135deg, $primary-900, $primary-700) !important;
     color: #fff !important;
-    // Extra top padding to clear the sticky header (64px)
     padding: calc(64px + 2.5rem) 0 3.5rem !important;
     margin-top: -64px !important;
     min-height: 80px;
+    text-align: center;
+    line-height: 1.6;
 
     h1 {
       font-size: 1.875rem;
       font-weight: 700;
-      letter-spacing: -0.025em;
+      letter-spacing: 0;
       color: #fff;
-      margin: 0 0 0.5rem;
+      line-height: 1.2;
+      margin: 0 auto 0.5rem;
     }
 
     p {
@@ -5924,6 +5926,7 @@ img {
       font-size: 0.875rem;
       max-width: 42rem;
       line-height: 1.6;
+      margin: 0 auto;
     }
   }
 
@@ -6564,8 +6567,8 @@ body.contactpage .content footer,
 body.infopage .content footer {
   margin: 0 !important;
   padding: 0 !important;
-  width: 100vw !important;
-  margin-left: calc(-50vw + 50%) !important;
+  width: 100% !important;
+  margin-left: 0 !important;
 }
 
 /* Hide the old base sidebar on contact/info pages */
@@ -6601,33 +6604,36 @@ body.infopage #mobile-sticky-sidebar-button { display: none; }
   dd { font-size: 0.875rem; color: $gray-600; line-height: 1.7; margin: 0 0 0.75rem 0; }
 }
 
-/* Hero — break out to full viewport width */
+/* Shared info-page hero */
 .contact-hero {
-  padding: calc(64px + 2.5rem) 0 3rem;
+  padding: calc(64px + 2.5rem) 0 3.5rem;
   margin-top: -64px;
   text-align: center;
   background: linear-gradient(135deg, $primary-900, $primary-700);
-  width: 100vw;
+  color: #fff;
+  line-height: 1.6;
+  width: 100%;
   position: relative;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  left: auto;
+  right: auto;
+  margin-left: 0;
+  margin-right: 0;
 
   &__title {
     font-size: 1.875rem;
     font-weight: 700;
     color: #fff;
-    letter-spacing: -0.025em;
+    line-height: 1.2;
+    letter-spacing: 0;
     margin: 0;
-    @media (min-width: 640px) { font-size: 2.25rem; }
   }
 
   &__subtitle {
-    margin: 0.75rem auto 0;
-    max-width: 28rem;
-    font-size: 1rem;
-    color: rgba(255,255,255,0.7);
+    margin: 0.5rem auto 0;
+    max-width: 42rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: $primary-300;
   }
 }
 
@@ -7045,34 +7051,38 @@ body.alertpage input#pc[type="text"] {
 
 // --- Hero ---
 .alerts-hero {
-  background: linear-gradient(135deg, $primary-700 0%, $primary-900 100%);
-  padding: 3rem 0 2.5rem;
+  background: linear-gradient(135deg, $primary-900, $primary-700);
+  margin-top: -64px;
+  padding: calc(64px + 2.5rem) 0 3.5rem;
   text-align: center;
+  color: #fff;
+  line-height: 1.6;
 
   &__icon {
-    display: inline-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: rgba(255,255,255,.85);
-    margin-right: 0.5rem;
-    vertical-align: middle;
+    margin: 0 auto 0.75rem;
   }
 
   &__title {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     font-size: 1.875rem;
     font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
     color: #fff;
-    display: inline;
-    vertical-align: middle;
-    margin: 0;
+    display: block;
+    max-width: 42rem;
+    margin: 0 auto;
   }
 
   &__subtitle {
-    margin-top: 0.75rem;
-    color: rgba(255,255,255,.7);
-    max-width: 40rem;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 0.95rem;
+    margin: 0.5rem auto 0;
+    color: $primary-300;
+    max-width: 42rem;
+    font-size: 0.875rem;
     line-height: 1.6;
   }
 }
@@ -7784,7 +7794,7 @@ body.alertpage input#pc[type="text"] {
     background: linear-gradient(135deg, $primary-900, $primary-700);
     color: #fff;
     line-height: 1.6;
-    text-align: left;
+    text-align: center;
   }
 
   .alerts-hero__glow {
@@ -7828,6 +7838,7 @@ body.alertpage input#pc[type="text"] {
   .alerts-hero__title {
     display: block;
     max-width: 42rem;
+    margin: 0 auto;
     color: #fff;
     font-size: 1.875rem;
     font-weight: 700;
@@ -7847,7 +7858,7 @@ body.alertpage input#pc[type="text"] {
 
   .alerts-hero__lead {
     max-width: 42rem;
-    margin: 0.5rem 0 0;
+    margin: 0.5rem auto 0;
     color: $primary-300;
     font-size: 0.875rem;
     line-height: 1.6;
@@ -8203,26 +8214,16 @@ body.alertpage input#pc[type="text"] {
   .alerts-hero {
     position: relative;
     overflow: hidden;
-    padding: 3.25rem 0 3rem;
-    background:
-      radial-gradient(circle at 82% 20%, rgba($accent-500, 0.28), transparent 28rem),
-      linear-gradient(135deg, $primary-700 0%, $primary-900 100%);
-    text-align: left;
+    margin-top: -64px;
+    padding: calc(64px + 2.5rem) 0 3.5rem;
+    background: linear-gradient(135deg, $primary-900, $primary-700);
+    color: #fff;
+    line-height: 1.6;
+    text-align: center;
   }
 
   .alerts-hero__glow {
-    position: absolute;
-    right: 1rem;
-    bottom: -5rem;
-    width: 18rem;
-    height: 18rem;
-    border-radius: 999px;
-    background: rgba($accent-500, 0.22);
-    filter: blur(34px);
-
-    @media (min-width: 72rem) {
-      right: calc((100vw - 72rem) / 2);
-    }
+    display: none;
   }
 
   .alerts-hero__inner {
@@ -8285,24 +8286,21 @@ body.alertpage input#pc[type="text"] {
 
   .alerts-hero__title {
     display: block;
-    max-width: 46rem;
-    margin: 0;
+    max-width: 42rem;
+    margin: 0 auto;
     color: #fff;
-    font-size: 2.2rem;
-    font-weight: 900;
-    line-height: 1.04;
-
-    @media (min-width: 768px) {
-      font-size: 3.4rem;
-    }
+    font-size: 1.875rem;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
   }
 
   .alerts-hero__lead {
     max-width: 42rem;
-    margin: 1rem 0 0;
-    color: rgba(255, 255, 255, 0.76);
-    font-size: 1.03rem;
-    line-height: 1.65;
+    margin: 0.5rem auto 0;
+    color: $primary-300;
+    font-size: 0.875rem;
+    line-height: 1.6;
   }
 
   .alerts-body {
