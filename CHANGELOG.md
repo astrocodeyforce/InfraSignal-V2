@@ -22,6 +22,9 @@
             - Follow-up style parity committed as `9938791ed` (`Align Local Alerts subscription styling`): normalized `/alert/list` to the same header-adjacent hero scale, typography, card treatment, and footer width used by the rest of the InfraSignal public pages.
             - Replaced the oversized Local Alerts-specific hero treatment with the Reports-style gradient, 30px/700 title, 14px lead, 42rem content column, restrained white panels, and a white RSS panel.
             - Contained the recent-report photo scroller and removed the alert-page `100vw` footer breakout so the subscription page no longer creates document-level horizontal overflow.
+        - Error page redesign:
+            - Follow-up error-page redesign committed as `ec953162f` (`Redesign InfraSignal error page`): added an InfraSignal-only `errors/generic.html` override and scoped `body.errorpage` styles so the `/alert/subscribe` CAPTCHA error uses the shared hero/header scale, sidebar/help links, action card, reference-code copy control, and neutral page surface instead of the old centered white error box.
+            - Kept the change reversible through one focused implementation commit; rollback with `git revert ec953162f`, rebuild InfraSignal CSS, and clear Template Toolkit caches.
         - Public page header consistency:
             - Follow-up header alignment committed as `03ead4fe4` (`Center public page headers`): centered the hero/header text and matched header sizing across Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
             - Normalized public hero headers to the same blue gradient, 30px/700 title, 14px lead, 42rem text column, `calc(64px + 2.5rem)` top padding, and 3.5rem bottom padding.
@@ -54,6 +57,7 @@
             - Browser computed-style checks confirmed `/rss/l/42.154421,-87.958962` and `/rss/area/1025717` now share the same sticky-header overlap, 104px/56px hero spacing, 30px/700 title, 14px lead text, blue gradient, `rgb(248, 249, 251)` page background, hidden hero-only RSS controls, and zero horizontal overflow as the normal public pages.
             - Browser computed-style checks confirmed `/rss/area/974962`, `/rss/area/1025717`, and `/rss/l/42.154421,-87.958962` now render one-line RSS browser hero titles/leads at the same 226px header height as How It Works, About, and Local Alerts.
             - Live DEV checks confirmed `/rss/xsl` and `/rss/area/974962` still parse as XML and the browser-rendered RSS sidebar `What is RSS?` link now carries `target="_blank"` and `rel="noopener noreferrer"`.
+            - Live DEV `/alert/subscribe` POST checks confirmed missing-CAPTCHA Local Alerts submissions now render the new InfraSignal error page with HTTP 400, the old `confirmation-header` markup removed, a 226px hero, 30px/700 title, 14px lead, shared `rgb(248, 249, 251)` page background, and zero horizontal overflow.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
@@ -65,6 +69,7 @@
                 - RSS hero sizing follow-up committed as `171e12018` (`Match RSS hero sizing`) before documentation/tracker updates.
                 - Compact RSS browser hero text follow-up committed as `8f1b154cf` (`Shorten RSS browser hero text`) before documentation/tracker updates.
                 - RSS help-link new-tab follow-up committed as `26c77c1bb` (`Open RSS help link in new tab`) before documentation/tracker updates.
+                - Error page redesign follow-up committed as `ec953162f` (`Redesign InfraSignal error page`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
