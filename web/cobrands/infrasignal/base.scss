@@ -4020,7 +4020,7 @@ body.infopage.govpage .content footer {
 }
 
 .page--gov {
-  background: #fff;
+  background: $surface-page;
   color: $gray-900;
   padding-bottom: 4rem;
   overflow: visible;
@@ -5639,7 +5639,7 @@ body.dashboard .container {
 
 body.dashboard {
     overflow-x: hidden;
-    background: $gray-100 !important;
+  background: $surface-page !important;
 }
 
 // Reset footer spacing from layout.css (.content footer { margin-bottom: -1em })
@@ -5931,7 +5931,7 @@ img {
   }
 
   &__body {
-    background-color: $gray-100;
+    background-color: $surface-page;
     min-height: 100vh;
     padding: 2rem 0 3rem;
 
@@ -6559,7 +6559,7 @@ body.infopage .content footer {
 body.contactpage,
 body.infopage {
   overflow-x: hidden;
-  background: #f8f9fb !important;
+  background: $surface-page !important;
 }
 
 /* Ensure footer wrapper is full-width */
@@ -6640,7 +6640,7 @@ body.infopage #mobile-sticky-sidebar-button { display: none; }
 /* Body section */
 .contact-body {
   padding: 2.5rem 0 4rem;
-  background: #f8f9fb;
+  background: $surface-page;
 }
 
 /* Two-column layout */
@@ -6993,7 +6993,7 @@ body.alertpage .content footer {
 
 body.alertpage {
   overflow-x: hidden;
-  background: $gray-50 !important;
+  background: $surface-page !important;
 }
 
 body.alertpage .sticky-sidebar,
@@ -7889,7 +7889,7 @@ body.alertpage input#pc[type="text"] {
   }
 
   .alerts-body {
-    background: $gray-100;
+    background: $surface-page;
     padding: 2rem 0 3rem;
   }
 
@@ -8304,7 +8304,7 @@ body.alertpage input#pc[type="text"] {
   }
 
   .alerts-body {
-    background: $gray-50;
+    background: $surface-page;
   }
 
   .alerts-main {
