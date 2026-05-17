@@ -481,7 +481,7 @@
                     <p class="rss-side__title">Help and info</p>
                     <a class="rss-side__link is-active" href="{$uri}">This RSS feed</a>
                     <a class="rss-side__link" href="[% c.cobrand.base_url %]/alert">Back to Local Alerts</a>
-                    <a class="rss-side__link" href="https://www.bbc.co.uk/news/10628494">What is RSS?</a>
+                    <a class="rss-side__link" href="https://www.bbc.co.uk/news/10628494" target="_blank" rel="noopener noreferrer">What is RSS?</a>
                     <a class="rss-side__link" href="[% c.cobrand.base_url %]/about/privacy">Privacy</a>
                     <a class="rss-side__link" href="[% c.cobrand.base_url %]/contact">Contact us</a>
                   </nav>
