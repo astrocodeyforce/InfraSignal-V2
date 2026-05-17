@@ -16,6 +16,7 @@
             - Fixed the RSS sidebar scroll collision by making the whole sidebar stack sticky instead of only the link list, so the email CTA no longer slides under the nav.
             - Follow-up style parity committed as `0e916ff14` (`Align RSS page with site styling`): matched the RSS XSL header, navigation links, language/sign-in actions, hero gradient, hero typography, footer typography, language row, and footer CTA to the normal InfraSignal pages.
             - Follow-up sizing parity committed as `171e12018` (`Match RSS hero sizing`): moved the RSS browser hero under the sticky header like the other public pages, removed the redundant hero pill/actions from the visual header, and matched the RSS hero spacing to the shared public-page header scale.
+            - Follow-up compact hero text committed as `8f1b154cf` (`Shorten RSS browser hero text`): shortened area-feed hero titles such as `/rss/area/974962` to `New problems in Lake County, IL` and reduced the RSS hero lead to one line so RSS browser headers match the normal public-page height while preserving the full feed channel title for RSS readers.
         - Local Alerts subscription style parity:
             - Follow-up style parity committed as `9938791ed` (`Align Local Alerts subscription styling`): normalized `/alert/list` to the same header-adjacent hero scale, typography, card treatment, and footer width used by the rest of the InfraSignal public pages.
             - Replaced the oversized Local Alerts-specific hero treatment with the Reports-style gradient, 30px/700 title, 14px lead, 42rem content column, restrained white panels, and a white RSS panel.
@@ -50,6 +51,7 @@
             - Browser computed-style checks confirmed Reports, About, Contact, For Local Government, Local Alerts entry, Local Alerts subscription, Local Alerts suggestions, and `/rss/area/1025717` all use `rgb(248, 249, 251)` for the public page surface and retain matching blue hero gradients with zero horizontal overflow.
             - Browser computed-style checks confirmed `/how-it-works`, Reports, About, FAQ, Privacy, Terms, Contact, For Local Government, Local Alerts, alert subscription, alert suggestions, and `/rss/area/1025717` now share the same public hero title size/weight, lead size, hero gradient, page background, and no visible dot/glow overlays.
             - Browser computed-style checks confirmed `/rss/l/42.154421,-87.958962` and `/rss/area/1025717` now share the same sticky-header overlap, 104px/56px hero spacing, 30px/700 title, 14px lead text, blue gradient, `rgb(248, 249, 251)` page background, hidden hero-only RSS controls, and zero horizontal overflow as the normal public pages.
+            - Browser computed-style checks confirmed `/rss/area/974962`, `/rss/area/1025717`, and `/rss/l/42.154421,-87.958962` now render one-line RSS browser hero titles/leads at the same 226px header height as How It Works, About, and Local Alerts.
         - GitHub:
             - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
             - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
@@ -59,6 +61,7 @@
                 - Public background color follow-up committed as `48d64aae6` (`Unify public page background color`) before documentation/tracker updates.
                 - How It Works hero styling follow-up committed as `92d46c63e` (`Align How It Works hero styling`) before documentation/tracker updates.
                 - RSS hero sizing follow-up committed as `171e12018` (`Match RSS hero sizing`) before documentation/tracker updates.
+                - Compact RSS browser hero text follow-up committed as `8f1b154cf` (`Shorten RSS browser hero text`) before documentation/tracker updates.
 
     - InfraSignal - May 16, 2026 (UI cleanup batch 1):
         - Structure and safety:
