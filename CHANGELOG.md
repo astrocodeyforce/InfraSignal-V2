@@ -1,6 +1,13 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 22, 2026 (Around page updates-link removal):
+        - Added an InfraSignal-only `around/_updates.html` override so the shared around/map page no longer renders the visible `Get updates` control or its wrapper above the report filters.
+        - Kept the report-status/category/sort filters, report list, map controls, and alert subscription pages unchanged.
+        - Cleared Template Toolkit caches on DEV.
+        - Verification confirmed the supplied `/around?lon=-87.96334&lat=42.17766&js=1&zoom=3` URL returns HTTP 200, no longer renders `#key-tool-around-updates` or `#key-tools`, has no visible `Get updates` control in browser checks, retains filters/list content, and has zero horizontal overflow.
+        - Implementation committed as `9cc42ee76` (`Hide around page updates link`) before documentation/tracker updates.
+
     - InfraSignal - May 22, 2026 (How It Works step-card polish):
         - Polished the first four How It Works process cards with shorter, more professional copy and a cleaner tile treatment.
         - Restyled the step cards with a smaller badge/title rhythm, fixed visual scene height, separated text area, consistent card heights, and tighter card gaps.
