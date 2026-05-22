@@ -756,9 +756,36 @@
         setTimeout(fixDropzoneText, 1500);
     }
 
+    var enhanceTimer;
+    function scheduleEnhanceReportDetail() {
+        clearTimeout(enhanceTimer);
+        enhanceTimer = setTimeout(enhanceReportDetail, 50);
+    }
+
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', enhanceReportDetail);
+        document.addEventListener('DOMContentLoaded', scheduleEnhanceReportDetail);
     } else {
-        enhanceReportDetail();
+        scheduleEnhanceReportDetail();
+    }
+
+    if (window.MutationObserver) {
+        var sidebarRoot = document.getElementById('map_sidebar') || document.body;
+        var observer = new MutationObserver(function(mutations) {
+            for (var i = 0; i < mutations.length; i++) {
+                var mutation = mutations[i];
+                for (var j = 0; j < mutation.addedNodes.length; j++) {
+                    var node = mutation.addedNodes[j];
+                    if (node.nodeType !== 1) continue;
+                    if (
+                        node.id === 'side-report' ||
+                        (node.querySelector && node.querySelector('#side-report, .problem-header'))
+                    ) {
+                        scheduleEnhanceReportDetail();
+                        return;
+                    }
+                }
+            }
+        });
+        observer.observe(sidebarRoot, { childList: true, subtree: true });
     }
 })();
