@@ -1,6 +1,13 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 22, 2026 (How It Works step-card polish):
+        - Polished the first four How It Works process cards with shorter, more professional copy and a cleaner tile treatment.
+        - Restyled the step cards with a smaller badge/title rhythm, fixed visual scene height, separated text area, consistent card heights, and tighter card gaps.
+        - Rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss` and cleared Template Toolkit caches on DEV.
+        - Verification confirmed `/how-it-works` returns HTTP 200, renders the new step copy, has no template errors, shows equal step-card heights in the available browser viewport, and has zero horizontal overflow.
+        - Implementation committed as `db940bc95` (`Polish How It Works step cards`) before documentation/tracker updates.
+
     - InfraSignal - May 17, 2026 (UI cleanup batch 2: content ownership, local government, and RSS feed UI):
         - Content ownership:
             - Created `/about/for-local-government` as the dedicated authority-facing destination for government operations, intake, routing, integrations, and published civic-reporting proof points.
