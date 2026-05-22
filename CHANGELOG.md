@@ -1,6 +1,13 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 22, 2026 (Map-loaded report detail parity):
+        - Updated the InfraSignal report-detail enhancement script so reports opened from the around/map page are reprocessed after the sidebar content is loaded dynamically.
+        - Kept the existing standalone report detail templates and rich status/timeline styling unchanged while applying the same enhanced view to map-loaded report details.
+        - No CSS rebuild was required because the existing report detail styles already covered the status badge, details grid, description block, and timeline components.
+        - Verification confirmed opening a report from `/around?lon=-87.96334&lat=42.17766&js=1&zoom=3` now shows the enhanced status badge, details grid, description block, and `Reported`, `Acknowledged`, `In Progress`, `Resolved` timeline labels; direct `/report/578` and `/report/579` checks show the same enhanced structure.
+        - Implementation committed as `5f4c23711` (`Enhance dynamically loaded report details`) before documentation/tracker updates.
+
     - InfraSignal - May 22, 2026 (Around page updates-link removal):
         - Added an InfraSignal-only `around/_updates.html` override so the shared around/map page no longer renders the visible `Get updates` control or its wrapper above the report filters.
         - Kept the report-status/category/sort filters, report list, map controls, and alert subscription pages unchanged.
