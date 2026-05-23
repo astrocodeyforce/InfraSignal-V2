@@ -14,6 +14,7 @@
         - Follow-up committed as `ecce576b1` (`Surface reports monthly preview link`): added a staging-only hero action on live `/reports` that links to the monthly preview on the same host/port, plus a return link from preview to live data.
         - Follow-up committed as `429e960e7` (`Show reports preview by default on staging`): made DEV/staging `/reports` show the monthly preview by default, with real live data still available at `/reports?dashboard_live=1`.
         - Follow-up committed as `39aaac162` (`Remove reports preview fixture data`): removed the staging/sample dashboard fixture path so every visible `/reports` number is loaded from the database-backed dashboard JSON; verified DB counts match `582` visible reports, `440` fixed reports, and `0` last-seven-day reports.
+        - Follow-up committed as `f019193b7` (`Generate reports chart from database samples`): added DB-generated monthly chart arrays plus a guarded DEV seed helper that stores richer sample reports in the DEV database, then regenerated the dashboard JSON so `/reports` shows a curvy monthly chart whose totals, categories, authorities, and hover values match database rows.
 
     - InfraSignal - May 23, 2026 (Start Reporting form highlight):
         - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
