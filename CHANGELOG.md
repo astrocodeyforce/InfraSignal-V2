@@ -1,6 +1,14 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 23, 2026 (Reports dashboard redesign):
+        - Replaced the InfraSignal `/reports` dashboard with the supplied report-dashboard design adapted to the existing FixMyStreet/Catalyst data model and Template Toolkit paths.
+        - Swapped the old Chart.js canvas rendering for a page-local vanilla SVG chart renderer at `web/cobrands/infrasignal/reports-dashboard.js` and stopped loading the old Chart.js dashboard bundle on `/reports`.
+        - Added a small InfraSignal reports icon partial, rebuilt the dashboard markup around the existing report totals, monthly periods, last-seven-day metrics, top authorities, top categories, and jurisdiction picker data.
+        - Added scoped `.rd-*` dashboard styles to `base.scss`, regenerated `web/cobrands/infrasignal/base.css`, and preserved the existing accessible-autocomplete jurisdiction picker behavior.
+        - Verification confirmed `/reports` returns HTTP 200, renders two nonblank SVG charts, initializes the picker autocomplete with placeholder text, loads no old dashboard canvases or Chart.js assets, has no browser console/page errors, and keeps zero horizontal overflow in the available browser viewport.
+        - Implementation committed as `c5049dac1` (`Wire reports dashboard redesign`) before documentation/tracker updates.
+
     - InfraSignal - May 23, 2026 (Start Reporting form highlight):
         - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
         - Reused the existing CTA focus helper in `header-nav.js`; it now scrolls to the form, highlights the search pill, then leaves focus in the address/zipcode field.
