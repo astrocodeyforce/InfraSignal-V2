@@ -8,6 +8,7 @@
         - Added scoped `.rd-*` dashboard styles to `base.scss`, regenerated `web/cobrands/infrasignal/base.css`, and preserved the existing accessible-autocomplete jurisdiction picker behavior.
         - Verification confirmed `/reports` returns HTTP 200, renders two nonblank SVG charts, initializes the picker autocomplete with placeholder text, loads no old dashboard canvases or Chart.js assets, has no browser console/page errors, and keeps zero horizontal overflow in the available browser viewport.
         - Implementation committed as `c5049dac1` (`Wire reports dashboard redesign`) before documentation/tracker updates.
+        - Follow-up committed as `7655c1bb8` (`Tighten reports dashboard data display`): removed unsupported demo-style trend values and fake activity visuals, derived the resolution rate from real totals, rendered KPI sparklines from real period arrays, showed honest empty states for zero weekly/category activity, changed the chart copy from monthly to period-based, and fixed sparse mobile sparkline sizing.
 
     - InfraSignal - May 23, 2026 (Start Reporting form highlight):
         - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
