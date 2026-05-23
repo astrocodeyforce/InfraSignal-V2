@@ -4,7 +4,7 @@
     version('/cobrands/infrasignal/reports-dashboard.js')
 ] -%]
 [%-
-  rd_design_preview = c.config.STAGING_SITE && c.get_param('dashboard_preview');
+  rd_design_preview = c.config.STAGING_SITE && c.get_param('dashboard_live') != 1;
 
   IF rd_design_preview;
     problem_periods = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -56,12 +56,12 @@
     [% IF c.config.STAGING_SITE %]
       <div class="rd-hero__actions">
         [% IF rd_design_preview %]
-          <a class="rd-hero__preview-link rd-hero__preview-link--secondary" href="/reports">
+          <a class="rd-hero__preview-link rd-hero__preview-link--secondary" href="/reports?dashboard_live=1">
             [% PROCESS 'reports/_dashboard_icon.html' name='file' %]
             <span>[% loc('View live data') %]</span>
           </a>
         [% ELSE %]
-          <a class="rd-hero__preview-link" href="/reports?dashboard_preview=1">
+          <a class="rd-hero__preview-link" href="/reports">
             [% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %]
             <span>[% loc('View monthly preview') %]</span>
           </a>
