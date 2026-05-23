@@ -12,6 +12,9 @@
   rd_total_fixed = problems_fixed_by_period.last || 0;
   rd_average = average || '-';
   rd_regional_average = average || '-';
+  rd_chart_periods = chart_periods.size ? chart_periods : problem_periods;
+  rd_chart_reported_by_period = problems_reported_by_chart_period.size ? problems_reported_by_chart_period : problems_reported_by_period;
+  rd_chart_fixed_by_period = problems_fixed_by_chart_period.size ? problems_fixed_by_chart_period : problems_fixed_by_period;
 
   problems_reported = rd_total_reports | format_number;
   problems_fixed = rd_total_fixed | format_number;
@@ -49,7 +52,7 @@
           <div class="rd-kpi__label">[% loc('Total Reports') %]</div>
           <div class="rd-kpi__sub">[% loc('All time') %]</div>
         </div>
-        <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% problems_reported_by_period.join(',') %]]' aria-hidden="true"></div>
+        <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% rd_chart_reported_by_period.join(',') %]]' aria-hidden="true"></div>
       </article>
 
       <article class="rd-kpi rd-kpi--success">
@@ -62,7 +65,7 @@
           <div class="rd-kpi__label">[% loc('Problems Fixed') %]</div>
           <div class="rd-kpi__sub">[% rd_fixed_rate | format('%.1f') %]% [% loc('resolution rate') %]</div>
         </div>
-        <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% problems_fixed_by_period.join(',') %]]' aria-hidden="true"></div>
+        <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% rd_chart_fixed_by_period.join(',') %]]' aria-hidden="true"></div>
       </article>
 
       <article class="rd-kpi rd-kpi--accent">
@@ -100,7 +103,7 @@
       <header class="rd-card__head">
         <div>
           <h2 class="rd-card__title">[% loc('Performance over time') %]</h2>
-          <p class="rd-card__sub">[% loc('Reports submitted vs. problems fixed by period') %]</p>
+          <p class="rd-card__sub">[% chart_periods.size ? loc('Monthly reports submitted vs. problems fixed') : loc('Reports submitted vs. problems fixed by period') %]</p>
         </div>
         <ul class="rd-legend">
           <li><span class="rd-legend__dot rd-legend__dot--primary"></span>[% loc('Reported') %]</li>
@@ -108,8 +111,8 @@
         </ul>
       </header>
       <div class="rd-chart rd-chart--area" data-chart="area" data-series='[
-        [% FOREACH period IN problem_periods %]
-          {"month":"[% period | html %]","reported":[% problems_reported_by_period.${loop.index} || 0 %],"fixed":[% problems_fixed_by_period.${loop.index} || 0 %]}[% ',' UNLESS loop.last %]
+        [% FOREACH period IN rd_chart_periods %]
+          {"month":"[% period | html %]","reported":[% rd_chart_reported_by_period.${loop.index} || 0 %],"fixed":[% rd_chart_fixed_by_period.${loop.index} || 0 %]}[% ',' UNLESS loop.last %]
         [% END %]
       ]'></div>
     </section>

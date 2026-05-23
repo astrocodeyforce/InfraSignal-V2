@@ -177,6 +177,22 @@ sub generate_dashboard {
     $data{problems_reported_by_period} = \@problems_reported_by_period;
     $data{problems_fixed_by_period} = \@problems_fixed_by_period;
 
+    my $chart_start = FixMyStreet->set_time_zone(DateTime->now)->truncate(to => 'month')->subtract(months => 11);
+    my @chart_periods = loop_period($chart_start->clone, 'month_abbr', 'month', end_period('month'));
+    my %problems_reported_by_chart_period = stuff_by_day_or_year(
+        'month', $rs,
+        state => [ FixMyStreet::DB::Result::Problem->visible_states() ],
+        'me.confirmed' => { '>=', $dtf->format_datetime($chart_start) },
+    );
+    my %problems_fixed_by_chart_period = stuff_by_day_or_year(
+        'month', $rs,
+        state => [ FixMyStreet::DB::Result::Problem->fixed_states() ],
+        'me.confirmed' => { '>=', $dtf->format_datetime($chart_start) },
+    );
+    $data{chart_periods} = [ map { $_->{d} || $_->{n} } @chart_periods ];
+    $data{problems_reported_by_chart_period} = [ map { $problems_reported_by_chart_period{$_->{n}} || 0 } @chart_periods ];
+    $data{problems_fixed_by_chart_period} = [ map { $problems_fixed_by_chart_period{$_->{n}} || 0 } @chart_periods ];
+
     my %last_seven_days = (
         problems => [],
         updated => [],

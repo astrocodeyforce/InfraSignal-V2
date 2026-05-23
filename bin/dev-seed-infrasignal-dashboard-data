@@ -1,0 +1,142 @@
+#!/usr/bin/env perl
+
+use strict;
+use warnings;
+
+BEGIN {
+    use File::Basename qw(dirname);
+    use File::Spec;
+    my $d = dirname(File::Spec->rel2abs($0));
+    require "$d/../setenv.pl";
+}
+
+use DateTime;
+use FixMyStreet;
+use FixMyStreet::DB;
+
+die "Refusing to seed dashboard data unless INFRASIGNAL_DEV_SEED_REPORTS_DASHBOARD=1 is set\n"
+    unless $ENV{INFRASIGNAL_DEV_SEED_REPORTS_DASHBOARD};
+
+die "Refusing to seed dashboard data outside a staging/dev environment\n"
+    unless FixMyStreet->config('STAGING_SITE');
+
+my $source = 'infrasignal-dashboard-sample-v1';
+my $schema = FixMyStreet::DB->schema;
+my $dtf = $schema->storage->datetime_parser;
+
+my @authorities = (
+    [ 'Springfield, IL', 39.7817, -89.6501 ],
+    [ 'Shelbyville, IN', 39.5214, -85.7769 ],
+    [ 'Madison, WI', 43.0731, -89.4012 ],
+    [ 'Raleigh, NC', 35.7796, -78.6382 ],
+    [ 'Boulder, CO', 40.0150, -105.2705 ],
+);
+
+my @categories = (
+    'Pothole & Road',
+    'Streetlight',
+    'Sidewalk',
+    'Graffiti',
+    'Illegal Dumping',
+);
+
+my @reported_counts = (4, 12, 6, 16, 9, 14, 7, 18, 11, 15, 5, 24);
+my @fixed_counts =    (3, 10, 5, 13, 7, 12, 5, 15, 9, 12, 4, 20);
+
+$schema->txn_do(sub {
+    my $problems = $schema->resultset('Problem');
+    my $comments = $schema->resultset('Comment');
+    my @existing_ids = $problems->search({ external_source => $source })->get_column('id')->all;
+    if (@existing_ids) {
+        $comments->search({ problem_id => { -in => \@existing_ids } })->delete;
+        $problems->search({ id => { -in => \@existing_ids } })->delete;
+    }
+
+    my $user = $schema->resultset('User')->find({ email => 'dashboard-sample@infrasignal.local', email_verified => 1 })
+        || $schema->resultset('User')->create({
+            email => 'dashboard-sample@infrasignal.local',
+            email_verified => 1,
+            name => 'InfraSignal Dashboard Sample',
+            password => '',
+        });
+
+    my @bodies = map {
+        my ($name, $latitude, $longitude) = @$_;
+        my $body = $schema->resultset('Body')->find({ name => $name })
+            or die "Could not find body '$name'\n";
+        my @areas = $body->body_areas->get_column('area_id')->all;
+        {
+            body => $body,
+            latitude => $latitude,
+            longitude => $longitude,
+            areas => @areas ? ',' . join(',', @areas) . ',' : '',
+        };
+    } @authorities;
+
+    my $today = FixMyStreet->set_time_zone(DateTime->now)->truncate(to => 'day');
+    my $start = $today->clone->truncate(to => 'month')->subtract(months => 11);
+    my $created = 0;
+    my $fixed = 0;
+
+    for my $month_index (0 .. $#reported_counts) {
+        my $month = $start->clone->add(months => $month_index);
+        for my $report_index (1 .. $reported_counts[$month_index]) {
+            my $body_info = $bodies[($month_index + $report_index) % @bodies];
+            my $category = $categories[($month_index + $report_index) % @categories];
+            my $day = 5 + (($report_index * 3) % 18);
+            my $confirmed = $month->clone->set(day => $day, hour => 9 + ($report_index % 8), minute => ($report_index * 7) % 60);
+            if ($month_index == $#reported_counts) {
+                $confirmed = $today->clone->subtract(days => $report_index % 7)->set(hour => 9 + ($report_index % 8), minute => ($report_index * 7) % 60);
+            }
+
+            my $is_fixed = $report_index <= $fixed_counts[$month_index];
+            my $fixed_at = $confirmed->clone->add(days => 1 + (($month_index + $report_index) % 5));
+            $fixed_at = $today->clone->set(hour => 17) if DateTime->compare($fixed_at, $today) > 0;
+
+            my $problem = $problems->create({
+                postcode => '',
+                latitude => $body_info->{latitude} + (($report_index % 5) * 0.001),
+                longitude => $body_info->{longitude} - (($report_index % 5) * 0.001),
+                bodies_str => $body_info->{body}->id,
+                areas => $body_info->{areas},
+                category => $category,
+                title => "$category sample report",
+                detail => 'DEV dashboard sample report stored in the database for chart/statistics verification.',
+                used_map => 1,
+                user_id => $user->id,
+                name => $user->name,
+                anonymous => 0,
+                created => $dtf->format_datetime($confirmed),
+                confirmed => $dtf->format_datetime($confirmed),
+                state => $is_fixed ? 'fixed - council' : 'confirmed',
+                cobrand => 'infrasignal',
+                cobrand_data => '',
+                lastupdate => $dtf->format_datetime($is_fixed ? $fixed_at : $confirmed),
+                external_source => $source,
+                external_source_id => sprintf('%s-%02d-%03d', $source, $month_index + 1, $report_index),
+            });
+            $created++;
+
+            if ($is_fixed) {
+                $comments->create({
+                    problem_id => $problem->id,
+                    user_id => $user->id,
+                    anonymous => 0,
+                    name => $user->name,
+                    created => $dtf->format_datetime($fixed_at),
+                    confirmed => $dtf->format_datetime($fixed_at),
+                    text => 'Marked fixed by DEV dashboard sample data seed.',
+                    state => 'confirmed',
+                    cobrand => 'infrasignal',
+                    cobrand_data => '',
+                    mark_fixed => 1,
+                    problem_state => 'fixed - council',
+                    external_id => sprintf('%s-comment-%02d-%03d', $source, $month_index + 1, $report_index),
+                });
+                $fixed++;
+            }
+        }
+    }
+
+    print "Seeded $created DEV dashboard sample reports ($fixed fixed) with external_source=$source\n";
+});
