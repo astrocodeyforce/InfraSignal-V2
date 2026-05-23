@@ -175,11 +175,32 @@
     el.appendChild(svg);
   }
 
+  function renderSpark(el) {
+    var data = parseSeries(el).map(function (value) {
+      return Number(value) || 0;
+    });
+    if (!data.length) return;
+
+    var maxY = data.reduce(function (max, value) {
+      return value > max ? value : max;
+    }, 0);
+
+    el.innerHTML = '';
+    data.forEach(function (value, index) {
+      var bar = document.createElement('span');
+      var height = maxY ? Math.max(10, (value / maxY) * 100) : 0;
+      bar.className = 'rd-spark__bar' + (index === data.length - 1 ? ' is-current' : '');
+      bar.style.height = height + '%';
+      el.appendChild(bar);
+    });
+  }
+
   function renderAll() {
     document.querySelectorAll('.rd-chart').forEach(function (el) {
       var type = el.getAttribute('data-chart');
       if (type === 'area') renderArea(el);
       if (type === 'bar') renderBar(el);
+      if (type === 'spark') renderSpark(el);
     });
   }
 

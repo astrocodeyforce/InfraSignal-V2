@@ -9,8 +9,10 @@
     last_seven_reported = last_seven_days.problems_total | format_number;
     last_seven_updated = last_seven_days.updated_total | format_number;
     last_seven_fixed = last_seven_days.fixed_total | format_number;
-    other_categories_formatted = other_categories | format_number;
-    rd_updated_label = updated_label || loc('Updated recently');
+    rd_latest_reported = problems_reported_by_period.last || 0;
+    rd_latest_fixed = problems_fixed_by_period.last || 0;
+    rd_fixed_rate = rd_latest_reported ? rd_latest_fixed / rd_latest_reported * 100 : 0;
+    rd_week_activity = (last_seven_days.problems_total || 0) + (last_seven_days.updated_total || 0) + (last_seven_days.fixed_total || 0);
     rd_average = average || '-';
 -%]
 [% INCLUDE 'header.html', title = loc('Reports Dashboard'), bodyclass = 'dashboard reports-dashboard rd-page' %]
@@ -20,7 +22,7 @@
   <div class="infra-container rd-hero__inner">
     <span class="rd-hero__badge">
       <span class="rd-hero__pulse" aria-hidden="true"></span>
-      [% loc('Live') %] &middot; [% rd_updated_label | html %]
+      [% IF updated_label %][% loc('Live') %] &middot; [% updated_label | html %][% ELSE %][% loc('Live data') %][% END %]
     </span>
     <h1 class="rd-hero__title">[% loc('Reports Dashboard') %][% IF body %] &ndash; [% body.name | html %][% END %]</h1>
     <p class="rd-hero__lede">[% loc('Real-time overview of infrastructure reports across all communities. See what is being reported, what is getting fixed, and how responsive local government is.') %]</p>
@@ -34,61 +36,57 @@
       <article class="rd-kpi rd-kpi--primary">
         <header class="rd-kpi__head">
           <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='file' %]</span>
-          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %][% loc('All time') %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--neutral">[% loc('All time') %]</span>
         </header>
         <div class="rd-kpi__body">
           <div class="rd-kpi__value">[% problems_reported %]</div>
           <div class="rd-kpi__label">[% loc('Total Reports') %]</div>
           <div class="rd-kpi__sub">[% loc('All time') %]</div>
         </div>
-        <div class="rd-spark" aria-hidden="true">
-          [% FOREACH v IN [40,60,50,80,65,90,100] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
-        </div>
+        <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% problems_reported_by_period.join(',') %]]' aria-hidden="true"></div>
       </article>
 
       <article class="rd-kpi rd-kpi--success">
         <header class="rd-kpi__head">
           <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='check' %]</span>
-          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %][% loc('Resolved') %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--neutral">[% loc('All time') %]</span>
         </header>
         <div class="rd-kpi__body">
           <div class="rd-kpi__value">[% problems_fixed %]</div>
           <div class="rd-kpi__label">[% loc('Problems Fixed') %]</div>
-          <div class="rd-kpi__sub">[% loc('All time') %]</div>
+          <div class="rd-kpi__sub">[% rd_fixed_rate | format('%.1f') %]% [% loc('resolution rate') %]</div>
         </div>
-        <div class="rd-spark" aria-hidden="true">
-          [% FOREACH v IN [30,45,55,60,72,80,92] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
-        </div>
+        <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% problems_fixed_by_period.join(',') %]]' aria-hidden="true"></div>
       </article>
 
       <article class="rd-kpi rd-kpi--accent">
         <header class="rd-kpi__head">
           <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='trend' %]</span>
-          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %][% loc('Active') %]</span>
+          <span class="rd-kpi__trend [% rd_week_activity ? 'rd-kpi__trend--good' : 'rd-kpi__trend--neutral' %]">[% rd_week_activity ? loc('Active') : loc('No activity') %]</span>
         </header>
         <div class="rd-kpi__body">
           <div class="rd-kpi__value">[% last_seven_reported %]</div>
           <div class="rd-kpi__label">[% loc('Reports This Week') %]</div>
           <div class="rd-kpi__sub">[% loc('Last 7 days') %]</div>
         </div>
-        <div class="rd-spark" aria-hidden="true">
-          [% FOREACH v IN [20,50,30,45,65,40,70] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
-        </div>
+        [% IF rd_week_activity %]
+          <div class="rd-spark rd-chart rd-chart--spark" data-chart="spark" data-series='[[% last_seven_days.problems.join(',') %]]' aria-hidden="true"></div>
+        [% ELSE %]
+          <div class="rd-kpi__source">[% loc('No reports recorded') %]</div>
+        [% END %]
       </article>
 
       <article class="rd-kpi rd-kpi--warning">
         <header class="rd-kpi__head">
           <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='clock' %]</span>
-          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-down' %][% loc('Last 100') %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--neutral">[% loc('Last 100') %]</span>
         </header>
         <div class="rd-kpi__body">
           <div class="rd-kpi__value">[% rd_average | html %]</div>
           <div class="rd-kpi__label">[% loc('Avg. Days to Fix') %]</div>
           <div class="rd-kpi__sub">[% loc('Last 100 reports') %]</div>
         </div>
-        <div class="rd-spark" aria-hidden="true">
-          [% FOREACH v IN [90,80,75,65,60,50,45] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
-        </div>
+        <div class="rd-kpi__source">[% loc('Computed from fixed reports') %]</div>
       </article>
     </div>
 
@@ -96,7 +94,7 @@
       <header class="rd-card__head">
         <div>
           <h2 class="rd-card__title">[% loc('Performance over time') %]</h2>
-          <p class="rd-card__sub">[% loc('Monthly reports submitted vs. problems fixed') %]</p>
+          <p class="rd-card__sub">[% loc('Reports submitted vs. problems fixed by period') %]</p>
         </div>
         <ul class="rd-legend">
           <li><span class="rd-legend__dot rd-legend__dot--primary"></span>[% loc('Reported') %]</li>
@@ -117,7 +115,7 @@
             <h2 class="rd-card__title">[% loc('Last 7 days') %]</h2>
             <p class="rd-card__sub">[% loc('Daily report volume this week') %]</p>
           </div>
-          <span class="rd-pill rd-pill--success">[% loc('Active') %]</span>
+          <span class="rd-pill [% rd_week_activity ? 'rd-pill--success' : 'rd-pill--muted' %]">[% rd_week_activity ? loc('Active') : loc('No activity') %]</span>
         </header>
 
         <div class="rd-mini-stats">
@@ -135,15 +133,23 @@
           </div>
         </div>
 
-        <div class="rd-chart rd-chart--bar" data-chart="bar" data-series='[
-          [% FOREACH reports IN last_seven_days.problems %]
-            [% day_label = loop.last ? loc('Today') : '-' _ (7 - loop.count) _ loc('d') %]
-            {"day":"[% day_label | html %]","reports":[% reports || 0 %]}[% ',' UNLESS loop.last %]
-          [% END %]
-        ]'></div>
+        [% IF rd_week_activity %]
+          <div class="rd-chart rd-chart--bar" data-chart="bar" data-series='[
+            [% FOREACH reports IN last_seven_days.problems %]
+              [% day_label = loop.last ? loc('Today') : '-' _ (7 - loop.count) _ loc('d') %]
+              {"day":"[% day_label | html %]","reports":[% reports || 0 %]}[% ',' UNLESS loop.last %]
+            [% END %]
+          ]'></div>
+        [% ELSE %]
+          <div class="rd-empty rd-empty--chart">
+            <span class="rd-empty__icon">[% PROCESS 'reports/_dashboard_icon.html' name='trend' %]</span>
+            <h3 class="rd-empty__title">[% loc('No activity in the last 7 days') %]</h3>
+            <p class="rd-empty__text">[% loc('No reports, updates, or fixes were recorded for this period.') %]</p>
+          </div>
+        [% END %]
       </section>
 
-      <aside class="rd-picker rd-grid__col-2">
+      <aside class="rd-picker rd-picker--accent rd-grid__col-2">
         <div class="rd-picker__blur" aria-hidden="true"></div>
         <div class="rd-picker__head">
           <span class="rd-picker__icon">[% PROCESS 'reports/_dashboard_icon.html' name='map-pin' %]</span>
@@ -190,10 +196,7 @@
               <input type="text" id="rd-address" name="pc" class="rd-search__field" placeholder="[% loc('Enter address or ZIP') %]" autocomplete="postal-code">
             </div>
           </div>
-          <button type="submit" class="rd-picker__secondary-cta">
-            [% loc('View nearby') %]
-            [% PROCESS 'reports/_dashboard_icon.html' name='arrow-right' %]
-          </button>
+          <button type="submit" class="screen-reader-only">[% loc('View nearby') %]</button>
         </form>
       </aside>
     </div>
@@ -249,23 +252,31 @@
           </div>
         </header>
         <p class="rd-card__sub">[% loc('Most common issue types in the last 7 days.') %]</p>
-        <ul class="rd-cats">
-          [% FOREACH line IN top_five_categories %]
-            [% line_count = line.count | format_number ~%]
-            <li class="rd-cats__item">
-              <span class="rd-cats__icon" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='tag' %]</span>
-              <div class="rd-cats__body">
-                <div class="rd-cats__row">
-                  <span class="rd-cats__name">[% line.category | html %]</span>
-                  <span class="rd-cats__count">[% line_count %]</span>
+        [% IF top_five_categories.size %]
+          <ul class="rd-cats">
+            [% FOREACH line IN top_five_categories %]
+              [% line_count = line.count | format_number ~%]
+              <li class="rd-cats__item">
+                <span class="rd-cats__icon" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='tag' %]</span>
+                <div class="rd-cats__body">
+                  <div class="rd-cats__row">
+                    <span class="rd-cats__name">[% line.category | html %]</span>
+                    <span class="rd-cats__count">[% line_count %]</span>
+                  </div>
+                  <div class="rd-cats__bar">
+                    <span class="rd-cats__fill" style="width: [% line.count / (top_five_categories.0.count || 1) * 100 %]%"></span>
+                  </div>
                 </div>
-                <div class="rd-cats__bar">
-                  <span class="rd-cats__fill" style="width: [% line.count / (top_five_categories.0.count || 1) * 100 %]%"></span>
-                </div>
-              </div>
-            </li>
-          [% END %]
-        </ul>
+              </li>
+            [% END %]
+          </ul>
+        [% ELSE %]
+          <div class="rd-empty rd-empty--compact">
+            <span class="rd-empty__icon">[% PROCESS 'reports/_dashboard_icon.html' name='tag' %]</span>
+            <h3 class="rd-empty__title">[% loc('No category activity') %]</h3>
+            <p class="rd-empty__text">[% loc('No categories have reports in the last 7 days.') %]</p>
+          </div>
+        [% END %]
       </section>
     </div>
 
