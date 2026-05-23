@@ -10,6 +10,7 @@
         - Implementation committed as `c5049dac1` (`Wire reports dashboard redesign`) before documentation/tracker updates.
         - Follow-up committed as `7655c1bb8` (`Tighten reports dashboard data display`): removed unsupported demo-style trend values and fake activity visuals, derived the resolution rate from real totals, rendered KPI sparklines from real period arrays, showed honest empty states for zero weekly/category activity, changed the chart copy from monthly to period-based, and fixed sparse mobile sparkline sizing.
         - Follow-up committed as `c61e2c1de` (`Add reports dashboard preview data and hover`): added a staging-only `?dashboard_preview=1` mode with internally consistent Lovable-style sample data, cities across multiple states, populated categories, active weekly bars, and an interactive SVG chart tooltip/crosshair on hover while keeping normal `/reports` on real data.
+        - Follow-up committed as `1b7046dbb` (`Tune reports preview monthly chart`): adjusted the preview Jan-Dec sample series to create stronger month-to-month rises and dips while preserving the preview totals and monthly hover tooltip behavior.
 
     - InfraSignal - May 23, 2026 (Start Reporting form highlight):
         - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
