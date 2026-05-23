@@ -28,6 +28,29 @@
     return node;
   }
 
+  function clamp(value, min, max) {
+    return Math.min(Math.max(value, min), max);
+  }
+
+  function smoothPath(points) {
+    if (!points.length) return '';
+    if (points.length === 1) return 'M' + points[0].x + ' ' + points[0].y;
+
+    var path = 'M' + points[0].x + ' ' + points[0].y;
+    for (var index = 0; index < points.length - 1; index++) {
+      var previous = points[index - 1] || points[index];
+      var current = points[index];
+      var next = points[index + 1];
+      var after = points[index + 2] || next;
+      var cp1x = current.x + (next.x - previous.x) / 6;
+      var cp1y = current.y + (next.y - previous.y) / 6;
+      var cp2x = next.x - (after.x - current.x) / 6;
+      var cp2y = next.y - (after.y - current.y) / 6;
+      path += ' C' + cp1x + ' ' + cp1y + ' ' + cp2x + ' ' + cp2y + ' ' + next.x + ' ' + next.y;
+    }
+    return path;
+  }
+
   function renderArea(el) {
     var data = parseSeries(el);
     if (!data.length) return;
@@ -102,10 +125,14 @@
       svg.appendChild(label);
     });
 
-    function pathFor(key) {
+    function pointsFor(key) {
       return data.map(function (item, index) {
-        return (index === 0 ? 'M' : 'L') + x(index) + ' ' + y(item[key]);
-      }).join(' ');
+        return { x: x(index), y: y(item[key]) };
+      });
+    }
+
+    function pathFor(key) {
+      return smoothPath(pointsFor(key));
     }
 
     function areaFor(key) {
@@ -119,8 +146,70 @@
     svg.appendChild(svgEl('path', { d: pathFor('reported'), class: 'rd-chart__line-a' }));
     svg.appendChild(svgEl('path', { d: pathFor('fixed'), class: 'rd-chart__line-b' }));
 
+    var hoverLine = svgEl('line', {
+      x1: pad.l,
+      x2: pad.l,
+      y1: pad.t,
+      y2: pad.t + innerHeight,
+      class: 'rd-chart__hover-line'
+    });
+    var reportedDot = svgEl('circle', { r: 4, class: 'rd-chart__hover-dot rd-chart__hover-dot--reported' });
+    var fixedDot = svgEl('circle', { r: 4, class: 'rd-chart__hover-dot rd-chart__hover-dot--fixed' });
+    svg.appendChild(hoverLine);
+    svg.appendChild(reportedDot);
+    svg.appendChild(fixedDot);
+
     el.innerHTML = '';
     el.appendChild(svg);
+
+    var tooltip = document.createElement('div');
+    tooltip.className = 'rd-chart__tooltip';
+    el.appendChild(tooltip);
+
+    function hideHover() {
+      hoverLine.style.display = 'none';
+      reportedDot.style.display = 'none';
+      fixedDot.style.display = 'none';
+      tooltip.style.display = 'none';
+    }
+
+    function showHover(event) {
+      var rect = el.getBoundingClientRect();
+      var mouseX = clamp(event.clientX - rect.left, pad.l, width - pad.r);
+      var ratio = innerWidth ? (mouseX - pad.l) / innerWidth : 0;
+      var index = clamp(Math.round(ratio * (data.length - 1)), 0, data.length - 1);
+      var item = data[index];
+      var pointX = x(index);
+      var reportedY = y(item.reported);
+      var fixedY = y(item.fixed);
+
+      hoverLine.setAttribute('x1', pointX);
+      hoverLine.setAttribute('x2', pointX);
+      reportedDot.setAttribute('cx', pointX);
+      reportedDot.setAttribute('cy', reportedY);
+      fixedDot.setAttribute('cx', pointX);
+      fixedDot.setAttribute('cy', fixedY);
+
+      hoverLine.style.display = 'block';
+      reportedDot.style.display = 'block';
+      fixedDot.style.display = 'block';
+
+      tooltip.innerHTML = '<strong>' + item.month + '</strong>' +
+        '<span class="rd-chart__tooltip-reported">reported : ' + item.reported + '</span>' +
+        '<span class="rd-chart__tooltip-fixed">fixed : ' + item.fixed + '</span>';
+      tooltip.style.display = 'block';
+
+      var tooltipWidth = tooltip.offsetWidth;
+      var tooltipHeight = tooltip.offsetHeight;
+      var tooltipLeft = pointX + 14;
+      if (tooltipLeft + tooltipWidth > width - 8) tooltipLeft = pointX - tooltipWidth - 14;
+      tooltip.style.left = clamp(tooltipLeft, 8, width - tooltipWidth - 8) + 'px';
+      tooltip.style.top = clamp(Math.min(reportedY, fixedY) - 16, 8, height - tooltipHeight - 8) + 'px';
+    }
+
+    hideHover();
+    el.onmousemove = showHover;
+    el.onmouseleave = hideHover;
   }
 
   function renderBar(el) {

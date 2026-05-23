@@ -6934,6 +6934,51 @@ img {
   opacity: 0.9;
 }
 
+.rd-chart__hover-line {
+  stroke: rgba($gray-500, 0.32);
+  stroke-width: 1;
+  pointer-events: none;
+}
+
+.rd-chart__hover-dot {
+  stroke: #fff;
+  stroke-width: 2;
+  pointer-events: none;
+}
+
+.rd-chart__hover-dot--reported { fill: $primary-700; }
+.rd-chart__hover-dot--fixed { fill: $status-success; }
+
+.rd-chart__tooltip {
+  position: absolute;
+  z-index: 2;
+  display: none;
+  min-width: 6.5rem;
+  border: 1px solid $gray-300;
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 12px 26px rgba($primary-900, 0.14);
+  color: $gray-700;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  padding: 0.75rem 0.85rem;
+  pointer-events: none;
+
+  strong,
+  span {
+    display: block;
+  }
+
+  strong {
+    color: $gray-700;
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+  }
+}
+
+.rd-chart__tooltip-reported { color: $primary-700; }
+.rd-chart__tooltip-fixed { color: $status-success; }
+
 .rd-grid {
   display: grid;
   gap: 1.25rem;
