@@ -12,6 +12,7 @@
         - Follow-up committed as `c61e2c1de` (`Add reports dashboard preview data and hover`): added a staging-only `?dashboard_preview=1` mode with internally consistent Lovable-style sample data, cities across multiple states, populated categories, active weekly bars, and an interactive SVG chart tooltip/crosshair on hover while keeping normal `/reports` on real data.
         - Follow-up committed as `1b7046dbb` (`Tune reports preview monthly chart`): adjusted the preview Jan-Dec sample series to create stronger month-to-month rises and dips while preserving the preview totals and monthly hover tooltip behavior.
         - Follow-up committed as `ecce576b1` (`Surface reports monthly preview link`): added a staging-only hero action on live `/reports` that links to the monthly preview on the same host/port, plus a return link from preview to live data.
+        - Follow-up committed as `429e960e7` (`Show reports preview by default on staging`): made DEV/staging `/reports` show the monthly preview by default, with real live data still available at `/reports?dashboard_live=1`.
 
     - InfraSignal - May 23, 2026 (Start Reporting form highlight):
         - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
