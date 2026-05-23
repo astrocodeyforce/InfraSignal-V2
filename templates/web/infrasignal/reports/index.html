@@ -8,8 +8,8 @@
 
   IF rd_design_preview;
     problem_periods = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    problems_reported_by_period = [32, 41, 38, 55, 62, 48, 58, 71, 45, 53, 39, 44];
-    problems_fixed_by_period = [27, 35, 30, 42, 51, 44, 52, 60, 40, 48, 36, 42];
+    problems_reported_by_period = [28, 42, 35, 55, 64, 46, 57, 73, 39, 58, 41, 48];
+    problems_fixed_by_period = [24, 35, 29, 42, 60, 40, 50, 62, 34, 51, 36, 44];
     rd_week_problems = [8, 12, 6, 15, 9, 4, 3];
     rd_week_total = 57;
     rd_week_updates_total = 23;
@@ -121,7 +121,7 @@
       <header class="rd-card__head">
         <div>
           <h2 class="rd-card__title">[% loc('Performance over time') %]</h2>
-          <p class="rd-card__sub">[% loc('Reports submitted vs. problems fixed by period') %]</p>
+          <p class="rd-card__sub">[% rd_design_preview ? loc('Monthly reports submitted vs. problems fixed') : loc('Reports submitted vs. problems fixed by period') %]</p>
         </div>
         <ul class="rd-legend">
           <li><span class="rd-legend__dot rd-legend__dot--primary"></span>[% loc('Reported') %]</li>
