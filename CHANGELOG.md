@@ -1,6 +1,14 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 23, 2026 (Start Reporting form highlight):
+        - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
+        - Reused the existing CTA focus helper in `header-nav.js`; it now scrolls to the form, highlights the search pill, then leaves focus in the address/zipcode field.
+        - Reinforced the orange `Start Reporting` CTA text color so desktop and mobile button labels stay white across normal, visited, hover, and focus states.
+        - Added a reduced-motion fallback and rebuilt `web/cobrands/infrasignal/base.css` from `base.scss`.
+        - Verification confirmed the mobile/header `Start Reporting` flow lands on `/#postcodeForm`, applies the temporary highlight, removes it after the animation window, focuses `#pc`, and keeps zero horizontal overflow.
+        - Implementation committed as `0d28def2b` (`Highlight report form from header CTA`) and text-color follow-up committed as `ffa6d0500` (`Keep orange report CTA text white`) before documentation/tracker updates.
+
     - InfraSignal - May 23, 2026 (Report CTA address-form target):
         - Updated the public `Start Reporting` and main `Report an Issue` CTAs so they target the homepage address form at `/#postcodeForm` instead of linking to the bare homepage.
         - Added a small header navigation helper that focuses the address/zipcode field when report CTAs are clicked on the homepage or when the page loads with the `#postcodeForm` anchor.
