@@ -53,6 +53,21 @@
     </span>
     <h1 class="rd-hero__title">[% loc('Reports Dashboard') %][% IF body %] &ndash; [% body.name | html %][% END %]</h1>
     <p class="rd-hero__lede">[% loc('Real-time overview of infrastructure reports across all communities. See what is being reported, what is getting fixed, and how responsive local government is.') %]</p>
+    [% IF c.config.STAGING_SITE %]
+      <div class="rd-hero__actions">
+        [% IF rd_design_preview %]
+          <a class="rd-hero__preview-link rd-hero__preview-link--secondary" href="/reports">
+            [% PROCESS 'reports/_dashboard_icon.html' name='file' %]
+            <span>[% loc('View live data') %]</span>
+          </a>
+        [% ELSE %]
+          <a class="rd-hero__preview-link" href="/reports?dashboard_preview=1">
+            [% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %]
+            <span>[% loc('View monthly preview') %]</span>
+          </a>
+        [% END %]
+      </div>
+    [% END %]
   </div>
 </section>
 
