@@ -1,259 +1,280 @@
 [% USE Number.Format -%]
 [% extra_js = [
-    version('/vendor/chart.min.js'),
     version('/vendor/accessible-autocomplete.min.js'),
-    version('/js/dashboard.js'),
-    version('/cobrands/infrasignal/dashboard-overrides.js')
+    version('/cobrands/infrasignal/reports-dashboard.js')
 ] -%]
-[%
+[%-
     problems_reported = problems_reported_by_period.last | format_number;
     problems_fixed = problems_fixed_by_period.last | format_number;
     last_seven_reported = last_seven_days.problems_total | format_number;
     last_seven_updated = last_seven_days.updated_total | format_number;
     last_seven_fixed = last_seven_days.fixed_total | format_number;
     other_categories_formatted = other_categories | format_number;
+    rd_updated_label = updated_label || loc('Updated recently');
+    rd_average = average || '-';
 -%]
-[% INCLUDE 'header.html', title = loc('Reports Dashboard'), bodyclass = 'dashboard' %]
+[% INCLUDE 'header.html', title = loc('Reports Dashboard'), bodyclass = 'dashboard reports-dashboard rd-page' %]
 
-<section class="reports-dashboard__hero">
-  <div class="infra-container">
-    <h1>[% loc('Reports Dashboard') %]
-    [% IF body %] &ndash; [% body.name %] [% END %]
-    </h1>
-    <p>[% loc('Real-time overview of infrastructure reports across all communities. See what\'s being reported, what\'s getting fixed, and how responsive your local government is.') %]</p>
+<section class="rd-hero">
+  <div class="rd-hero__pattern" aria-hidden="true"></div>
+  <div class="infra-container rd-hero__inner">
+    <span class="rd-hero__badge">
+      <span class="rd-hero__pulse" aria-hidden="true"></span>
+      [% loc('Live') %] &middot; [% rd_updated_label | html %]
+    </span>
+    <h1 class="rd-hero__title">[% loc('Reports Dashboard') %][% IF body %] &ndash; [% body.name | html %][% END %]</h1>
+    <p class="rd-hero__lede">[% loc('Real-time overview of infrastructure reports across all communities. See what is being reported, what is getting fixed, and how responsive local government is.') %]</p>
   </div>
 </section>
 
-<div class="reports-dashboard__body">
-  <div class="infra-container">
+<div class="rd-shell">
+  <div class="infra-container rd-stack">
 
-    <!-- ===== KPI Strip ===== -->
-    <div class="kpi-strip">
-      <div class="kpi-card">
-        <div class="kpi-card__icon kpi-card__icon--primary">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+    <div class="rd-kpis">
+      <article class="rd-kpi rd-kpi--primary">
+        <header class="rd-kpi__head">
+          <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='file' %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %][% loc('All time') %]</span>
+        </header>
+        <div class="rd-kpi__body">
+          <div class="rd-kpi__value">[% problems_reported %]</div>
+          <div class="rd-kpi__label">[% loc('Total Reports') %]</div>
+          <div class="rd-kpi__sub">[% loc('All time') %]</div>
         </div>
-        <div>
-          <div class="kpi-card__value">[% problems_reported %]</div>
-          <div class="kpi-card__label">[% loc('Total Reports') %]</div>
-          <div class="kpi-card__sub">[% loc('All time') %]</div>
+        <div class="rd-spark" aria-hidden="true">
+          [% FOREACH v IN [40,60,50,80,65,90,100] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
         </div>
-      </div>
+      </article>
 
-      <div class="kpi-card">
-        <div class="kpi-card__icon kpi-card__icon--success">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="m9 11 3 3L22 4"/></svg>
+      <article class="rd-kpi rd-kpi--success">
+        <header class="rd-kpi__head">
+          <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='check' %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %][% loc('Resolved') %]</span>
+        </header>
+        <div class="rd-kpi__body">
+          <div class="rd-kpi__value">[% problems_fixed %]</div>
+          <div class="rd-kpi__label">[% loc('Problems Fixed') %]</div>
+          <div class="rd-kpi__sub">[% loc('All time') %]</div>
         </div>
-        <div>
-          <div class="kpi-card__value">[% problems_fixed %]</div>
-          <div class="kpi-card__label">[% loc('Problems Fixed') %]</div>
-          <div class="kpi-card__sub">[% loc('All time') %]</div>
+        <div class="rd-spark" aria-hidden="true">
+          [% FOREACH v IN [30,45,55,60,72,80,92] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
         </div>
-      </div>
+      </article>
 
-      <div class="kpi-card">
-        <div class="kpi-card__icon kpi-card__icon--accent">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+      <article class="rd-kpi rd-kpi--accent">
+        <header class="rd-kpi__head">
+          <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='trend' %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %][% loc('Active') %]</span>
+        </header>
+        <div class="rd-kpi__body">
+          <div class="rd-kpi__value">[% last_seven_reported %]</div>
+          <div class="rd-kpi__label">[% loc('Reports This Week') %]</div>
+          <div class="rd-kpi__sub">[% loc('Last 7 days') %]</div>
         </div>
-        <div>
-          <div class="kpi-card__value">[% last_seven_reported %]</div>
-          <div class="kpi-card__label">[% loc('Reports This Week') %]</div>
-          <div class="kpi-card__sub">[% loc('Last 7 days') %]</div>
+        <div class="rd-spark" aria-hidden="true">
+          [% FOREACH v IN [20,50,30,45,65,40,70] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
         </div>
-      </div>
+      </article>
 
-      <div class="kpi-card">
-        <div class="kpi-card__icon kpi-card__icon--warning">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      <article class="rd-kpi rd-kpi--warning">
+        <header class="rd-kpi__head">
+          <span class="rd-kpi__icon">[% PROCESS 'reports/_dashboard_icon.html' name='clock' %]</span>
+          <span class="rd-kpi__trend rd-kpi__trend--good">[% PROCESS 'reports/_dashboard_icon.html' name='trend-down' %][% loc('Last 100') %]</span>
+        </header>
+        <div class="rd-kpi__body">
+          <div class="rd-kpi__value">[% rd_average | html %]</div>
+          <div class="rd-kpi__label">[% loc('Avg. Days to Fix') %]</div>
+          <div class="rd-kpi__sub">[% loc('Last 100 reports') %]</div>
         </div>
-        <div>
-          <div class="kpi-card__value">[% average || '-' %]</div>
-          <div class="kpi-card__label">[% loc('Avg. Days to Fix') %]</div>
-          <div class="kpi-card__sub">[% loc('Last 100 reports') %]</div>
+        <div class="rd-spark" aria-hidden="true">
+          [% FOREACH v IN [90,80,75,65,60,50,45] %]<span class="rd-spark__bar[% IF loop.last %] is-current[% END %]" style="height: [% v %]%"></span>[% END %]
         </div>
-      </div>
+      </article>
     </div>
 
-    <!-- ===== All Time Chart ===== -->
-    <div class="chart-card">
-      <div class="chart-card__header">
+    <section class="rd-card">
+      <header class="rd-card__head">
         <div>
-          <h2 class="chart-card__title">[% loc('All Time') %]</h2>
-          <p class="chart-card__subtitle">[% loc('Monthly reports submitted vs. problems fixed') %]</p>
+          <h2 class="rd-card__title">[% loc('Performance over time') %]</h2>
+          <p class="rd-card__sub">[% loc('Monthly reports submitted vs. problems fixed') %]</p>
         </div>
-        <div class="chart-card__legend">
-          <span><span class="legend-dot legend-dot--primary"></span> [% loc('Reported') %]</span>
-          <span><span class="legend-dot legend-dot--success"></span> [% loc('Fixed') %]</span>
-        </div>
-      </div>
-      <div class="chart-card__canvas">
-        <canvas id="chart-all-reports" width="600" height="250"
-            data-labels="[[% FOR period IN problem_periods %]&quot;[% period %]&quot;[% IF NOT loop.last %],[% END %][% END %]]"
-            data-values-reports="[[% problems_reported_by_period.join(',') %]]"
-            data-values-fixed="[[% problems_fixed_by_period.join(',') %]]"
-            ></canvas>
-      </div>
-    </div>
+        <ul class="rd-legend">
+          <li><span class="rd-legend__dot rd-legend__dot--primary"></span>[% loc('Reported') %]</li>
+          <li><span class="rd-legend__dot rd-legend__dot--success"></span>[% loc('Fixed') %]</li>
+        </ul>
+      </header>
+      <div class="rd-chart rd-chart--area" data-chart="area" data-series='[
+        [% FOREACH period IN problem_periods %]
+          {"month":"[% period | html %]","reported":[% problems_reported_by_period.${loop.index} || 0 %],"fixed":[% problems_fixed_by_period.${loop.index} || 0 %]}[% ',' UNLESS loop.last %]
+        [% END %]
+      ]'></div>
+    </section>
 
-    <!-- ===== Last 7 Days + Area Picker ===== -->
-    <div class="split-row">
-
-      <!-- Last 7 Days -->
-      <div class="chart-card">
-        <h2 class="chart-card__title">[% loc('Last 7 Days') %]</h2>
-        <p class="chart-card__subtitle">[% loc('Daily report volume this week') %]</p>
-
-        <div class="stats-row">
+    <div class="rd-grid rd-grid--5">
+      <section class="rd-card rd-grid__col-3">
+        <header class="rd-card__head">
           <div>
-            <div class="stats-row__value stats-row__value--primary">[% last_seven_reported %]</div>
-            <div class="stats-row__label">[% loc('problems reported') %]</div>
+            <h2 class="rd-card__title">[% loc('Last 7 days') %]</h2>
+            <p class="rd-card__sub">[% loc('Daily report volume this week') %]</p>
           </div>
-          <div>
-            <div class="stats-row__value stats-row__value--accent">[% last_seven_updated %]</div>
-            <div class="stats-row__label">[% loc('updates on problems') %]</div>
+          <span class="rd-pill rd-pill--success">[% loc('Active') %]</span>
+        </header>
+
+        <div class="rd-mini-stats">
+          <div class="rd-mini-stats__item rd-mini-stats__item--primary">
+            <div class="rd-mini-stats__value">[% last_seven_reported %]</div>
+            <div class="rd-mini-stats__label">[% loc('Reported') %]</div>
           </div>
-          <div>
-            <div class="stats-row__value stats-row__value--success">[% last_seven_fixed %]</div>
-            <div class="stats-row__label">[% loc('problems marked as fixed') %]</div>
+          <div class="rd-mini-stats__item rd-mini-stats__item--accent">
+            <div class="rd-mini-stats__value">[% last_seven_updated %]</div>
+            <div class="rd-mini-stats__label">[% loc('Updates') %]</div>
+          </div>
+          <div class="rd-mini-stats__item rd-mini-stats__item--success">
+            <div class="rd-mini-stats__value">[% last_seven_fixed %]</div>
+            <div class="rd-mini-stats__label">[% loc('Fixed') %]</div>
           </div>
         </div>
 
-        <div class="chart-card__canvas" id="chart-7day">
-          <div class="dashboard-sparklines">
-            <div>
-              <div class="labelled-sparkline">
-                <canvas width="200" height="50" data-color="#D97B0C" data-values="[% last_seven_days.problems.join(' ') %]"></canvas>
-              </div>
-            </div>
-            <div>
-              <div class="labelled-sparkline">
-                <canvas width="200" height="50" data-color="#269AE9" data-values="[% last_seven_days.updated.join(' ') %]"></canvas>
-              </div>
-            </div>
-            <div>
-              <div class="labelled-sparkline">
-                <canvas width="200" height="50" data-color="#56A54A" data-values="[% last_seven_days.fixed.join(' ') %]"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Area Picker -->
-      <div class="area-picker">
-        <div class="area-picker__icon-title">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-          <h2 class="chart-card__title">[% loc('Show Reports in Your Area') %]</h2>
-        </div>
-        <p class="area-picker__subtitle">[% loc('Pick your local authority to see reports near you.') %]</p>
-
-        <form method="get" action="/reports">
-          [% IF body %]
-            <select id="ward" name="ward" class="js-autocomplete" required>
-              <option value="">[% loc('Choose your neighborhood…') %]</option>
-              [% FOR child IN children.values.sort('name') %]
-                <option>[% child.name | html ~%]</option>
-              [% END %]
-            </select>
-          [% ELSE %]
-            <select id="body" name="body" class="js-autocomplete" required>
-              <option value="">[% loc('Choose your neighborhood…') %]</option>
-              [% FOR b IN bodies %]
-                <option value="[% b.id %]">[% b.name | html ~%]
-                    [% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]
-                </option>
-              [% END %]
-            </select>
+        <div class="rd-chart rd-chart--bar" data-chart="bar" data-series='[
+          [% FOREACH reports IN last_seven_days.problems %]
+            [% day_label = loop.last ? loc('Today') : '-' _ (7 - loop.count) _ loc('d') %]
+            {"day":"[% day_label | html %]","reports":[% reports || 0 %]}[% ',' UNLESS loop.last %]
           [% END %]
-          <button type="submit" class="area-picker__go-btn">
-            [% loc('View Reports') %]
-            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+        ]'></div>
+      </section>
+
+      <aside class="rd-picker rd-grid__col-2">
+        <div class="rd-picker__blur" aria-hidden="true"></div>
+        <div class="rd-picker__head">
+          <span class="rd-picker__icon">[% PROCESS 'reports/_dashboard_icon.html' name='map-pin' %]</span>
+          <h2 class="rd-picker__title">[% loc('Reports in your area') %]</h2>
+        </div>
+        <p class="rd-picker__lede">[% loc('Pick your local authority or search an address to see community-specific reports.') %]</p>
+
+        <form class="rd-picker__form" action="[% body ? body_url : '/reports' %]" method="get">
+          [% IF body %]
+            <label class="rd-picker__label" for="ward">[% loc('Jurisdiction') %]</label>
+            <div class="rd-select">
+              <select id="ward" name="ward" class="rd-select__field js-autocomplete" required>
+                <option value="">[% loc('Select a jurisdiction...') %]</option>
+                [% FOR child IN children.values.sort('name') %]
+                  <option>[% child.name | html ~%]</option>
+                [% END %]
+              </select>
+              <span class="rd-select__caret" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='chevron-down' %]</span>
+            </div>
+          [% ELSE %]
+            <label class="rd-picker__label" for="body">[% loc('Jurisdiction') %]</label>
+            <div class="rd-select">
+              <select id="body" name="body" class="rd-select__field js-autocomplete" required>
+                <option value="">[% loc('Select a jurisdiction...') %]</option>
+                [% FOR b IN bodies %]
+                  <option value="[% b.id %]">[% b.name | html ~%][% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]</option>
+                [% END %]
+              </select>
+              <span class="rd-select__caret" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='chevron-down' %]</span>
+            </div>
+          [% END %]
+
+          <button type="submit" class="rd-picker__cta">
+            [% loc('Explore reports') %]
+            [% PROCESS 'reports/_dashboard_icon.html' name='arrow-right' %]
           </button>
         </form>
-        <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            var input = document.querySelector('.area-picker .autocomplete__input');
-            if (input) input.setAttribute('placeholder', '[% loc("Choose your neighborhood…") %]');
-          });
-        </script>
-      </div>
+
+        <form class="rd-picker__address" action="/around" method="get">
+          <div class="rd-picker__divider">
+            <label class="rd-picker__label" for="rd-address">[% loc('Or search by address') %]</label>
+            <div class="rd-search">
+              <span class="rd-search__icon" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='search' %]</span>
+              <input type="text" id="rd-address" name="pc" class="rd-search__field" placeholder="[% loc('Enter address or ZIP') %]" autocomplete="postal-code">
+            </div>
+          </div>
+          <button type="submit" class="rd-picker__secondary-cta">
+            [% loc('View nearby') %]
+            [% PROCESS 'reports/_dashboard_icon.html' name='arrow-right' %]
+          </button>
+        </form>
+      </aside>
     </div>
 
-    <!-- ===== Top 5 Sections ===== -->
-    <div class="top5-grid">
-
+    <div class="rd-grid rd-grid--2">
       [% IF NOT body %]
-      <!-- Top 5 Responsive Authorities -->
-      <div class="top5-card">
-        <div class="top5-card__icon-title">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/></svg>
-          <h2 class="chart-card__title">[% loc('Top 5 Responsive Authorities') %]</h2>
-        </div>
-        <p class="top5-card__subtitle">[% loc('Average time between a problem being reported and being fixed, last 100 reports.') %]</p>
-
-        <div class="auth-list">
-          [% SET rank = 0 %]
-          [% FOREACH line IN top_five_bodies %]
-            [% rank = rank + 1 %]
-            <div class="auth-list__item">
-              <div class="auth-list__rank auth-list__rank--[% IF rank <= 3 %][% rank %][% ELSE %]default[% END %]">[% rank %]</div>
-              <div class="auth-list__info">
-                <div class="auth-list__name">[% line.name | html %]</div>
-              </div>
-              <div class="auth-list__avg">
-                <div class="auth-list__days-value [% IF line.days <= 3 %]auth-list__days-value--fast[% ELSIF line.days <= 5 %]auth-list__days-value--medium[% ELSE %]auth-list__days-value--slow[% END %]">[% line.days %]</div>
-                <div class="auth-list__days-label">[% loc('avg days') %]</div>
-              </div>
-            </div>
-          [% END %]
-
-          <div class="auth-list__footer">
-            <span>[% loc('Overall average') %]</span>
-            <strong>[% tprintf(nget("%s day", "%s days", average), average) %]</strong>
+      <section class="rd-card">
+        <header class="rd-card__head">
+          <div class="rd-card__title-row">
+            <span class="rd-card__icon rd-card__icon--primary">[% PROCESS 'reports/_dashboard_icon.html' name='building' %]</span>
+            <h2 class="rd-card__title">[% loc('Top 5 Responsive Authorities') %]</h2>
           </div>
-        </div>
-      </div>
+          <span class="rd-card__trophy" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='trophy' %]</span>
+        </header>
+        <p class="rd-card__sub">[% loc('Average time between a problem being reported and being fixed, last 100 reports.') %]</p>
+        <ol class="rd-rank">
+          [% FOREACH line IN top_five_bodies %]
+            [% rank_class = 'rd-rank__num' %]
+            [% IF loop.index == 0 %][% rank_class = rank_class _ ' rd-rank__num--gold' %]
+            [% ELSIF loop.index == 1 %][% rank_class = rank_class _ ' rd-rank__num--silver' %]
+            [% ELSIF loop.index == 2 %][% rank_class = rank_class _ ' rd-rank__num--bronze' %]
+            [% END %]
+            [% day_class = 'rd-rank__days' %]
+            [% IF line.days <= 3 %][% day_class = day_class _ ' rd-rank__days--good' %]
+            [% ELSIF line.days <= 5 %][% day_class = day_class _ ' rd-rank__days--ok' %]
+            [% ELSE %][% day_class = day_class _ ' rd-rank__days--bad' %]
+            [% END %]
+            <li class="rd-rank__item">
+              <span class="[% rank_class %]">[% loop.index + 1 %]</span>
+              <div class="rd-rank__body">
+                <div class="rd-rank__name">[% line.name | html %]</div>
+                <div class="rd-rank__meta">[% loc('Average fix time') %]</div>
+              </div>
+              <div class="rd-rank__metric">
+                <div class="[% day_class %]">[% line.days %]</div>
+                <div class="rd-rank__unit">[% loc('avg days') %]</div>
+              </div>
+            </li>
+          [% END %]
+        </ol>
+        <footer class="rd-card__foot">
+          <span>[% loc('Overall regional average') %]</span>
+          <strong>[% tprintf(nget('%s day', '%s days', average), average) %]</strong>
+        </footer>
+      </section>
       [% END %]
 
-      <!-- Top 5 Categories -->
-      <div class="top5-card">
-        <div class="top5-card__icon-title">
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 2 7l10 5 10-5-10-5Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>
-          <h2 class="chart-card__title">[% loc('Top 5 Most Used Categories') %]</h2>
-        </div>
-        <p class="top5-card__subtitle">[% loc('Number of problems reported in each category, in the last 7 days.') %]</p>
-
-        <div class="cat-list">
+      <section class="rd-card">
+        <header class="rd-card__head">
+          <div class="rd-card__title-row">
+            <span class="rd-card__icon rd-card__icon--accent">[% PROCESS 'reports/_dashboard_icon.html' name='tag' %]</span>
+            <h2 class="rd-card__title">[% loc('Top 5 Most Reported Categories') %]</h2>
+          </div>
+        </header>
+        <p class="rd-card__sub">[% loc('Most common issue types in the last 7 days.') %]</p>
+        <ul class="rd-cats">
           [% FOREACH line IN top_five_categories %]
             [% line_count = line.count | format_number ~%]
-            <div class="cat-list__item">
-              <div class="cat-list__header">
-                <span class="cat-list__name">[% line.category | html %]</span>
-                <span class="cat-list__count">[% tprintf(nget("%s report", "%s reports", line.count), decode(line_count)) %]</span>
+            <li class="rd-cats__item">
+              <span class="rd-cats__icon" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='tag' %]</span>
+              <div class="rd-cats__body">
+                <div class="rd-cats__row">
+                  <span class="rd-cats__name">[% line.category | html %]</span>
+                  <span class="rd-cats__count">[% line_count %]</span>
+                </div>
+                <div class="rd-cats__bar">
+                  <span class="rd-cats__fill" style="width: [% line.count / (top_five_categories.0.count || 1) * 100 %]%"></span>
+                </div>
               </div>
-              <div class="cat-list__bar">
-                <div class="cat-list__bar-fill" style="width: [% line.count / (top_five_categories.0.count || 1) * 100 %]%"></div>
-              </div>
-            </div>
+            </li>
           [% END %]
-
-          <div class="cat-list__footer">
-            <a href="/#postcodeForm">
-              [% loc('Report an issue') %]
-              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
-      </div>
+        </ul>
+      </section>
     </div>
 
-    <!-- ===== CTA Banner ===== -->
     <div class="cta-banner">
       <h2>[% loc('See something that needs fixing?') %]</h2>
       <p>[% loc('Report infrastructure issues in your community. It only takes a minute.') %]</p>
       <a href="/#postcodeForm" class="cta-banner__btn">
         [% loc('Report an Issue') %]
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        [% PROCESS 'reports/_dashboard_icon.html' name='arrow-right' %]
       </a>
     </div>
 
