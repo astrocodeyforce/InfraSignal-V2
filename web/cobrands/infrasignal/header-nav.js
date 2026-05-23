@@ -45,6 +45,47 @@
     });
   }
 
+  /* Focus the address form when report CTAs point to the homepage form. */
+  function focusReportAddressForm() {
+    var form = document.getElementById('postcodeForm');
+    var input = document.getElementById('pc');
+    if (!form || !input) return false;
+
+    try {
+      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } catch (e) {
+      form.scrollIntoView();
+    }
+    window.setTimeout(function () {
+      try {
+        input.focus({ preventScroll: true });
+      } catch (e) {
+        input.focus();
+      }
+    }, 250);
+    return true;
+  }
+
+  document.querySelectorAll('a[href="/#postcodeForm"], a[href="#postcodeForm"]').forEach(function (link) {
+    link.addEventListener('click', function (event) {
+      var url = new URL(link.href, window.location.href);
+      var currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+      var linkPath = url.pathname.replace(/\/+$/, '') || '/';
+      if (url.hash === '#postcodeForm' && linkPath === currentPath && focusReportAddressForm()) {
+        event.preventDefault();
+        if (window.history && window.history.pushState) {
+          window.history.pushState(null, '', '#postcodeForm');
+        } else {
+          window.location.hash = 'postcodeForm';
+        }
+      }
+    });
+  });
+
+  if (window.location.hash === '#postcodeForm') {
+    window.setTimeout(focusReportAddressForm, 150);
+  }
+
   /* ── Language Switcher Portal ── */
   var langBtn = document.querySelector('#lang-switcher-header .lang-dd__btn');
   if (langBtn) {
