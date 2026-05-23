@@ -51,6 +51,14 @@
     var input = document.getElementById('pc');
     if (!form || !input) return false;
 
+    form.classList.remove('is-report-cta-highlight');
+    void form.offsetWidth;
+    form.classList.add('is-report-cta-highlight');
+    window.clearTimeout(form._reportCtaHighlightTimer);
+    form._reportCtaHighlightTimer = window.setTimeout(function () {
+      form.classList.remove('is-report-cta-highlight');
+    }, 1400);
+
     try {
       form.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (e) {

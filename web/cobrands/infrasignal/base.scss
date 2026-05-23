@@ -1155,6 +1155,10 @@ textarea:focus {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
+        &.is-report-cta-highlight div {
+            animation: report-cta-form-highlight 1.3s ease-out;
+        }
+
         input[type="text"],
         input#pc[type="text"] {
             flex: 1 1 auto;
@@ -1217,6 +1221,28 @@ textarea:focus {
                 padding: 14px 18px;
                 font-size: 15px;
             }
+        }
+    }
+
+    @keyframes report-cta-form-highlight {
+        0% {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(0);
+        }
+        28% {
+            box-shadow: 0 0 0 5px rgba($accent-500, 0.38), 0 0 0 12px rgba(255, 255, 255, 0.18), 0 12px 32px rgba(0, 0, 0, 0.24);
+            transform: translateY(-1px);
+        }
+        100% {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            transform: translateY(0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .postcode-form-box.is-report-cta-highlight div {
+            animation: none;
+            box-shadow: 0 0 0 5px rgba($accent-500, 0.38), 0 4px 20px rgba(0, 0, 0, 0.15);
         }
     }
 
