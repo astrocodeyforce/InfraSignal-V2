@@ -6633,52 +6633,6 @@ img {
   line-height: 1.7;
 }
 
-.rd-hero__actions {
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
-}
-
-.rd-hero__preview-link {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  min-height: 2.75rem;
-  padding: 0.75rem 1.1rem;
-  border: 1px solid rgba(#fff, 0.9);
-  border-radius: 999px;
-  background: #fff;
-  color: $primary-900;
-  font-size: 0.9rem;
-  font-weight: 800;
-  line-height: 1;
-  text-decoration: none;
-  box-shadow: 0 14px 32px rgba(#000, 0.18);
-  transition: background 0.18s ease, color 0.18s ease, transform 0.18s ease;
-
-  &:hover,
-  &:focus {
-    background: $accent-500;
-    border-color: $accent-500;
-    color: #fff;
-    text-decoration: none;
-    transform: translateY(-1px);
-  }
-
-  svg {
-    width: 1rem;
-    height: 1rem;
-  }
-}
-
-.rd-hero__preview-link--secondary {
-  background: rgba(#fff, 0.12);
-  border-color: rgba(#fff, 0.34);
-  color: #fff;
-  box-shadow: none;
-}
-
 .rd-shell {
   position: relative;
   z-index: 2;
@@ -7517,10 +7471,6 @@ img {
 
   .rd-hero__inner {
     text-align: left;
-  }
-
-  .rd-hero__actions {
-    justify-content: flex-start;
   }
 
   .rd-kpis,

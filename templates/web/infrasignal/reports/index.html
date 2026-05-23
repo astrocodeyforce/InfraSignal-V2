@@ -4,35 +4,14 @@
     version('/cobrands/infrasignal/reports-dashboard.js')
 ] -%]
 [%-
-  rd_design_preview = c.config.STAGING_SITE && c.get_param('dashboard_live') != 1;
-
-  IF rd_design_preview;
-    problem_periods = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    problems_reported_by_period = [28, 42, 35, 55, 64, 46, 57, 73, 39, 58, 41, 48];
-    problems_fixed_by_period = [24, 35, 29, 42, 60, 40, 50, 62, 34, 51, 36, 44];
-    rd_week_problems = [8, 12, 6, 15, 9, 4, 3];
-    rd_week_total = 57;
-    rd_week_updates_total = 23;
-    rd_week_fixed_total = 14;
-    rd_total_reports = 586;
-    rd_total_fixed = 507;
-    rd_average = '3.8';
-    rd_regional_average = '4.3';
-    rd_preview_body_names = ['Springfield, IL', 'Shelbyville, IN', 'Madison, WI', 'Raleigh, NC', 'Boulder, CO'];
-    rd_preview_body_days = [2.1, 3.4, 4.2, 5.8, 6.1];
-    rd_preview_body_reports = [156, 89, 229, 45, 67];
-    rd_preview_category_names = ['Pothole & Road', 'Streetlight', 'Sidewalk', 'Graffiti', 'Illegal Dumping'];
-    rd_preview_category_counts = [18, 13, 11, 8, 7];
-  ELSE;
-    rd_week_problems = last_seven_days.problems;
-    rd_week_total = last_seven_days.problems_total || 0;
-    rd_week_updates_total = last_seven_days.updated_total || 0;
-    rd_week_fixed_total = last_seven_days.fixed_total || 0;
-    rd_total_reports = problems_reported_by_period.last || 0;
-    rd_total_fixed = problems_fixed_by_period.last || 0;
-    rd_average = average || '-';
-    rd_regional_average = average || '-';
-  END;
+  rd_week_problems = last_seven_days.problems;
+  rd_week_total = last_seven_days.problems_total || 0;
+  rd_week_updates_total = last_seven_days.updated_total || 0;
+  rd_week_fixed_total = last_seven_days.fixed_total || 0;
+  rd_total_reports = problems_reported_by_period.last || 0;
+  rd_total_fixed = problems_fixed_by_period.last || 0;
+  rd_average = average || '-';
+  rd_regional_average = average || '-';
 
   problems_reported = rd_total_reports | format_number;
   problems_fixed = rd_total_fixed | format_number;
@@ -49,25 +28,10 @@
   <div class="infra-container rd-hero__inner">
     <span class="rd-hero__badge">
       <span class="rd-hero__pulse" aria-hidden="true"></span>
-      [% IF rd_design_preview %][% loc('Design preview data') %][% ELSIF updated_label %][% loc('Live') %] &middot; [% updated_label | html %][% ELSE %][% loc('Live data') %][% END %]
+      [% IF updated_label %][% loc('Live') %] &middot; [% updated_label | html %][% ELSE %][% loc('Live data') %][% END %]
     </span>
     <h1 class="rd-hero__title">[% loc('Reports Dashboard') %][% IF body %] &ndash; [% body.name | html %][% END %]</h1>
     <p class="rd-hero__lede">[% loc('Real-time overview of infrastructure reports across all communities. See what is being reported, what is getting fixed, and how responsive local government is.') %]</p>
-    [% IF c.config.STAGING_SITE %]
-      <div class="rd-hero__actions">
-        [% IF rd_design_preview %]
-          <a class="rd-hero__preview-link rd-hero__preview-link--secondary" href="/reports?dashboard_live=1">
-            [% PROCESS 'reports/_dashboard_icon.html' name='file' %]
-            <span>[% loc('View live data') %]</span>
-          </a>
-        [% ELSE %]
-          <a class="rd-hero__preview-link" href="/reports">
-            [% PROCESS 'reports/_dashboard_icon.html' name='trend-up' %]
-            <span>[% loc('View monthly preview') %]</span>
-          </a>
-        [% END %]
-      </div>
-    [% END %]
   </div>
 </section>
 
@@ -136,7 +100,7 @@
       <header class="rd-card__head">
         <div>
           <h2 class="rd-card__title">[% loc('Performance over time') %]</h2>
-          <p class="rd-card__sub">[% rd_design_preview ? loc('Monthly reports submitted vs. problems fixed') : loc('Reports submitted vs. problems fixed by period') %]</p>
+          <p class="rd-card__sub">[% loc('Reports submitted vs. problems fixed by period') %]</p>
         </div>
         <ul class="rd-legend">
           <li><span class="rd-legend__dot rd-legend__dot--primary"></span>[% loc('Reported') %]</li>
@@ -255,55 +219,28 @@
         </header>
         <p class="rd-card__sub">[% loc('Average time between a problem being reported and being fixed, last 100 reports.') %]</p>
         <ol class="rd-rank">
-          [% IF rd_design_preview %]
-            [% FOREACH body_name IN rd_preview_body_names %]
-              [% body_days = rd_preview_body_days.${loop.index}; body_reports = rd_preview_body_reports.${loop.index} %]
-              [% rank_class = 'rd-rank__num' %]
-              [% IF loop.index == 0 %][% rank_class = rank_class _ ' rd-rank__num--gold' %]
-              [% ELSIF loop.index == 1 %][% rank_class = rank_class _ ' rd-rank__num--silver' %]
-              [% ELSIF loop.index == 2 %][% rank_class = rank_class _ ' rd-rank__num--bronze' %]
-              [% END %]
-              [% day_class = 'rd-rank__days' %]
-              [% IF body_days <= 3 %][% day_class = day_class _ ' rd-rank__days--good' %]
-              [% ELSIF body_days <= 5 %][% day_class = day_class _ ' rd-rank__days--ok' %]
-              [% ELSE %][% day_class = day_class _ ' rd-rank__days--bad' %]
-              [% END %]
-              <li class="rd-rank__item">
-                <span class="[% rank_class %]">[% loop.index + 1 %]</span>
-                <div class="rd-rank__body">
-                  <div class="rd-rank__name">[% body_name | html %]</div>
-                  <div class="rd-rank__meta">[% body_reports | format_number %] [% loc('reports') %]</div>
-                </div>
-                <div class="rd-rank__metric">
-                  <div class="[% day_class %]">[% body_days %]</div>
-                  <div class="rd-rank__unit">[% loc('avg days') %]</div>
-                </div>
-              </li>
+          [% FOREACH line IN top_five_bodies %]
+            [% rank_class = 'rd-rank__num' %]
+            [% IF loop.index == 0 %][% rank_class = rank_class _ ' rd-rank__num--gold' %]
+            [% ELSIF loop.index == 1 %][% rank_class = rank_class _ ' rd-rank__num--silver' %]
+            [% ELSIF loop.index == 2 %][% rank_class = rank_class _ ' rd-rank__num--bronze' %]
             [% END %]
-          [% ELSE %]
-            [% FOREACH line IN top_five_bodies %]
-              [% rank_class = 'rd-rank__num' %]
-              [% IF loop.index == 0 %][% rank_class = rank_class _ ' rd-rank__num--gold' %]
-              [% ELSIF loop.index == 1 %][% rank_class = rank_class _ ' rd-rank__num--silver' %]
-              [% ELSIF loop.index == 2 %][% rank_class = rank_class _ ' rd-rank__num--bronze' %]
-              [% END %]
-              [% day_class = 'rd-rank__days' %]
-              [% IF line.days <= 3 %][% day_class = day_class _ ' rd-rank__days--good' %]
-              [% ELSIF line.days <= 5 %][% day_class = day_class _ ' rd-rank__days--ok' %]
-              [% ELSE %][% day_class = day_class _ ' rd-rank__days--bad' %]
-              [% END %]
-              <li class="rd-rank__item">
-                <span class="[% rank_class %]">[% loop.index + 1 %]</span>
-                <div class="rd-rank__body">
-                  <div class="rd-rank__name">[% line.name | html %]</div>
-                  <div class="rd-rank__meta">[% loc('Average fix time') %]</div>
-                </div>
-                <div class="rd-rank__metric">
-                  <div class="[% day_class %]">[% line.days %]</div>
-                  <div class="rd-rank__unit">[% loc('avg days') %]</div>
-                </div>
-              </li>
-            [% END %]
+            [% day_class = 'rd-rank__days' %]
+            [% IF line.days <= 3 %][% day_class = day_class _ ' rd-rank__days--good' %]
+            [% ELSIF line.days <= 5 %][% day_class = day_class _ ' rd-rank__days--ok' %]
+            [% ELSE %][% day_class = day_class _ ' rd-rank__days--bad' %]
+          [% END %]
+            <li class="rd-rank__item">
+              <span class="[% rank_class %]">[% loop.index + 1 %]</span>
+              <div class="rd-rank__body">
+                <div class="rd-rank__name">[% line.name | html %]</div>
+                <div class="rd-rank__meta">[% loc('Average fix time') %]</div>
+              </div>
+              <div class="rd-rank__metric">
+                <div class="[% day_class %]">[% line.days %]</div>
+                <div class="rd-rank__unit">[% loc('avg days') %]</div>
+              </div>
+            </li>
           [% END %]
         </ol>
         <footer class="rd-card__foot">
@@ -321,25 +258,7 @@
           </div>
         </header>
         <p class="rd-card__sub">[% loc('Most common issue types in the last 7 days.') %]</p>
-        [% IF rd_design_preview %]
-          <ul class="rd-cats">
-            [% FOREACH category_name IN rd_preview_category_names %]
-              [% category_count = rd_preview_category_counts.${loop.index}; category_count_formatted = category_count | format_number ~%]
-              <li class="rd-cats__item">
-                <span class="rd-cats__icon" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='tag' %]</span>
-                <div class="rd-cats__body">
-                  <div class="rd-cats__row">
-                    <span class="rd-cats__name">[% category_name | html %]</span>
-                    <span class="rd-cats__count">[% category_count_formatted %] <span>[% loc('reports') %]</span></span>
-                  </div>
-                  <div class="rd-cats__bar">
-                    <span class="rd-cats__fill" style="width: [% category_count / (rd_preview_category_counts.0 || 1) * 100 %]%"></span>
-                  </div>
-                </div>
-              </li>
-            [% END %]
-          </ul>
-        [% ELSIF top_five_categories.size %]
+        [% IF top_five_categories.size %]
           <ul class="rd-cats">
             [% FOREACH line IN top_five_categories %]
               [% line_count = line.count | format_number ~%]
