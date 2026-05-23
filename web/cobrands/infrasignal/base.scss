@@ -322,7 +322,7 @@ $meta-font: $font-body;
     padding: 8px 18px;
     border-radius: 8px;
     background: $accent-500;
-    color: #fff;
+    color: #fff !important;
     font-size: 14px;
     font-weight: 600;
     text-decoration: none;
@@ -331,9 +331,11 @@ $meta-font: $font-body;
 
     @media (min-width: 768px) { display: inline-block; }
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:visited {
         background: $accent-600;
-        color: #fff;
+      color: #fff !important;
         text-decoration: none;
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba($accent-500, 0.35);
@@ -428,8 +430,11 @@ $meta-font: $font-body;
         text-align: center;
         text-decoration: none;
 
-        &:hover {
+        &:hover,
+        &:focus,
+        &:visited {
             background: $accent-600;
+          color: #fff !important;
         }
     }
 
