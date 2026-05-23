@@ -7135,6 +7135,10 @@ img {
 .rd-select__caret { right: 0.85rem; }
 .rd-search__icon { left: 0.85rem; }
 
+.rd-picker .rd-select__caret {
+  top: 1.425rem;
+}
+
 .rd-picker__cta,
 .rd-picker__secondary-cta {
   display: inline-flex;
