@@ -1,6 +1,14 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal - May 23, 2026 (Report CTA address-form target):
+        - Updated the public `Start Reporting` and main `Report an Issue` CTAs so they target the homepage address form at `/#postcodeForm` instead of linking to the bare homepage.
+        - Added a small header navigation helper that focuses the address/zipcode field when report CTAs are clicked on the homepage or when the page loads with the `#postcodeForm` anchor.
+        - Kept the CTA label as `Start Reporting` in the header because reporting is the primary public action; sign-in remains part of the downstream flow when needed.
+        - Cleared Template Toolkit caches on DEV; no CSS rebuild was required.
+        - Verification confirmed the header/mobile `Start Reporting` link from `/how-it-works` navigates to `/#postcodeForm` and focuses the address field, and live DEV pages render the corrected CTA anchors.
+        - Implementation committed as `062dc58e1` (`Point report CTAs to address form`) before documentation/tracker updates.
+
     - InfraSignal - May 22, 2026 (Map-loaded report detail parity):
         - Updated the InfraSignal report-detail enhancement script so reports opened from the around/map page are reprocessed after the sidebar content is loaded dynamically.
         - Kept the existing standalone report detail templates and rich status/timeline styling unchanged while applying the same enhanced view to map-loaded report details.
