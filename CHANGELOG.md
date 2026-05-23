@@ -15,6 +15,7 @@
         - Follow-up committed as `429e960e7` (`Show reports preview by default on staging`): made DEV/staging `/reports` show the monthly preview by default, with real live data still available at `/reports?dashboard_live=1`.
         - Follow-up committed as `39aaac162` (`Remove reports preview fixture data`): removed the staging/sample dashboard fixture path so every visible `/reports` number is loaded from the database-backed dashboard JSON; verified DB counts match `582` visible reports, `440` fixed reports, and `0` last-seven-day reports.
         - Follow-up committed as `f019193b7` (`Generate reports chart from database samples`): added DB-generated monthly chart arrays plus a guarded DEV seed helper that stores richer sample reports in the DEV database, then regenerated the dashboard JSON so `/reports` shows a curvy monthly chart whose totals, categories, authorities, and hover values match database rows.
+        - Follow-up committed as `7bcc933a5` (`Fix reports picker control layout`): fixed the reports area picker so the autocomplete dropdown no longer covers the address search section, the generated black dropdown arrow is hidden, and the address search icon no longer overlaps placeholder text.
 
     - InfraSignal - May 23, 2026 (Start Reporting form highlight):
         - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
