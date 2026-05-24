@@ -14864,3 +14864,91 @@ body.authpage {
     }
   }
 }
+
+/* -- Around: location-match disambiguation card -------------------- */
+.is-geo-matches {
+    background: #ffffff;
+    color: #1f2937;
+    max-width: 640px;
+    margin: 1.5rem auto;
+    padding: 1.5rem 1.5rem 1rem;
+    border-radius: 14px;
+    box-shadow: 0 14px 40px rgba(15, 36, 68, 0.18);
+}
+
+.is-geo-matches__title {
+    margin: 0 0 0.4rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f2444;
+}
+
+.is-geo-matches__hint,
+.is-geo-matches__foot {
+    margin: 0 0 1rem;
+    color: #4b5563;
+    font-size: 0.95rem;
+}
+
+.is-geo-matches__foot {
+    margin-top: 1rem;
+    margin-bottom: 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.is-geo-matches__list {
+    list-style: none;
+    margin: 0 0 0.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.is-geo-matches__item {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.is-geo-matches__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    color: #1f2937;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.is-geo-matches__link:hover,
+.is-geo-matches__link:focus {
+    background: #fff7ed;
+    border-color: #fdba74;
+    color: #0f2444;
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.is-geo-matches__icon {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+
+.is-geo-matches__name {
+    flex: 1;
+}
+
+.is-geo-matches__chev {
+    color: #f97316;
+    font-size: 1.25rem;
+    line-height: 1;
+    font-weight: 700;
+}
