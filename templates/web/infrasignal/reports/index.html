@@ -166,7 +166,7 @@
         </div>
         <p class="rd-picker__lede">[% loc('Pick your local authority or search an address to see community-specific reports.') %]</p>
 
-        <form class="rd-picker__form" action="[% body ? body_url : '/reports' %]" method="get">
+        <form class="rd-picker__form" action="[% body ? body_url : '/around' %]" method="get">
           [% IF body %]
             <label class="rd-picker__label" for="ward">[% loc('Jurisdiction') %]</label>
             <div class="rd-select">
@@ -181,10 +181,10 @@
           [% ELSE %]
             <label class="rd-picker__label" for="body">[% loc('Jurisdiction') %]</label>
             <div class="rd-select">
-              <select id="body" name="body" class="rd-select__field js-autocomplete" required>
+              <select id="body" name="pc" class="rd-select__field js-autocomplete" required>
                 <option value="">[% loc('Select a jurisdiction...') %]</option>
                 [% FOR b IN bodies %]
-                  <option value="[% b.id %]">[% b.name | html ~%][% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]</option>
+                  <option value="[% b.name | html %]">[% b.name | html ~%][% IF NOT b.area_count %] [% loc('(no longer exists)') %][% END ~%]</option>
                 [% END %]
               </select>
               <span class="rd-select__caret" aria-hidden="true">[% PROCESS 'reports/_dashboard_icon.html' name='chevron-down' %]</span>
