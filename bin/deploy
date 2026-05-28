@@ -16,7 +16,9 @@ set -euo pipefail
 
 PROD_DIR="/opt/infrasignal-v2"
 COMPOSE_FILE="docker/docker-compose-prod.yml"
-BRANCH="main"
+# The actually-deployed branch is `dev`, not `main` (see ARCHITECTURE.md).
+# Override with: DEPLOY_BRANCH=main ./bin/deploy ...
+BRANCH="${DEPLOY_BRANCH:-dev}"
 BACKUP_DIR="/opt/backups/infrasignal"
 
 cd "$PROD_DIR"
@@ -24,6 +26,14 @@ cd "$PROD_DIR"
 # --- Helper functions ---
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
+
+require_clean_tree() {
+    if [[ -n "$(git status --porcelain)" ]]; then
+        log "✗ Working tree is dirty. Commit, stash, or revert before deploying:"
+        git status --short
+        exit 1
+    fi
+}
 
 backup_db() {
     local timestamp
@@ -86,6 +96,7 @@ case "$MODE" in
         ;;
 
     --migrate)
+        require_clean_tree
         backup_db
 
         log "[1/5] Pulling latest from origin/$BRANCH ..."
@@ -101,6 +112,7 @@ case "$MODE" in
         ;;
 
     --full|full|"")
+        require_clean_tree
         backup_db
 
         log "[1/4] Pulling latest from origin/$BRANCH ..."

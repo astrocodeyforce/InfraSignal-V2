@@ -1,8 +1,17 @@
 # InfraSignal Platform
 
-**Version:** 2.3  
+**Version:** 2.6  
 **Live:** https://infrasignal.org  
-**Branch:** `main` (production) / `dev` (development)
+**Branch:** `dev` is what production actually runs (`main` is stale)
+
+> **Start here for the big picture:**
+> - [`SYSTEM-MAP.md`](SYSTEM-MAP.md) — visual map of containers,
+>   networks, request flow, and where to edit what.
+> - [`ARCHITECTURE.md`](ARCHITECTURE.md) — current production state,
+>   staging, dev environment, deploy procedure.
+> - [`notes/2026-05-26-prod-hardening.md`](notes/2026-05-26-prod-hardening.md)
+>   and [`notes/2026-05-26-dev-db-isolation.md`](notes/2026-05-26-dev-db-isolation.md)
+>   for the latest infra changes and how to roll them back.
 
 InfraSignal is a civic infrastructure reporting platform built on the
 [FixMyStreet Platform](https://fixmystreet.org/) (AGPL v3). It enables

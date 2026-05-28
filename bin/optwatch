@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+# optwatch — log unexpected file modifications under the InfraSignal
+# source trees. Created 2026-05-27 to catch the next "desync event"
+# (something deleted swathes of files at 2026-05-27 14:58 UTC without
+# leaving an obvious trace).
+#
+# Invoked by /etc/cron.d/optwatch every 10 minutes. Output appends to
+# /var/log/optwatch.log so any future desync leaves a forensic trail.
+#
+# Logs are best-effort — noisy paths (perl deps, cache, photos) are
+# excluded. Anything else that's been modified in the last 15 minutes
+# gets a timestamped line.
+
+set -uo pipefail
+
+TS=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
+
+for root in /opt/infrasignal-v2 /opt/infrasignal-dev; do
+    [[ -d "$root" ]] || continue
+
+    out=$(find "$root" -mmin -15 \
+        \( -type f -o -type d \) \
+        ! -path '*/.git/*' \
+        ! -path '*/local/*' \
+        ! -path '*/data/*' \
+        ! -path '*/web/photo/*' \
+        ! -path '*/cache/*' \
+        ! -path '*/.cypress/*' \
+        ! -path '*/vendor/*' \
+        ! -path '*/node_modules/*' \
+        2>/dev/null \
+        | head -200)
+
+    if [[ -n "$out" ]]; then
+        printf '[%s] CHANGES in %s:\n' "$TS" "$root"
+        # Indent each line for readability in the log.
+        printf '%s\n' "$out" | sed 's/^/  /'
+    fi
+done
+
+exit 0

@@ -1,6 +1,69 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 27, 2026 (Operations / file-watch + repo push):
+        - Added `bin/optwatch` + `/etc/cron.d/optwatch` to log unexpected
+          file modifications under `/opt/infrasignal-v2` and
+          `/opt/infrasignal-dev` to `/var/log/optwatch.log`. Purpose: leave
+          a forensic trail if the May 27 14:58 UTC desync event recurs.
+        - Committed and pushed the restored hardening + isolation work
+          (compose files, nginx conf, deploy script, docs, notes) to
+          `origin/dev`. `/opt/infrasignal-v2` left at its current
+          deployed commit; prod redeploy is a separate intentional step.
+    - InfraSignal — May 26, 2026 (Dev DB isolation):
+        - `/opt/infrasignal-dev` no longer shares production's postgres or
+          memcached. New `dev-db` (postgres 13.11, own `dev-pgdata` volume)
+          and `dev-memcached` services added to
+          `/opt/infrasignal-dev/docker/docker-compose-local.yml`, with
+          aliases `dev-postgres.svc` / `dev-memcached.svc` on the shared
+          `docker_default` bridge.
+        - Dev's `conf/general.yml` repointed; original preserved at
+          `general.yml.pre-isolation-2026-05-26.bak`.
+        - Dev DB initialised at schema version 0094, 37 tables. Prod DB
+          unchanged (still 723 problems, max id 723); zero connections
+          from dev-fixmystreet visible in prod's `pg_stat_activity`.
+        - Updated `SYSTEM-MAP.md` (topology + environment matrix) and
+          added a "Development environment" section to `ARCHITECTURE.md`.
+          Detailed log at `notes/2026-05-26-dev-db-isolation.md`.
+        - No deletions; rollback path documented in the note.
+    - InfraSignal — May 26, 2026 (Production hardening, no-deletion pass):
+        - Operations / infrastructure:
+            - Stopped the broken legacy `infrasignal-v2` Compose stack
+              (containers/volume/network preserved; restart policy disabled).
+            - Locked `conf/nginx.conf-prod` to `server_name infrasignal.org
+              www.infrasignal.org`; unknown hostnames now get a 444. Updated
+              the nginx healthcheck in `docker/docker-compose-prod.yml` to
+              send `Host: infrasignal.org` accordingly.
+            - Fixed `bin/deploy` branch mismatch — default `BRANCH` is now
+              `dev` (matches the actually-deployed branch), overridable via
+              `DEPLOY_BRANCH=`; `--full` / `--migrate` modes now abort on a
+              dirty prod working tree.
+            - Tagged the deployed commit as `prod-2026-05-03` (rollback marker).
+            - Added `docker/docker-compose-prod-image.yml` — a draft
+              image-based prod compose for the future cutover off the live
+              bind mount (existing prod compose untouched).
+            - Brought up the staging environment on `127.0.0.1:8080` with
+              its own postgres/memcached/network. Added `bin/staging-deploy`
+              for bootstrap + lifecycle, and gitignored the generated
+              `conf/general.yml-staging.runtime`.
+            - Updated `ARCHITECTURE.md` with a "Current Production State"
+              section, a "CI image / manual deploy" section, and a "Staging
+              environment" section.
+            - No files / containers / volumes / branches / remotes deleted.
+        - Detailed log at `notes/2026-05-26-prod-hardening.md`.
+    - InfraSignal — May 27, 2026 (Restoration after dev/v2 dir desync):
+        - All compose files, nginx configs, deploy scripts, and notes
+          listed in the two May 26 entries above were rewritten from
+          ground truth (running container `docker inspect` + the
+          surviving `general.yml.pre-isolation-2026-05-26.bak`) after
+          an unidentified sync operation between `/opt/infrasignal-v2`
+          and `/opt/infrasignal-dev` deleted them from disk while the
+          containers stayed running. Container runtime state was
+          preserved end-to-end; brief prod blip (~30s, HTTP 504)
+          occurred during validation when an accidental `docker compose
+          --no-start` recreated db + fixmystreet.
+        - See `notes/2026-05-27-restoration-after-desync.md` for the
+          full incident log.
     - InfraSignal - May 23, 2026 (Reports dashboard redesign):
         - Replaced the InfraSignal `/reports` dashboard with the supplied report-dashboard design adapted to the existing FixMyStreet/Catalyst data model and Template Toolkit paths.
         - Swapped the old Chart.js canvas rendering for a page-local vanilla SVG chart renderer at `web/cobrands/infrasignal/reports-dashboard.js` and stopped loading the old Chart.js dashboard bundle on `/reports`.

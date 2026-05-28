@@ -60,6 +60,7 @@ services:
         condition: service_started
     volumes:
       - ../:/var/www/fixmystreet
+      - ../conf/general.yml-staging.runtime:/var/www/fixmystreet/conf/general.yml:ro
       - staging-local:/var/www/fixmystreet/local
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
