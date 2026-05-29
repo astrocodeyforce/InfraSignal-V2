@@ -90,5 +90,10 @@ conf/general.yml-staging.runtime
 # 2026-05-26 dev DB isolation — keeps stale passwords out of git).
 conf/general.yml*.bak
 *.bak
+
+# Local DB dumps / backups (e.g. from bin/refresh-db, prod data wipe) — never commit
+backups/
+*.dump
+*.sql.gz
 conf/general.yml.pre-isolation-*
 
