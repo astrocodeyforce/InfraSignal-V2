@@ -23,7 +23,10 @@ services:
     ports:
       - "127.0.0.1:8080:80"
     volumes:
-      - ../web:/var/www/fixmystreet/web:ro
+      # Static assets (CSS/JS/images) served from the ISOLATED staging
+      # source tree so staging can run dev's latest UI without touching
+      # prod. nginx routing config stays shared (identical for both).
+      - /opt/infrasignal-staging/web:/var/www/fixmystreet/web:ro
       - ../conf/nginx.conf-docker:/etc/nginx/conf.d/default.conf:ro
       - ../conf/nginx-main.conf:/etc/nginx/nginx.conf:ro
     healthcheck:
@@ -59,8 +62,13 @@ services:
       memcached:
         condition: service_started
     volumes:
-      - ../:/var/www/fixmystreet
-      - ../conf/general.yml-staging.runtime:/var/www/fixmystreet/conf/general.yml:ro
+      # App code from the ISOLATED staging source tree (/opt/infrasignal-staging),
+      # a mirror of the dev working tree. Decoupled from prod's /opt/infrasignal-v2
+      # so staging can show the latest UI while prod stays frozen. Re-sync with:
+      #   sudo rsync -a --delete --exclude='.git/' --exclude='local/' \
+      #     /opt/infrasignal-dev/ /opt/infrasignal-staging/
+      - /opt/infrasignal-staging:/var/www/fixmystreet
+      - /opt/infrasignal-staging/conf/general.yml-staging.runtime:/var/www/fixmystreet/conf/general.yml:ro
       - staging-local:/var/www/fixmystreet/local
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}

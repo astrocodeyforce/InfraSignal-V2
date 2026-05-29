@@ -1,6 +1,58 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Staging code isolation — own source tree):
+        - Staging now runs from its OWN tree `/opt/infrasignal-staging`
+          (a mirror of the dev working tree) instead of sharing prod's
+          `/opt/infrasignal-v2`. Staging can now show the latest dev UI
+          for customer demos while prod stays frozen on its old code.
+        - Found via `docker inspect` that staging + prod were mounting
+          the same host dir — they differed only by DB + config override.
+          The three UI-relevant mounts (app source, `general.yml`
+          override, nginx `web/`) were repointed in
+          `docker/docker-compose-staging.yml`; nginx routing config and
+          db schema stay shared (identical, db container untouched).
+        - Only `staging-fixmystreet-1` + `staging-nginx-1` were
+          recreated (`--no-build --no-deps`); db/memcached untouched.
+          Perl deps reused from the `staging-local` volume (no carton
+          reinstall). Fixed a `/reports` 500 by running
+          `bin/update-all-reports` (regenerates the ephemeral dashboard
+          JSON the recreated container lacked).
+        - Verified staging serves dev's CSS (`61d616c92162`) and all
+          routes 200; prod verified byte-for-byte unchanged (old CSS
+          hash `9f74d1d3f54a`, same mount, commit 39b493aed, 0 reports).
+        - Now 3 fully independent envs (own code + own DB each). Re-sync
+          recipe (rsync dev→staging) documented in the note.
+        - `/opt/infrasignal-staging` is host-only (generated mirror, not
+          in git). The compose edit IS in git.
+        - Detailed log at `notes/2026-05-29-staging-code-isolation.md`.
+    - InfraSignal — May 29, 2026 (Prod data wipe — clean slate for customers):
+        - Cleared all user-generated / demo content from the
+          **production** DB (723 problems, 555 comments, 6 alerts,
+          4 test users) so first real customers see a fresh app.
+          Single atomic SQL transaction; zero downtime (memcached
+          cache flush only).
+        - KEPT all operational reference data: `body` (28,090),
+          `contacts` (365,170), `translation` (1,095,540),
+          `osm_zone_cache` (56), `priority_zone_config` (30),
+          plus categories/response data, state, config, secret,
+          roles, manifest_theme. Sequences reset
+          (`RESTART IDENTITY`) so the next report is `/report/1`.
+        - KEPT all 4 superusers (admin@infrasignal.org,
+          REDACTED-EMAIL, dev-admin@infrasignal.org,
+          dev-admin@infrasignal.local); passwords unchanged.
+        - Demo dataset preserved in 3 places before the wipe:
+          staging (`:8080`, PII-scrubbed, full 723 reports), plus two
+          persistent backups at
+          `/opt/infrasignal-v2/backups/prod-20260529T174837Z-pre-wipe.{sql.gz,dump}`.
+        - Rollback documented (one gunzip|psql command, ~15s).
+        - Staging demo polish (customer-facing env): replaced the
+          synthetic `Dev User/Reporter <id>` scrub placeholders with
+          realistic names (Michael Anderson, Sarah Williams, …) across
+          `users`/`problem`/`comment`, and hid the one `Test` report.
+          Staging now shows 722 credible reports with real-looking
+          authors — no actual PII (synthetic + reserved example.com).
+        - Detailed log at `notes/2026-05-29-prod-data-wipe.md`.
     - InfraSignal — May 29, 2026 (/report/new hero polish, CSS-only):
         - Added a ~121-line block at the end of
           `web/cobrands/infrasignal/base.scss` that fills in the
