@@ -89,5 +89,6 @@ conf/general.yml-staging.runtime
 # Backups of generated/secret-bearing files (e.g. created during the
 # 2026-05-26 dev DB isolation — keeps stale passwords out of git).
 conf/general.yml*.bak
+*.bak
 conf/general.yml.pre-isolation-*
 

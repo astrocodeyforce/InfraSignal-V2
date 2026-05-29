@@ -1,6 +1,51 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Expose staging on a public demo link):
+        - Changed `docker/docker-compose-staging.yml` nginx port binding from
+          `127.0.0.1:8080` to `0.0.0.0:8080` so staging is reachable like dev.
+          Recreated only the `staging-nginx` container; DB + app untouched.
+        - Public demo link: http://REDACTED-IP:8080/ (verified 200).
+        - Promotion stays MANUAL (dev → staging → prod); no auto-sync. See
+          `notes/2026-05-29-staging-public-link.md` and ARCHITECTURE.md.
+        - Note: staging is open (no auth); data was PII-scrubbed earlier.
+    - InfraSignal — May 29, 2026 (Category demo photos on every report — staging + dev):
+        - Generated 13 photorealistic "citizen report" photos (one per distinct
+          issue type; the 17 category strings collapse to 13 real types) and
+          assigned them by category to ALL visible reports on staging (722/722)
+          AND dev (723/723), so both demo environments look credible. Previously
+          only 5 reports per env had photos.
+        - PROD intentionally excluded: it was wiped clean for customers (0
+          reports), so no photos to replace and no mock data added to the live
+          site.
+        - Masters downsized to 1200x800 (~2.9 MB total) and stored in
+          `demo-assets/category-photos/`. Reproducible via
+          `bin/seed-demo-photos.sh <dev|staging>`.
+        - Mechanism: set `problem.photo` per category, then populate the
+          persistent `web/photo` cache (`<id>.0.{fp,tn,full,}.jpeg`, gitignored)
+          that the FixMyStreet Photo controller serves before falling back to
+          the ephemeral `UPLOAD_DIR` master. Verified `full` byte-identical to
+          each master; fp/default/full all 200.
+        - Per-report isolation verified: `delete_cached` only touches a report's
+          own id-keyed cache, and a new upload is content-hashed into a fresh
+          master that repoints only that report. Live test: changing report 6's
+          photo left report 26 (same category/image) byte-for-byte unchanged.
+        - Detailed log at `notes/2026-05-29-staging-category-photos.md`.
+    - InfraSignal — May 29, 2026 (Fix staging broken images — logo + report photos):
+        - Logo, favicons, and report photos showed broken on staging
+          `:8080`. Two causes: (1) the image `location` block in
+          `conf/nginx.conf-docker` (staging-only nginx config) lacked the
+          `try_files $uri @catalyst;` fallback the css/js block has, so
+          all image URLs — static logo/favicons AND app-served
+          `/photo/*.jpeg` — 404'd; (2) the staging tree only had the ~20
+          photo files from the dev rsync, not prod's full set.
+        - Fix 1: added the `@catalyst` fallback to the image block;
+          reloaded nginx live (no recreate). Tracked file — committed.
+        - Fix 2: `rsync` prod's `web/photo` (86 files) into the staging
+          tree (host-only, like the rest of `/opt/infrasignal-staging`).
+        - Verified: logo 200, all 5 report thumbnails 200 (real
+          image/jpeg). Staging-only; prod and dev untouched.
+        - Detailed log at `notes/2026-05-29-staging-images-fix.md`.
     - InfraSignal — May 29, 2026 (Staging code isolation — own source tree):
         - Staging now runs from its OWN tree `/opt/infrasignal-staging`
           (a mirror of the dev working tree) instead of sharing prod's

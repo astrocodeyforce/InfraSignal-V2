@@ -62,6 +62,11 @@ server {
         expires 30d;
         add_header Cache-Control "public";
         access_log off;
+        # Fall back to the app like the css/js block above. Without this,
+        # static images (logo, favicons) and app-served /photo/*.jpeg URLs
+        # 404 because the static `root` does not resolve them. The Catalyst
+        # app serves both correctly.
+        try_files $uri @catalyst;
     }
 
     # Rewrite rules

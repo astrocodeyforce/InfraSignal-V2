@@ -34,12 +34,33 @@ local dev work  →  staging.infrasignal.org  →  infrasignal.org (prod)
 - Dev is a separate checkout (`/opt/infrasignal-dev`) with its own
   postgres and memcached as of 2026-05-26 — see "Development
   environment" below.
-- Staging is its own compose project, runs on `127.0.0.1:8080`, has
-  its own DB and memcached, fully isolated network. Brought up only
-  when needed.
+- Staging is its own compose project, runs on `0.0.0.0:8080` (public
+  demo link **http://REDACTED-IP:8080/** as of 2026-05-29), has its
+  own DB and memcached, fully isolated network, and its own source
+  tree at `/opt/infrasignal-staging`.
 - Prod runs whatever's currently checked out at `/opt/infrasignal-v2`
   on whatever branch it's on. The `bin/deploy` script enforces a
   clean working tree before `git pull` and defaults to `dev` branch.
+
+#### Promotion is MANUAL (by design — never automatic)
+
+The three environments are deliberately decoupled. Changes flow one
+direction, and only when a human pushes them:
+
+```
+1. make + verify change on dev        (/opt/infrasignal-dev, :3001)
+2. git commit + push to origin/dev
+3. promote CODE to staging (manual rsync):
+     sudo rsync -a --delete --exclude='.git/' --exclude='local/' \
+       --exclude='web/photo/' /opt/infrasignal-dev/ /opt/infrasignal-staging/
+4. (optional) promote DATA with bin/refresh-db or bin/seed-demo-photos.sh
+5. only after staging looks right → promote to prod
+```
+
+- There is **no** live link or auto-sync between environments. Each has
+  its own source tree and its own database.
+- There are no `staging`/`production` git branches: all work lands on
+  `dev`; environments are deployed/promoted from there.
 
 ### Recent changes to the deploy script
 
@@ -88,7 +109,7 @@ Four services on isolated `staging_default` network:
 
 | Service | Notes |
 | --- | --- |
-| `staging-nginx-1` | `nginx:1.27.2`, ports `127.0.0.1:8080:80`, uses `conf/nginx.conf-docker` (NOT prod) |
+| `staging-nginx-1` | `nginx:1.27.2`, ports `0.0.0.0:8080:80` (public demo link `http://REDACTED-IP:8080/`), uses `conf/nginx.conf-docker` (NOT prod) |
 | `staging-fixmystreet-1` | Built from `Dockerfile-development`. Mounts whole source tree AND overrides `conf/general.yml` with `conf/general.yml-staging.runtime` |
 | `staging-db-1` | Postgres 13.11. Its own volume `staging_staging-pgdata`. Uses `fms` role + `infrasignal` database (created at bootstrap) |
 | `staging-memcached-1` | `memcached -m 64 -c 512` |

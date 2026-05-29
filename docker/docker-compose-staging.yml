@@ -21,7 +21,8 @@ services:
         condition: service_healthy
     restart: always
     ports:
-      - "127.0.0.1:8080:80"
+      # Public demo link (like dev's :3001). Reachable at http://<host>:8080/
+      - "0.0.0.0:8080:80"
     volumes:
       # Static assets (CSS/JS/images) served from the ISOLATED staging
       # source tree so staging can run dev's latest UI without touching
