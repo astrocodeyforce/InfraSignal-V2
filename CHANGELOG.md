@@ -1,6 +1,28 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (/report/new hero polish, CSS-only):
+        - Added a ~121-line block at the end of
+          `web/cobrands/infrasignal/base.scss` that fills in the
+          page-level chrome the previous report-form styling never
+          covered: hero band on the `<h1>` (navy gradient + orange
+          accent + inline SVG pin), branded back-pill on
+          `.problem-back--top`, stronger gradient + 5px border on
+          `.report-routing-note`, and uppercase brand-color section
+          labels for `#photo-upload-label/#title-label/#detail-label/
+          #form_category_legend`.
+        - Diagnosis: prior 1058-line SCSS work compiled fine (hash
+          matched URL, 43 rules → 88 selectors live in CSS) but
+          targeted only form internals (inputs, radios, dropzone,
+          labels). Page-level chrome had no styling, so the page
+          still read as default FixMyStreet.
+        - Rebuilt `base.css` via in-container `bin/make_css
+          web/cobrands/infrasignal/`. Hash: `563e7720b735` →
+          `61d616c92162`. File size: +~2 KB.
+        - No template files were edited. No selectors outside
+          `body.mappage #report-a-problem-main` were touched —
+          other pages unaffected. Prod and staging unchanged.
+        - Detailed log at `notes/2026-05-29-report-new-hero-polish.md`.
     - InfraSignal — May 29, 2026 (Dev DB seeded from prod, PII scrubbed):
         - Added `bin/refresh-db` (mirrored to both
           `/opt/infrasignal-dev/bin/` and `/opt/infrasignal-v2/bin/`):

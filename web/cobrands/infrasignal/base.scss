@@ -199,6 +199,12 @@ $meta-font: $font-body;
     }
 }
 
+body.admin #site-header .header-container {
+    max-width: 1400px;
+    padding-left: 24px;
+    padding-right: clamp(24px, calc(100vw - 1280px), 120px);
+}
+
 // Logo area — pin + InfraSignal wordmark image
 .header-logo {
     display: flex;
@@ -230,7 +236,7 @@ $meta-font: $font-body;
     align-items: center;
     gap: 4px;
 
-    @media (min-width: 768px) {
+    @media (min-width: 1160px) {
         display: flex;
     }
 
@@ -299,19 +305,46 @@ $meta-font: $font-body;
 // Admin link in header
 .header-admin-link {
     display: none;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 13px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    margin-left: 4px;
+    min-height: 42px;
+    padding: 0 14px;
+    border: 1px solid rgba($primary-300, 0.3);
+    border-radius: 8px;
+    background: rgba($primary-500, 0.1);
+    color: #fff !important;
+    font-size: 14px;
     font-weight: 500;
-    color: $primary-300;
+    line-height: 1;
     text-decoration: none;
-    transition: background 0.15s;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 
-    @media (min-width: 768px) { display: inline-block; }
+    @media (min-width: 1160px) { display: inline-flex; }
 
-    &:hover {
-        background: rgba($primary-500, 0.1);
+    &:hover,
+    &:focus-visible {
+        border-color: rgba($primary-300, 0.6);
+        background: rgba($primary-500, 0.2);
         color: #fff;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $accent-500;
+        outline-offset: 2px;
+    }
+
+    &.is-active {
+        border-color: rgba($primary-300, 0.52);
+        background: rgba($primary-500, 0.24);
+        color: #fff;
+    }
+
+    &__icon {
+        flex-shrink: 0;
+        color: $accent-500;
     }
 }
 
@@ -319,23 +352,28 @@ $meta-font: $font-body;
 .header-signin {
     display: none;
     margin-left: 4px;
-    padding: 8px 18px;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 18px;
     border-radius: 8px;
     background: $accent-500;
     color: #fff !important;
     font-size: 14px;
     font-weight: 600;
+    line-height: 1;
     text-decoration: none;
+    white-space: nowrap;
     transition: background-color 0.2s, transform 0.15s, box-shadow 0.2s;
     box-shadow: 0 2px 8px rgba($accent-500, 0.25);
 
-    @media (min-width: 768px) { display: inline-block; }
+    @media (min-width: 1160px) { display: inline-flex; }
 
     &:hover,
     &:focus,
     &:visited {
         background: $accent-600;
-      color: #fff !important;
+        color: #fff !important;
         text-decoration: none;
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba($accent-500, 0.35);
@@ -362,7 +400,7 @@ $meta-font: $font-body;
     cursor: pointer;
     padding: 0;
 
-    @media (min-width: 768px) { display: none; }
+    @media (min-width: 1160px) { display: none; }
 
     span {
         display: block;
@@ -398,7 +436,7 @@ $meta-font: $font-body;
     right: 0;
     z-index: 49;
 
-    @media (min-width: 768px) { display: none !important; }
+    @media (min-width: 1160px) { display: none !important; }
 
     &.is-open { display: block; }
 
@@ -436,6 +474,28 @@ $meta-font: $font-body;
             background: $accent-600;
           color: #fff !important;
         }
+    }
+
+    .mobile-menu__admin-link {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba($primary-300, 0.28);
+        background: rgba($primary-500, 0.12);
+        color: #fff;
+
+        &:hover,
+        &:focus,
+        &.is-active {
+            border-color: rgba($primary-300, 0.56);
+            background: rgba($primary-500, 0.24);
+            color: #fff;
+        }
+    }
+
+    .mobile-menu__admin-icon {
+        flex-shrink: 0;
+        color: $accent-500;
     }
 
     .mobile-menu__langs {
@@ -3782,12 +3842,6 @@ a[href="/report"] {
         }
     }
 }
-.site-footer__langs {
-    margin-top: 16px;
-    font-size: 0.75rem;
-    p { margin: 0; }
-    p + p { margin-top: 4px; }
-}
 .site-footer__bottom {
     margin-top: 48px;
     padding-top: 32px;
@@ -3808,19 +3862,65 @@ a[href="/report"] {
     margin: 0;
     color: rgba($primary-300, 0.6);
 }
-.site-footer__gov-link {
-    font-size: 0.875rem;
-    padding: 10px 20px;
-    border: 1px solid rgba($primary-300, 0.25);
-    border-radius: 8px;
-    transition: all 0.2s;
-    background: rgba($primary-500, 0.08);
 
-    &:hover {
-        border-color: $accent-500;
-        background: rgba($accent-500, 0.1);
-        color: #fff;
-    }
+.site-footer__lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.site-footer__lang-label {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: rgba($primary-300, 0.72);
+}
+
+.site-footer__lang-list {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.site-footer__lang-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 14px;
+  border-radius: 999px;
+  border: 1px solid rgba($primary-300, 0.24);
+  background: rgba($primary-500, 0.08);
+  color: $primary-300;
+  font-size: 0.9rem;
+  line-height: 1;
+  text-decoration: none;
+  transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+
+  &:hover,
+  &:focus {
+    border-color: rgba(#fff, 0.42);
+    background: rgba($primary-300, 0.12);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  &.is-active {
+    background: $accent-500;
+    border-color: $accent-500;
+    color: #fff;
+    box-shadow: 0 10px 24px rgba($accent-500, 0.28);
+  }
+}
+
+@media (min-width: 640px) {
+  .site-footer__lang-switch {
+    justify-content: flex-end;
+  }
 }
 
 /* ===========================================================
@@ -6565,46 +6665,37 @@ img {
 .rd-hero {
   position: relative;
   overflow: hidden;
-  background:
-    radial-gradient(circle at 12% 20%, rgba($accent-500, 0.22), transparent 34%),
-    radial-gradient(circle at 86% 10%, rgba($primary-300, 0.18), transparent 30%),
-    linear-gradient(135deg, $primary-900 0%, #163B73 52%, $primary-700 100%);
+  background: linear-gradient(135deg, $primary-900, $primary-700);
   color: #fff;
-  padding: calc(64px + 3rem) 0 5.5rem;
+  padding: calc(64px + 2.5rem) 0 3.5rem;
   margin-top: -64px;
 }
 
 .rd-hero__pattern {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  opacity: 0.24;
-  background-image: radial-gradient(circle, rgba(#fff, 0.24) 1px, transparent 1.5px);
-  background-size: 32px 32px;
-  mask-image: linear-gradient(to bottom, #000, transparent 84%);
+  display: none;
 }
 
 .rd-hero__inner {
   position: relative;
   z-index: 1;
-  max-width: 760px;
+  max-width: 42rem;
   text-align: center;
 }
 
 .rd-hero__badge {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  border: 1px solid rgba(#fff, 0.24);
+  gap: 0.4rem;
+  border: 1px solid rgba($primary-300, 0.24);
   border-radius: 999px;
-  background: rgba(#fff, 0.12);
-  color: rgba(#fff, 0.9);
+  background: rgba($primary-300, 0.12);
+  color: $primary-300;
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   padding: 0.4rem 0.75rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .rd-hero__pulse {
@@ -6619,25 +6710,25 @@ img {
 .rd-hero__title {
   margin: 0;
   color: #fff;
-  font-size: clamp(2rem, 4vw, 4.1rem);
-  line-height: 1.05;
-  font-weight: 800;
+  font-size: 1.875rem;
+  line-height: 1.2;
+  font-weight: 700;
   letter-spacing: 0;
 }
 
 .rd-hero__lede {
-  max-width: 44rem;
-  margin: 1rem auto 0;
-  color: rgba(#fff, 0.8);
-  font-size: 1rem;
-  line-height: 1.7;
+  max-width: 42rem;
+  margin: 0.5rem auto 0;
+  color: $primary-300;
+  font-size: 0.875rem;
+  line-height: 1.6;
 }
 
 .rd-shell {
   position: relative;
   z-index: 2;
-  margin-top: -3rem;
-  padding: 0 0 3.5rem;
+  margin-top: 0;
+  padding: 2.5rem 0 3.5rem;
   background: $surface-page;
 }
 
@@ -7496,11 +7587,11 @@ img {
 
 @media (max-width: 720px) {
   .rd-hero {
-    padding: calc(64px + 2.25rem) 0 4.75rem;
+    padding: calc(64px + 2.5rem) 0 3.5rem;
   }
 
   .rd-hero__inner {
-    text-align: left;
+    text-align: center;
   }
 
   .rd-kpis,
@@ -7636,10 +7727,16 @@ body.infopage #mobile-sticky-sidebar-button { display: none; }
   line-height: 1.6;
   width: 100%;
   position: relative;
+  overflow: hidden;
   left: auto;
   right: auto;
   margin-left: 0;
   margin-right: 0;
+
+  > .infra-container {
+    position: relative;
+    z-index: 1;
+  }
 
   &__title {
     font-size: 1.875rem;
@@ -7656,6 +7753,95 @@ body.infopage #mobile-sticky-sidebar-button { display: none; }
     font-size: 0.875rem;
     line-height: 1.6;
     color: $primary-300;
+  }
+}
+
+.page--gov .gov-hero,
+.hiw-hero,
+.alerts-hero,
+.rd-hero,
+.errpage-hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.page--gov .gov-hero__inner,
+.hiw-hero__inner,
+.alerts-hero > .infra-container,
+.alerts-hero__inner,
+.rd-hero__inner,
+.errpage-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-pulse {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  content-visibility: auto;
+}
+
+.hero-pulse__ping,
+.hero-pulse__reveal {
+  position: absolute;
+  inset: 0;
+}
+
+.hero-pulse__reveal {
+  --r: 0px;
+  opacity: 0;
+  animation: hero-pulse-reveal 4s ease-out forwards;
+  -webkit-mask-image: radial-gradient(
+    ellipse calc(var(--r) * 2.2) var(--r) at var(--px) var(--py),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 45%,
+    rgba(0, 0, 0, 0.35) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  mask-image: radial-gradient(
+    ellipse calc(var(--r) * 2.2) var(--r) at var(--px) var(--py),
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0.85) 45%,
+    rgba(0, 0, 0, 0.35) 80%,
+    rgba(0, 0, 0, 0) 100%
+  );
+  will-change: opacity;
+
+  svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.hero-pulse__core {
+  position: absolute;
+  left: var(--px);
+  top: var(--py);
+  width: 6px;
+  height: 6px;
+  border-radius: 9999px;
+  background: #fffbeb;
+  box-shadow:
+    0 0 6px rgba(255, 251, 235, 0.95),
+    0 0 14px rgba(253, 230, 138, 0.85),
+    0 0 28px rgba(251, 146, 60, 0.55),
+    0 0 48px rgba(249, 115, 22, 0.30);
+  opacity: 0;
+  animation: hero-pulse-core 4s ease-out forwards;
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-pulse__reveal,
+  .hero-pulse__core {
+    animation: none;
+    opacity: 0;
   }
 }
 
@@ -10204,6 +10390,8 @@ body.mappage .big-green-banner {
   justify-content: space-between;
   padding: 0.85rem 1rem 0.85rem 1rem !important;
   margin: 0 !important;
+  min-height: 4.25rem;
+  box-sizing: border-box;
   background: linear-gradient(135deg, $primary-900, $primary-700) !important;
   color: #fff !important;
   font-size: 0.85rem !important;
@@ -10215,6 +10403,8 @@ body.mappage .big-green-banner {
   border-top: 3px solid $accent-500 !important;
   text-align: left !important;
   position: relative;
+  top: 0 !important;
+  bottom: auto !important;
 
   // Location pin icon
   &::before {
@@ -10331,6 +10521,67 @@ body.mappage .floating-button-wrapper {
   body.mappage .floating-button-wrapper {
     width: calc(28em - 16px) !important;
     max-width: calc(28em - 16px) !important;
+  }
+}
+
+@media (max-width: 56em) {
+  body.mappage {
+    height: auto !important;
+    min-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+
+    .content {
+      display: flex !important;
+      flex-direction: column !important;
+      min-height: auto !important;
+    }
+  }
+
+  body.mappage #map_box,
+  body.mappage #map_sidebar {
+    position: relative !important;
+    top: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  body.mappage #map_box {
+    order: 1;
+    height: clamp(240px, 42vh, 360px) !important;
+    min-height: 240px;
+    margin-top: 0 !important;
+    border-bottom: 1px solid $gray-300;
+  }
+
+  body.mappage #map_sidebar {
+    order: 2;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
+    border-top: 1px solid $gray-300;
+    border-right: 0;
+  }
+
+  body.mappage #map_box #map,
+  body.mappage #map_box .olMapViewport {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  body.mappage #side,
+  body.mappage #side-report,
+  body.mappage #side-form,
+  body.mappage .shadow-wrap,
+  body.mappage .floating-button-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
   }
 }
 
@@ -11806,6 +12057,432 @@ $lv-shadow-sm:       0 1px 2px rgba(0, 0, 0, 0.06);
 $lv-shadow-md:       0 4px 12px rgba(0, 0, 0, 0.1);
 $lv-radius-lg:       8px;
 $lv-radius-xl:       12px;
+
+// ═══════════════════════════════════════════════════════
+// 0. NEW REPORT WIZARD — map/sidebar flow
+// ═══════════════════════════════════════════════════════
+body.mappage #side-form {
+  min-height: 100%;
+  background: linear-gradient(180deg, $lv-bg-subtle 0, $lv-bg-white 7rem);
+}
+
+body.mappage #report-a-problem-main {
+  padding: 0 16px 24px;
+  color: $lv-text-fg;
+
+  > h1 {
+    margin: 0 0 16px;
+    color: $lv-text-fg;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+}
+
+body.mappage #report-a-problem-main #problem_form {
+  > * + * {
+    margin-top: 18px;
+  }
+}
+
+body.mappage #report-a-problem-main .change_location {
+  margin: 0;
+  padding: 14px 16px;
+  background: linear-gradient(180deg, rgba($lv-bg-white, 0.96), $lv-bg-subtle);
+  border: 1px solid $lv-border;
+  border-radius: 16px;
+  box-shadow: $lv-shadow-sm;
+  color: $lv-text-muted;
+
+  .change_location__map {
+    color: $lv-text-fg;
+    font-weight: 700;
+  }
+
+  a {
+    color: $lv-primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover,
+    &:focus { text-decoration: underline; }
+  }
+}
+
+body.mappage #report-a-problem-main .report-routing-note {
+  margin: 0;
+  padding: 14px 16px;
+  border: 1px solid rgba($lv-primary, 0.18);
+  border-left: 4px solid $lv-primary;
+  border-radius: 16px;
+  background: linear-gradient(135deg, $lv-primary-10, rgba($lv-primary, 0.04));
+  box-shadow: $lv-shadow-sm;
+
+  p {
+    margin: 0;
+    color: rgba($lv-text-fg, 0.88);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  strong {
+    color: $lv-primary;
+    font-weight: 800;
+  }
+}
+
+body.mappage #report-a-problem-main .js-reporting-page {
+  color: $lv-text-fg;
+}
+
+body.mappage #report-a-problem-main .form-section-heading,
+body.mappage #report-a-problem-main #form_category_legend,
+body.mappage #report-a-problem-main #photo-upload-label,
+body.mappage #report-a-problem-main .label,
+body.mappage #report-a-problem-main #title-label,
+body.mappage #report-a-problem-main #detail-label {
+  display: block;
+  margin: 0 0 10px;
+  color: $lv-text-fg;
+  font-size: 15px;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+body.mappage #report-a-problem-main .form-section-description {
+  margin: 0 0 14px;
+  padding: 14px 16px;
+  border: 1px solid $lv-border;
+  border-radius: 16px;
+  background: linear-gradient(180deg, $lv-primary-03, $lv-bg-white);
+  box-shadow: $lv-shadow-sm;
+  color: $lv-text-muted;
+  font-size: 14px;
+  line-height: 1.65;
+
+  p { margin: 0; }
+
+  strong {
+    color: $lv-text-fg;
+    font-weight: 700;
+  }
+
+  a {
+    color: $lv-primary;
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover,
+    &:focus { text-decoration: underline; }
+  }
+}
+
+body.mappage #report-a-problem-main .form-hint {
+  margin: 0 0 8px;
+  color: $lv-text-muted;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+body.mappage #report-a-problem-main input.form-control,
+body.mappage #report-a-problem-main textarea.form-control {
+  width: 100%;
+  border: 1px solid $lv-border;
+  border-radius: 14px;
+  background: $lv-bg-white;
+  box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.04), $lv-shadow-sm;
+  color: $lv-text-fg;
+  padding: 12px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: $lv-primary;
+    box-shadow: 0 0 0 4px $lv-primary-10;
+    outline: none;
+  }
+}
+
+body.mappage #report-a-problem-main textarea.form-control {
+  min-height: 180px;
+  line-height: 1.6;
+}
+
+body.mappage #report-a-problem-main .govuk-radios--small {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+body.mappage #report-a-problem-main .govuk-radios__item {
+  position: relative;
+  margin: 0;
+}
+
+body.mappage #report-a-problem-main .govuk-radios__input {
+  position: absolute;
+  top: 50%;
+  left: 14px;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  transform: translateY(-50%);
+  accent-color: $lv-primary;
+  z-index: 1;
+}
+
+body.mappage #report-a-problem-main .govuk-radios__label {
+  display: block;
+  padding: 14px 16px 14px 44px;
+  border: 1px solid $lv-border;
+  border-radius: 14px;
+  background: $lv-bg-white;
+  box-shadow: $lv-shadow-sm;
+  color: $lv-text-fg;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
+}
+
+body.mappage #report-a-problem-main #form_category_fieldset .govuk-radios__item {
+  width: 100%;
+  clear: both;
+}
+
+body.mappage #report-a-problem-main #form_category_fieldset .govuk-radios__label {
+  float: none !important;
+  width: 100%;
+  max-width: none;
+  min-height: 58px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+body.mappage #report-a-problem-main .govuk-radios__input:hover + .govuk-radios__label,
+body.mappage #report-a-problem-main .govuk-radios__label:hover {
+  border-color: $lv-primary-25;
+  background: $lv-bg-subtle;
+}
+
+body.mappage #report-a-problem-main .govuk-radios__input:checked + .govuk-radios__label {
+  border-color: $lv-primary-40;
+  background: linear-gradient(180deg, $lv-primary-06, $lv-bg-white);
+  box-shadow: 0 0 0 4px $lv-primary-10;
+  color: $lv-primary;
+}
+
+body.mappage #report-a-problem-main .dropzone {
+  margin: 0;
+  padding: 24px 20px;
+  border: 1px dashed $lv-primary-40;
+  border-radius: 16px;
+  background: linear-gradient(180deg, $lv-bg-white, $lv-primary-06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92), $lv-shadow-sm;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+
+  &:hover,
+  &:focus-within,
+  &.dz-drag-hover {
+    border-color: $lv-primary;
+    background: linear-gradient(180deg, $lv-primary-03, $lv-primary-10);
+    box-shadow: 0 0 0 4px $lv-primary-10;
+  }
+
+  .dz-default.dz-message {
+    width: 100%;
+    margin: 0;
+
+    > span,
+    > button {
+      width: 100%;
+      justify-content: center;
+      text-align: center;
+      color: $lv-text-muted;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    u {
+      padding: 10px 16px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, $accent-500, $accent-600);
+      box-shadow: 0 8px 20px rgba($accent-600, 0.18);
+
+      &:hover {
+        background: linear-gradient(180deg, lighten($accent-500, 4%), $accent-500);
+      }
+    }
+  }
+}
+
+body.mappage #report-a-problem-main .description_tips {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+body.mappage #report-a-problem-main .description_tips ul {
+  margin: 0;
+  padding: 14px 16px 14px 32px;
+  list-style: none;
+  border-radius: 14px;
+  box-shadow: $lv-shadow-sm;
+}
+
+body.mappage #report-a-problem-main .description_tips li {
+  position: relative;
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.55;
+
+  &:last-child { margin-bottom: 0; }
+}
+
+body.mappage #report-a-problem-main .description_tips .do {
+  background: rgba($lv-primary, 0.05);
+  border: 1px solid rgba($lv-primary, 0.16);
+  color: rgba($lv-text-fg, 0.86);
+
+  li::before {
+    content: '✓';
+    position: absolute;
+    left: -18px;
+    top: 0;
+    color: $lv-primary;
+    font-weight: 800;
+  }
+}
+
+body.mappage #report-a-problem-main .description_tips .dont {
+  background: $lv-amber-50;
+  border: 1px solid rgba($lv-amber-400, 0.32);
+  color: $lv-amber-700;
+
+  li::before {
+    content: '!';
+    position: absolute;
+    left: -16px;
+    top: 0;
+    color: $lv-amber-500;
+    font-weight: 900;
+  }
+}
+
+body.mappage #report-a-problem-main .form-section-preview--next {
+  width: 100%;
+  margin: 20px 0 0;
+  padding: 18px;
+  border: 1px solid $lv-border;
+  border-radius: 16px;
+  background: linear-gradient(180deg, $lv-bg-subtle, $lv-bg-white);
+  box-shadow: $lv-shadow-sm;
+  box-sizing: border-box;
+
+  .form-section-heading {
+    margin: 0 0 12px;
+  }
+
+  small,
+  .or {
+    color: $lv-text-muted;
+    font-size: 12px;
+  }
+}
+
+body.mappage #report-a-problem-main .floating-button-spacer {
+  min-height: calc(112px + env(safe-area-inset-bottom, 0px));
+}
+
+body.mappage #report-a-problem-main .floating-button-wrapper {
+  pointer-events: none;
+}
+
+body.mappage #report-a-problem-main .floating-button,
+body.mappage #report-a-problem-main .floating-button .btn {
+  pointer-events: auto;
+}
+
+@media (max-width: 56em) {
+  body.mappage #report-a-problem-main .floating-button-spacer {
+    min-height: 0;
+    margin-top: 18px;
+  }
+
+  body.mappage #report-a-problem-main .floating-button-wrapper {
+    position: static !important;
+    width: 100% !important;
+    height: auto !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    pointer-events: auto;
+  }
+
+  body.mappage #report-a-problem-main .floating-button {
+    padding: 0 !important;
+  }
+}
+
+body.mappage #report-a-problem-main .btn--oidc,
+body.mappage #report-a-problem-main #oidc_sign_in {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 11px 16px;
+  border: 1px solid $lv-border;
+  border-radius: 12px;
+  background: $lv-bg-white;
+  color: $lv-text-fg;
+  font-size: 14px;
+  font-weight: 700;
+  box-shadow: $lv-shadow-sm;
+  transition: border-color 0.2s, background-color 0.2s, box-shadow 0.2s;
+
+  &:hover,
+  &:focus {
+    border-color: $lv-primary-40;
+    background: $lv-bg-subtle;
+    box-shadow: $lv-shadow-md;
+  }
+}
+
+body.mappage #report-a-problem-main .js-reporting-page--next,
+body.mappage #report-a-problem-main .btn--final,
+body.mappage #report-a-problem-main .js-new-report-user-show {
+  border: none;
+  border-radius: 14px;
+  background: linear-gradient(180deg, $primary-700, $primary-900);
+  color: #fff;
+  box-shadow: 0 10px 22px rgba($primary-900, 0.2);
+  transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(180deg, $primary-500, $primary-700);
+    box-shadow: 0 14px 28px rgba($primary-900, 0.22);
+    transform: translateY(-1px);
+  }
+}
+
+body.mappage #report-a-problem-main .floating-button .btn {
+  padding: 13px 18px;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+body.mappage #report-a-problem-main .cf-turnstile {
+  margin: 16px 0 0;
+}
+
+@media (min-width: 420px) {
+  body.mappage #report-a-problem-main .description_tips {
+    grid-template-columns: 1fr 1fr;
+  }
+}
 
 // Ping animation (status bar dot)
 @keyframes lv-status-ping {
@@ -14865,6 +15542,185 @@ body.authpage {
   }
 }
 
+/* ===========================================================
+   SIGNED OUT PAGE
+   =========================================================== */
+body.signedoutpage {
+  background: linear-gradient(180deg, $primary-900 0, $primary-700 100%) !important;
+
+  .container,
+  .container--sidebar {
+    width: 100% !important;
+    max-width: none !important;
+    padding: 0 !important;
+  }
+
+  .content {
+    width: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: none !important;
+    background: transparent !important;
+    color: $gray-900;
+  }
+
+  .content footer {
+    margin: 0 !important;
+  }
+}
+
+.signed-out {
+  min-height: calc(100vh - 64px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(2rem, 8vh, 5rem) 1rem 3rem;
+  background:
+    radial-gradient(circle at 28% 12%, rgba($accent-500, 0.18), transparent 24rem),
+    linear-gradient(180deg, $primary-900 0, $primary-700 100%);
+  box-sizing: border-box;
+}
+
+.signed-out__card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.4rem;
+  width: 100%;
+  max-width: 42rem;
+  padding: 2rem;
+  border: 1px solid rgba($primary-300, 0.32);
+  border-radius: 16px;
+  background: rgba(#fff, 0.98);
+  box-shadow: 0 24px 70px rgba(15, 36, 68, 0.28);
+  text-align: center;
+}
+
+.signed-out__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  flex: 0 0 5.5rem;
+  border-radius: 50%;
+  background: $accent-500;
+  color: $primary-900;
+  box-shadow: 0 16px 30px rgba($accent-500, 0.28);
+}
+
+.signed-out__body {
+  min-width: 0;
+}
+
+.signed-out__eyebrow {
+  margin: 0 0 0.55rem;
+  color: $primary-700;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.signed-out__title {
+  margin: 0;
+  color: $gray-900;
+  font-size: clamp(1.875rem, 4vw, 2.35rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: 0;
+}
+
+.signed-out__lede {
+  max-width: 30rem;
+  margin: 1rem auto 0;
+  color: $gray-600;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.signed-out__link {
+  color: $primary-700;
+  font-weight: 800;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.signed-out__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1.8rem;
+}
+
+.signed-out__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.signed-out__button--primary {
+  border: 1px solid $primary-700;
+  background: $primary-700;
+  color: #fff !important;
+  box-shadow: 0 10px 22px rgba($primary-700, 0.22);
+
+  &:hover,
+  &:focus {
+    background: $primary-900;
+    border-color: $primary-900;
+    color: #fff !important;
+    transform: translateY(-1px);
+  }
+}
+
+.signed-out__button--ghost {
+  border: 1px solid $gray-300;
+  background: #fff;
+  color: $gray-900 !important;
+
+  &:hover,
+  &:focus {
+    border-color: rgba($primary-500, 0.45);
+    background: $primary-50;
+    color: $primary-700 !important;
+    transform: translateY(-1px);
+  }
+}
+
+@media (min-width: 640px) {
+  .signed-out__card {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2rem;
+    padding: 3rem;
+    text-align: left;
+  }
+
+  .signed-out__lede {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  .signed-out__actions {
+    flex-direction: row;
+  }
+}
+
 /* -- Around: location-match disambiguation card -------------------- */
 .is-geo-matches {
     background: #ffffff;
@@ -14952,3 +15808,131 @@ body.authpage {
     line-height: 1;
     font-weight: 700;
 }
+
+// =====================================================================
+// InfraSignal — /report/new sidebar hero polish (added 2026-05-29)
+// ---------------------------------------------------------------------
+// The form-field styling at L12064-12482 covers inputs/radios/dropzone
+// but the page-level chrome (h1, back link, routing-note) still reads
+// as default FixMyStreet. These rules add the missing "InfraSignal hero"
+// feel inside the constrained sidebar layout (mappage split view).
+//
+// Source order: appended after the original h1 rule at L12073 so this
+// wins by source order at the same specificity.
+// =====================================================================
+
+body.mappage #side-form {
+    // Remove the soft gradient — the hero now provides the top fill.
+    background: $lv-bg-white;
+}
+
+body.mappage #report-a-problem-main {
+    // Bleed the hero edge-to-edge by killing the top/horizontal padding
+    // and re-applying it to the form body below the hero.
+    padding: 0 0 24px;
+
+    > .problem-back--top {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        margin: 12px 16px 10px;
+        padding: 6px 12px 6px 8px;
+        background: $lv-primary-10;
+        color: $lv-primary;
+        font-weight: 700;
+        font-size: 13px;
+        line-height: 1;
+        border-radius: 999px;
+        text-decoration: none;
+        transition: background 0.15s ease;
+
+        &:hover,
+        &:focus {
+            background: $lv-primary-15;
+            text-decoration: none;
+            color: $lv-primary;
+        }
+
+        svg {
+            width: 1em;
+            height: 1em;
+            flex-shrink: 0;
+        }
+    }
+
+    // Hero band — the real "you are reporting a problem" page header.
+    > h1 {
+        display: block;
+        margin: 0 0 18px;
+        padding: 20px 20px 18px;
+        background: linear-gradient(135deg, $lv-primary 0%, $primary-900 100%);
+        color: $lv-primary-fg;
+        font-size: 24px;
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.015em;
+        border-bottom: 3px solid $accent-500;
+        box-shadow: $lv-shadow-sm;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.18);
+
+        &::before {
+            content: "";
+            display: inline-block;
+            width: 18px;
+            height: 22px;
+            margin-right: 10px;
+            vertical-align: -4px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23F97316"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 110-5 2.5 2.5 0 010 5z"/></svg>') no-repeat center / contain;
+        }
+    }
+
+    // Reapply horizontal padding to all the form body children that the
+    // bleed removed it from. The hero + back link override above.
+    > *:not(h1):not(.problem-back--top) {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
+// Strengthen the "Your report will be sent to ..." routing-note so it
+// reads as a clear callout, not just bold text.
+body.mappage #report-a-problem-main .report-routing-note {
+    border-left-width: 5px;
+    padding: 16px 18px;
+    background: linear-gradient(
+        135deg,
+        $lv-primary-10 0%,
+        rgba(249, 115, 22, 0.06) 100%
+    );
+
+    p {
+        font-size: 14.5px;
+        line-height: 1.55;
+    }
+
+    strong {
+        color: $primary-900;
+    }
+}
+
+// Section labels (Photos, Title, Detail) — uplift with the brand color
+// and a tiny uppercase treatment so each section reads as a clear step.
+body.mappage #report-a-problem-main #photo-upload-label,
+body.mappage #report-a-problem-main #title-label,
+body.mappage #report-a-problem-main #detail-label,
+body.mappage #report-a-problem-main #form_category_legend {
+    color: $lv-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 12.5px;
+
+    // The optional/required suffix span should stay normal-cased.
+    .optional,
+    .required {
+        text-transform: none;
+        letter-spacing: 0;
+        color: $lv-text-muted;
+        font-weight: 600;
+    }
+}
+
