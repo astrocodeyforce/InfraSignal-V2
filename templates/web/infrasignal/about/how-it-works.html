@@ -179,7 +179,8 @@
 <article class="hiw">
   <section class="hiw-hero">
     <div class="hiw-hero__bg" aria-hidden="true"></div>
-    <div class="infra-container hiw-hero__inner">
+    [% INCLUDE 'front/hero-pulse.html' %]
+    <div class="infra-container hiw-hero__inner" data-hero-exclude>
       <h1 class="hiw-hero__title">[% loc('How InfraSignal Works') %]</h1>
       <p class="hiw-hero__lead">[% loc('A simple way to report issues in your neighborhood and ensure they reach the right people.') %]</p>
     </div>

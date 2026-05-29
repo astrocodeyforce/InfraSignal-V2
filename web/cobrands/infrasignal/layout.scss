@@ -1,6 +1,12 @@
 @import "_colours";
 @import "../sass/layout";
 
+body.mappage #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+}
+
 /* ======================================================
    A12: Desktop Layout Polish (≥48em / 768px)
    Updated for community-connect design system.

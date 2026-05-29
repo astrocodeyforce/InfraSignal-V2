@@ -28,11 +28,8 @@
 
 <section class="rd-hero">
   <div class="rd-hero__pattern" aria-hidden="true"></div>
-  <div class="infra-container rd-hero__inner">
-    <span class="rd-hero__badge">
-      <span class="rd-hero__pulse" aria-hidden="true"></span>
-      [% IF updated_label %][% loc('Live') %] &middot; [% updated_label | html %][% ELSE %][% loc('Live data') %][% END %]
-    </span>
+  [% INCLUDE 'front/hero-pulse.html' %]
+  <div class="infra-container rd-hero__inner" data-hero-exclude>
     <h1 class="rd-hero__title">[% loc('Reports Dashboard') %][% IF body %] &ndash; [% body.name | html %][% END %]</h1>
     <p class="rd-hero__lede">[% loc('Real-time overview of infrastructure reports across all communities. See what is being reported, what is getting fixed, and how responsive local government is.') %]</p>
   </div>

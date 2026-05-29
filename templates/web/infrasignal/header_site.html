@@ -38,7 +38,13 @@
 
       [%# Admin link %]
       [% IF c.user_exists AND c.cobrand.admin_allow_user(c.user) %]
-        <a href="/admin" class="header-admin-link">[% loc('Admin') %]</a>
+        <a href="[% c.uri_for('/admin') | html %]" class="header-admin-link[% IF c.req.uri.path.match('^/admin') %] is-active[% END %]" title="[% loc('Admin Console') | html %]">
+          <svg class="header-admin-link__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          <span>[% loc('Admin') %]</span>
+        </a>
       [% END %]
 
       [%# Hamburger — mobile only %]
@@ -65,7 +71,13 @@
         [% END %]
       [% END %]
       [% IF c.user_exists AND c.cobrand.admin_allow_user(c.user) %]
-        <a href="/admin">[% loc('Admin') %]</a>
+        <a href="[% c.uri_for('/admin') | html %]" class="mobile-menu__admin-link[% IF c.req.uri.path.match('^/admin') %] is-active[% END %]">
+          <svg class="mobile-menu__admin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          <span>[% loc('Admin') %]</span>
+        </a>
       [% END %]
       [%# Language links for mobile %]
       <div class="mobile-menu__langs">

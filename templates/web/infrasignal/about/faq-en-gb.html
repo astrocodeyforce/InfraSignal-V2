@@ -3,13 +3,10 @@
     bodyclass = 'infopage'
 %]
 
-[%# ===== Hero Section ===== %]
-<section class="contact-hero">
-  <div class="infra-container">
-    <h1 class="contact-hero__title">[% loc('Frequently Asked Questions') %]</h1>
-    <p class="contact-hero__subtitle">[% loc('Find answers to common questions about InfraSignal.') %]</p>
-  </div>
-</section>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = loc('Frequently Asked Questions')
+    public_page_subtitle = loc('Find answers to common questions about InfraSignal.')
+%]
 
 [%# ===== Two-column layout ===== %]
 <section class="contact-body">

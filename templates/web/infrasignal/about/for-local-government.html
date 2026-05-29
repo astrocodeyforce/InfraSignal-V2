@@ -54,7 +54,8 @@
 <main class="page--gov" id="for-local-government">
   <section class="gov-hero">
     <span class="gov-hero__dots" aria-hidden="true"></span>
-    <div class="infra-container gov-hero__inner">
+    [% INCLUDE 'front/hero-pulse.html' %]
+    <div class="infra-container gov-hero__inner" data-hero-exclude>
       <h1 class="gov-hero__title">[% loc('For Local Government') %]</h1>
       <p class="gov-hero__sub">[% loc('A structured public reporting channel for infrastructure teams.') %]</p>
     </div>

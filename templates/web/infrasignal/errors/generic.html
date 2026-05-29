@@ -86,7 +86,8 @@
     <header class="errpage-hero">
       <span class="errpage-hero__pattern" aria-hidden="true"></span>
       <span class="errpage-hero__glow" aria-hidden="true"></span>
-      <div class="infra-container errpage-hero__inner">
+      [% INCLUDE 'front/hero-pulse.html' %]
+      <div class="infra-container errpage-hero__inner" data-hero-exclude>
         <span class="errpage-hero__eyebrow">
           [% IF error_kind == 'captcha' %]
             [% PROCESS err_icon_shield %]

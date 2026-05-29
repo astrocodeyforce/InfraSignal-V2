@@ -14,6 +14,12 @@
             </p>
         </div>
         <div class="infra-admin-page-header__actions">
+            <a class="infra-admin-btn infra-admin-btn--ghost" href="[% c.uri_for('/my') | html %]">
+                <span class="infra-admin-btn__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="7" r="4"/></svg>
+                </span>
+                [% loc('Your account') %]
+            </a>
             [% IF c.user.has_body_permission_to('report_edit') %]
                 <a class="infra-admin-btn infra-admin-btn--ghost" href="[% c.uri_for('reports') | html %]">
                     <span class="infra-admin-btn__icon" aria-hidden="true">
