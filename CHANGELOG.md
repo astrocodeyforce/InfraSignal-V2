@@ -1,6 +1,31 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Dev DB seeded from prod, PII scrubbed):
+        - Added `bin/refresh-db` (mirrored to both
+          `/opt/infrasignal-dev/bin/` and `/opt/infrasignal-v2/bin/`):
+          one-shot script that does `pg_dump` from prod →
+          drop+create target DB → restore → run scrub SQL →
+          flush memcached → verify. Refuses to target prod.
+          Always backs up the target DB to `/tmp` first.
+        - Ran it against dev. Dev DB now holds a scrubbed prod
+          snapshot: 723 problems, 555 comments, 28,090 bodies, 9
+          users (8 from prod with all PII anonymized, plus a stable
+          `dev-admin@example.invalid` superuser).
+        - Scrub coverage: `users.email/name/phone/password/social_ids/extra`,
+          `problem.name/cobrand_data/extra`,
+          `comment.name/website/cobrand_data/extra/private_email_text`;
+          truncates `abuse/admin_log/sessions/token/partial_user/
+          moderation_original_data/textmystreet/alert_sent`.
+        - Kept verbatim: `problem.title/detail` and `comment.text`
+          (real prod report content — acceptable for non-public dev,
+          noted as residual risk if dev is ever exposed publicly).
+          Photos are NOT copied by default (`--with-photos` opt-in).
+        - Prod untouched throughout (read-only `pg_dump`); prod still
+          at 723 problems, max id 723, site still 200.
+        - Staging left empty intentionally — same command refreshes
+          it (`bin/refresh-db staging`) when desired.
+        - Detailed log at `notes/2026-05-29-dev-db-refresh.md`.
     - InfraSignal — May 27, 2026 (Operations / file-watch + repo push):
         - Added `bin/optwatch` + `/etc/cron.d/optwatch` to log unexpected
           file modifications under `/opt/infrasignal-v2` and
