@@ -1,6 +1,18 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Fix untranslated admin sidebar items: Duplicate Reports / Priority Zones):
+        - The two custom admin sidebar entries stayed English in every language
+          because their titles were hardcoded plain strings in the cobrand's
+          admin_pages(): `$pages->{duplicate_reports} = [ 'Duplicate Reports', ...]`.
+          The label is rendered from allowed_pages, so it never hit loc().
+        - Fix: wrapped both titles with `_()` (the FMS Perl gettext helper, same as
+          core admin_pages) in perllib/FixMyStreet/Cobrand/Infrasignal.pm, and added
+          the "Priority Zones" msgstr to ru/tr/es ("Duplicate Reports" already
+          existed). .mo recompiled.
+        - Verified logged-in on dev: sidebar shows Дублирующие отчёты/Приоритетные
+          зоны (ru), Yinelenen Bildirimler/Öncelik Bölgeleri (tr) with no English.
+          Perl + .po + .mo mirrored to staging.
     - InfraSignal — May 29, 2026 (Translate the ADMIN CONSOLE ru/tr/es):
         - Superuser screenshots showed English leaking across the admin console
           (Özet/dashboard, Bölümler/bodies, Bildirimler, Duplicate Reports, etc.).

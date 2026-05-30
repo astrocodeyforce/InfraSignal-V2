@@ -9758,6 +9758,9 @@ msgstr "reportes"
 msgid "reports waiting to be sent"
 msgstr "reportes en espera de envío"
 
+msgid "Priority Zones"
+msgstr "Zonas de Prioridad"
+
 #~ msgid "%s admin:"
 #~ msgstr "admin:"
 

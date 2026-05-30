@@ -376,8 +376,8 @@ sub admin_pages {
     # Add Duplicate Reports tab (visible to users who can edit reports)
     my $user = $self->{c}->user;
     if ($user && ($user->is_superuser || $user->has_body_permission_to('report_edit'))) {
-        $pages->{duplicate_reports} = [ 'Duplicate Reports', 2.5 ];
-        $pages->{priority_zones} = [ 'Priority Zones', 2.6 ];
+        $pages->{duplicate_reports} = [ _('Duplicate Reports'), 2.5 ];
+        $pages->{priority_zones} = [ _('Priority Zones'), 2.6 ];
     }
 
     return $pages;

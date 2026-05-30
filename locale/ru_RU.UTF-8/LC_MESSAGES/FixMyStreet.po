@@ -9658,6 +9658,9 @@ msgstr "отчётов"
 msgid "reports waiting to be sent"
 msgstr "отчётов ожидают отправки"
 
+msgid "Priority Zones"
+msgstr "Приоритетные зоны"
+
 #~ msgid "%s admin:"
 #~ msgstr "Администратор сайта %s:"
 

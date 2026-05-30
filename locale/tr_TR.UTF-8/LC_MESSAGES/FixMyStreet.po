@@ -9633,6 +9633,9 @@ msgstr "bildirim"
 msgid "reports waiting to be sent"
 msgstr "bildirim gönderilmeyi bekliyor"
 
+msgid "Priority Zones"
+msgstr "Öncelik Bölgeleri"
+
 #~ msgid "%s admin:"
 #~ msgstr "%s yönetici:"
 
