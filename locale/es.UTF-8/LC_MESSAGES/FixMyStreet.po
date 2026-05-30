@@ -9575,6 +9575,189 @@ msgstr "✓ Gratis"
 msgid "✓ Government trusted"
 msgstr "✓ Confiado por el gobierno"
 
+msgid "%sm apart"
+msgstr "a %s m de distancia"
+
+msgid "-- All cities --"
+msgstr "-- Todas las ciudades --"
+
+msgid "-- All cities in county --"
+msgstr "-- Todas las ciudades del condado --"
+
+msgid "-- All counties --"
+msgstr "-- Todos los condados --"
+
+msgid "-- Select a state --"
+msgstr "-- Seleccione un estado --"
+
+msgid "Access"
+msgstr "Acceso"
+
+msgid "Admin Console"
+msgstr "Consola de Administración"
+
+msgid "Admin navigation"
+msgstr "Navegación de administración"
+
+msgid "Admin sections"
+msgstr "Secciones de administración"
+
+msgid "All Categories"
+msgstr "Todas las categorías"
+
+msgid "All report issue types"
+msgstr "Todos los tipos de problemas de reportes"
+
+msgid "All report lifecycle distribution"
+msgstr "Distribución del ciclo de vida de los reportes"
+
+msgid "Available for your account"
+msgstr "Disponible para su cuenta"
+
+msgid "Awaiting send"
+msgstr "En espera de envío"
+
+msgid "Bodies with Site Messages"
+msgstr "Organismos con mensajes del sitio"
+
+msgid "By Category"
+msgstr "Por Categoría"
+
+msgid "By Status"
+msgstr "Por Estado"
+
+msgid "City / Town"
+msgstr "Ciudad / Pueblo"
+
+msgid "Created reports per day"
+msgstr "Reportes creados por día"
+
+msgid "Denied"
+msgstr "Denegado"
+
+msgid "Detection Radius"
+msgstr "Radio de detección"
+
+msgid "Dismiss"
+msgstr "Descartar"
+
+msgid "Duplicate Groups"
+msgstr "Grupos de duplicados"
+
+msgid "Duplicate Reports"
+msgstr "Reportes Duplicados"
+
+msgid "Edit Priority Zone"
+msgstr "Editar Zona de Prioridad"
+
+msgid "Find reports and users"
+msgstr "Buscar reportes y usuarios"
+
+msgid "Good morning"
+msgstr "Buenos días"
+
+msgid "Granted"
+msgstr "Concedido"
+
+msgid "Latest submissions"
+msgstr "Últimos envíos"
+
+msgid "Mark"
+msgstr "Marcar"
+
+msgid "Mark as duplicate:"
+msgstr "Marcar como duplicado:"
+
+msgid "Name or email address"
+msgstr "Nombre o dirección de correo"
+
+msgid "New report"
+msgstr "Nuevo reporte"
+
+msgid "No bodies found for %s."
+msgstr "No se encontraron organismos para %s."
+
+msgid "No duplicate reports detected"
+msgstr "No se detectaron reportes duplicados"
+
+msgid "No recent reports to show."
+msgstr "No hay reportes recientes para mostrar."
+
+msgid "No reports are currently waiting to be sent."
+msgstr "Actualmente no hay reportes en espera de envío."
+
+msgid ""
+"No reports found within the specified radius sharing the same category. Try "
+"increasing the radius."
+msgstr ""
+"No se encontraron reportes dentro del radio especificado con la misma "
+"categoría. Intente aumentar el radio."
+
+msgid "Open only"
+msgstr "Solo abiertos"
+
+msgid "Open reports manager"
+msgstr "Abrir gestor de reportes"
+
+msgid "Open reports pending delivery"
+msgstr "Reportes abiertos pendientes de entrega"
+
+msgid "Priority Zone Configuration"
+msgstr "Configuración de Zonas de Prioridad"
+
+msgid "Radius (metres)"
+msgstr "Radio (metros)"
+
+msgid "Recent reports"
+msgstr "Reportes recientes"
+
+msgid "Report ID, title, or email"
+msgstr "ID de reporte, título o correo"
+
+msgid "Report Pairs"
+msgstr "Pares de reportes"
+
+msgid "Report State"
+msgstr "Estado del reporte"
+
+msgid ""
+"Reports in the same category within a geographic radius that may be "
+"duplicates."
+msgstr ""
+"Reportes de la misma categoría dentro de un radio geográfico que pueden ser "
+"duplicados."
+
+msgid "Reports this week"
+msgstr "Reportes de esta semana"
+
+msgid ""
+"Scroll inside this table to review the full queue without stretching the "
+"page."
+msgstr ""
+"Desplácese dentro de esta tabla para revisar toda la cola sin estirar la "
+"página."
+
+msgid "View all"
+msgstr "Ver todos"
+
+msgid "View reports"
+msgstr "Ver reportes"
+
+msgid "admin sections available"
+msgstr "secciones de administración disponibles"
+
+msgid "is duplicate of"
+msgstr "es duplicado de"
+
+msgid "last 7 days"
+msgstr "últimos 7 días"
+
+msgid "reports"
+msgstr "reportes"
+
+msgid "reports waiting to be sent"
+msgstr "reportes en espera de envío"
+
 #~ msgid "%s admin:"
 #~ msgstr "admin:"
 

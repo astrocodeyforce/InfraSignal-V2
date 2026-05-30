@@ -9452,6 +9452,187 @@ msgstr "✓ Ücretsiz"
 msgid "✓ Government trusted"
 msgstr "✓ Devlet güvenilirliği"
 
+msgid "%sm apart"
+msgstr "%s m mesafede"
+
+msgid "-- All cities --"
+msgstr "-- Tüm şehirler --"
+
+msgid "-- All cities in county --"
+msgstr "-- İlçedeki tüm şehirler --"
+
+msgid "-- All counties --"
+msgstr "-- Tüm ilçeler --"
+
+msgid "-- Select a state --"
+msgstr "-- Bir eyalet seçin --"
+
+msgid "Access"
+msgstr "Erişim"
+
+msgid "Admin Console"
+msgstr "Yönetici Konsolu"
+
+msgid "Admin navigation"
+msgstr "Yönetici gezinmesi"
+
+msgid "Admin sections"
+msgstr "Yönetici bölümleri"
+
+msgid "All Categories"
+msgstr "Tüm Kategoriler"
+
+msgid "All report issue types"
+msgstr "Tüm bildirim sorun türleri"
+
+msgid "All report lifecycle distribution"
+msgstr "Tüm bildirim yaşam döngüsü dağılımı"
+
+msgid "Available for your account"
+msgstr "Hesabınız için kullanılabilir"
+
+msgid "Awaiting send"
+msgstr "Gönderim bekliyor"
+
+msgid "Bodies with Site Messages"
+msgstr "Site Mesajı Olan Kurumlar"
+
+msgid "By Category"
+msgstr "Kategoriye Göre"
+
+msgid "By Status"
+msgstr "Duruma Göre"
+
+msgid "City / Town"
+msgstr "Şehir / Kasaba"
+
+msgid "Created reports per day"
+msgstr "Günlük oluşturulan bildirimler"
+
+msgid "Denied"
+msgstr "Reddedildi"
+
+msgid "Detection Radius"
+msgstr "Tespit Yarıçapı"
+
+msgid "Dismiss"
+msgstr "Kapat"
+
+msgid "Duplicate Groups"
+msgstr "Yinelenen Gruplar"
+
+msgid "Duplicate Reports"
+msgstr "Yinelenen Bildirimler"
+
+msgid "Edit Priority Zone"
+msgstr "Öncelik Bölgesini Düzenle"
+
+msgid "Find reports and users"
+msgstr "Bildirim ve kullanıcı bul"
+
+msgid "Good morning"
+msgstr "Günaydın"
+
+msgid "Granted"
+msgstr "Verildi"
+
+msgid "Latest submissions"
+msgstr "Son gönderimler"
+
+msgid "Mark"
+msgstr "İşaretle"
+
+msgid "Mark as duplicate:"
+msgstr "Yinelenen olarak işaretle:"
+
+msgid "Name or email address"
+msgstr "Ad veya e-posta adresi"
+
+msgid "New report"
+msgstr "Yeni bildirim"
+
+msgid "No bodies found for %s."
+msgstr "%s için kurum bulunamadı."
+
+msgid "No duplicate reports detected"
+msgstr "Yinelenen bildirim tespit edilmedi"
+
+msgid "No recent reports to show."
+msgstr "Gösterilecek son bildirim yok."
+
+msgid "No reports are currently waiting to be sent."
+msgstr "Şu anda gönderilmeyi bekleyen bildirim yok."
+
+msgid ""
+"No reports found within the specified radius sharing the same category. Try "
+"increasing the radius."
+msgstr ""
+"Belirtilen yarıçap içinde aynı kategoride bildirim bulunamadı. Yarıçapı "
+"artırmayı deneyin."
+
+msgid "Open only"
+msgstr "Yalnızca açık"
+
+msgid "Open reports manager"
+msgstr "Bildirim yöneticisini aç"
+
+msgid "Open reports pending delivery"
+msgstr "Teslim bekleyen açık bildirimler"
+
+msgid "Priority Zone Configuration"
+msgstr "Öncelik Bölgesi Yapılandırması"
+
+msgid "Radius (metres)"
+msgstr "Yarıçap (metre)"
+
+msgid "Recent reports"
+msgstr "Son bildirimler"
+
+msgid "Report ID, title, or email"
+msgstr "Bildirim kimliği, başlık veya e-posta"
+
+msgid "Report Pairs"
+msgstr "Bildirim Çiftleri"
+
+msgid "Report State"
+msgstr "Bildirim Durumu"
+
+msgid ""
+"Reports in the same category within a geographic radius that may be "
+"duplicates."
+msgstr ""
+"Coğrafi yarıçap içinde aynı kategorideki, yinelenen olabilecek bildirimler."
+
+msgid "Reports this week"
+msgstr "Bu haftaki bildirimler"
+
+msgid ""
+"Scroll inside this table to review the full queue without stretching the "
+"page."
+msgstr ""
+"Sayfayı uzatmadan tüm kuyruğu incelemek için bu tablonun içinde kaydırın."
+
+msgid "View all"
+msgstr "Tümünü görüntüle"
+
+msgid "View reports"
+msgstr "Bildirimleri görüntüle"
+
+msgid "admin sections available"
+msgstr "kullanılabilir yönetici bölümü"
+
+msgid "is duplicate of"
+msgstr "şunun kopyası"
+
+msgid "last 7 days"
+msgstr "son 7 gün"
+
+msgid "reports"
+msgstr "bildirim"
+
+msgid "reports waiting to be sent"
+msgstr "bildirim gönderilmeyi bekliyor"
+
 #~ msgid "%s admin:"
 #~ msgstr "%s yönetici:"
 

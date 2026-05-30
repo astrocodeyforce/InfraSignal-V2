@@ -9475,6 +9475,189 @@ msgstr "✓ Бесплатно"
 msgid "✓ Government trusted"
 msgstr "✓ Доверие государственных органов"
 
+msgid "%sm apart"
+msgstr "%s м друг от друга"
+
+msgid "-- All cities --"
+msgstr "-- Все города --"
+
+msgid "-- All cities in county --"
+msgstr "-- Все города округа --"
+
+msgid "-- All counties --"
+msgstr "-- Все округа --"
+
+msgid "-- Select a state --"
+msgstr "-- Выберите штат --"
+
+msgid "Access"
+msgstr "Доступ"
+
+msgid "Admin Console"
+msgstr "Консоль администратора"
+
+msgid "Admin navigation"
+msgstr "Навигация администратора"
+
+msgid "Admin sections"
+msgstr "Разделы администратора"
+
+msgid "All Categories"
+msgstr "Все категории"
+
+msgid "All report issue types"
+msgstr "Все типы проблем в отчётах"
+
+msgid "All report lifecycle distribution"
+msgstr "Распределение по жизненному циклу отчётов"
+
+msgid "Available for your account"
+msgstr "Доступно для вашей учётной записи"
+
+msgid "Awaiting send"
+msgstr "Ожидают отправки"
+
+msgid "Bodies with Site Messages"
+msgstr "Организации с сообщениями сайта"
+
+msgid "By Category"
+msgstr "По категориям"
+
+msgid "By Status"
+msgstr "По статусу"
+
+msgid "City / Town"
+msgstr "Город / посёлок"
+
+msgid "Created reports per day"
+msgstr "Создано отчётов в день"
+
+msgid "Denied"
+msgstr "Отказано"
+
+msgid "Detection Radius"
+msgstr "Радиус обнаружения"
+
+msgid "Dismiss"
+msgstr "Отклонить"
+
+msgid "Duplicate Groups"
+msgstr "Группы дубликатов"
+
+msgid "Duplicate Reports"
+msgstr "Дублирующие отчёты"
+
+msgid "Edit Priority Zone"
+msgstr "Изменить приоритетную зону"
+
+msgid "Find reports and users"
+msgstr "Поиск отчётов и пользователей"
+
+msgid "Good morning"
+msgstr "Доброе утро"
+
+msgid "Granted"
+msgstr "Предоставлен"
+
+msgid "Latest submissions"
+msgstr "Последние отправки"
+
+msgid "Mark"
+msgstr "Отметить"
+
+msgid "Mark as duplicate:"
+msgstr "Отметить как дубликат:"
+
+msgid "Name or email address"
+msgstr "Имя или адрес эл. почты"
+
+msgid "New report"
+msgstr "Новый отчёт"
+
+msgid "No bodies found for %s."
+msgstr "Для %s организаций не найдено."
+
+msgid "No duplicate reports detected"
+msgstr "Дублирующие отчёты не обнаружены"
+
+msgid "No recent reports to show."
+msgstr "Нет недавних отчётов для показа."
+
+msgid "No reports are currently waiting to be sent."
+msgstr "Сейчас нет отчётов, ожидающих отправки."
+
+msgid ""
+"No reports found within the specified radius sharing the same category. Try "
+"increasing the radius."
+msgstr ""
+"В указанном радиусе не найдено отчётов той же категории. Попробуйте "
+"увеличить радиус."
+
+msgid "Open only"
+msgstr "Только открытые"
+
+msgid "Open reports manager"
+msgstr "Открыть менеджер отчётов"
+
+msgid "Open reports pending delivery"
+msgstr "Открытые отчёты, ожидающие доставки"
+
+msgid "Priority Zone Configuration"
+msgstr "Настройка приоритетных зон"
+
+msgid "Radius (metres)"
+msgstr "Радиус (в метрах)"
+
+msgid "Recent reports"
+msgstr "Недавние отчёты"
+
+msgid "Report ID, title, or email"
+msgstr "ID отчёта, заголовок или эл. почта"
+
+msgid "Report Pairs"
+msgstr "Пары отчётов"
+
+msgid "Report State"
+msgstr "Статус отчёта"
+
+msgid ""
+"Reports in the same category within a geographic radius that may be "
+"duplicates."
+msgstr ""
+"Отчёты той же категории в пределах географического радиуса, которые могут "
+"быть дубликатами."
+
+msgid "Reports this week"
+msgstr "Отчёты за эту неделю"
+
+msgid ""
+"Scroll inside this table to review the full queue without stretching the "
+"page."
+msgstr ""
+"Прокручивайте внутри таблицы, чтобы просмотреть всю очередь, не растягивая "
+"страницу."
+
+msgid "View all"
+msgstr "Смотреть все"
+
+msgid "View reports"
+msgstr "Смотреть отчёты"
+
+msgid "admin sections available"
+msgstr "доступных разделов администратора"
+
+msgid "is duplicate of"
+msgstr "является дубликатом"
+
+msgid "last 7 days"
+msgstr "последние 7 дней"
+
+msgid "reports"
+msgstr "отчётов"
+
+msgid "reports waiting to be sent"
+msgstr "отчётов ожидают отправки"
+
 #~ msgid "%s admin:"
 #~ msgstr "Администратор сайта %s:"
 

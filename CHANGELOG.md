@@ -1,6 +1,32 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Translate the ADMIN CONSOLE ru/tr/es):
+        - Superuser screenshots showed English leaking across the admin console
+          (Özet/dashboard, Bölümler/bodies, Bildirimler, Duplicate Reports, etc.).
+        - Found 58 untranslated admin loc() strings and added/filled 57 per language
+          via polib (1 already done): dashboard KPIs ("Good morning", "Awaiting
+          send", "Access/Granted", "By Category/Status", "Recent reports", "Find
+          reports and users", …), Duplicate Reports page ("Radius (metres)", "All
+          Categories", "Report State", "Open only", "Duplicate Groups", "Report
+          Pairs", "Detection Radius", "is duplicate of", "%sm apart", …), priority
+          zones, site messages, response-template picker, sidebar items
+          ("Duplicate Reports", "Priority Zones").
+        - Wrapped previously HARDCODED strings so they can localize:
+            - admin/bodies/index.html — static labels (State:, County:, City/Town:,
+              dropdown placeholders, table headers, the empty-state paragraph) AND
+              the JS-generated text. For the JS, added a TT-rendered `T = {…}` i18n
+              map (loc() piped through replace to stay quote-safe) and replaced the
+              hardcoded JS literals ("No bodies found.", section headers, "-- All
+              cities in county --", "No bodies found for %s.", …).
+            - admin/duplicate_reports.html — "%sm apart" via tprintf(loc()).
+        - Verified logged-in on dev (:3001) via a one-time login link: /admin,
+          /admin/duplicate_reports, /admin/bodies render fully translated in
+          ru/tr/es with no visible English. Mirrored templates + .po + .mo to
+          staging (stale .ttc cleared so TT recompiles).
+        - Not changed: the dashboard donut legends (category/status names) are
+          drawn client-side from report DATA, not loc() strings — that is the
+          separate category-name/data-translation track.
     - InfraSignal — May 29, 2026 (Translate home hero / Reports dashboard / Contact page ru/tr/es):
         - User reported (via screenshots) English text still leaking on the Russian
           home page, the Reports Dashboard, and the Contact page — and likely tr/es

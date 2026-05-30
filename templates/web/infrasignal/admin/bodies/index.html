@@ -24,33 +24,33 @@
 </style>
 
 <div class="filter-row">
-  <label for="state_filter">State:</label>
-  <select id="state_filter"><option value="">-- Select a state --</option></select>
+  <label for="state_filter">[% loc('State') %]:</label>
+  <select id="state_filter"><option value="">[% loc('-- Select a state --') %]</option></select>
   <span id="state_info" class="info"></span>
-  <span id="state_loading" class="loading" style="display:none;">Loading...</span>
+  <span id="state_loading" class="loading" style="display:none;">[% loc('Loading...') %]</span>
 </div>
 
 <div class="filter-row" id="county_row" style="display:none;">
-  <label for="county_filter">County:</label>
-  <select id="county_filter"><option value="">-- All counties --</option></select>
+  <label for="county_filter">[% loc('County') %]:</label>
+  <select id="county_filter"><option value="">[% loc('-- All counties --') %]</option></select>
   <span id="county_info" class="info"></span>
-  <span id="county_loading" class="loading" style="display:none;">Loading cities...</span>
+  <span id="county_loading" class="loading" style="display:none;">[% loc('Loading cities...') %]</span>
 </div>
 
 <div class="filter-row" id="city_row" style="display:none;">
-  <label for="city_filter">City / Town:</label>
-  <select id="city_filter"><option value="">-- All cities --</option></select>
+  <label for="city_filter">[% loc('City / Town') %]:</label>
+  <select id="city_filter"><option value="">[% loc('-- All cities --') %]</option></select>
   <span id="city_info" class="info"></span>
 </div>
 
 <table id="admin_bodies" style="display:none;">
   <thead>
-    <tr><th>Name</th><th>Type</th><th></th></tr>
+    <tr><th>[% loc('Name') %]</th><th>[% loc('Type') %]</th><th></th></tr>
   </thead>
   <tbody id="bodies_tbody"></tbody>
 </table>
 
-<p id="bodies_placeholder" style="color:#666;">Select a state above to view its bodies.</p>
+<p id="bodies_placeholder" style="color:#666;">[% loc('Select a state above to view its bodies.') %]</p>
 
 [% IF c.user.is_superuser %]
 <p style="margin-top:1em;">
@@ -60,6 +60,17 @@
 
 <script nonce="[% csp_nonce %]">
 (function() {
+  var T = {
+    selectAbove: "[% loc('Select a state above to view its bodies.') | replace('"', '\\"') %]",
+    noBodies:    "[% loc('No bodies found.') | replace('"', '\\"') %]",
+    allCounties: "[% loc('-- All counties --') | replace('"', '\\"') %]",
+    allCities:   "[% loc('-- All cities --') | replace('"', '\\"') %]",
+    state:       "[% loc('State') | replace('"', '\\"') %]",
+    counties:    "[% loc('Counties') | replace('"', '\\"') %]",
+    citiesTowns: "[% loc('Cities / Towns') | replace('"', '\\"') %]",
+    allCitiesInCounty: "[% loc('-- All cities in county --') | replace('"', '\\"') %]",
+    noBodiesFor: "[% loc('No bodies found for %s.') | replace('"', '\\"') %]"
+  };
   var US_STATES = [
     {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
     {code:"AR",name:"Arkansas"},{code:"CA",name:"California"},{code:"CO",name:"Colorado"},
@@ -141,9 +152,9 @@
 
   function renderTable(stateBody, counties, cities) {
     tbody.innerHTML = '';
-    if (stateBody.length) { addSection('State', stateBody.length); stateBody.forEach(function(b){ addRow(b,'State'); }); }
-    if (counties.length)  { addSection('Counties', counties.length); counties.forEach(function(b){ addRow(b,'County'); }); }
-    if (cities.length)    { addSection('Cities / Towns', cities.length); cities.forEach(function(b){ addRow(b,'City/Town'); }); }
+    if (stateBody.length) { addSection(T.state, stateBody.length); stateBody.forEach(function(b){ addRow(b,T.state); }); }
+    if (counties.length)  { addSection(T.counties, counties.length); counties.forEach(function(b){ addRow(b,T.counties); }); }
+    if (cities.length)    { addSection(T.citiesTowns, cities.length); cities.forEach(function(b){ addRow(b,T.citiesTowns); }); }
     var total = stateBody.length + counties.length + cities.length;
     if (total > 0) {
       table.style.display = '';
@@ -151,7 +162,7 @@
     } else {
       table.style.display = 'none';
       placeholder.style.display = '';
-      placeholder.textContent = 'No bodies found.';
+      placeholder.textContent = T.noBodies;
     }
   }
 
@@ -160,8 +171,8 @@
     var state = this.value;
     countyRow.style.display = 'none';
     cityRow.style.display = 'none';
-    resetDropdown(countySel, '-- All counties --');
-    resetDropdown(citySel, '-- All cities --');
+    resetDropdown(countySel, T.allCounties);
+    resetDropdown(citySel, T.allCities);
     document.getElementById('state_info').textContent = '';
     document.getElementById('county_info').textContent = '';
     document.getElementById('city_info').textContent = '';
@@ -170,7 +181,7 @@
     if (!state) {
       table.style.display = 'none';
       placeholder.style.display = '';
-      placeholder.textContent = 'Select a state above to view its bodies.';
+      placeholder.textContent = T.selectAbove;
       return;
     }
 
@@ -183,7 +194,7 @@
         document.getElementById('state_loading').style.display = 'none';
         if (!data.bodies || !data.bodies.length) {
           placeholder.style.display = '';
-          placeholder.textContent = 'No bodies found for ' + state + '.';
+          placeholder.textContent = T.noBodiesFor.replace('%s', state);
           return;
         }
 
@@ -236,7 +247,7 @@
   // COUNTY CHANGE — filter cities to those within the selected county
   countySel.addEventListener('change', function() {
     var countyId = this.value;
-    resetDropdown(citySel, '-- All cities --');
+    resetDropdown(citySel, T.allCities);
     document.getElementById('city_info').textContent = '';
 
     if (!countyId) {
@@ -264,7 +275,7 @@
       .then(function(r) { return r.json(); })
       .then(function(data) {
         document.getElementById('county_loading').style.display = 'none';
-        resetDropdown(citySel, '-- All cities in county --');
+        resetDropdown(citySel, T.allCitiesInCounty);
         var filteredCities = (data.cities && data.cities.length) ? data.cities : [];
 
         filteredCities.forEach(function(b) {
