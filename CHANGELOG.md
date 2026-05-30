@@ -1,6 +1,22 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Translate home hero / Reports dashboard / Contact page ru/tr/es):
+        - User reported (via screenshots) English text still leaking on the Russian
+          home page, the Reports Dashboard, and the Contact page — and likely tr/es
+          too. These pages live in templates not covered by the first marketing
+          batch: around/intro.html (hero), around/postcode_form.html (search box +
+          trust badges), reports/index.html (dashboard), contact/index.html (form).
+        - Found 70 untranslated loc() strings on those pages (empty or absent in the
+          catalogs). Added/filled 66 new entries × ru/tr/es (the other 4 were already
+          translated) using polib (fill-or-add, never clobbering existing msgstr).
+          Strings with HTML/`%s`/entities (e.g. the mailto link, the FAQ link, the
+          "Report Form" link, `&rsquo;`/`&ndash;`) keep their markup; `your@email.com`
+          left verbatim. .mo recompiled.
+        - Verified on dev (:3001) and staging (:8080): home, /reports, /contact all
+          render fully translated in ru/tr/es with ZERO English leftovers.
+        - Note: polib re-wraps .po line formatting on save, so the diff is large but
+          msgid counts are intact (ru 1808 / tr 1805 / es 1805).
     - InfraSignal — May 29, 2026 (Translate marketing pages ru/tr/es via .po + ROOT-CAUSE locale fix):
         - Scope: home page, how-it-works, for-local-government, security — the
           remaining custom InfraSignal pages whose loc() strings were never in the
