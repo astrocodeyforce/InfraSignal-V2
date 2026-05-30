@@ -1,6 +1,29 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 30, 2026 (Restore lost translations on About / FAQ / Alerts pages):
+        - Symptom: in ru/tr/es the About, FAQ and Local Alerts pages rendered in
+          English again (card descriptions, FAQ Q&A, alert page body), even though
+          how-it-works / for-local-government / security stayed translated.
+        - Root cause: these pages' strings are loc()-wrapped in the templates
+          (templates/web/infrasignal/about/{about,faq}.html and
+          templates/web/infrasignal/alert/{index,_index_text,choose}.html), but the
+          matching msgids were never committed to the git-tracked .po catalogs (a
+          prior file-loss reverted .po to a version that only had the pages above).
+          With no catalog entry, gettext falls back to the English msgid.
+        - Fix (durable): added the missing translations directly to the git-tracked
+          .po catalogs for ru_RU / tr_TR / es — 74 strings for About + FAQ + page
+          chrome + sidebar (About/Terms) and 52 strings for the custom Local Alerts
+          page (126 msgids x 3 languages). Because the strings are loc()-wrapped and
+          now live in the committed .po, gettext re-extraction keeps them — this is
+          why how-it-works survived and these will too once committed.
+        - .mo recompiled for all three languages; dev + staging restarted.
+        - Verified on dev and staging (Accept-Language: tr): /about, /faq and /alert
+          show Turkish with no English leftovers from the checked strings.
+        - NOT changed: the long legal bodies of /about/privacy and /about/terms are
+          hardcoded English prose in the templates (only ~3 chrome strings each are
+          loc()-wrapped, which are now translated). Full legal-text translation would
+          require wrapping each paragraph and is left as a separate decision.
     - InfraSignal — May 29, 2026 (Fix untranslated admin sidebar items: Duplicate Reports / Priority Zones):
         - The two custom admin sidebar entries stayed English in every language
           because their titles were hardcoded plain strings in the cobrand's

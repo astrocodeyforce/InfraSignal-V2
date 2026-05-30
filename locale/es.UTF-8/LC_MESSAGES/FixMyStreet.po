@@ -9761,6 +9761,747 @@ msgstr "reportes en espera de envío"
 msgid "Priority Zones"
 msgstr "Zonas de Prioridad"
 
+msgid "%s bodies in %s"
+msgstr "%s organismos en %s"
+
+msgid "%s counties"
+msgstr "%s condados"
+
+msgid "%s cities/towns"
+msgstr "%s ciudades/pueblos"
+
+msgid "%s cities/towns in %s"
+msgstr "%s ciudades/pueblos en %s"
+
+msgid "county"
+msgstr "condado"
+
+msgid "Error loading bodies."
+msgstr "Error al cargar los organismos."
+
+msgid "Error loading cities"
+msgstr "Error al cargar las ciudades"
+
+msgid "Manage Priorities"
+msgstr "Gestionar prioridades"
+
+msgid "Edit Message"
+msgstr "Editar mensaje"
+
+msgid ""
+"Select a state to find a body, then click to manage its response priorities."
+msgstr ""
+"Seleccione un estado para encontrar un organismo, luego haga clic para "
+"gestionar sus prioridades de respuesta."
+
+msgid "Select a state to find a body, then click to manage its site message."
+msgstr ""
+"Seleccione un estado para encontrar un organismo, luego haga clic para "
+"gestionar su mensaje del sitio."
+
+msgid "A summary of this site's configuration, running version %s."
+msgstr ""
+"Un resumen de la configuración de este sitio, ejecutando la versión %s."
+
+msgid "unknown"
+msgstr "desconocido"
+
+msgid "View %s configuration"
+msgstr "Ver la configuración de %s"
+
+msgid "Variable"
+msgstr "Variable"
+
+msgid "general.yml value"
+msgstr "valor de general.yml"
+
+msgid "Cobrand module override"
+msgstr "Anulación del módulo de cobrand"
+
+msgid "URLs"
+msgstr "URLs"
+
+msgid "Display"
+msgstr "Visualización"
+
+msgid "Geocoder"
+msgstr "Geocodificador"
+
+msgid "MapIt"
+msgstr "MapIt"
+
+msgid "Database"
+msgstr "Base de datos"
+
+msgid "Development"
+msgstr "Desarrollo"
+
+msgid "Site title"
+msgstr "Título del sitio"
+
+msgid "Web templates"
+msgstr "Plantillas web"
+
+msgid "Language override"
+msgstr "Anulación de idioma"
+
+msgid "Database site configuration"
+msgstr "Configuración del sitio en la base de datos"
+
+msgid "Key"
+msgstr "Clave"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "JSON:"
+msgstr "JSON:"
+
+msgid "FixMyStreet name"
+msgstr "Nombre de FixMyStreet"
+
+msgid "FixMyStreet short name"
+msgstr "Nombre corto de FixMyStreet"
+
+msgid "Wasteworks name"
+msgstr "Nombre de WasteWorks"
+
+msgid "Wasteworks short name"
+msgstr "Nombre corto de WasteWorks"
+
+msgid "Theme colour"
+msgstr "Color del tema"
+
+msgid "Background colour"
+msgstr "Color de fondo"
+
+msgid "Add icon"
+msgstr "Añadir icono"
+
+msgid "Select a cobrand"
+msgstr "Seleccione un cobrand"
+
+msgid "Icon"
+msgstr "Icono"
+
+msgid "Size"
+msgstr "Tamaño"
+
+msgid "Delete?"
+msgstr "¿Eliminar?"
+
+msgid "Return to themes list"
+msgstr "Volver a la lista de temas"
+
+msgid "Account details and notification preferences"
+msgstr "Detalles de la cuenta y preferencias de notificación"
+
+msgid "Add phone"
+msgstr "Añadir teléfono"
+
+msgid "Changes are saved when you update preferences"
+msgstr "Los cambios se guardan cuando actualiza las preferencias"
+
+msgid "Civic impact"
+msgstr "Impacto cívico"
+
+msgid "Help improve municipal services"
+msgstr "Ayude a mejorar los servicios municipales"
+
+msgid "Needs verification"
+msgstr "Necesita verificación"
+
+msgid "New reports near your area"
+msgstr "Nuevos reportes cerca de su zona"
+
+msgid "Not provided"
+msgstr "No proporcionado"
+
+msgid "Notification preferences"
+msgstr "Preferencias de notificación"
+
+msgid "Profile details"
+msgstr "Detalles del perfil"
+
+msgid "Questionnaires"
+msgstr "Cuestionarios"
+
+msgid "Report a new issue"
+msgstr "Reportar un nuevo problema"
+
+msgid "Update notifications"
+msgstr "Notificaciones de actualización"
+
+msgid "Update preferences"
+msgstr "Actualizar preferencias"
+
+msgid "Verified account"
+msgstr "Cuenta verificada"
+
+msgid "When your reports change status"
+msgstr "Cuando cambia el estado de sus reportes"
+
+msgid "issue"
+msgstr "problema"
+
+msgid "issues"
+msgstr "problemas"
+
+msgid "reported through your account"
+msgstr "reportado a través de su cuenta"
+
+msgid ""
+"Empowering residents to improve their communities, one report at a time."
+msgstr ""
+"Ayudamos a los residentes a mejorar sus comunidades, un reporte a la vez."
+
+msgid "What We Do"
+msgstr "Qué hacemos"
+
+msgid ""
+"Across the United States, infrastructure problems like potholes, broken "
+"streetlights, damaged sidewalks, and illegal dumping go unreported because "
+"residents don&rsquo;t know who to contact. InfraSignal solves this with a "
+"single, easy-to-use platform."
+msgstr ""
+"En todo Estados Unidos, los problemas de infraestructura como baches, "
+"farolas rotas, aceras dañadas y vertidos ilegales no se reportan porque los "
+"residentes no saben a quién contactar. InfraSignal resuelve esto con una "
+"plataforma única y fácil de usar."
+
+msgid "Pin the problem on the map"
+msgstr "Marque el problema en el mapa"
+
+msgid "Auto-route to the right authority"
+msgstr "Enrutamiento automático a la autoridad correcta"
+
+msgid "Get email updates on status"
+msgstr "Reciba actualizaciones de estado por correo"
+
+msgid "Map"
+msgstr "Mapa"
+
+msgid "Public visibility for community"
+msgstr "Visibilidad pública para la comunidad"
+
+msgid "All 50 + D.C."
+msgstr "Los 50 estados + D.C."
+
+msgid "County governments"
+msgstr "Gobiernos de condado"
+
+msgid "Cities"
+msgstr "Ciudades"
+
+msgid "City &amp; town governments"
+msgstr "Gobiernos de ciudades y pueblos"
+
+msgid "Standardized types"
+msgstr "Tipos estandarizados"
+
+msgid ""
+"Reports move through a clear lifecycle: residents add a location and "
+"details, InfraSignal helps route the report, and everyone can follow public "
+"updates over time."
+msgstr ""
+"Los reportes siguen un ciclo de vida claro: los residentes agregan una "
+"ubicación y detalles, InfraSignal ayuda a enrutar el reporte y todos pueden "
+"seguir las actualizaciones públicas con el tiempo."
+
+msgid "See the full process"
+msgstr "Ver el proceso completo"
+
+msgid ""
+"InfraSignal gives public teams a standardized channel for receiving "
+"structured, location-based reports from residents. Operational, integration,"
+" and partnership details now live on the local government page."
+msgstr ""
+"InfraSignal ofrece a los equipos públicos un canal estandarizado para "
+"recibir reportes estructurados y basados en la ubicación de los residentes. "
+"Los detalles operativos, de integración y de asociación ahora están en la "
+"página de gobierno local."
+
+msgid "Contact Form"
+msgstr "Formulario de contacto"
+
+msgid "Get in Touch"
+msgstr "Póngase en contacto"
+
+msgid "Questions, suggestions, or partnership inquiries?"
+msgstr "¿Preguntas, sugerencias o consultas de asociación?"
+
+msgid "Find answers to common questions about InfraSignal."
+msgstr "Encuentre respuestas a las preguntas frecuentes sobre InfraSignal."
+
+msgid "General"
+msgstr "General"
+
+msgid "Is InfraSignal free?"
+msgstr "¿InfraSignal es gratis?"
+
+msgid ""
+"Yes. InfraSignal is free for all users. There is no charge to create an "
+"account, submit reports, receive status updates, or subscribe to local "
+"alerts."
+msgstr ""
+"Sí. InfraSignal es gratuito para todos los usuarios. No hay cargo por crear "
+"una cuenta, enviar reportes, recibir actualizaciones de estado o suscribirse"
+" a alertas locales."
+
+msgid "Reporting a Problem"
+msgstr "Reportar un problema"
+
+msgid "How do I report a problem?"
+msgstr "¿Cómo reporto un problema?"
+
+msgid ""
+"Start from the <a href=\"/\">home page</a>, enter the location, place the "
+"pin on the map, choose the best category, add details and photos, then "
+"submit the report for routing."
+msgstr ""
+"Comience desde la <a href=\"/\">página de inicio</a>, ingrese la ubicación, "
+"coloque el marcador en el mapa, elija la mejor categoría, agregue detalles y"
+" fotos, y luego envíe el reporte para su enrutamiento."
+
+msgid ""
+"For the full report journey, see <a href=\"/how-it-works\">How It Works</a>."
+msgstr ""
+"Para conocer el recorrido completo del reporte, consulte <a href=\"/how-it-"
+"works\">Cómo funciona</a>."
+
+msgid "What categories of problems can I report?"
+msgstr "¿Qué categorías de problemas puedo reportar?"
+
+msgid "InfraSignal supports 13 standard infrastructure categories:"
+msgstr "InfraSignal admite 13 categorías de infraestructura estándar:"
+
+msgid "What should I not report on InfraSignal?"
+msgstr "¿Qué no debo reportar en InfraSignal?"
+
+msgid ""
+"InfraSignal is designed for non-emergency infrastructure issues. <strong>Do "
+"not use InfraSignal for:</strong>"
+msgstr ""
+"InfraSignal está diseñado para problemas de infraestructura que no son "
+"emergencias. <strong>No use InfraSignal para:</strong>"
+
+msgid "Emergencies"
+msgstr "Emergencias"
+
+msgid "call <strong>911</strong> immediately for any threat to life or safety"
+msgstr ""
+"llame al <strong>911</strong> de inmediato ante cualquier amenaza a la vida "
+"o la seguridad"
+
+msgid "Crimes in progress or suspicious activity"
+msgstr "Delitos en curso o actividad sospechosa"
+
+msgid ""
+"Utility outages (gas, electric, water) &mdash; contact your utility provider"
+" directly"
+msgstr ""
+"Cortes de servicios públicos (gas, electricidad, agua) &mdash; contacte "
+"directamente a su proveedor de servicios"
+
+msgid "Noise complaints or neighbor disputes"
+msgstr "Quejas por ruido o disputas con vecinos"
+
+msgid "Missed trash or recycling pickup"
+msgstr "Recolección de basura o reciclaje no realizada"
+
+msgid "Building permits or code enforcement inquiries"
+msgstr "Consultas sobre permisos de construcción o cumplimiento de normas"
+
+msgid "Animal control"
+msgstr "Control de animales"
+
+msgid "Parking or traffic enforcement"
+msgstr "Control de estacionamiento o tráfico"
+
+msgid "Do I need an account?"
+msgstr "¿Necesito una cuenta?"
+
+msgid ""
+"You must provide a valid email address when submitting a report so that "
+"InfraSignal can send a confirmation link and deliver status updates. You may"
+" also create a full account to manage all your reports and subscriptions "
+"from one dashboard."
+msgstr ""
+"Debe proporcionar una dirección de correo electrónico válida al enviar un "
+"reporte para que InfraSignal pueda enviar un enlace de confirmación y "
+"entregar actualizaciones de estado. También puede crear una cuenta completa "
+"para gestionar todos sus reportes y suscripciones desde un solo panel."
+
+msgid "Can I upload photos?"
+msgstr "¿Puedo subir fotos?"
+
+msgid ""
+"Yes. You may attach up to 3 photos per report. Photos are automatically "
+"screened for inappropriate content before being published."
+msgstr ""
+"Sí. Puede adjuntar hasta 3 fotos por reporte. Las fotos se revisan "
+"automáticamente en busca de contenido inapropiado antes de publicarse."
+
+msgid "Can I report anonymously?"
+msgstr "¿Puedo reportar de forma anónima?"
+
+msgid ""
+"You may choose to hide your name from the public-facing report page. "
+"However, your name and email address are always shared with the responsible "
+"local authority so they can investigate and, if needed, contact you about "
+"the issue."
+msgstr ""
+"Puede optar por ocultar su nombre en la página pública del reporte. Sin "
+"embargo, su nombre y dirección de correo electrónico siempre se comparten "
+"con la autoridad local responsable para que pueda investigar y, si es "
+"necesario, contactarlo sobre el problema."
+
+msgid "After Submitting"
+msgstr "Después de enviar"
+
+msgid "How are reports delivered to local authorities?"
+msgstr "¿Cómo se entregan los reportes a las autoridades locales?"
+
+msgid ""
+"Reports are sent via email to the designated contact address for the "
+"responsible local authority. Each report includes the problem location "
+"(coordinates and address), the selected category, your description, any "
+"attached photos, and your contact information."
+msgstr ""
+"Los reportes se envían por correo electrónico a la dirección de contacto "
+"designada de la autoridad local responsable. Cada reporte incluye la "
+"ubicación del problema (coordenadas y dirección), la categoría seleccionada,"
+" su descripción, las fotos adjuntas y su información de contacto."
+
+msgid "How are reports prioritized?"
+msgstr "¿Cómo se priorizan los reportes?"
+
+msgid ""
+"InfraSignal assigns one of four priority levels to each report: "
+"<strong>Emergency</strong> (immediate safety hazard), <strong>High</strong> "
+"(needs attention within 24 hours), <strong>Normal</strong> (standard "
+"response time), and <strong>Low</strong> (non-urgent). Local authorities can"
+" adjust priority as part of their investigation."
+msgstr ""
+"InfraSignal asigna uno de cuatro niveles de prioridad a cada reporte: "
+"<strong>Emergencia</strong> (peligro de seguridad inmediato), "
+"<strong>Alta</strong> (requiere atención en 24 horas), "
+"<strong>Normal</strong> (tiempo de respuesta estándar) y "
+"<strong>Baja</strong> (no urgente). Las autoridades locales pueden ajustar "
+"la prioridad como parte de su investigación."
+
+msgid "How long will it take to fix my problem?"
+msgstr "¿Cuánto tiempo tomará resolver mi problema?"
+
+msgid ""
+"Response times depend on the category, severity, and the local "
+"authority&rsquo;s workload. InfraSignal does not control how quickly "
+"authorities respond; it enables you to track your report&rsquo;s status and "
+"receive email updates when action is taken."
+msgstr ""
+"Los tiempos de respuesta dependen de la categoría, la gravedad y la carga de"
+" trabajo de la autoridad local. InfraSignal no controla la rapidez con que "
+"responden las autoridades; le permite seguir el estado de su reporte y "
+"recibir actualizaciones por correo cuando se toman medidas."
+
+msgid "How do I check the status of my report?"
+msgstr "¿Cómo verifico el estado de mi reporte?"
+
+msgid ""
+"You will receive email notifications when the status changes. You can also "
+"log in to your account and view all your reports under <strong>Your "
+"account</strong>. Each report shows its current status: open, investigating,"
+" in progress, fixed, or closed."
+msgstr ""
+"Recibirá notificaciones por correo cuando cambie el estado. También puede "
+"iniciar sesión en su cuenta y ver todos sus reportes en <strong>Su "
+"cuenta</strong>. Cada reporte muestra su estado actual: abierto, "
+"investigando, en progreso, resuelto o cerrado."
+
+msgid "What if my problem has not been addressed?"
+msgstr "¿Qué pasa si mi problema no ha sido atendido?"
+
+msgid ""
+"You can post an update on your existing report at any time to provide "
+"additional photos, note that the problem persists, or add new details. The "
+"responsible authority is notified of each update."
+msgstr ""
+"Puede publicar una actualización en su reporte existente en cualquier "
+"momento para proporcionar fotos adicionales, indicar que el problema "
+"persiste o agregar nuevos detalles. Se notifica a la autoridad responsable "
+"de cada actualización."
+
+msgid "Can I see reports submitted by others?"
+msgstr "¿Puedo ver reportes enviados por otros?"
+
+msgid ""
+"Yes. The <a href=\"/reports\">All Reports</a> page displays all public "
+"reports with their status, location, and category. You can browse by area or"
+" search for specific locations."
+msgstr ""
+"Sí. La página <a href=\"/reports\">Todos los reportes</a> muestra todos los "
+"reportes públicos con su estado, ubicación y categoría. Puede explorar por "
+"área o buscar ubicaciones específicas."
+
+msgid "Can I get alerts about problems near me?"
+msgstr "¿Puedo recibir alertas sobre problemas cerca de mí?"
+
+msgid ""
+"Yes. Visit <a href=\"/alert\">Local Alerts</a> to subscribe to email "
+"notifications for new reports in your area. You can set alerts by geographic"
+" radius or by specific local authority."
+msgstr ""
+"Sí. Visite <a href=\"/alert\">Alertas locales</a> para suscribirse a "
+"notificaciones por correo de nuevos reportes en su área. Puede configurar "
+"alertas por radio geográfico o por autoridad local específica."
+
+msgid "Technical"
+msgstr "Técnico"
+
+msgid "What devices are supported?"
+msgstr "¿Qué dispositivos son compatibles?"
+
+msgid ""
+"InfraSignal is a responsive web application that works on smartphones, "
+"tablets, and desktop computers. No app installation is required &mdash; "
+"access through any modern web browser."
+msgstr ""
+"InfraSignal es una aplicación web responsiva que funciona en teléfonos "
+"inteligentes, tabletas y computadoras de escritorio. No se requiere "
+"instalación de aplicaciones &mdash; acceda a través de cualquier navegador "
+"web moderno."
+
+msgid "Still have questions?"
+msgstr "¿Aún tiene preguntas?"
+
+msgid ""
+"Can&rsquo;t find what you&rsquo;re looking for? We&rsquo;re happy to help."
+msgstr "¿No encuentra lo que busca? Estaremos encantados de ayudar."
+
+msgid "How we collect, use, and protect your information."
+msgstr "Cómo recopilamos, usamos y protegemos su información."
+
+msgid "Questions about your privacy?"
+msgstr "¿Preguntas sobre su privacidad?"
+
+msgid ""
+"If you have questions or concerns about this Privacy Policy, reach out to "
+"us."
+msgstr ""
+"Si tiene preguntas o inquietudes sobre esta Política de privacidad, "
+"comuníquese con nosotros."
+
+msgid "Please read these terms carefully before using InfraSignal."
+msgstr "Lea estos términos cuidadosamente antes de usar InfraSignal."
+
+msgid "Questions about these terms?"
+msgstr "¿Preguntas sobre estos términos?"
+
+msgid "If you have questions or concerns, reach out to us."
+msgstr "Si tiene preguntas o inquietudes, comuníquese con nosotros."
+
+msgid "About"
+msgstr "Acerca de"
+
+msgid "Terms"
+msgstr "Términos"
+
+msgid "Local RSS Feeds & Email Alerts – InfraSignal"
+msgstr "Feeds RSS locales y alertas por correo – InfraSignal"
+
+msgid "Local RSS Feeds & Email Alerts"
+msgstr "Feeds RSS locales y alertas por correo"
+
+msgid ""
+"Stay informed about infrastructure reports in your area with customizable "
+"alerts and RSS feeds."
+msgstr ""
+"Manténgase informado sobre los reportes de infraestructura en su área con "
+"alertas personalizables y feeds RSS."
+
+msgid "Find Local Alerts"
+msgstr "Buscar alertas locales"
+
+msgid ""
+"InfraSignal offers a variety of RSS feeds and email alerts for local "
+"problems, including alerts for all problems within a particular ward or "
+"local authority, or all problems within a certain distance of a particular "
+"location."
+msgstr ""
+"InfraSignal ofrece una variedad de feeds RSS y alertas por correo para "
+"problemas locales, incluidas alertas para todos los problemas dentro de un "
+"distrito o autoridad local en particular, o todos los problemas dentro de "
+"cierta distancia de una ubicación específica."
+
+msgid ""
+"To find out what local alerts we have for you, please enter your street name"
+" and area."
+msgstr ""
+"Para saber qué alertas locales tenemos para usted, ingrese el nombre de su "
+"calle y su área."
+
+msgid "Address or ZIP code"
+msgstr "Dirección o código postal"
+
+msgid "RSS Feeds"
+msgstr "Feeds RSS"
+
+msgid ""
+"Subscribe via your favorite RSS reader to get real-time updates on reports "
+"in your area."
+msgstr ""
+"Suscríbase a través de su lector RSS favorito para recibir actualizaciones "
+"en tiempo real sobre los reportes en su área."
+
+msgid "New reports within your chosen radius"
+msgstr "Nuevos reportes dentro del radio que elija"
+
+msgid "Status changes on watched reports"
+msgstr "Cambios de estado en los reportes seguidos"
+
+msgid "Weekly digest option available"
+msgstr "Opción de resumen semanal disponible"
+
+msgid "Want to browse first?"
+msgstr "¿Quiere explorar primero?"
+
+msgid ""
+"Use All Reports to browse public report activity. Return here when you are "
+"ready to subscribe to alerts for a specific place."
+msgstr ""
+"Use Todos los reportes para explorar la actividad pública de reportes. "
+"Vuelva aquí cuando esté listo para suscribirse a las alertas de un lugar "
+"específico."
+
+msgid "You can unsubscribe from email alerts at any time."
+msgstr ""
+"Puede cancelar la suscripción a las alertas por correo en cualquier momento."
+
+msgid "e.g. '%s' or '%s'"
+msgstr "p. ej. '%s' o '%s'"
+
+msgid "What you'll receive"
+msgstr "Lo que recibirá"
+
+msgid "Choose a location for Local Alerts"
+msgstr "Elija una ubicación para las alertas locales"
+
+msgid "Choose an alert area"
+msgstr "Elija un área de alerta"
+
+msgid "Which location did you mean?"
+msgstr "¿A qué ubicación se refería?"
+
+msgid "We found more than one match for \"%s\"."
+msgstr "Encontramos más de una coincidencia para \"%s\"."
+
+msgid "We found more than one matching location."
+msgstr "Encontramos más de una ubicación coincidente."
+
+msgid "Help & Info"
+msgstr "Ayuda e información"
+
+msgid "Try a more specific search"
+msgstr "Pruebe una búsqueda más específica"
+
+msgid "Add a street, ZIP code, or nearby landmark to narrow the results."
+msgstr ""
+"Agregue una calle, código postal o punto de referencia cercano para acotar "
+"los resultados."
+
+msgid "Select your location"
+msgstr "Seleccione su ubicación"
+
+msgid "Choose the area you want to use for Local Alerts."
+msgstr "Elija el área que desea usar para las alertas locales."
+
+msgid "Location match"
+msgstr "Coincidencia de ubicación"
+
+msgid "Local Alerts match"
+msgstr "Coincidencia de alertas locales"
+
+msgid "selected area"
+msgstr "área seleccionada"
+
+msgid "Trees"
+msgstr "Árboles"
+
+msgid "Fallen tree blocking road"
+msgstr "Árbol caído bloqueando la vía"
+
+msgid "School zone"
+msgstr "Zona escolar"
+
+msgid "Road damage near school"
+msgstr "Daño en la vía cerca de la escuela"
+
+msgid "Pothole at intersection"
+msgstr "Bache en la intersección"
+
+msgid "Deep pothole on Main St"
+msgstr "Bache profundo en Main St"
+
+msgid "Road"
+msgstr "Vía"
+
+msgid "Crumbling road surface"
+msgstr "Superficie de la vía deteriorada"
+
+msgid "RSS & email alerts for"
+msgstr "Alertas RSS y por correo para"
+
+msgid ""
+"Subscribe to a quiet, useful feed of new infrastructure reports near you by "
+"radius, county, or state."
+msgstr ""
+"Suscríbase a un feed discreto y útil de nuevos reportes de infraestructura "
+"cerca de usted por radio, condado o estado."
+
+msgid "Alert area"
+msgstr "Área de alerta"
+
+msgid "Recent nearby reports"
+msgstr "Reportes recientes cercanos"
+
+msgid "A preview of what your feed will look like."
+msgstr "Una vista previa de cómo se verá su feed."
+
+msgid "Local RSS feeds and email alerts for '%s'"
+msgstr "Feeds RSS locales y alertas por correo para '%s'"
+
+msgid "Pick the area you care about. You can change this any time."
+msgstr "Elija el área que le interesa. Puede cambiarla en cualquier momento."
+
+msgid ""
+"Reports near %s are sent to different local authorities, depending on the "
+"type of problem."
+msgstr ""
+"Los reportes cerca de %s se envían a diferentes autoridades locales, según "
+"el tipo de problema."
+
+msgid "Alert scope"
+msgstr "Alcance de la alerta"
+
+msgid "Covers roughly 200,000 people"
+msgstr "Cubre aproximadamente 200 000 personas"
+
+msgid "Or specify a different radius:"
+msgstr "O especifique un radio diferente:"
+
+msgid "Km"
+msgstr "Km"
+
+msgid ""
+"We will not use your email for anything beyond sending you alerts within "
+"this area. See our <a href=\"%s\">privacy policy</a>."
+msgstr ""
+"No usaremos su correo electrónico para nada más que enviarle alertas dentro "
+"de esta área. Consulte nuestra <a href=\"%s\">política de privacidad</a>."
+
+msgid "Plug your feed into any RSS reader."
+msgstr "Conecte su feed a cualquier lector RSS."
+
 #~ msgid "%s admin:"
 #~ msgstr "admin:"
 

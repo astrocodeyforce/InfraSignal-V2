@@ -9661,6 +9661,751 @@ msgstr "отчётов ожидают отправки"
 msgid "Priority Zones"
 msgstr "Приоритетные зоны"
 
+msgid "%s bodies in %s"
+msgstr "%s учреждений в штате %s"
+
+msgid "%s counties"
+msgstr "%s округов"
+
+msgid "%s cities/towns"
+msgstr "%s городов/посёлков"
+
+msgid "%s cities/towns in %s"
+msgstr "%s городов/посёлков в %s"
+
+msgid "county"
+msgstr "округ"
+
+msgid "Error loading bodies."
+msgstr "Ошибка загрузки учреждений."
+
+msgid "Error loading cities"
+msgstr "Ошибка загрузки городов"
+
+msgid "Manage Priorities"
+msgstr "Управление приоритетами"
+
+msgid "Edit Message"
+msgstr "Редактировать сообщение"
+
+msgid ""
+"Select a state to find a body, then click to manage its response priorities."
+msgstr ""
+"Выберите штат, чтобы найти учреждение, затем нажмите, чтобы управлять его "
+"приоритетами ответа."
+
+msgid "Select a state to find a body, then click to manage its site message."
+msgstr ""
+"Выберите штат, чтобы найти учреждение, затем нажмите, чтобы управлять его "
+"сообщением на сайте."
+
+msgid "A summary of this site's configuration, running version %s."
+msgstr "Сводка конфигурации этого сайта, выполняется версия %s."
+
+msgid "unknown"
+msgstr "неизвестно"
+
+msgid "View %s configuration"
+msgstr "Просмотреть конфигурацию %s"
+
+msgid "Variable"
+msgstr "Переменная"
+
+msgid "general.yml value"
+msgstr "значение general.yml"
+
+msgid "Cobrand module override"
+msgstr "Переопределение модуля кобренда"
+
+msgid "URLs"
+msgstr "URL-адреса"
+
+msgid "Display"
+msgstr "Отображение"
+
+msgid "Geocoder"
+msgstr "Геокодер"
+
+msgid "MapIt"
+msgstr "MapIt"
+
+msgid "Database"
+msgstr "База данных"
+
+msgid "Development"
+msgstr "Разработка"
+
+msgid "Site title"
+msgstr "Название сайта"
+
+msgid "Web templates"
+msgstr "Веб-шаблоны"
+
+msgid "Language override"
+msgstr "Переопределение языка"
+
+msgid "Database site configuration"
+msgstr "Конфигурация сайта в базе данных"
+
+msgid "Key"
+msgstr "Ключ"
+
+msgid "Value"
+msgstr "Значение"
+
+msgid "JSON:"
+msgstr "JSON:"
+
+msgid "FixMyStreet name"
+msgstr "Название FixMyStreet"
+
+msgid "FixMyStreet short name"
+msgstr "Краткое название FixMyStreet"
+
+msgid "Wasteworks name"
+msgstr "Название WasteWorks"
+
+msgid "Wasteworks short name"
+msgstr "Краткое название WasteWorks"
+
+msgid "Theme colour"
+msgstr "Цвет темы"
+
+msgid "Background colour"
+msgstr "Цвет фона"
+
+msgid "Add icon"
+msgstr "Добавить значок"
+
+msgid "Select a cobrand"
+msgstr "Выберите кобренд"
+
+msgid "Icon"
+msgstr "Значок"
+
+msgid "Size"
+msgstr "Размер"
+
+msgid "Delete?"
+msgstr "Удалить?"
+
+msgid "Return to themes list"
+msgstr "Вернуться к списку тем"
+
+msgid "Account details and notification preferences"
+msgstr "Сведения об аккаунте и настройки уведомлений"
+
+msgid "Add phone"
+msgstr "Добавить телефон"
+
+msgid "Changes are saved when you update preferences"
+msgstr "Изменения сохраняются при обновлении настроек"
+
+msgid "Civic impact"
+msgstr "Гражданское влияние"
+
+msgid "Help improve municipal services"
+msgstr "Помогите улучшить муниципальные услуги"
+
+msgid "Needs verification"
+msgstr "Требуется подтверждение"
+
+msgid "New reports near your area"
+msgstr "Новые сообщения рядом с вами"
+
+msgid "Not provided"
+msgstr "Не указано"
+
+msgid "Notification preferences"
+msgstr "Настройки уведомлений"
+
+msgid "Profile details"
+msgstr "Сведения о профиле"
+
+msgid "Questionnaires"
+msgstr "Опросы"
+
+msgid "Report a new issue"
+msgstr "Сообщить о новой проблеме"
+
+msgid "Update notifications"
+msgstr "Уведомления об обновлениях"
+
+msgid "Update preferences"
+msgstr "Обновить настройки"
+
+msgid "Verified account"
+msgstr "Подтверждённый аккаунт"
+
+msgid "When your reports change status"
+msgstr "Когда меняется статус ваших обращений"
+
+msgid "issue"
+msgstr "обращение"
+
+msgid "issues"
+msgstr "обращений"
+
+msgid "reported through your account"
+msgstr "сообщено через ваш аккаунт"
+
+msgid ""
+"Empowering residents to improve their communities, one report at a time."
+msgstr ""
+"Помогаем жителям улучшать свои сообщества — по одному обращению за раз."
+
+msgid "What We Do"
+msgstr "Что мы делаем"
+
+msgid ""
+"Across the United States, infrastructure problems like potholes, broken "
+"streetlights, damaged sidewalks, and illegal dumping go unreported because "
+"residents don&rsquo;t know who to contact. InfraSignal solves this with a "
+"single, easy-to-use platform."
+msgstr ""
+"По всей территории США проблемы инфраструктуры — ямы, неработающие фонари, "
+"повреждённые тротуары и незаконные свалки — остаются незарегистрированными, "
+"потому что жители не знают, к кому обращаться. InfraSignal решает это с "
+"помощью единой и простой в использовании платформы."
+
+msgid "Pin the problem on the map"
+msgstr "Отметьте проблему на карте"
+
+msgid "Auto-route to the right authority"
+msgstr "Автоматическая маршрутизация в нужную инстанцию"
+
+msgid "Get email updates on status"
+msgstr "Получайте обновления статуса по эл. почте"
+
+msgid "Map"
+msgstr "Карта"
+
+msgid "Public visibility for community"
+msgstr "Публичная видимость для сообщества"
+
+msgid "All 50 + D.C."
+msgstr "Все 50 штатов + округ Колумбия"
+
+msgid "County governments"
+msgstr "Окружные органы власти"
+
+msgid "Cities"
+msgstr "Города"
+
+msgid "City &amp; town governments"
+msgstr "Городские и поселковые органы власти"
+
+msgid "Standardized types"
+msgstr "Стандартизированные типы"
+
+msgid ""
+"Reports move through a clear lifecycle: residents add a location and "
+"details, InfraSignal helps route the report, and everyone can follow public "
+"updates over time."
+msgstr ""
+"Обращения проходят через понятный жизненный цикл: жители добавляют "
+"местоположение и детали, InfraSignal помогает направить обращение, и все "
+"могут следить за публичными обновлениями со временем."
+
+msgid "See the full process"
+msgstr "Посмотреть весь процесс"
+
+msgid ""
+"InfraSignal gives public teams a standardized channel for receiving "
+"structured, location-based reports from residents. Operational, integration,"
+" and partnership details now live on the local government page."
+msgstr ""
+"InfraSignal предоставляет государственным командам стандартизированный канал"
+" для получения структурированных обращений с привязкой к местоположению от "
+"жителей. Сведения об эксплуатации, интеграции и партнёрстве теперь размещены"
+" на странице для местных органов власти."
+
+msgid "Contact Form"
+msgstr "Форма обратной связи"
+
+msgid "Get in Touch"
+msgstr "Свяжитесь с нами"
+
+msgid "Questions, suggestions, or partnership inquiries?"
+msgstr "Вопросы, предложения или запросы о партнёрстве?"
+
+msgid "Find answers to common questions about InfraSignal."
+msgstr "Найдите ответы на распространённые вопросы об InfraSignal."
+
+msgid "General"
+msgstr "Общее"
+
+msgid "Is InfraSignal free?"
+msgstr "InfraSignal бесплатен?"
+
+msgid ""
+"Yes. InfraSignal is free for all users. There is no charge to create an "
+"account, submit reports, receive status updates, or subscribe to local "
+"alerts."
+msgstr ""
+"Да. InfraSignal бесплатен для всех пользователей. Создание аккаунта, подача "
+"обращений, получение обновлений статуса и подписка на местные оповещения не "
+"требуют оплаты."
+
+msgid "Reporting a Problem"
+msgstr "Сообщение о проблеме"
+
+msgid "How do I report a problem?"
+msgstr "Как сообщить о проблеме?"
+
+msgid ""
+"Start from the <a href=\"/\">home page</a>, enter the location, place the "
+"pin on the map, choose the best category, add details and photos, then "
+"submit the report for routing."
+msgstr ""
+"Начните с <a href=\"/\">главной страницы</a>, введите местоположение, "
+"поставьте метку на карте, выберите подходящую категорию, добавьте детали и "
+"фотографии, затем отправьте обращение на маршрутизацию."
+
+msgid ""
+"For the full report journey, see <a href=\"/how-it-works\">How It Works</a>."
+msgstr ""
+"Полный путь обращения см. на странице <a href=\"/how-it-works\">Как это "
+"работает</a>."
+
+msgid "What categories of problems can I report?"
+msgstr "О каких категориях проблем я могу сообщить?"
+
+msgid "InfraSignal supports 13 standard infrastructure categories:"
+msgstr "InfraSignal поддерживает 13 стандартных категорий инфраструктуры:"
+
+msgid "What should I not report on InfraSignal?"
+msgstr "О чём не следует сообщать в InfraSignal?"
+
+msgid ""
+"InfraSignal is designed for non-emergency infrastructure issues. <strong>Do "
+"not use InfraSignal for:</strong>"
+msgstr ""
+"InfraSignal предназначен для неэкстренных вопросов инфраструктуры. "
+"<strong>Не используйте InfraSignal для:</strong>"
+
+msgid "Emergencies"
+msgstr "Чрезвычайные ситуации"
+
+msgid "call <strong>911</strong> immediately for any threat to life or safety"
+msgstr ""
+"немедленно звоните <strong>911</strong> при любой угрозе жизни или "
+"безопасности"
+
+msgid "Crimes in progress or suspicious activity"
+msgstr "Совершаемые преступления или подозрительная активность"
+
+msgid ""
+"Utility outages (gas, electric, water) &mdash; contact your utility provider"
+" directly"
+msgstr ""
+"Отключения коммунальных услуг (газ, электричество, вода) &mdash; обращайтесь"
+" напрямую к поставщику услуг"
+
+msgid "Noise complaints or neighbor disputes"
+msgstr "Жалобы на шум или споры с соседями"
+
+msgid "Missed trash or recycling pickup"
+msgstr "Пропущенный вывоз мусора или вторсырья"
+
+msgid "Building permits or code enforcement inquiries"
+msgstr "Вопросы о разрешениях на строительство или соблюдении норм"
+
+msgid "Animal control"
+msgstr "Контроль за животными"
+
+msgid "Parking or traffic enforcement"
+msgstr "Контроль парковки или дорожного движения"
+
+msgid "Do I need an account?"
+msgstr "Нужен ли мне аккаунт?"
+
+msgid ""
+"You must provide a valid email address when submitting a report so that "
+"InfraSignal can send a confirmation link and deliver status updates. You may"
+" also create a full account to manage all your reports and subscriptions "
+"from one dashboard."
+msgstr ""
+"При подаче обращения необходимо указать действующий адрес электронной почты,"
+" чтобы InfraSignal мог отправить ссылку для подтверждения и доставлять "
+"обновления статуса. Вы также можете создать полноценный аккаунт, чтобы "
+"управлять всеми своими обращениями и подписками из одной панели."
+
+msgid "Can I upload photos?"
+msgstr "Могу ли я загружать фотографии?"
+
+msgid ""
+"Yes. You may attach up to 3 photos per report. Photos are automatically "
+"screened for inappropriate content before being published."
+msgstr ""
+"Да. К одному обращению можно прикрепить до 3 фотографий. Перед публикацией "
+"фотографии автоматически проверяются на неприемлемый контент."
+
+msgid "Can I report anonymously?"
+msgstr "Могу ли я сообщить анонимно?"
+
+msgid ""
+"You may choose to hide your name from the public-facing report page. "
+"However, your name and email address are always shared with the responsible "
+"local authority so they can investigate and, if needed, contact you about "
+"the issue."
+msgstr ""
+"Вы можете скрыть своё имя на публичной странице обращения. Однако ваше имя и"
+" адрес электронной почты всегда передаются ответственному местному органу "
+"власти, чтобы он мог провести проверку и при необходимости связаться с вами "
+"по поводу проблемы."
+
+msgid "After Submitting"
+msgstr "После отправки"
+
+msgid "How are reports delivered to local authorities?"
+msgstr "Как обращения доставляются местным органам власти?"
+
+msgid ""
+"Reports are sent via email to the designated contact address for the "
+"responsible local authority. Each report includes the problem location "
+"(coordinates and address), the selected category, your description, any "
+"attached photos, and your contact information."
+msgstr ""
+"Обращения отправляются по электронной почте на указанный контактный адрес "
+"ответственного местного органа власти. Каждое обращение включает "
+"местоположение проблемы (координаты и адрес), выбранную категорию, ваше "
+"описание, прикреплённые фотографии и вашу контактную информацию."
+
+msgid "How are reports prioritized?"
+msgstr "Как определяется приоритет обращений?"
+
+msgid ""
+"InfraSignal assigns one of four priority levels to each report: "
+"<strong>Emergency</strong> (immediate safety hazard), <strong>High</strong> "
+"(needs attention within 24 hours), <strong>Normal</strong> (standard "
+"response time), and <strong>Low</strong> (non-urgent). Local authorities can"
+" adjust priority as part of their investigation."
+msgstr ""
+"InfraSignal присваивает каждому обращению один из четырёх уровней "
+"приоритета: <strong>Экстренный</strong> (непосредственная угроза "
+"безопасности), <strong>Высокий</strong> (требует внимания в течение 24 "
+"часов), <strong>Обычный</strong> (стандартное время реагирования) и "
+"<strong>Низкий</strong> (несрочный). Местные органы власти могут изменять "
+"приоритет в рамках своей проверки."
+
+msgid "How long will it take to fix my problem?"
+msgstr "Сколько времени займёт устранение моей проблемы?"
+
+msgid ""
+"Response times depend on the category, severity, and the local "
+"authority&rsquo;s workload. InfraSignal does not control how quickly "
+"authorities respond; it enables you to track your report&rsquo;s status and "
+"receive email updates when action is taken."
+msgstr ""
+"Сроки реагирования зависят от категории, серьёзности и загруженности "
+"местного органа власти. InfraSignal не контролирует, насколько быстро органы"
+" реагируют; он позволяет отслеживать статус вашего обращения и получать "
+"обновления по электронной почте при принятии мер."
+
+msgid "How do I check the status of my report?"
+msgstr "Как проверить статус моего обращения?"
+
+msgid ""
+"You will receive email notifications when the status changes. You can also "
+"log in to your account and view all your reports under <strong>Your "
+"account</strong>. Each report shows its current status: open, investigating,"
+" in progress, fixed, or closed."
+msgstr ""
+"Вы будете получать уведомления по электронной почте при изменении статуса. "
+"Вы также можете войти в свой аккаунт и просмотреть все свои обращения в "
+"разделе <strong>Ваш аккаунт</strong>. Каждое обращение показывает свой "
+"текущий статус: открыто, расследуется, в работе, исправлено или закрыто."
+
+msgid "What if my problem has not been addressed?"
+msgstr "Что делать, если моя проблема не была решена?"
+
+msgid ""
+"You can post an update on your existing report at any time to provide "
+"additional photos, note that the problem persists, or add new details. The "
+"responsible authority is notified of each update."
+msgstr ""
+"Вы можете в любое время опубликовать обновление к существующему обращению, "
+"чтобы добавить дополнительные фотографии, отметить, что проблема "
+"сохраняется, или добавить новые детали. Ответственный орган уведомляется о "
+"каждом обновлении."
+
+msgid "Can I see reports submitted by others?"
+msgstr "Могу ли я видеть обращения, поданные другими?"
+
+msgid ""
+"Yes. The <a href=\"/reports\">All Reports</a> page displays all public "
+"reports with their status, location, and category. You can browse by area or"
+" search for specific locations."
+msgstr ""
+"Да. На странице <a href=\"/reports\">Все обращения</a> отображаются все "
+"публичные обращения с их статусом, местоположением и категорией. Вы можете "
+"просматривать их по районам или искать конкретные местоположения."
+
+msgid "Can I get alerts about problems near me?"
+msgstr "Могу ли я получать оповещения о проблемах рядом со мной?"
+
+msgid ""
+"Yes. Visit <a href=\"/alert\">Local Alerts</a> to subscribe to email "
+"notifications for new reports in your area. You can set alerts by geographic"
+" radius or by specific local authority."
+msgstr ""
+"Да. Перейдите на страницу <a href=\"/alert\">Местные оповещения</a>, чтобы "
+"подписаться на уведомления по электронной почте о новых обращениях в вашем "
+"районе. Вы можете настроить оповещения по географическому радиусу или по "
+"конкретному местному органу власти."
+
+msgid "Technical"
+msgstr "Технические вопросы"
+
+msgid "What devices are supported?"
+msgstr "Какие устройства поддерживаются?"
+
+msgid ""
+"InfraSignal is a responsive web application that works on smartphones, "
+"tablets, and desktop computers. No app installation is required &mdash; "
+"access through any modern web browser."
+msgstr ""
+"InfraSignal — это адаптивное веб-приложение, которое работает на смартфонах,"
+" планшетах и настольных компьютерах. Установка приложения не требуется "
+"&mdash; доступ через любой современный веб-браузер."
+
+msgid "Still have questions?"
+msgstr "Остались вопросы?"
+
+msgid ""
+"Can&rsquo;t find what you&rsquo;re looking for? We&rsquo;re happy to help."
+msgstr "Не нашли то, что искали? Мы будем рады помочь."
+
+msgid "How we collect, use, and protect your information."
+msgstr "Как мы собираем, используем и защищаем вашу информацию."
+
+msgid "Questions about your privacy?"
+msgstr "Вопросы о вашей конфиденциальности?"
+
+msgid ""
+"If you have questions or concerns about this Privacy Policy, reach out to "
+"us."
+msgstr ""
+"Если у вас есть вопросы или опасения по поводу этой Политики "
+"конфиденциальности, свяжитесь с нами."
+
+msgid "Please read these terms carefully before using InfraSignal."
+msgstr ""
+"Пожалуйста, внимательно прочитайте эти условия перед использованием "
+"InfraSignal."
+
+msgid "Questions about these terms?"
+msgstr "Вопросы об этих условиях?"
+
+msgid "If you have questions or concerns, reach out to us."
+msgstr "Если у вас есть вопросы или опасения, свяжитесь с нами."
+
+msgid "About"
+msgstr "О нас"
+
+msgid "Terms"
+msgstr "Условия"
+
+msgid "Local RSS Feeds & Email Alerts – InfraSignal"
+msgstr "Местные RSS-ленты и оповещения по эл. почте – InfraSignal"
+
+msgid "Local RSS Feeds & Email Alerts"
+msgstr "Местные RSS-ленты и оповещения по эл. почте"
+
+msgid ""
+"Stay informed about infrastructure reports in your area with customizable "
+"alerts and RSS feeds."
+msgstr ""
+"Будьте в курсе обращений об инфраструктуре в вашем районе с помощью "
+"настраиваемых оповещений и RSS-лент."
+
+msgid "Find Local Alerts"
+msgstr "Найти местные оповещения"
+
+msgid ""
+"InfraSignal offers a variety of RSS feeds and email alerts for local "
+"problems, including alerts for all problems within a particular ward or "
+"local authority, or all problems within a certain distance of a particular "
+"location."
+msgstr ""
+"InfraSignal предлагает различные RSS-ленты и оповещения по электронной почте"
+" о местных проблемах, включая оповещения обо всех проблемах в пределах "
+"определённого района или местного органа власти либо обо всех проблемах в "
+"пределах определённого расстояния от конкретного места."
+
+msgid ""
+"To find out what local alerts we have for you, please enter your street name"
+" and area."
+msgstr ""
+"Чтобы узнать, какие местные оповещения у нас есть для вас, введите название "
+"вашей улицы и район."
+
+msgid "Address or ZIP code"
+msgstr "Адрес или почтовый индекс"
+
+msgid "RSS Feeds"
+msgstr "RSS-ленты"
+
+msgid ""
+"Subscribe via your favorite RSS reader to get real-time updates on reports "
+"in your area."
+msgstr ""
+"Подпишитесь через свой любимый RSS-ридер, чтобы получать обновления об "
+"обращениях в вашем районе в реальном времени."
+
+msgid "New reports within your chosen radius"
+msgstr "Новые обращения в пределах выбранного вами радиуса"
+
+msgid "Status changes on watched reports"
+msgstr "Изменения статуса в отслеживаемых обращениях"
+
+msgid "Weekly digest option available"
+msgstr "Доступна опция еженедельной сводки"
+
+msgid "Want to browse first?"
+msgstr "Хотите сначала ознакомиться?"
+
+msgid ""
+"Use All Reports to browse public report activity. Return here when you are "
+"ready to subscribe to alerts for a specific place."
+msgstr ""
+"Используйте «Все обращения», чтобы просмотреть публичную активность по "
+"обращениям. Вернитесь сюда, когда будете готовы подписаться на оповещения "
+"для конкретного места."
+
+msgid "You can unsubscribe from email alerts at any time."
+msgstr ""
+"Вы можете отписаться от оповещений по электронной почте в любое время."
+
+msgid "e.g. '%s' or '%s'"
+msgstr "напр. «%s» или «%s»"
+
+msgid "What you'll receive"
+msgstr "Что вы будете получать"
+
+msgid "Choose a location for Local Alerts"
+msgstr "Выберите местоположение для местных оповещений"
+
+msgid "Choose an alert area"
+msgstr "Выберите область оповещения"
+
+msgid "Which location did you mean?"
+msgstr "Какое местоположение вы имели в виду?"
+
+msgid "We found more than one match for \"%s\"."
+msgstr "Мы нашли несколько совпадений для «%s»."
+
+msgid "We found more than one matching location."
+msgstr "Мы нашли несколько подходящих местоположений."
+
+msgid "Help & Info"
+msgstr "Помощь и информация"
+
+msgid "Try a more specific search"
+msgstr "Попробуйте более конкретный поиск"
+
+msgid "Add a street, ZIP code, or nearby landmark to narrow the results."
+msgstr ""
+"Добавьте улицу, почтовый индекс или ближайший ориентир, чтобы сузить "
+"результаты."
+
+msgid "Select your location"
+msgstr "Выберите ваше местоположение"
+
+msgid "Choose the area you want to use for Local Alerts."
+msgstr "Выберите область, которую хотите использовать для местных оповещений."
+
+msgid "Location match"
+msgstr "Совпадение местоположения"
+
+msgid "Local Alerts match"
+msgstr "Совпадение местных оповещений"
+
+msgid "selected area"
+msgstr "выбранная область"
+
+msgid "Trees"
+msgstr "Деревья"
+
+msgid "Fallen tree blocking road"
+msgstr "Упавшее дерево перекрывает дорогу"
+
+msgid "School zone"
+msgstr "Школьная зона"
+
+msgid "Road damage near school"
+msgstr "Повреждение дороги рядом со школой"
+
+msgid "Pothole at intersection"
+msgstr "Яма на перекрёстке"
+
+msgid "Deep pothole on Main St"
+msgstr "Глубокая яма на Мейн-стрит"
+
+msgid "Road"
+msgstr "Дорога"
+
+msgid "Crumbling road surface"
+msgstr "Разрушающееся дорожное покрытие"
+
+msgid "RSS & email alerts for"
+msgstr "RSS- и почтовые оповещения для"
+
+msgid ""
+"Subscribe to a quiet, useful feed of new infrastructure reports near you by "
+"radius, county, or state."
+msgstr ""
+"Подпишитесь на тихую и полезную ленту новых обращений об инфраструктуре "
+"рядом с вами — по радиусу, округу или штату."
+
+msgid "Alert area"
+msgstr "Область оповещения"
+
+msgid "Recent nearby reports"
+msgstr "Недавние обращения поблизости"
+
+msgid "A preview of what your feed will look like."
+msgstr "Предварительный просмотр того, как будет выглядеть ваша лента."
+
+msgid "Local RSS feeds and email alerts for '%s'"
+msgstr "Местные RSS-ленты и оповещения по эл. почте для «%s»"
+
+msgid "Pick the area you care about. You can change this any time."
+msgstr ""
+"Выберите область, которая вас интересует. Вы можете изменить это в любое "
+"время."
+
+msgid ""
+"Reports near %s are sent to different local authorities, depending on the "
+"type of problem."
+msgstr ""
+"Обращения рядом с %s направляются разным местным органам власти в "
+"зависимости от типа проблемы."
+
+msgid "Alert scope"
+msgstr "Область действия оповещения"
+
+msgid "Covers roughly 200,000 people"
+msgstr "Охватывает примерно 200 000 человек"
+
+msgid "Or specify a different radius:"
+msgstr "Или укажите другой радиус:"
+
+msgid "Km"
+msgstr "км"
+
+msgid ""
+"We will not use your email for anything beyond sending you alerts within "
+"this area. See our <a href=\"%s\">privacy policy</a>."
+msgstr ""
+"Мы не будем использовать вашу электронную почту ни для чего, кроме отправки "
+"оповещений в пределах этой области. См. нашу <a href=\"%s\">политику "
+"конфиденциальности</a>."
+
+msgid "Plug your feed into any RSS reader."
+msgstr "Подключите вашу ленту к любому RSS-ридеру."
+
 #~ msgid "%s admin:"
 #~ msgstr "Администратор сайта %s:"
 
