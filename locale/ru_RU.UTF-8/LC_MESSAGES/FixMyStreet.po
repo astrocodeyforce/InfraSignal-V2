@@ -8413,3 +8413,670 @@ msgstr "городов в"
 
 #~ msgid "Place pin on map"
 #~ msgstr "Поставить метку на карте"
+
+# >>> InfraSignal marketing-page strings (auto-added)
+# added 2026-05-30 for home/how-it-works/for-local-government/security
+
+msgid "&ldquo;It has been a resounding success.&rdquo;"
+msgstr "&ldquo;Это был громкий успех.&rdquo;"
+
+msgid "&ldquo;Members of the public are choosing to use the platform...&rdquo;"
+msgstr "&ldquo;Жители сами выбирают эту платформу...&rdquo;"
+
+msgid "&ldquo;a catalyst for change.&rdquo;"
+msgstr "&ldquo;катализатор перемен.&rdquo;"
+
+msgid "&ldquo;easier, faster to use, and more interactive&rdquo;"
+msgstr "&ldquo;проще, быстрее в использовании и интерактивнее&rdquo;"
+
+msgid "&ldquo;simple for the user, but deal with some complex routing behind the scenes&rdquo;"
+msgstr "&ldquo;просто для пользователя, но со сложной маршрутизацией за кулисами&rdquo;"
+
+msgid "+45% online reporting"
+msgstr "+45% онлайн-обращений"
+
+msgid "-24% reporting costs"
+msgstr "-24% затрат на обработку"
+
+msgid "13 standardized infrastructure categories"
+msgstr "13 стандартизированных категорий инфраструктуры"
+
+msgid "200,000+ updates each year"
+msgstr "200 000+ обновлений в год"
+
+msgid "30+ UK councils live"
+msgstr "30+ муниципалитетов Великобритании"
+
+msgid "4 languages"
+msgstr "4 языка"
+
+msgid "92% resolution rate shown"
+msgstr "показатель решения 92%"
+
+msgid "99.5% fewer duplicates"
+msgstr "на 99,5% меньше дубликатов"
+
+msgid "A behind-the-scenes look at how InfraSignal turns a quick submission into a routed, trackable record."
+msgstr "Взгляд изнутри: как InfraSignal превращает быструю заявку в маршрутизированную, отслеживаемую запись."
+
+msgid "A simple way to report issues in your neighborhood and ensure they reach the right people."
+msgstr "Простой способ сообщить о проблемах в вашем районе и убедиться, что они дойдут до нужных людей."
+
+msgid "A structured public reporting channel for infrastructure teams."
+msgstr "Структурированный канал общественных обращений для инфраструктурных команд."
+
+msgid "AI-assisted intake"
+msgstr "Приём с помощью ИИ"
+
+msgid "About Us"
+msgstr "О нас"
+
+msgid "Action Scheduled"
+msgstr "Запланированы действия"
+
+msgid "Add a location, description, and photos."
+msgstr "Добавьте местоположение, описание и фотографии."
+
+msgid "Add a photo, location, and short description in one guided step."
+msgstr "Добавьте фото, местоположение и краткое описание за один шаг."
+
+msgid "Agency workflow"
+msgstr "Рабочий процесс ведомства"
+
+msgid "All rights reserved."
+msgstr "Все права защищены."
+
+msgid "Anatomy"
+msgstr "Структура"
+
+msgid "Audience"
+msgstr "Аудитория"
+
+msgid "Better insight into recurring infrastructure issues."
+msgstr "Лучшее понимание повторяющихся инфраструктурных проблем."
+
+msgid "Boundary matching"
+msgstr "Сопоставление границ"
+
+msgid "Boundary routing"
+msgstr "Маршрутизация по границам"
+
+msgid "Bridge / Guard"
+msgstr "Мост / ограждение"
+
+msgid "Browse reported issues on the public map and see what has already been submitted."
+msgstr "Просматривайте заявленные проблемы на общедоступной карте и смотрите, что уже отправлено."
+
+msgid "Buckinghamshire reported fewer calls, fewer emails, fewer duplicate reports, and lower handling costs."
+msgstr "Бакингемшир сообщил о меньшем числе звонков, писем, дублирующих отчётов и о снижении затрат на обработку."
+
+msgid "Built for Public Reporting"
+msgstr "Создано для общественных обращений"
+
+msgid "Built for government"
+msgstr "Создано для государственных органов"
+
+msgid "Built for residents"
+msgstr "Создано для жителей"
+
+msgid "Category is used for routing"
+msgstr "Категория используется для маршрутизации"
+
+msgid "Category routing"
+msgstr "Маршрутизация по категориям"
+
+msgid "Category suggestions and photo moderation support cleaner report review."
+msgstr "Подсказки категорий и модерация фото обеспечивают более чистую проверку отчётов."
+
+msgid "Central Bedfordshire reported a 46% increase in online reports and a 24% reduction in reporting costs."
+msgstr "Сентрал-Бедфордшир сообщил о росте онлайн-обращений на 46% и снижении затрат на обработку на 24%."
+
+msgid "Channel shift"
+msgstr "Переход в онлайн-каналы"
+
+msgid "Cities & Towns"
+msgstr "Города и посёлки"
+
+msgid "City & County Public Works"
+msgstr "Городские и окружные коммунальные службы"
+
+msgid "City infrastructure reporting service for Z&uuml;rich."
+msgstr "Сервис обращений по городской инфраструктуре для Цюриха."
+
+msgid "City-wide &middot; since 2013"
+msgstr "По всему городу &middot; с 2013 года"
+
+msgid "Company"
+msgstr "Компания"
+
+msgid "Cost efficiency"
+msgstr "Экономическая эффективность"
+
+msgid "Council reference quotes"
+msgstr "Цитаты-референсы муниципалитетов"
+
+msgid "Council references"
+msgstr "Референсы муниципалитетов"
+
+msgid "Drain / Flood"
+msgstr "Дренаж / затопление"
+
+msgid "Duplicates are reduced"
+msgstr "Дубликаты сокращаются"
+
+msgid "Each submitted report is intended to give staff enough context to decide who should review it and what should happen next."
+msgstr "Каждый отправленный отчёт призван дать сотрудникам достаточно контекста, чтобы решить, кто должен его рассмотреть и что делать дальше."
+
+msgid "Email and Open311 GeoReport v2-compatible routing where configured."
+msgstr "Маршрутизация по эл. почте и совместимая с Open311 GeoReport v2, где настроено."
+
+msgid "Email intake"
+msgstr "Приём по электронной почте"
+
+msgid "Emergency, high, normal, and low priority levels help teams triage."
+msgstr "Уровни приоритета (экстренный, высокий, нормальный, низкий) помогают командам сортировать обращения."
+
+msgid "English, Spanish, Russian, and Turkish support are built in."
+msgstr "Встроенная поддержка английского, испанского, русского и турецкого языков."
+
+msgid "FAQ"
+msgstr "Частые вопросы"
+
+msgid "Fewer irrelevant reports"
+msgstr "Меньше нерелевантных отчётов"
+
+msgid "Follow progress as updates are added."
+msgstr "Следите за ходом по мере добавления обновлений."
+
+msgid "Follow status updates as the issue is reviewed and resolved."
+msgstr "Следите за обновлениями статуса по мере рассмотрения и решения проблемы."
+
+msgid "For Government"
+msgstr "Для государственных органов"
+
+msgid "For Local Authorities"
+msgstr "Для местных властей"
+
+msgid "For Local Government"
+msgstr "Для местных органов власти"
+
+msgid "For Residents"
+msgstr "Для жителей"
+
+msgid "From a quick resident report to a trackable public record, InfraSignal keeps the process clear."
+msgstr "От быстрого обращения жителя до отслеживаемой публичной записи — InfraSignal делает процесс прозрачным."
+
+msgid "GDPR-aligned"
+msgstr "Соответствует GDPR"
+
+msgid "Geographic data helps route reports to the right public authority."
+msgstr "Географические данные помогают направлять отчёты нужному государственному органу."
+
+msgid "Get email alerts for local activity."
+msgstr "Получайте уведомления по эл. почте о местной активности."
+
+msgid "Gloucestershire saw a 45% increase in online reporting within four months while improving transparency for residents."
+msgstr "Глостершир увидел рост онлайн-обращений на 45% за четыре месяца при повышении прозрачности для жителей."
+
+msgid "Go to quote 1"
+msgstr "Перейти к цитате 1"
+
+msgid "Go to quote 2"
+msgstr "Перейти к цитате 2"
+
+msgid "Go to quote 3"
+msgstr "Перейти к цитате 3"
+
+msgid "Go to quote 4"
+msgstr "Перейти к цитате 4"
+
+msgid "Go to quote 5"
+msgstr "Перейти к цитате 5"
+
+msgid "Go to quote 6"
+msgstr "Перейти к цитате 6"
+
+msgid "Graffiti"
+msgstr "Граффити"
+
+msgid "High priority"
+msgstr "Высокий приоритет"
+
+msgid "How InfraSignal Works"
+msgstr "Как работает InfraSignal"
+
+msgid "How It Works"
+msgstr "Как это работает"
+
+msgid "How a resident report moves through your team &mdash; from inbox to public update."
+msgstr "Как обращение жителя проходит через вашу команду &mdash; от входящих до публичного обновления."
+
+msgid "Illegal Dumping"
+msgstr "Незаконный сброс мусора"
+
+msgid "Implementation can be aligned around the way an agency already receives and assigns work."
+msgstr "Внедрение можно подстроить под то, как ведомство уже получает и распределяет работу."
+
+msgid "In Progress"
+msgstr "В работе"
+
+msgid "InfraSignal follows a public reporting pattern already used by civic reporting services internationally: residents submit location-based reports, agencies receive structured intake, and communities can follow public updates over time."
+msgstr "InfraSignal следует модели общественных обращений, уже используемой гражданскими сервисами по всему миру: жители отправляют геопривязанные обращения, ведомства получают структурированный приём, а сообщества могут со временем следить за публичными обновлениями."
+
+msgid "InfraSignal gives residents one simple place to report local problems without needing to know which department to contact."
+msgstr "InfraSignal даёт жителям одно простое место, чтобы сообщать о местных проблемах, не зная, в какой отдел обращаться."
+
+msgid "InfraSignal helps public teams receive resident reports with location, category, details, photos, and follow-up context in a consistent format."
+msgstr "InfraSignal помогает государственным командам получать обращения жителей с местоположением, категорией, деталями, фотографиями и контекстом в едином формате."
+
+msgid "InfraSignal is not just a reporting form. Reports can be viewed publicly, followed individually, or monitored through local alerts."
+msgstr "InfraSignal — это не просто форма обращения. Отчёты можно просматривать публично, отслеживать по отдельности или контролировать через местные оповещения."
+
+msgid "InfraSignal pins the issue to the right place on the map."
+msgstr "InfraSignal закрепляет проблему в нужном месте на карте."
+
+msgid "InfraSignal turns resident reports into structured, location-based information that is easier to review, route, and respond to."
+msgstr "InfraSignal превращает обращения жителей в структурированную геопривязанную информацию, которую проще рассматривать, маршрутизировать и обрабатывать."
+
+msgid "InfraSignal uses the address, zipcode, or map pin to understand exactly where the issue is located."
+msgstr "InfraSignal использует адрес, индекс или метку на карте, чтобы точно понять, где находится проблема."
+
+msgid "Intake"
+msgstr "Приём"
+
+msgid "Investigating"
+msgstr "Расследуется"
+
+msgid "Jurisdiction and boundary matching for location-based assignment to the responsible authority."
+msgstr "Сопоставление юрисдикций и границ для геопривязанного назначения ответственному органу."
+
+msgid "Large pothole near pedestrian crossing &mdash; water pooling after rain."
+msgstr "Большая яма у пешеходного перехода &mdash; скопление воды после дождя."
+
+msgid "Latest issues reported by community members near you."
+msgstr "Последние проблемы, о которых сообщили жители рядом с вами."
+
+msgid "Legal"
+msgstr "Правовая информация"
+
+msgid "Lincolnshire reports around 80% online reporting and automatic status updates at county scale."
+msgstr "Линкольншир сообщает о ~80% онлайн-обращений и автоматических обновлениях статуса в масштабе округа."
+
+msgid "Local Admins for Routing & Updates"
+msgstr "Местные администраторы для маршрутизации и обновлений"
+
+msgid "Local Alerts"
+msgstr "Местные оповещения"
+
+msgid "Locate"
+msgstr "Определите место"
+
+msgid "Location is matched"
+msgstr "Местоположение сопоставлено"
+
+msgid "Map position, coordinates, and address context"
+msgstr "Положение на карте, координаты и адресный контекст"
+
+msgid "Model"
+msgstr "Модель"
+
+msgid "Multi-language access"
+msgstr "Многоязычный доступ"
+
+msgid "National &middot; 290 cities"
+msgstr "По всей стране &middot; 290 городов"
+
+msgid "National local issue reporting service for Sweden."
+msgstr "Национальный сервис обращений о местных проблемах для Швеции."
+
+msgid "Nearby existing reports may be shown so residents can avoid reporting the same issue twice."
+msgstr "Могут показываться существующие ближайшие отчёты, чтобы жители не сообщали об одной и той же проблеме дважды."
+
+msgid "Next quote"
+msgstr "Следующая цитата"
+
+msgid "Noise"
+msgstr "Шум"
+
+msgid "Northumberland used public updates, asset mapping, and workflow messages to handle heavy drainage demand more clearly."
+msgstr "Нортумберленд использовал публичные обновления, картирование объектов и рабочие сообщения, чтобы яснее справляться с высокой нагрузкой по дренажу."
+
+msgid "Open311 v2"
+msgstr "Open311 v2"
+
+msgid "Operations"
+msgstr "Операции"
+
+msgid "Operations and integration"
+msgstr "Операции и интеграция"
+
+msgid "Platform"
+msgstr "Платформа"
+
+msgid "Post public updates so residents can follow progress without submitting again."
+msgstr "Публикуйте обновления, чтобы жители следили за ходом без повторных обращений."
+
+msgid "Pothole"
+msgstr "Яма"
+
+msgid "Pothole & Road"
+msgstr "Яма / дорога"
+
+msgid "Previous quote"
+msgstr "Предыдущая цитата"
+
+msgid "Priority context"
+msgstr "Контекст приоритета"
+
+msgid "Priority context for triage"
+msgstr "Контекст приоритета для сортировки"
+
+msgid "Priority levels for emergency, high, normal, and low reports."
+msgstr "Уровни приоритета для экстренных, высоких, нормальных и низких обращений."
+
+msgid "Priority levels help teams triage emergency, high, normal, and low reports."
+msgstr "Уровни приоритета помогают командам сортировать экстренные, высокие, нормальные и низкие обращения."
+
+msgid "Proven civic reporting model"
+msgstr "Проверенная модель гражданских обращений"
+
+msgid "Public adoption"
+msgstr "Общественное принятие"
+
+msgid "Public report link and update history"
+msgstr "Ссылка на публичный отчёт и история обновлений"
+
+msgid "Public reports can be viewed on the map so residents and local teams can see what has already been reported."
+msgstr "Публичные отчёты можно просматривать на карте, чтобы жители и местные команды видели, о чём уже сообщили."
+
+msgid "Public visibility into reported issues."
+msgstr "Публичная видимость заявленных проблем."
+
+msgid "Public visibility that can reduce duplicate reports and clarify status."
+msgstr "Публичная видимость, которая снижает число дубликатов и проясняет статус."
+
+msgid "Public-sector civic reporting deployments and integrations."
+msgstr "Внедрения и интеграции гражданских обращений в госсекторе."
+
+msgid "Public-sector proof points"
+msgstr "Подтверждения в госсекторе"
+
+msgid "Quote slides"
+msgstr "Слайды с цитатами"
+
+msgid "Read the case study"
+msgstr "Читать кейс"
+
+msgid "Ready to report an issue?"
+msgstr "Готовы сообщить о проблеме?"
+
+msgid "Receive"
+msgstr "Получение"
+
+msgid "Receive reports directly into a shared inbox for teams that manage requests via email today."
+msgstr "Получайте отчёты прямо в общий почтовый ящик для команд, которые сегодня обрабатывают запросы по эл. почте."
+
+msgid "Recently Reported Problems"
+msgstr "Недавно заявленные проблемы"
+
+msgid "Reduced duplicate reports."
+msgstr "Сокращение дублирующих отчётов."
+
+msgid "Report an Issue"
+msgstr "Сообщить о проблеме"
+
+msgid "Report infrastructure issues and get them fixed. Serving communities across all 51 US states."
+msgstr "Сообщайте о проблемах инфраструктуры и добивайтесь их решения. Обслуживаем сообщества во всех 51 регионе США."
+
+msgid "Report potholes, broken streetlights, sidewalk damage, drainage issues, trash overflow, graffiti, abandoned vehicles, and other infrastructure problems."
+msgstr "Сообщайте о ямах, неисправных фонарях, повреждённых тротуарах, проблемах с дренажом, переполненном мусоре, граффити, брошенных автомобилях и других проблемах инфраструктуры."
+
+msgid "Report, route, and track in four simple steps"
+msgstr "Сообщайте, направляйте и отслеживайте за четыре простых шага"
+
+msgid "Reports are public, location-based, and easy to follow, helping residents and public teams work from the same information."
+msgstr "Отчёты публичны, геопривязаны и просты для отслеживания, помогая жителям и государственным командам работать с одной и той же информацией."
+
+msgid "Reports can be sent to responsible authorities by email or service integrations such as Open311 where configured."
+msgstr "Отчёты могут отправляться ответственным органам по эл. почте или через интеграции вроде Open311, где настроено."
+
+msgid "Resident contact details where required"
+msgstr "Контактные данные жителя, где требуется"
+
+msgid "Resident experience"
+msgstr "Опыт жителя"
+
+msgid "Residents can follow updates, subscribe to alerts, and check report progress over time."
+msgstr "Жители могут следить за обновлениями, подписываться на оповещения и проверять ход обращений со временем."
+
+msgid "Respond"
+msgstr "Реагирование"
+
+msgid "Review"
+msgstr "Рассмотрение"
+
+msgid "Review by category, priority, location, and available contact context."
+msgstr "Рассмотрение по категории, приоритету, местоположению и доступному контактному контексту."
+
+msgid "Review repeated categories, locations, and response patterns over time."
+msgstr "Анализируйте повторяющиеся категории, места и схемы реагирования со временем."
+
+msgid "Route"
+msgstr "Направление"
+
+msgid "Route reports to the right service area or department based on the resident-selected category."
+msgstr "Направляйте отчёты в нужную службу или отдел на основе выбранной жителем категории."
+
+msgid "Routed"
+msgstr "Направлено"
+
+msgid "Routing and setup options"
+msgstr "Параметры маршрутизации и настройки"
+
+msgid "SOC 2-ready"
+msgstr "Готовность к SOC 2"
+
+msgid "Scale"
+msgstr "Масштаб"
+
+msgid "See reports from other residents."
+msgstr "Смотрите отчёты других жителей."
+
+msgid "Selected category and report description"
+msgstr "Выбранная категория и описание отчёта"
+
+msgid "Send issues to the right department, inbox, or integration channel."
+msgstr "Отправляйте проблемы в нужный отдел, почтовый ящик или канал интеграции."
+
+msgid "Service Coordinators & Intake Teams"
+msgstr "Координаторы служб и команды приёма"
+
+msgid "Setup"
+msgstr "Настройка"
+
+msgid "Setup options"
+msgstr "Параметры настройки"
+
+msgid "Short excerpts and published outcomes from real SocietyWorks case studies."
+msgstr "Краткие выдержки и опубликованные результаты из реальных кейсов SocietyWorks."
+
+msgid "Short quote excerpts and published figures from publicly available SocietyWorks case studies, shown as reference points for the civic reporting model. These councils are not InfraSignal customers or endorsers."
+msgstr "Краткие выдержки из цитат и опубликованные показатели из общедоступных кейсов SocietyWorks, приведённые как ориентиры для модели гражданских обращений. Эти муниципалитеты не являются клиентами InfraSignal и не поддерживают его."
+
+msgid "Sidewalk"
+msgstr "Тротуар"
+
+msgid "Smart routing"
+msgstr "Умная маршрутизация"
+
+msgid "Snap a photo and describe the issue. Our AI helps fill in the details."
+msgstr "Сделайте фото и опишите проблему. Наш ИИ поможет заполнить детали."
+
+msgid "SocietyWorks"
+msgstr "SocietyWorks"
+
+msgid "Staff admin"
+msgstr "Администрирование персонала"
+
+msgid "Staff and admin access for reviewing reports, posting updates, and managing routing rules."
+msgstr "Доступ для персонала и администраторов для рассмотрения отчётов, публикации обновлений и управления правилами маршрутизации."
+
+msgid "Staff/admin tools for reviewing reports and updates."
+msgstr "Инструменты для персонала/админов для рассмотрения отчётов и обновлений."
+
+msgid "Standardized categories aligned with common public works operations."
+msgstr "Стандартизированные категории, согласованные с типичными операциями коммунальных служб."
+
+msgid "Start Reporting"
+msgstr "Начать обращение"
+
+msgid "Start with an address, add the details, and let InfraSignal help your report reach the right place."
+msgstr "Начните с адреса, добавьте детали, и InfraSignal поможет вашему отчёту дойти до нужного места."
+
+msgid "States + D.C."
+msgstr "Штаты + округ Колумбия"
+
+msgid "Streetlight"
+msgstr "Уличный фонарь"
+
+msgid "Structured intake, routing, priority context, and integration details are now grouped on one page for public teams."
+msgstr "Структурированный приём, маршрутизация, контекст приоритета и детали интеграции теперь собраны на одной странице для государственных команд."
+
+msgid "Structured reports from residents with location, category, details, and photos."
+msgstr "Структурированные обращения жителей с местоположением, категорией, деталями и фотографиями."
+
+msgid "Structured reports with category, location, details, and photos."
+msgstr "Структурированные отчёты с категорией, местоположением, деталями и фотографиями."
+
+msgid "Structured reports, cleaner intake"
+msgstr "Структурированные отчёты, более чистый приём"
+
+msgid "Structured, geolocated reports with photos and resident contact context."
+msgstr "Структурированные геопривязанные отчёты с фотографиями и контактным контекстом жителя."
+
+msgid "Subscribe to updates for reports near an address or area."
+msgstr "Подписывайтесь на обновления по отчётам рядом с адресом или районом."
+
+msgid "Sweden"
+msgstr "Швеция"
+
+msgid "Switzerland"
+msgstr "Швейцария"
+
+msgid "Terms & Conditions"
+msgstr "Условия использования"
+
+msgid "The issue category helps determine which local department or service should receive the report."
+msgstr "Категория проблемы помогает определить, какой местный отдел или служба должны получить отчёт."
+
+msgid "The public reporting experience stays simple for residents, while agencies receive cleaner information for triage, routing, and response."
+msgstr "Опыт обращения остаётся простым для жителей, а ведомства получают более чистую информацию для сортировки, маршрутизации и реагирования."
+
+msgid "The report becomes visible"
+msgstr "Отчёт становится видимым"
+
+msgid "The report is sent"
+msgstr "Отчёт отправлен"
+
+msgid "The report is sent to the responsible local team or agency."
+msgstr "Отчёт отправляется ответственной местной команде или ведомству."
+
+msgid "These examples are included as reference points for the wider civic reporting model, not as InfraSignal customers or endorsements."
+msgstr "Эти примеры приведены как ориентиры для более широкой модели гражданских обращений, а не как клиенты InfraSignal или одобрения."
+
+msgid "This page is for public teams that receive, review, route, or respond to resident infrastructure reports."
+msgstr "Эта страница для государственных команд, которые получают, рассматривают, маршрутизируют или реагируют на инфраструктурные обращения жителей."
+
+msgid "Three simple steps to get infrastructure problems fixed."
+msgstr "Три простых шага к решению проблем инфраструктуры."
+
+msgid "Track"
+msgstr "Отслеживание"
+
+msgid "Track issues across your community"
+msgstr "Отслеживайте проблемы по всему сообществу"
+
+msgid "Track your own reports from your account."
+msgstr "Отслеживайте собственные отчёты из вашей учётной записи."
+
+msgid "Traffic Signal"
+msgstr "Светофор"
+
+msgid "Transport for London uses smart routing so residents do not need to know which body owns each street asset."
+msgstr "Transport for London использует умную маршрутизацию, чтобы жителям не нужно было знать, какому органу принадлежит каждый дорожный объект."
+
+msgid "Transportation, Streets, Parks & Facilities"
+msgstr "Транспорт, улицы, парки и объекты"
+
+msgid "Tree Hazard"
+msgstr "Опасное дерево"
+
+msgid "Triage"
+msgstr "Сортировка"
+
+msgid "United Kingdom"
+msgstr "Великобритания"
+
+msgid "Up to 98.69% savings per report."
+msgstr "Экономия до 98,69% на отчёт."
+
+msgid "Updates keep people informed"
+msgstr "Обновления держат людей в курсе"
+
+msgid "Uploaded photos where provided"
+msgstr "Загруженные фотографии, где предоставлены"
+
+msgid "Useful for local authorities and service teams"
+msgstr "Полезно для местных властей и сервисных команд"
+
+msgid "Vehicle / Parking"
+msgstr "Транспорт / парковка"
+
+msgid "View All Reports"
+msgstr "Смотреть все отчёты"
+
+msgid "View Reports"
+msgstr "Смотреть отчёты"
+
+msgid "View all reports"
+msgstr "Смотреть все отчёты"
+
+msgid "View public reports"
+msgstr "Смотреть публичные отчёты"
+
+msgid "View your reports, manage notification preferences, and follow updates from one place."
+msgstr "Просматривайте свои отчёты, управляйте настройками уведомлений и следите за обновлениями в одном месте."
+
+msgid "Visit"
+msgstr "Перейти"
+
+msgid "WCAG 2.1 AA"
+msgstr "WCAG 2.1 AA"
+
+msgid "Water Leak"
+msgstr "Утечка воды"
+
+msgid "We detect your location and identify the exact address automatically."
+msgstr "Мы определяем ваше местоположение и автоматически устанавливаем точный адрес."
+
+msgid "What You Can Report"
+msgstr "О чём можно сообщить"
+
+msgid "What each report includes"
+msgstr "Что включает каждый отчёт"
+
+msgid "What happens after you submit a report?"
+msgstr "Что происходит после отправки отчёта?"
+
+msgid "Who this is for"
+msgstr "Для кого это"
+
+msgid "Workflow"
+msgstr "Рабочий процесс"
+
+msgid "Your Account"
+msgstr "Ваша учётная запись"
+
+msgid "Your report is sent directly to the responsible local government."
+msgstr "Ваш отчёт отправляется напрямую ответственному местному органу власти."
+

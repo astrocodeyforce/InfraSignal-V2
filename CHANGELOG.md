@@ -1,6 +1,35 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Translate marketing pages ru/tr/es via .po + ROOT-CAUSE locale fix):
+        - Scope: home page, how-it-works, for-local-government, security — the
+          remaining custom InfraSignal pages whose loc() strings were never in the
+          .po catalogs, so they showed English in every language.
+        - Added 221 new msgid/msgstr entries (× ru/tr/es = 663 translations) to
+          locale/{ru_RU,tr_TR,es}.UTF-8/LC_MESSAGES/FixMyStreet.po, then recompiled
+          the .mo with msgfmt. (The 14 strings already in core — All Reports,
+          Closed, Open, etc. — were left untouched and reused their core
+          translation.) msgids were paired line-by-line against the extracted
+          loc() list so they match exactly (a mismatch silently falls back to EN).
+        - ROOT CAUSE found while verifying: gettext translation NEVER worked in
+          ru/tr/es on the running dev container — the OS locales (ru_RU.UTF-8,
+          tr_TR.UTF-8, es_ES.UTF-8) were not generated, so setlocale() failed and
+          loc() always returned English. That is why earlier about/faq fixes had to
+          use per-language TEMPLATE files (templates don't need setlocale). This
+          also meant the ~1,300 already-translated CORE strings (report flow,
+          account, alerts) were silently English too.
+        - Fix: `docker/Dockerfile-development` already generates ru/tr/es locales
+          (added Apr 9) — the dev container was simply built before that and never
+          rebuilt. Generated the 3 locales in the live dev container with localedef
+          (no disruptive rebuild needed); next rebuild keeps them automatically.
+          Staging's container was already built with the locales.
+        - Result: dev + staging now render fully translated home / how-it-works /
+          for-local-government / security in ru/tr/es with ZERO English leftovers,
+          AND the core UI now localizes for the first time. Verified on dev (:3001)
+          and staging (:8080).
+        - Promotion note: .mo is gitignored (built from .po via msgfmt /
+          commonlib/bin/gettext-makemo). When promoting code, recompile .mo and
+          ensure the target container has the ru_RU/tr_TR/es_ES OS locales.
     - InfraSignal — May 29, 2026 (Restore translations on the redesigned info pages):
         - Follow-up to the consolidation below: making about/faq/privacy/terms
           generic gave every language the NEW UI but English TEXT (the custom

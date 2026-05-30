@@ -8375,3 +8375,670 @@ msgstr "şehir:"
 
 #~ msgid "Place pin on map"
 #~ msgstr "Harita üzerine işaretleyin"
+
+# >>> InfraSignal marketing-page strings (auto-added)
+# added 2026-05-30 for home/how-it-works/for-local-government/security
+
+msgid "&ldquo;It has been a resounding success.&rdquo;"
+msgstr "&ldquo;Büyük bir başarı oldu.&rdquo;"
+
+msgid "&ldquo;Members of the public are choosing to use the platform...&rdquo;"
+msgstr "&ldquo;Halk, platformu kullanmayı tercih ediyor...&rdquo;"
+
+msgid "&ldquo;a catalyst for change.&rdquo;"
+msgstr "&ldquo;değişim için bir katalizör.&rdquo;"
+
+msgid "&ldquo;easier, faster to use, and more interactive&rdquo;"
+msgstr "&ldquo;daha kolay, daha hızlı ve daha etkileşimli&rdquo;"
+
+msgid "&ldquo;simple for the user, but deal with some complex routing behind the scenes&rdquo;"
+msgstr "&ldquo;kullanıcı için basit, ancak arka planda karmaşık yönlendirmeyi yönetir&rdquo;"
+
+msgid "+45% online reporting"
+msgstr "+%45 çevrimiçi bildirim"
+
+msgid "-24% reporting costs"
+msgstr "-%24 bildirim maliyeti"
+
+msgid "13 standardized infrastructure categories"
+msgstr "13 standartlaştırılmış altyapı kategorisi"
+
+msgid "200,000+ updates each year"
+msgstr "yılda 200.000+ güncelleme"
+
+msgid "30+ UK councils live"
+msgstr "30+ İngiltere belediyesi aktif"
+
+msgid "4 languages"
+msgstr "4 dil"
+
+msgid "92% resolution rate shown"
+msgstr "%92 çözüm oranı gösterildi"
+
+msgid "99.5% fewer duplicates"
+msgstr "%99,5 daha az yinelenen"
+
+msgid "A behind-the-scenes look at how InfraSignal turns a quick submission into a routed, trackable record."
+msgstr "InfraSignal'in hızlı bir gönderimi yönlendirilmiş, izlenebilir bir kayda nasıl dönüştürdüğüne perde arkası bir bakış."
+
+msgid "A simple way to report issues in your neighborhood and ensure they reach the right people."
+msgstr "Mahallenizdeki sorunları bildirmenin ve doğru kişilere ulaşmasını sağlamanın basit bir yolu."
+
+msgid "A structured public reporting channel for infrastructure teams."
+msgstr "Altyapı ekipleri için yapılandırılmış bir kamu bildirim kanalı."
+
+msgid "AI-assisted intake"
+msgstr "Yapay zeka destekli alım"
+
+msgid "About Us"
+msgstr "Hakkımızda"
+
+msgid "Action Scheduled"
+msgstr "Eylem Planlandı"
+
+msgid "Add a location, description, and photos."
+msgstr "Konum, açıklama ve fotoğraf ekleyin."
+
+msgid "Add a photo, location, and short description in one guided step."
+msgstr "Tek bir yönlendirmeli adımda fotoğraf, konum ve kısa açıklama ekleyin."
+
+msgid "Agency workflow"
+msgstr "Kurum iş akışı"
+
+msgid "All rights reserved."
+msgstr "Tüm hakları saklıdır."
+
+msgid "Anatomy"
+msgstr "Yapısı"
+
+msgid "Audience"
+msgstr "Hedef Kitle"
+
+msgid "Better insight into recurring infrastructure issues."
+msgstr "Tekrar eden altyapı sorunlarına daha iyi içgörü."
+
+msgid "Boundary matching"
+msgstr "Sınır eşleştirme"
+
+msgid "Boundary routing"
+msgstr "Sınıra göre yönlendirme"
+
+msgid "Bridge / Guard"
+msgstr "Köprü / Korkuluk"
+
+msgid "Browse reported issues on the public map and see what has already been submitted."
+msgstr "Bildirilen sorunlara herkese açık haritada göz atın ve nelerin zaten gönderildiğini görün."
+
+msgid "Buckinghamshire reported fewer calls, fewer emails, fewer duplicate reports, and lower handling costs."
+msgstr "Buckinghamshire daha az çağrı, daha az e-posta, daha az yinelenen bildirim ve daha düşük işleme maliyeti bildirdi."
+
+msgid "Built for Public Reporting"
+msgstr "Kamu Bildirimi İçin Tasarlandı"
+
+msgid "Built for government"
+msgstr "Devlet için tasarlandı"
+
+msgid "Built for residents"
+msgstr "Sakinler için tasarlandı"
+
+msgid "Category is used for routing"
+msgstr "Kategori yönlendirme için kullanılır"
+
+msgid "Category routing"
+msgstr "Kategoriye göre yönlendirme"
+
+msgid "Category suggestions and photo moderation support cleaner report review."
+msgstr "Kategori önerileri ve fotoğraf denetimi daha temiz bildirim incelemesini destekler."
+
+msgid "Central Bedfordshire reported a 46% increase in online reports and a 24% reduction in reporting costs."
+msgstr "Central Bedfordshire çevrimiçi bildirimlerde %46 artış ve bildirim maliyetlerinde %24 azalma bildirdi."
+
+msgid "Channel shift"
+msgstr "Kanal değişimi"
+
+msgid "Cities & Towns"
+msgstr "Şehirler ve Kasabalar"
+
+msgid "City & County Public Works"
+msgstr "Şehir ve İlçe Kamu Hizmetleri"
+
+msgid "City infrastructure reporting service for Z&uuml;rich."
+msgstr "Zürih için şehir altyapısı bildirim hizmeti."
+
+msgid "City-wide &middot; since 2013"
+msgstr "Şehir genelinde &middot; 2013'ten beri"
+
+msgid "Company"
+msgstr "Şirket"
+
+msgid "Cost efficiency"
+msgstr "Maliyet verimliliği"
+
+msgid "Council reference quotes"
+msgstr "Belediye referans alıntıları"
+
+msgid "Council references"
+msgstr "Belediye referansları"
+
+msgid "Drain / Flood"
+msgstr "Drenaj / Su Baskını"
+
+msgid "Duplicates are reduced"
+msgstr "Yinelenenler azaltılır"
+
+msgid "Each submitted report is intended to give staff enough context to decide who should review it and what should happen next."
+msgstr "Gönderilen her bildirim, personele kimin inceleyeceğine ve sonraki adımın ne olacağına karar vermek için yeterli bağlamı vermeyi amaçlar."
+
+msgid "Email and Open311 GeoReport v2-compatible routing where configured."
+msgstr "Yapılandırıldığı yerlerde e-posta ve Open311 GeoReport v2 uyumlu yönlendirme."
+
+msgid "Email intake"
+msgstr "E-posta ile alım"
+
+msgid "Emergency, high, normal, and low priority levels help teams triage."
+msgstr "Acil, yüksek, normal ve düşük öncelik düzeyleri ekiplerin önceliklendirmesine yardımcı olur."
+
+msgid "English, Spanish, Russian, and Turkish support are built in."
+msgstr "İngilizce, İspanyolca, Rusça ve Türkçe desteği yerleşiktir."
+
+msgid "FAQ"
+msgstr "SSS"
+
+msgid "Fewer irrelevant reports"
+msgstr "Daha az alakasız bildirim"
+
+msgid "Follow progress as updates are added."
+msgstr "Güncellemeler eklendikçe ilerlemeyi takip edin."
+
+msgid "Follow status updates as the issue is reviewed and resolved."
+msgstr "Sorun incelenip çözülürken durum güncellemelerini takip edin."
+
+msgid "For Government"
+msgstr "Devlet İçin"
+
+msgid "For Local Authorities"
+msgstr "Yerel Yönetimler İçin"
+
+msgid "For Local Government"
+msgstr "Yerel Yönetim İçin"
+
+msgid "For Residents"
+msgstr "Sakinler İçin"
+
+msgid "From a quick resident report to a trackable public record, InfraSignal keeps the process clear."
+msgstr "Hızlı bir sakin bildiriminden izlenebilir bir kamu kaydına kadar, InfraSignal süreci net tutar."
+
+msgid "GDPR-aligned"
+msgstr "GDPR uyumlu"
+
+msgid "Geographic data helps route reports to the right public authority."
+msgstr "Coğrafi veriler bildirimleri doğru kamu kurumuna yönlendirmeye yardımcı olur."
+
+msgid "Get email alerts for local activity."
+msgstr "Yerel etkinlik için e-posta uyarıları alın."
+
+msgid "Gloucestershire saw a 45% increase in online reporting within four months while improving transparency for residents."
+msgstr "Gloucestershire dört ay içinde çevrimiçi bildirimde %45 artış gördü ve sakinler için şeffaflığı artırdı."
+
+msgid "Go to quote 1"
+msgstr "1. alıntıya git"
+
+msgid "Go to quote 2"
+msgstr "2. alıntıya git"
+
+msgid "Go to quote 3"
+msgstr "3. alıntıya git"
+
+msgid "Go to quote 4"
+msgstr "4. alıntıya git"
+
+msgid "Go to quote 5"
+msgstr "5. alıntıya git"
+
+msgid "Go to quote 6"
+msgstr "6. alıntıya git"
+
+msgid "Graffiti"
+msgstr "Grafiti"
+
+msgid "High priority"
+msgstr "Yüksek öncelik"
+
+msgid "How InfraSignal Works"
+msgstr "InfraSignal Nasıl Çalışır"
+
+msgid "How It Works"
+msgstr "Nasıl Çalışır"
+
+msgid "How a resident report moves through your team &mdash; from inbox to public update."
+msgstr "Bir sakin bildiriminin ekibinizde nasıl ilerlediği &mdash; gelen kutusundan herkese açık güncellemeye."
+
+msgid "Illegal Dumping"
+msgstr "Yasadışı Atık"
+
+msgid "Implementation can be aligned around the way an agency already receives and assigns work."
+msgstr "Uygulama, bir kurumun işi halihazırda nasıl aldığı ve atadığı etrafında hizalanabilir."
+
+msgid "In Progress"
+msgstr "Devam Ediyor"
+
+msgid "InfraSignal follows a public reporting pattern already used by civic reporting services internationally: residents submit location-based reports, agencies receive structured intake, and communities can follow public updates over time."
+msgstr "InfraSignal, dünya çapında sivil bildirim hizmetleri tarafından zaten kullanılan bir kamu bildirim modelini izler: sakinler konum tabanlı bildirimler gönderir, kurumlar yapılandırılmış alım alır ve topluluklar zaman içinde herkese açık güncellemeleri takip edebilir."
+
+msgid "InfraSignal gives residents one simple place to report local problems without needing to know which department to contact."
+msgstr "InfraSignal, sakinlere hangi departmanla iletişime geçeceklerini bilmelerine gerek kalmadan yerel sorunları bildirebilecekleri basit tek bir yer sunar."
+
+msgid "InfraSignal helps public teams receive resident reports with location, category, details, photos, and follow-up context in a consistent format."
+msgstr "InfraSignal, kamu ekiplerinin sakin bildirimlerini konum, kategori, ayrıntılar, fotoğraflar ve takip bağlamıyla tutarlı bir biçimde almasına yardımcı olur."
+
+msgid "InfraSignal is not just a reporting form. Reports can be viewed publicly, followed individually, or monitored through local alerts."
+msgstr "InfraSignal yalnızca bir bildirim formu değildir. Bildirimler herkese açık olarak görüntülenebilir, tek tek takip edilebilir veya yerel uyarılar aracılığıyla izlenebilir."
+
+msgid "InfraSignal pins the issue to the right place on the map."
+msgstr "InfraSignal, sorunu haritada doğru yere sabitler."
+
+msgid "InfraSignal turns resident reports into structured, location-based information that is easier to review, route, and respond to."
+msgstr "InfraSignal, sakin bildirimlerini incelemesi, yönlendirmesi ve yanıtlaması daha kolay olan yapılandırılmış, konum tabanlı bilgilere dönüştürür."
+
+msgid "InfraSignal uses the address, zipcode, or map pin to understand exactly where the issue is located."
+msgstr "InfraSignal, sorunun tam olarak nerede olduğunu anlamak için adresi, posta kodunu veya harita iğnesini kullanır."
+
+msgid "Intake"
+msgstr "Alım"
+
+msgid "Investigating"
+msgstr "Araştırılıyor"
+
+msgid "Jurisdiction and boundary matching for location-based assignment to the responsible authority."
+msgstr "Sorumlu kuruma konum tabanlı atama için yargı yetkisi ve sınır eşleştirme."
+
+msgid "Large pothole near pedestrian crossing &mdash; water pooling after rain."
+msgstr "Yaya geçidi yakınında büyük çukur &mdash; yağmurdan sonra su birikmesi."
+
+msgid "Latest issues reported by community members near you."
+msgstr "Yakınınızdaki topluluk üyeleri tarafından bildirilen en son sorunlar."
+
+msgid "Legal"
+msgstr "Yasal"
+
+msgid "Lincolnshire reports around 80% online reporting and automatic status updates at county scale."
+msgstr "Lincolnshire, ilçe ölçeğinde yaklaşık %80 çevrimiçi bildirim ve otomatik durum güncellemeleri bildiriyor."
+
+msgid "Local Admins for Routing & Updates"
+msgstr "Yönlendirme ve Güncellemeler için Yerel Yöneticiler"
+
+msgid "Local Alerts"
+msgstr "Yerel Uyarılar"
+
+msgid "Locate"
+msgstr "Konumu Belirleyin"
+
+msgid "Location is matched"
+msgstr "Konum eşleştirildi"
+
+msgid "Map position, coordinates, and address context"
+msgstr "Harita konumu, koordinatlar ve adres bağlamı"
+
+msgid "Model"
+msgstr "Model"
+
+msgid "Multi-language access"
+msgstr "Çok dilli erişim"
+
+msgid "National &middot; 290 cities"
+msgstr "Ulusal &middot; 290 şehir"
+
+msgid "National local issue reporting service for Sweden."
+msgstr "İsveç için ulusal yerel sorun bildirim hizmeti."
+
+msgid "Nearby existing reports may be shown so residents can avoid reporting the same issue twice."
+msgstr "Sakinlerin aynı sorunu iki kez bildirmemesi için yakındaki mevcut bildirimler gösterilebilir."
+
+msgid "Next quote"
+msgstr "Sonraki alıntı"
+
+msgid "Noise"
+msgstr "Gürültü"
+
+msgid "Northumberland used public updates, asset mapping, and workflow messages to handle heavy drainage demand more clearly."
+msgstr "Northumberland, yoğun drenaj talebini daha net karşılamak için herkese açık güncellemeleri, varlık haritalamasını ve iş akışı mesajlarını kullandı."
+
+msgid "Open311 v2"
+msgstr "Open311 v2"
+
+msgid "Operations"
+msgstr "Operasyonlar"
+
+msgid "Operations and integration"
+msgstr "Operasyonlar ve entegrasyon"
+
+msgid "Platform"
+msgstr "Platform"
+
+msgid "Post public updates so residents can follow progress without submitting again."
+msgstr "Sakinlerin tekrar göndermeden ilerlemeyi takip edebilmesi için herkese açık güncellemeler yayınlayın."
+
+msgid "Pothole"
+msgstr "Çukur"
+
+msgid "Pothole & Road"
+msgstr "Çukur / Yol"
+
+msgid "Previous quote"
+msgstr "Önceki alıntı"
+
+msgid "Priority context"
+msgstr "Öncelik bağlamı"
+
+msgid "Priority context for triage"
+msgstr "Önceliklendirme için öncelik bağlamı"
+
+msgid "Priority levels for emergency, high, normal, and low reports."
+msgstr "Acil, yüksek, normal ve düşük bildirimler için öncelik düzeyleri."
+
+msgid "Priority levels help teams triage emergency, high, normal, and low reports."
+msgstr "Öncelik düzeyleri, ekiplerin acil, yüksek, normal ve düşük bildirimleri önceliklendirmesine yardımcı olur."
+
+msgid "Proven civic reporting model"
+msgstr "Kanıtlanmış sivil bildirim modeli"
+
+msgid "Public adoption"
+msgstr "Kamusal benimseme"
+
+msgid "Public report link and update history"
+msgstr "Herkese açık bildirim bağlantısı ve güncelleme geçmişi"
+
+msgid "Public reports can be viewed on the map so residents and local teams can see what has already been reported."
+msgstr "Herkese açık bildirimler haritada görüntülenebilir, böylece sakinler ve yerel ekipler nelerin zaten bildirildiğini görebilir."
+
+msgid "Public visibility into reported issues."
+msgstr "Bildirilen sorunlarda kamusal görünürlük."
+
+msgid "Public visibility that can reduce duplicate reports and clarify status."
+msgstr "Yinelenen bildirimleri azaltabilen ve durumu netleştirebilen kamusal görünürlük."
+
+msgid "Public-sector civic reporting deployments and integrations."
+msgstr "Kamu sektörü sivil bildirim uygulamaları ve entegrasyonları."
+
+msgid "Public-sector proof points"
+msgstr "Kamu sektörü kanıt noktaları"
+
+msgid "Quote slides"
+msgstr "Alıntı slaytları"
+
+msgid "Read the case study"
+msgstr "Vaka çalışmasını okuyun"
+
+msgid "Ready to report an issue?"
+msgstr "Bir sorun bildirmeye hazır mısınız?"
+
+msgid "Receive"
+msgstr "Alma"
+
+msgid "Receive reports directly into a shared inbox for teams that manage requests via email today."
+msgstr "Bugün talepleri e-posta yoluyla yöneten ekipler için bildirimleri doğrudan paylaşılan bir gelen kutusuna alın."
+
+msgid "Recently Reported Problems"
+msgstr "Son Bildirilen Sorunlar"
+
+msgid "Reduced duplicate reports."
+msgstr "Yinelenen bildirimler azaldı."
+
+msgid "Report an Issue"
+msgstr "Sorun Bildir"
+
+msgid "Report infrastructure issues and get them fixed. Serving communities across all 51 US states."
+msgstr "Altyapı sorunlarını bildirin ve çözülmelerini sağlayın. ABD'nin 51 bölgesinin tamamında topluluklara hizmet veriyoruz."
+
+msgid "Report potholes, broken streetlights, sidewalk damage, drainage issues, trash overflow, graffiti, abandoned vehicles, and other infrastructure problems."
+msgstr "Çukurları, bozuk sokak lambalarını, kaldırım hasarlarını, drenaj sorunlarını, taşan çöpleri, grafitileri, terk edilmiş araçları ve diğer altyapı sorunlarını bildirin."
+
+msgid "Report, route, and track in four simple steps"
+msgstr "Dört basit adımda bildirin, yönlendirin ve takip edin"
+
+msgid "Reports are public, location-based, and easy to follow, helping residents and public teams work from the same information."
+msgstr "Bildirimler herkese açık, konum tabanlı ve takibi kolaydır; sakinlerin ve kamu ekiplerinin aynı bilgilerle çalışmasına yardımcı olur."
+
+msgid "Reports can be sent to responsible authorities by email or service integrations such as Open311 where configured."
+msgstr "Bildirimler, yapılandırıldığı yerlerde e-posta veya Open311 gibi hizmet entegrasyonları aracılığıyla sorumlu yetkililere gönderilebilir."
+
+msgid "Resident contact details where required"
+msgstr "Gerektiğinde sakin iletişim bilgileri"
+
+msgid "Resident experience"
+msgstr "Sakin deneyimi"
+
+msgid "Residents can follow updates, subscribe to alerts, and check report progress over time."
+msgstr "Sakinler güncellemeleri takip edebilir, uyarılara abone olabilir ve zaman içinde bildirim ilerlemesini kontrol edebilir."
+
+msgid "Respond"
+msgstr "Yanıtlama"
+
+msgid "Review"
+msgstr "İnceleme"
+
+msgid "Review by category, priority, location, and available contact context."
+msgstr "Kategoriye, önceliğe, konuma ve mevcut iletişim bağlamına göre inceleyin."
+
+msgid "Review repeated categories, locations, and response patterns over time."
+msgstr "Zaman içinde tekrarlanan kategorileri, konumları ve yanıt kalıplarını inceleyin."
+
+msgid "Route"
+msgstr "Yönlendirme"
+
+msgid "Route reports to the right service area or department based on the resident-selected category."
+msgstr "Sakinin seçtiği kategoriye göre bildirimleri doğru hizmet alanına veya departmana yönlendirin."
+
+msgid "Routed"
+msgstr "Yönlendirildi"
+
+msgid "Routing and setup options"
+msgstr "Yönlendirme ve kurulum seçenekleri"
+
+msgid "SOC 2-ready"
+msgstr "SOC 2'ye hazır"
+
+msgid "Scale"
+msgstr "Ölçek"
+
+msgid "See reports from other residents."
+msgstr "Diğer sakinlerin bildirimlerini görün."
+
+msgid "Selected category and report description"
+msgstr "Seçilen kategori ve bildirim açıklaması"
+
+msgid "Send issues to the right department, inbox, or integration channel."
+msgstr "Sorunları doğru departmana, gelen kutusuna veya entegrasyon kanalına gönderin."
+
+msgid "Service Coordinators & Intake Teams"
+msgstr "Hizmet Koordinatörleri ve Alım Ekipleri"
+
+msgid "Setup"
+msgstr "Kurulum"
+
+msgid "Setup options"
+msgstr "Kurulum seçenekleri"
+
+msgid "Short excerpts and published outcomes from real SocietyWorks case studies."
+msgstr "Gerçek SocietyWorks vaka çalışmalarından kısa alıntılar ve yayınlanmış sonuçlar."
+
+msgid "Short quote excerpts and published figures from publicly available SocietyWorks case studies, shown as reference points for the civic reporting model. These councils are not InfraSignal customers or endorsers."
+msgstr "Herkese açık SocietyWorks vaka çalışmalarından kısa alıntılar ve yayınlanmış rakamlar; sivil bildirim modeli için referans noktası olarak gösterilmiştir. Bu belediyeler InfraSignal müşterisi veya destekçisi değildir."
+
+msgid "Sidewalk"
+msgstr "Kaldırım"
+
+msgid "Smart routing"
+msgstr "Akıllı yönlendirme"
+
+msgid "Snap a photo and describe the issue. Our AI helps fill in the details."
+msgstr "Bir fotoğraf çekin ve sorunu açıklayın. Yapay zekamız ayrıntıları doldurmaya yardımcı olur."
+
+msgid "SocietyWorks"
+msgstr "SocietyWorks"
+
+msgid "Staff admin"
+msgstr "Personel yönetimi"
+
+msgid "Staff and admin access for reviewing reports, posting updates, and managing routing rules."
+msgstr "Bildirimleri incelemek, güncellemeler yayınlamak ve yönlendirme kurallarını yönetmek için personel ve yönetici erişimi."
+
+msgid "Staff/admin tools for reviewing reports and updates."
+msgstr "Bildirimleri ve güncellemeleri incelemek için personel/yönetici araçları."
+
+msgid "Standardized categories aligned with common public works operations."
+msgstr "Yaygın kamu hizmetleri operasyonlarıyla uyumlu standartlaştırılmış kategoriler."
+
+msgid "Start Reporting"
+msgstr "Bildirime Başla"
+
+msgid "Start with an address, add the details, and let InfraSignal help your report reach the right place."
+msgstr "Bir adresle başlayın, ayrıntıları ekleyin ve InfraSignal'in bildiriminizin doğru yere ulaşmasına yardımcı olmasına izin verin."
+
+msgid "States + D.C."
+msgstr "Eyaletler + D.C."
+
+msgid "Streetlight"
+msgstr "Sokak Lambası"
+
+msgid "Structured intake, routing, priority context, and integration details are now grouped on one page for public teams."
+msgstr "Yapılandırılmış alım, yönlendirme, öncelik bağlamı ve entegrasyon ayrıntıları artık kamu ekipleri için tek bir sayfada gruplanmıştır."
+
+msgid "Structured reports from residents with location, category, details, and photos."
+msgstr "Sakinlerden konum, kategori, ayrıntılar ve fotoğraflarla yapılandırılmış bildirimler."
+
+msgid "Structured reports with category, location, details, and photos."
+msgstr "Kategori, konum, ayrıntılar ve fotoğraflarla yapılandırılmış bildirimler."
+
+msgid "Structured reports, cleaner intake"
+msgstr "Yapılandırılmış bildirimler, daha temiz alım"
+
+msgid "Structured, geolocated reports with photos and resident contact context."
+msgstr "Fotoğraflar ve sakin iletişim bağlamıyla yapılandırılmış, coğrafi konumlu bildirimler."
+
+msgid "Subscribe to updates for reports near an address or area."
+msgstr "Bir adresin veya bölgenin yakınındaki bildirimler için güncellemelere abone olun."
+
+msgid "Sweden"
+msgstr "İsveç"
+
+msgid "Switzerland"
+msgstr "İsviçre"
+
+msgid "Terms & Conditions"
+msgstr "Kullanım Koşulları"
+
+msgid "The issue category helps determine which local department or service should receive the report."
+msgstr "Sorun kategorisi, bildirimin hangi yerel departman veya hizmete ulaşması gerektiğini belirlemeye yardımcı olur."
+
+msgid "The public reporting experience stays simple for residents, while agencies receive cleaner information for triage, routing, and response."
+msgstr "Kamu bildirim deneyimi sakinler için basit kalırken, kurumlar önceliklendirme, yönlendirme ve yanıt için daha temiz bilgi alır."
+
+msgid "The report becomes visible"
+msgstr "Bildirim görünür hale gelir"
+
+msgid "The report is sent"
+msgstr "Bildirim gönderilir"
+
+msgid "The report is sent to the responsible local team or agency."
+msgstr "Bildirim, sorumlu yerel ekibe veya kuruma gönderilir."
+
+msgid "These examples are included as reference points for the wider civic reporting model, not as InfraSignal customers or endorsements."
+msgstr "Bu örnekler, InfraSignal müşterileri veya onayları olarak değil, daha geniş sivil bildirim modeli için referans noktaları olarak dahil edilmiştir."
+
+msgid "This page is for public teams that receive, review, route, or respond to resident infrastructure reports."
+msgstr "Bu sayfa, sakin altyapı bildirimlerini alan, inceleyen, yönlendiren veya yanıtlayan kamu ekipleri içindir."
+
+msgid "Three simple steps to get infrastructure problems fixed."
+msgstr "Altyapı sorunlarının çözülmesi için üç basit adım."
+
+msgid "Track"
+msgstr "Takip"
+
+msgid "Track issues across your community"
+msgstr "Topluluğunuz genelinde sorunları takip edin"
+
+msgid "Track your own reports from your account."
+msgstr "Kendi bildirimlerinizi hesabınızdan takip edin."
+
+msgid "Traffic Signal"
+msgstr "Trafik Işığı"
+
+msgid "Transport for London uses smart routing so residents do not need to know which body owns each street asset."
+msgstr "Transport for London, sakinlerin her sokak varlığının hangi kuruma ait olduğunu bilmesine gerek kalmaması için akıllı yönlendirme kullanır."
+
+msgid "Transportation, Streets, Parks & Facilities"
+msgstr "Ulaşım, Sokaklar, Parklar ve Tesisler"
+
+msgid "Tree Hazard"
+msgstr "Ağaç Tehlikesi"
+
+msgid "Triage"
+msgstr "Önceliklendirme"
+
+msgid "United Kingdom"
+msgstr "Birleşik Krallık"
+
+msgid "Up to 98.69% savings per report."
+msgstr "Bildirim başına %98,69'a varan tasarruf."
+
+msgid "Updates keep people informed"
+msgstr "Güncellemeler insanları bilgilendirir"
+
+msgid "Uploaded photos where provided"
+msgstr "Sağlandığında yüklenen fotoğraflar"
+
+msgid "Useful for local authorities and service teams"
+msgstr "Yerel yönetimler ve hizmet ekipleri için yararlı"
+
+msgid "Vehicle / Parking"
+msgstr "Araç / Park"
+
+msgid "View All Reports"
+msgstr "Tüm Bildirimleri Görüntüle"
+
+msgid "View Reports"
+msgstr "Bildirimleri Görüntüle"
+
+msgid "View all reports"
+msgstr "Tüm bildirimleri görüntüle"
+
+msgid "View public reports"
+msgstr "Herkese açık bildirimleri görüntüle"
+
+msgid "View your reports, manage notification preferences, and follow updates from one place."
+msgstr "Bildirimlerinizi görüntüleyin, bildirim tercihlerinizi yönetin ve güncellemeleri tek bir yerden takip edin."
+
+msgid "Visit"
+msgstr "Ziyaret et"
+
+msgid "WCAG 2.1 AA"
+msgstr "WCAG 2.1 AA"
+
+msgid "Water Leak"
+msgstr "Su Sızıntısı"
+
+msgid "We detect your location and identify the exact address automatically."
+msgstr "Konumunuzu algılar ve tam adresi otomatik olarak belirleriz."
+
+msgid "What You Can Report"
+msgstr "Neleri Bildirebilirsiniz"
+
+msgid "What each report includes"
+msgstr "Her bildirimin içeriği"
+
+msgid "What happens after you submit a report?"
+msgstr "Bir bildirim gönderdikten sonra ne olur?"
+
+msgid "Who this is for"
+msgstr "Bu kimin için"
+
+msgid "Workflow"
+msgstr "İş akışı"
+
+msgid "Your Account"
+msgstr "Hesabınız"
+
+msgid "Your report is sent directly to the responsible local government."
+msgstr "Bildiriminiz doğrudan sorumlu yerel yönetime gönderilir."
+
