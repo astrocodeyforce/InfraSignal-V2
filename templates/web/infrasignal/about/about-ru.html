@@ -1,0 +1,130 @@
+[% INCLUDE 'header.html',
+    title = loc('About InfraSignal'),
+    bodyclass = 'infopage'
+%]
+
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'Об InfraSignal'
+    public_page_subtitle = 'Помогаем жителям улучшать свои районы — по одному обращению за раз.'
+%]
+
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
+
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'about'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
+
+      [%# Main Content %]
+      <div class="contact-main">
+
+        [%# What We Do — Feature Cards %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">Что мы делаем</h2>
+          <p>По всей территории Соединённых Штатов проблемы инфраструктуры — ямы на дорогах, неисправные уличные фонари, повреждённые тротуары и незаконный сброс мусора — остаются незамеченными, потому что жители не знают, куда обращаться. InfraSignal решает это с помощью единой и удобной платформы.</p>
+
+          <div class="about-what-we-do">
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📍</div>
+              <h3>Определите место</h3>
+              <p>Отметьте проблему на карте</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📨</div>
+              <h3>Направление</h3>
+              <p>Автоматически направляем в нужную администрацию</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🔔</div>
+              <h3>Отслеживание</h3>
+              <p>Получайте обновления статуса по эл. почте</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🗺️</div>
+              <h3>Карта</h3>
+              <p>Публичная видимость для сообщества</p>
+            </div>
+          </div>
+        </div>
+
+        [%# Coverage Stats Grid %]
+        <div class="about-stats" style="margin-bottom: 1.5rem">
+          <div class="about-stats__item">
+            <span class="about-stats__number">51</span>
+            <span class="about-stats__label">Штат</span>
+            <span class="about-stats__detail">Все 50 + округ Колумбия</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">3 000+</span>
+            <span class="about-stats__label">Округа</span>
+            <span class="about-stats__detail">Окружные администрации</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">25 000+</span>
+            <span class="about-stats__label">Города</span>
+            <span class="about-stats__detail">Городские администрации</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">13</span>
+            <span class="about-stats__label">Категорий</span>
+            <span class="about-stats__detail">Стандартизированных типов</span>
+          </div>
+        </div>
+
+        [%# How It Works — Teaser %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">Как это работает</h2>
+          <p>Обращения проходят понятный жизненный цикл: житель указывает место и детали, InfraSignal помогает направить обращение, и каждый может следить за публичными обновлениями.</p>
+          <div class="about-contact">
+            <a href="/how-it-works" class="about-contact__link--primary">
+              Посмотреть весь процесс &rarr;
+            </a>
+          </div>
+        </div>
+
+        [%# For Local Authorities — Summary Card %]
+        <div class="about-benefits-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0; font-size: 1.125rem; font-weight: 600">Для местных властей</h2>
+          <p style="font-size: 0.875rem; color: #6b7280">InfraSignal предоставляет государственным органам стандартизированный канал для получения структурированных обращений с геопривязкой от жителей. Подробности об операциях, интеграции и партнёрстве теперь на странице для местных властей.</p>
+          <div class="about-contact">
+            <a href="/about/for-local-government" class="about-contact__link--outline">
+              Для местных властей
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              Форма обратной связи &rarr;
+            </a>
+          </div>
+        </div>
+
+        [%# Contact CTA %]
+        <div class="info-page-card" style="text-align: center">
+          <h2 style="margin-top: 0">Контакты</h2>
+          <p>Вопросы, предложения или запросы о сотрудничестве?</p>
+          <div class="about-contact">
+            <a href="mailto:[% c.cobrand.contact_email %]" class="about-contact__link--outline">
+              ✉ [% c.cobrand.contact_email %]
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              Форма обратной связи →
+            </a>
+          </div>
+        </div>
+
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

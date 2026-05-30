@@ -1,6 +1,22 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Restore translations on the redesigned info pages):
+        - Follow-up to the consolidation below: making about/faq/privacy/terms
+          generic gave every language the NEW UI but English TEXT (the custom
+          marketing/legal strings aren't in the .po catalogs, so loc() fell back
+          to English). Users reported the lost translations.
+        - Fix: recreated the per-language files in the NEW layout WITH translated
+          copy — `about-{ru,tr,es}.html`, `faq-{ru,tr,es}.html`,
+          `privacy-{ru,tr,es}.html`, `terms-{ru,tr,es}.html` (12 files). Each
+          reuses the redesigned structure (hero, sidebar, cards, accordions,
+          CTA) and the recovered human legal translations from git history.
+        - Result: new branded UI + full translations for ru/tr/es; English keeps
+          the generic loc()-based templates. The About controller picks the
+          `-<lang>.html` variant automatically.
+        - Verified on dev (:3001): translated headings present, ZERO English
+          markers, no template errors, for all 4 pages × ru/tr/es. Mirrored to
+          the staging tree.
     - InfraSignal — May 29, 2026 (Fix: non-English About pages showed the old UI):
         - The About controller resolves `about/<page>-<lang>.html` before the
           generic template. The May-24 redesign only updated the English/
