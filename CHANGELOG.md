@@ -1,6 +1,18 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 29, 2026 (Fix: non-English About pages showed the old UI):
+        - The About controller resolves `about/<page>-<lang>.html` before the
+          generic template. The May-24 redesign only updated the English/
+          generic templates, so `tr/es/ru` kept getting served stale Apr-9
+          per-language files with the OLD layout.
+        - Fix: made `about` + `faq` generic (`about-en-gb.html` → `about.html`,
+          `faq-en-gb.html` → `faq.html`) and removed the stale per-language
+          files for about/faq/privacy/terms (tr/es/ru). All languages now use
+          the redesigned, loc()-based templates (English copy where strings
+          aren't translated in the .po files yet).
+        - Applied to dev + staging trees. Verified new-UI markers render for
+          en-gb/tr/es/ru on /about, /about/faq, /about/privacy, /about/terms.
     - InfraSignal — May 29, 2026 (Expose staging on a public demo link):
         - Changed `docker/docker-compose-staging.yml` nginx port binding from
           `127.0.0.1:8080` to `0.0.0.0:8080` so staging is reachable like dev.
