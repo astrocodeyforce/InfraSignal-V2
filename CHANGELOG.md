@@ -1,6 +1,24 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 30, 2026 (Translate full Privacy Policy & Terms of Use legal text):
+        - Previously only ~3 chrome strings per page were loc()-wrapped; the entire
+          legal body of /about/privacy and /about/terms was hardcoded English, so
+          those pages stayed English in ru/tr/es.
+        - Fix: wrapped every legal string (section titles, accordion summaries,
+          paragraphs, list items) in templates/web/infrasignal/about/{privacy,terms}.html
+          with loc(); used tprintf(loc('...%s...'), ...) for the two strings that embed
+          a dynamic link (site URL, DMCA contact email) so the link stays out of the
+          translatable msgid. Static internal links (/contact, /about/terms,
+          /about/privacy) are kept inside the msgid like the FAQ strings.
+        - Added 171 new msgids x 3 languages (ru/tr/es) to the git-tracked .po catalogs
+          covering the complete Privacy Policy (10 sections) and Terms of Use (17
+          sections). .mo recompiled.
+        - Verified on dev + staging (Accept-Language tr/ru/es): both pages render fully
+          translated with no English body leftovers. Templates + .po/.mo mirrored to
+          staging.
+        - Durability: all strings are loc()-wrapped and committed to the catalogs, so
+          gettext re-extraction preserves them (same mechanism that kept how-it-works).
     - InfraSignal — May 30, 2026 (Restore lost translations on About / FAQ / Alerts pages):
         - Symptom: in ru/tr/es the About, FAQ and Local Alerts pages rendered in
           English again (card descriptions, FAQ Q&A, alert page body), even though
