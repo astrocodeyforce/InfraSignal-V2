@@ -438,6 +438,8 @@ sub cities_by_county : Path("cities_by_county") : Args(0) {
 
     # Use MapIt covers API to find O07/O08 areas within this county
     my $mapit_url = $c->config->{MAPIT_URL} || 'https://global.mapit.mysociety.org/';
+    $mapit_url = 'https://global.mapit.mysociety.org/'
+        if $mapit_url =~ m{(?:localhost|127\.0\.0\.1).*fakemapit}i;
     $mapit_url =~ s{/$}{};
 
     my @all_child_area_ids;
@@ -451,7 +453,7 @@ sub cities_by_county : Path("cities_by_county") : Args(0) {
         next unless $content;
         my $data = eval { JSON::MaybeXS::decode_json($content) };
         next unless $data && ref $data eq 'HASH';
-        push @all_child_area_ids, keys %$data;
+        push @all_child_area_ids, grep { /^\d+$/ } keys %$data;
     }
 
     # Find bodies matching those area_ids
