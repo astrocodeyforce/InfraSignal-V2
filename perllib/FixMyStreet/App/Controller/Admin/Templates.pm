@@ -19,6 +19,11 @@ Admin pages for response templates
 sub index : Path : Args(0) {
     my ( $self, $c ) = @_;
 
+    # InfraSignal's custom response-template picker uses the bodies_by_state
+    # JSON endpoint, so superusers do not need all bodies rendered into the
+    # initial page.
+    return 1 if $c->cobrand->moniker eq 'infrasignal' && $c->user->is_superuser;
+
     $c->forward('/admin/body_specific_page', [
         '/admin/fetch_all_bodies',
         '/admin/templates/view'

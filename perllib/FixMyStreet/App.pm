@@ -292,6 +292,23 @@ sub setup_dev_overrides {
 
     # Extract all the _override_xxx parameters
     my %params = %{ $c->req->parameters };
+
+    # InfraSignal's public language switcher uses ?lang=xx. On dev/staging the
+    # app persists language through the override session, so accept lang as the
+    # user-facing alias for _override_lang. Use query params only so form fields
+    # on admin POSTs cannot accidentally change the UI language.
+    my %query_params = %{ $c->req->query_parameters };
+    if ( my $lang = $query_params{lang} ) {
+        $lang = $lang->[0] if ref $lang eq 'ARRAY';
+        $lang = 'en-gb' if $lang eq 'en';
+
+        my %valid_lang = map { (split /,/, $_, 2)[0] => 1 }
+            @{ FixMyStreet->config('LANGUAGES') || [] };
+        $valid_lang{'en-gb'} = 1;
+
+        $params{_override_lang} = $lang if $valid_lang{$lang};
+    }
+
     delete $params{$_} for grep { !m{^_override_} } keys %params;
 
     # stop if there is nothing to add

@@ -106,6 +106,12 @@
 
     var curLang = document.documentElement.lang || 'en-gb';
 
+    function languageUrl(code) {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', code);
+      return url.pathname + url.search + url.hash;
+    }
+
     var portal = document.createElement('ul');
     portal.className = 'lang-dd__portal';
     portal.style.cssText =
@@ -119,7 +125,7 @@
       if (l.code === curLang) li.className = 'lang-dd--sel';
 
       var a = document.createElement('a');
-      a.href = '?lang=' + l.code;
+      a.href = languageUrl(l.code);
       a.style.cssText =
         'display:flex;align-items:center;gap:8px;padding:7px 14px;color:#333;' +
         'text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;transition:background-color 0.1s';

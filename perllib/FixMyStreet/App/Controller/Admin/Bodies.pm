@@ -39,6 +39,11 @@ sub index : Path : Args(0) {
         return $c->res->redirect( $c->uri_for_action('admin/bodies/edit', [ $c->user->from_body->id ] ) );
     }
 
+    # InfraSignal's custom admin/bodies page loads bodies on demand by state via
+    # JSON endpoints. Loading all 28k+ bodies here makes every admin navigation
+    # response huge, especially with the dev debug toolbar enabled.
+    return 1 if $c->cobrand->moniker eq 'infrasignal';
+
     my $edit_activity = $c->model('DB::ContactsHistory')->search(
         undef,
         {

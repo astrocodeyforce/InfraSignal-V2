@@ -1,6 +1,34 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 31, 2026 (Admin language switching and navigation performance):
+        - Fixed language switching on dev/staging admin pages where URLs such as
+          `?lang=en-gb` could still render Turkish because the staging override
+          session only persisted `_override_lang`. `setup_dev_overrides` now accepts
+          the public `lang` query parameter as a validated alias for `_override_lang`
+          (query params only, so admin form fields cannot accidentally change the UI
+          language). Header, mobile, footer, and legacy nav language links now
+          preserve the current URL/query/hash while changing `lang`.
+        - Reduced perceived language-switch reload cost by increasing dev static asset
+          cache lifetime for fingerprinted CSS/JS/images from 5 minutes to 4 weeks
+          with `Cache-Control: public, immutable`.
+        - Fixed slow admin navigation for the InfraSignal admin picker pages. Bodies,
+          Response Templates, Response Priorities, Site Message, and Users were
+          loading all 28k+ bodies into the initial page even though the custom
+          InfraSignal UI loads bodies on demand via `/admin/bodies/bodies_by_state`.
+          These landing pages now skip the all-body fetch for the `infrasignal`
+          cobrand and keep the AJAX state/county/city picker behavior.
+        - Measured authenticated dev page sizes after the fix: `/admin/bodies`
+          ~65KB, `/admin/templates` ~67KB, `/admin/users` ~83KB; previously Bodies
+          and Templates were multi-megabyte responses (up to ~14MB observed) and
+          Users was ~8.1MB.
+        - Mirrored runtime changes to staging and restarted dev/staging.
+    - InfraSignal — May 31, 2026 (Complete remaining admin page translation wrappers):
+        - Kept the prior admin i18n work durable by wrapping the remaining visible
+          hardcoded admin strings in `loc()` across Manifest Theme, Config, Bodies,
+          Response Priorities, and Site Message pages.
+        - Added explicit Manifest Theme form labels for fields that were previously
+          auto-humanized, giving stable gettext msgids for ru/tr/es translations.
     - InfraSignal — May 30, 2026 (Translate full Privacy Policy & Terms of Use legal text):
         - Previously only ~3 chrome strings per page were loc()-wrapped; the entire
           legal body of /about/privacy and /about/terms was hardcoded English, so

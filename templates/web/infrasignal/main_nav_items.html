@@ -59,6 +59,11 @@
       {code:'tr',flag:'/cobrands/infrasignal/flags/tr.svg',label:'TR'}
     ];
     var curLang='[% lang_code %]'||'en-gb';
+    function languageUrl(code) {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', code);
+      return url.pathname + url.search + url.hash;
+    }
     var portal=document.createElement('ul');
     portal.className='lang-dd__portal';
     portal.style.cssText='display:none;position:fixed;margin:0;padding:4px 0;background:#fff;border:1px solid rgba(0,0,0,0.12);border-radius:5px;box-shadow:0 4px 12px rgba(0,0,0,0.15);list-style:none;z-index:99999;min-width:90px;list-style-type:none';
@@ -67,7 +72,7 @@
       li.style.cssText='margin:0;padding:0;list-style:none;list-style-type:none;display:block';
       if(l.code===curLang) li.className='lang-dd--sel';
       var a=document.createElement('a');
-      a.href='?lang='+l.code;
+      a.href=languageUrl(l.code);
       a.style.cssText='display:flex;align-items:center;gap:8px;padding:7px 14px;color:#333;text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;transition:background-color 0.1s';
       a.innerHTML='<img src="'+l.flag+'" style="width:18px;height:18px;border-radius:50%;object-fit:cover;border:1px solid rgba(0,0,0,0.12)" alt="">'+l.label;
       a.onmouseenter=function(){a.style.backgroundColor='#f0f4ff'};

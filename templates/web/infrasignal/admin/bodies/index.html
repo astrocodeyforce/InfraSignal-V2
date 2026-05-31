@@ -69,7 +69,14 @@
     counties:    "[% loc('Counties') | replace('"', '\\"') %]",
     citiesTowns: "[% loc('Cities / Towns') | replace('"', '\\"') %]",
     allCitiesInCounty: "[% loc('-- All cities in county --') | replace('"', '\\"') %]",
-    noBodiesFor: "[% loc('No bodies found for %s.') | replace('"', '\\"') %]"
+    noBodiesFor: "[% loc('No bodies found for %s.') | replace('"', '\\"') %]",
+    bodiesIn:    "[% loc('%s bodies in %s') | replace('"', '\\"') %]",
+    countiesCount: "[% loc('%s counties') | replace('"', '\\"') %]",
+    citiesCount: "[% loc('%s cities/towns') | replace('"', '\\"') %]",
+    citiesInCounty: "[% loc('%s cities/towns in %s') | replace('"', '\\"') %]",
+    countyFallback: "[% loc('county') | replace('"', '\\"') %]",
+    errBodies:   "[% loc('Error loading bodies.') | replace('"', '\\"') %]",
+    errCities:   "[% loc('Error loading cities') | replace('"', '\\"') %]"
   };
   var US_STATES = [
     {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
@@ -208,7 +215,7 @@
           else stateData.allCities.push(b);
         });
 
-        document.getElementById('state_info').textContent = data.count + ' bodies in ' + state;
+        document.getElementById('state_info').textContent = T.bodiesIn.replace('%s', data.count).replace('%s', state);
 
         // Populate county dropdown
         if (stateData.counties.length) {
@@ -219,7 +226,7 @@
             o.textContent = b.name;
             countySel.appendChild(o);
           });
-          document.getElementById('county_info').textContent = stateData.counties.length + ' counties';
+          document.getElementById('county_info').textContent = T.countiesCount.replace('%s', stateData.counties.length);
         }
 
         // Populate city dropdown with all cities
@@ -231,7 +238,7 @@
             o.textContent = b.name;
             citySel.appendChild(o);
           });
-          document.getElementById('city_info').textContent = stateData.allCities.length + ' cities/towns';
+          document.getElementById('city_info').textContent = T.citiesCount.replace('%s', stateData.allCities.length);
         }
 
         // Render full table
@@ -240,7 +247,7 @@
       .catch(function() {
         document.getElementById('state_loading').style.display = 'none';
         placeholder.style.display = '';
-        placeholder.textContent = 'Error loading bodies.';
+        placeholder.textContent = T.errBodies;
       });
   });
 
@@ -260,7 +267,7 @@
           o.textContent = b.name;
           citySel.appendChild(o);
         });
-        document.getElementById('city_info').textContent = stateData.allCities.length + ' cities/towns';
+        document.getElementById('city_info').textContent = T.citiesCount.replace('%s', stateData.allCities.length);
       }
       // Show all in table
       renderTable(stateData.stateBody, stateData.counties, stateData.allCities);
@@ -285,7 +292,7 @@
           citySel.appendChild(o);
         });
 
-        document.getElementById('city_info').textContent = filteredCities.length + ' cities/towns in ' + (data.county_name || 'county');
+        document.getElementById('city_info').textContent = T.citiesInCounty.replace('%s', filteredCities.length).replace('%s', (data.county_name || T.countyFallback));
 
         // Find the selected county object
         var selectedCounty = stateData.counties.filter(function(c) { return c.id == countyId; });
@@ -293,7 +300,7 @@
       })
       .catch(function() {
         document.getElementById('county_loading').style.display = 'none';
-        document.getElementById('city_info').textContent = 'Error loading cities';
+        document.getElementById('city_info').textContent = T.errCities;
       });
   });
 

@@ -76,7 +76,7 @@ sub index :Path : Args(0) {
         }
     } else {
         $c->forward('/auth/get_csrf_token');
-        $c->forward('/admin/fetch_all_bodies');
+        $c->forward('/admin/fetch_all_bodies') unless $c->cobrand->moniker eq 'infrasignal';
         $c->cobrand->call_hook('admin_user_edit_extra_data');
 
         # Admin users by default
@@ -115,7 +115,7 @@ sub add : Local : Args(0) {
 
     $c->stash->{template} = 'admin/users/edit.html';
     $c->forward('/auth/get_csrf_token');
-    $c->forward('/admin/fetch_all_bodies');
+    $c->forward('/admin/fetch_all_bodies') unless $c->cobrand->moniker eq 'infrasignal';
     $c->cobrand->call_hook('admin_user_edit_extra_data');
 
     return unless $c->get_param('submit');
@@ -242,7 +242,7 @@ sub edit : Chained('user') : PathPart('') : Args(0) {
         $c->stash->{available_permissions} = $c->cobrand->available_permissions;
     }
 
-    $c->forward('/admin/fetch_all_bodies');
+    $c->forward('/admin/fetch_all_bodies') unless $c->cobrand->moniker eq 'infrasignal';
     $c->forward('/admin/fetch_body_areas', [ $user->from_body ]) if $user->from_body;
     $c->forward('fetch_body_roles', [ $user->from_body ]) if $user->from_body;
     $c->cobrand->call_hook('admin_user_edit_extra_data');
