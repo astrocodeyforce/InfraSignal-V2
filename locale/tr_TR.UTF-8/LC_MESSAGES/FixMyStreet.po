@@ -2806,8 +2806,8 @@ msgid ""
 "It's often quickest to <a href=\"%s\">check our FAQs</a> and see if the "
 "answer is there."
 msgstr ""
-" FAQs'ı kontrol et</a> bu çözüme ulaşmak için <a href=\"%s\">en hızlı "
-"yoldur."
+"Genellikle en hızlısı <a href=\"%s\">sık sorulan sorularımıza bakmak</a> ve "
+"cevabın orada olup olmadığını görmektir."
 
 #: templates/web/base/tokens/confirm_problem.html:34
 msgid "It’s on its way to the council right now."
@@ -9030,7 +9030,7 @@ msgstr ""
 "kategoriler."
 
 msgid "Start Reporting"
-msgstr "Bildirime Başla"
+msgstr "Bildir"
 
 msgid ""
 "Start with an address, add the details, and let InfraSignal help your report"
@@ -9176,7 +9176,7 @@ msgid "View All Reports"
 msgstr "Tüm Bildirimleri Görüntüle"
 
 msgid "View Reports"
-msgstr "Bildirimleri Görüntüle"
+msgstr "Bildirimler"
 
 msgid "View all reports"
 msgstr "Tüm bildirimleri görüntüle"
@@ -11418,6 +11418,393 @@ msgstr ""
 "birlikte, Hizmeti kullanımınızla ilgili sizinle InfraSignal arasındaki tüm "
 "sözleşmeyi oluşturur ve önceki tüm sözleşmelerin ve mutabakatların yerine "
 "geçer."
+
+#. InfraSignal custom UI string
+msgid "Something went wrong"
+msgstr "Bir şeyler ters gitti"
+
+#. InfraSignal custom UI string
+msgid "Quick check"
+msgstr "Hızlı kontrol"
+
+#. InfraSignal custom UI string
+msgid "CAPTCHA verification failed"
+msgstr "CAPTCHA doğrulaması başarısız oldu"
+
+#. InfraSignal custom UI string
+msgid "The CAPTCHA check did not complete. Please try the form again."
+msgstr "CAPTCHA kontrolü tamamlanmadı. Lütfen formu tekrar deneyin."
+
+#. InfraSignal custom UI string
+msgid "Please complete the CAPTCHA verification"
+msgstr "Lütfen CAPTCHA doğrulamasını tamamlayın"
+
+#. InfraSignal custom UI string
+msgid "Complete the CAPTCHA check to continue with your alert subscription."
+msgstr "Uyarı aboneliğinize devam etmek için CAPTCHA kontrolünü tamamlayın."
+
+#. InfraSignal custom UI string
+msgid "Access blocked"
+msgstr "Erişim engellendi"
+
+#. InfraSignal custom UI string
+msgid "You do not have permission to view this"
+msgstr "Bunu görüntüleme izniniz yok"
+
+#. InfraSignal custom UI string
+msgid "Page not found"
+msgstr "Sayfa bulunamadı"
+
+#. InfraSignal custom UI string
+msgid "We cannot find that page"
+msgstr "Bu sayfayı bulamıyoruz"
+
+#. InfraSignal custom UI string
+msgid "Return home"
+msgstr "Ana sayfaya dön"
+
+#. InfraSignal custom UI string
+msgid "Our server hit a snag"
+msgstr "Sunucumuzda bir sorun oluştu"
+
+#. InfraSignal custom UI string
+msgid "This is on our side, not yours. Please try again in a moment."
+msgstr ""
+"Bu sizin değil, bizim tarafımızdaki bir sorun. Lütfen birazdan tekrar "
+"deneyin."
+
+#. InfraSignal custom UI string
+msgid "Help and info"
+msgstr "Yardım ve bilgi"
+
+#. InfraSignal custom UI string
+msgid "Contact us"
+msgstr "Bize ulaşın"
+
+#. InfraSignal custom UI string
+msgid "Still stuck?"
+msgstr "Hâlâ takıldınız mı?"
+
+#. InfraSignal custom UI string
+msgid "Our team replies within one business day."
+msgstr "Ekibimiz bir iş günü içinde yanıt verir."
+
+#. InfraSignal custom UI string
+msgid "Verification required"
+msgstr "Doğrulama gerekli"
+
+#. InfraSignal custom UI string
+msgid ""
+"Return to the alert form, complete the CAPTCHA check, and submit again."
+msgstr ""
+"Uyarı formuna dönün, CAPTCHA kontrolünü tamamlayın ve tekrar gönderin."
+
+#. InfraSignal custom UI string
+msgid "Go back"
+msgstr "Geri dön"
+
+#. InfraSignal custom UI string
+msgid "Read the FAQ"
+msgstr "SSS'yi okuyun"
+
+#. InfraSignal custom UI string
+msgid "Contact support"
+msgstr "Destek ile iletişime geçin"
+
+#. InfraSignal custom UI string
+msgid "Reference code"
+msgstr "Referans kodu"
+
+#. InfraSignal custom UI string
+msgid "Copy"
+msgstr "Kopyala"
+
+#. InfraSignal custom UI string
+msgid "Copied"
+msgstr "Kopyalandı"
+
+#. InfraSignal custom UI string
+msgid "Copy reference code"
+msgstr "Referans kodunu kopyala"
+
+#. InfraSignal custom UI string
+msgid ""
+"As this is a staging site and %s is false, reports made on this site will be"
+" sent to the problem reporter, not the contact given for the report's "
+"category."
+msgstr ""
+"Bu bir hazırlık (staging) sitesi olduğundan ve %s değeri false olduğundan, "
+"bu sitede yapılan bildirimler, bildirimin kategorisi için verilen iletişim "
+"adresine değil, bildirimi yapan kişiye gönderilecektir."
+
+#. InfraSignal custom UI string
+msgid "Signed out"
+msgstr "Çıkış yapıldı"
+
+#. InfraSignal custom UI string
+msgid "Session ended"
+msgstr "Oturum sona erdi"
+
+#. InfraSignal custom UI string
+msgid "Please feel free to"
+msgstr "Dilerseniz"
+
+#. InfraSignal custom UI string
+msgid "sign in again"
+msgstr "tekrar giriş yapın"
+
+#. InfraSignal custom UI string
+msgid "or go back to the"
+msgstr "ya da geri dönün:"
+
+#. InfraSignal custom UI string
+msgid "front page"
+msgstr "ana sayfa"
+
+#. InfraSignal custom UI string
+msgid "Sign in again"
+msgstr "Tekrar giriş yap"
+
+#. InfraSignal custom UI string
+msgid "Back to home"
+msgstr "Ana sayfaya dön"
+
+#. InfraSignal custom UI string
+msgid "Change name"
+msgstr "Adı değiştir"
+
+#. InfraSignal custom UI string
+msgid "Add name"
+msgstr "Ad ekle"
+
+#. InfraSignal custom UI string
+msgid "Back to account"
+msgstr "Hesaba dön"
+
+#. InfraSignal custom UI string
+msgid "Profile"
+msgstr "Profil"
+
+#. InfraSignal custom UI string
+msgid "Choose the name shown on your account and reports."
+msgstr "Hesabınızda ve bildirimlerinizde görünen adı seçin."
+
+#. InfraSignal custom UI string
+msgid "Please enter a shorter name"
+msgstr "Lütfen daha kısa bir ad girin"
+
+#. InfraSignal custom UI string
+msgid "Welcome back"
+msgstr "Tekrar hoş geldiniz"
+
+#. InfraSignal custom UI string
+msgid "Save your reports, updates, and alert settings in one secure place."
+msgstr ""
+"Bildirimlerinizi, güncellemelerinizi ve uyarı ayarlarınızı tek bir güvenli "
+"yerde saklayın."
+
+#. InfraSignal custom UI string
+msgid "End-to-end encrypted reports"
+msgstr "Uçtan uca şifreli bildirimler"
+
+#. InfraSignal custom UI string
+msgid "Real-time municipal SLA tracking"
+msgstr "Gerçek zamanlı belediye SLA takibi"
+
+#. InfraSignal custom UI string
+msgid "Verified citizen-government channel"
+msgstr "Doğrulanmış vatandaş-devlet kanalı"
+
+#. InfraSignal custom UI string
+msgid "GovCloud-grade security"
+msgstr "GovCloud düzeyinde güvenlik"
+
+#. InfraSignal custom UI string
+msgid "SOC 2 aligned"
+msgstr "SOC 2 uyumlu"
+
+#. InfraSignal custom UI string
+msgid "Account options"
+msgstr "Hesap seçenekleri"
+
+#. InfraSignal custom UI string
+msgid "Create account"
+msgstr "Hesap oluştur"
+
+#. InfraSignal custom UI string
+msgid "Back to sign in"
+msgstr "Girişe dön"
+
+#. InfraSignal custom UI string
+msgid "Account recovery"
+msgstr "Hesap kurtarma"
+
+#. InfraSignal custom UI string
+msgid "Password update"
+msgstr "Parola güncelleme"
+
+#. InfraSignal custom UI string
+msgid "Get started"
+msgstr "Başlayın"
+
+#. InfraSignal custom UI string
+msgid ""
+"Enter your email and choose a new password. We will send you a secure sign-"
+"in link to confirm the change."
+msgstr ""
+"E-posta adresinizi girin ve yeni bir parola seçin. Değişikliği onaylamak "
+"için size güvenli bir giriş bağlantısı göndereceğiz."
+
+#. InfraSignal custom UI string
+msgid ""
+"Choose a new password, then confirm it with the secure link we email to you."
+msgstr ""
+"Yeni bir parola seçin, ardından size e-posta ile gönderdiğimiz güvenli "
+"bağlantı ile onaylayın."
+
+#. InfraSignal custom UI string
+msgid "Already have an account?"
+msgstr "Zaten bir hesabınız var mı?"
+
+#. InfraSignal custom UI string
+msgid "New password"
+msgstr "Yeni parola"
+
+#. InfraSignal custom UI string
+msgid "%d+ characters"
+msgstr "%d+ karakter"
+
+#. InfraSignal custom UI string
+msgid "Show password"
+msgstr "Parolayı göster"
+
+#. InfraSignal custom UI string
+msgid "Hide password"
+msgstr "Parolayı gizle"
+
+#. InfraSignal custom UI string
+msgid ""
+"Sign in to manage your reports, follow updates, and stay connected with your"
+" municipality."
+msgstr ""
+"Bildirimlerinizi yönetmek, güncellemeleri takip etmek ve belediyenizle "
+"bağlantıda kalmak için giriş yapın."
+
+#. InfraSignal custom UI string
+msgid "Sign in to InfraSignal"
+msgstr "InfraSignal'e giriş yapın"
+
+#. InfraSignal custom UI string
+msgid "New here?"
+msgstr "Yeni misiniz?"
+
+#. InfraSignal custom UI string
+msgid "Continue with Facebook"
+msgstr "Facebook ile devam et"
+
+#. InfraSignal custom UI string
+msgid "Continue with %s"
+msgstr "%s ile devam et"
+
+#. InfraSignal custom UI string
+msgid "Continue with Twitter"
+msgstr "Twitter ile devam et"
+
+#. InfraSignal custom UI string
+msgid "or continue with email"
+msgstr "ya da e-posta ile devam edin"
+
+#. InfraSignal custom UI string
+msgid "New to InfraSignal?"
+msgstr "InfraSignal'de yeni misiniz?"
+
+#. InfraSignal custom UI string
+msgid "Password"
+msgstr "Parola"
+
+#. InfraSignal custom UI string
+msgid "Forgot password?"
+msgstr "Parolanızı mı unuttunuz?"
+
+#. InfraSignal custom UI string
+msgid "Email me a magic sign-in link"
+msgstr "Bana e-posta ile sihirli giriş bağlantısı gönder"
+
+#. InfraSignal custom UI string
+msgid ""
+"Have you ever reported a problem to a local authority before, or is this "
+"your first time?"
+msgstr ""
+"Daha önce yerel bir yönetime hiç sorun bildirdiniz mi, yoksa bu ilk kez mi?"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you wish to leave a public update on the problem, please enter it here\n"
+"(please note it will not be sent to the local authority)."
+msgstr ""
+"Sorunla ilgili herkese açık bir güncelleme bırakmak isterseniz, lütfen buraya girin\n"
+"(lütfen bunun yerel yönetime gönderilmeyeceğini unutmayın)."
+
+#. InfraSignal custom UI string
+msgid ""
+"Thanks, glad to hear it's been fixed! Could we just ask if you have ever "
+"reported a problem to a local authority before?"
+msgstr ""
+"Teşekkürler, sorunun çözüldüğünü duymak güzel! Daha önce yerel bir yönetime "
+"hiç sorun bildirip bildirmediğinizi sorabilir miyiz?"
+
+#. InfraSignal custom UI string
+msgid ""
+"Pick the closest match below to view its reports, or try a different search."
+msgstr ""
+"Bildirimlerini görüntülemek için aşağıdan en yakın eşleşmeyi seçin ya da "
+"farklı bir arama deneyin."
+
+#. InfraSignal custom UI string
+msgid ""
+"e.g. '1600 Pennsylvania Ave, Washington DC' or 'Times Square, New York'"
+msgstr ""
+"örn. '1600 Pennsylvania Ave, Washington DC' veya 'Times Square, New York'"
+
+#. InfraSignal custom UI string
+msgid "Ref:&nbsp;%s"
+msgstr "Referans:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "InfraSignal ref:&nbsp;%s"
+msgstr "InfraSignal referansı:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "Responsible Authority:"
+msgstr "Sorumlu yönetim:"
+
+#. InfraSignal custom UI string
+msgid "(not sent to local authority)"
+msgstr "(yerel yönetime gönderilmedi)"
+
+#. InfraSignal custom UI string
+msgid "Not reported to local authority"
+msgstr "Yerel yönetime bildirilmedi"
+
+#. InfraSignal custom UI string
+msgid "the local authority"
+msgstr "yerel yönetim"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you let us know your email address, we'll notify you when this problem is"
+" updated or fixed."
+msgstr ""
+"E-posta adresinizi bize bildirirseniz, bu sorun güncellendiğinde veya "
+"çözüldüğünde sizi bilgilendiririz."
+
+#. InfraSignal custom UI string
+msgid "It's on its way to the local authority right now."
+msgstr "Şu anda yerel yönetime iletiliyor."
+
+#. InfraSignal custom UI string
+msgid "I just reported a problem on @InfraSignal"
+msgstr "@InfraSignal üzerinden az önce bir sorun bildirdim"
 
 #~ msgid "%s admin:"
 #~ msgstr "%s yönetici:"

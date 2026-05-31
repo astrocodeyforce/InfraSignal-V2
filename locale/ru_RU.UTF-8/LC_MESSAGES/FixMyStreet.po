@@ -2797,8 +2797,8 @@ msgid ""
 "It's often quickest to <a href=\"%s\">check our FAQs</a> and see if the "
 "answer is there."
 msgstr ""
-"Загляните в раздел <a href=\"%s\">Часто задаваемые вопросы</a>: возможно, вы"
-" найдете там нужную информацию."
+"Часто быстрее всего <a href=\"%s\">посмотреть наши частые вопросы</a> и "
+"проверить, есть ли там ответ."
 
 #: templates/web/base/tokens/confirm_problem.html:34
 msgid "It’s on its way to the council right now."
@@ -8582,7 +8582,7 @@ msgstr ""
 "Следите за обновлениями статуса по мере рассмотрения и решения проблемы."
 
 msgid "For Government"
-msgstr "Для государственных органов"
+msgstr "Для властей"
 
 msgid "For Local Authorities"
 msgstr "Для местных властей"
@@ -9051,7 +9051,7 @@ msgstr ""
 "коммунальных служб."
 
 msgid "Start Reporting"
-msgstr "Начать обращение"
+msgstr "Сообщить"
 
 msgid ""
 "Start with an address, add the details, and let InfraSignal help your report"
@@ -9196,7 +9196,7 @@ msgid "View All Reports"
 msgstr "Смотреть все отчёты"
 
 msgid "View Reports"
-msgstr "Смотреть отчёты"
+msgstr "Отчёты"
 
 msgid "View all reports"
 msgstr "Смотреть все отчёты"
@@ -11477,6 +11477,396 @@ msgstr ""
 "конфиденциальности</a> составляют полное соглашение между вами и InfraSignal"
 " в отношении использования вами Сервиса и заменяют все предыдущие соглашения"
 " и договорённости."
+
+#. InfraSignal custom UI string
+msgid "Something went wrong"
+msgstr "Что-то пошло не так"
+
+#. InfraSignal custom UI string
+msgid "Quick check"
+msgstr "Быстрая проверка"
+
+#. InfraSignal custom UI string
+msgid "CAPTCHA verification failed"
+msgstr "Проверка CAPTCHA не пройдена"
+
+#. InfraSignal custom UI string
+msgid "The CAPTCHA check did not complete. Please try the form again."
+msgstr ""
+"Проверка CAPTCHA не была завершена. Пожалуйста, попробуйте заполнить форму "
+"ещё раз."
+
+#. InfraSignal custom UI string
+msgid "Please complete the CAPTCHA verification"
+msgstr "Пожалуйста, пройдите проверку CAPTCHA"
+
+#. InfraSignal custom UI string
+msgid "Complete the CAPTCHA check to continue with your alert subscription."
+msgstr "Пройдите проверку CAPTCHA, чтобы продолжить подписку на оповещения."
+
+#. InfraSignal custom UI string
+msgid "Access blocked"
+msgstr "Доступ заблокирован"
+
+#. InfraSignal custom UI string
+msgid "You do not have permission to view this"
+msgstr "У вас нет прав для просмотра этой страницы"
+
+#. InfraSignal custom UI string
+msgid "Page not found"
+msgstr "Страница не найдена"
+
+#. InfraSignal custom UI string
+msgid "We cannot find that page"
+msgstr "Мы не можем найти эту страницу"
+
+#. InfraSignal custom UI string
+msgid "Return home"
+msgstr "Вернуться на главную"
+
+#. InfraSignal custom UI string
+msgid "Our server hit a snag"
+msgstr "На нашем сервере произошёл сбой"
+
+#. InfraSignal custom UI string
+msgid "This is on our side, not yours. Please try again in a moment."
+msgstr ""
+"Это проблема на нашей стороне, а не на вашей. Пожалуйста, повторите попытку "
+"через мгновение."
+
+#. InfraSignal custom UI string
+msgid "Help and info"
+msgstr "Помощь и информация"
+
+#. InfraSignal custom UI string
+msgid "Contact us"
+msgstr "Свяжитесь с нами"
+
+#. InfraSignal custom UI string
+msgid "Still stuck?"
+msgstr "Всё ещё нужна помощь?"
+
+#. InfraSignal custom UI string
+msgid "Our team replies within one business day."
+msgstr "Наша команда отвечает в течение одного рабочего дня."
+
+#. InfraSignal custom UI string
+msgid "Verification required"
+msgstr "Требуется проверка"
+
+#. InfraSignal custom UI string
+msgid ""
+"Return to the alert form, complete the CAPTCHA check, and submit again."
+msgstr ""
+"Вернитесь к форме оповещений, пройдите проверку CAPTCHA и отправьте снова."
+
+#. InfraSignal custom UI string
+msgid "Go back"
+msgstr "Назад"
+
+#. InfraSignal custom UI string
+msgid "Read the FAQ"
+msgstr "Читать частые вопросы"
+
+#. InfraSignal custom UI string
+msgid "Contact support"
+msgstr "Связаться со службой поддержки"
+
+#. InfraSignal custom UI string
+msgid "Reference code"
+msgstr "Код обращения"
+
+#. InfraSignal custom UI string
+msgid "Copy"
+msgstr "Копировать"
+
+#. InfraSignal custom UI string
+msgid "Copied"
+msgstr "Скопировано"
+
+#. InfraSignal custom UI string
+msgid "Copy reference code"
+msgstr "Скопировать код обращения"
+
+#. InfraSignal custom UI string
+msgid ""
+"As this is a staging site and %s is false, reports made on this site will be"
+" sent to the problem reporter, not the contact given for the report's "
+"category."
+msgstr ""
+"Поскольку это тестовый сайт и параметр %s имеет значение false, обращения, "
+"созданные на этом сайте, будут отправлены автору обращения, а не контакту, "
+"указанному для категории обращения."
+
+#. InfraSignal custom UI string
+msgid "Signed out"
+msgstr "Вы вышли из системы"
+
+#. InfraSignal custom UI string
+msgid "Session ended"
+msgstr "Сеанс завершён"
+
+#. InfraSignal custom UI string
+msgid "Please feel free to"
+msgstr "При желании вы можете"
+
+#. InfraSignal custom UI string
+msgid "sign in again"
+msgstr "войти снова"
+
+#. InfraSignal custom UI string
+msgid "or go back to the"
+msgstr "или вернуться на"
+
+#. InfraSignal custom UI string
+msgid "front page"
+msgstr "главную страницу"
+
+#. InfraSignal custom UI string
+msgid "Sign in again"
+msgstr "Войти снова"
+
+#. InfraSignal custom UI string
+msgid "Back to home"
+msgstr "На главную"
+
+#. InfraSignal custom UI string
+msgid "Change name"
+msgstr "Изменить имя"
+
+#. InfraSignal custom UI string
+msgid "Add name"
+msgstr "Добавить имя"
+
+#. InfraSignal custom UI string
+msgid "Back to account"
+msgstr "Назад к аккаунту"
+
+#. InfraSignal custom UI string
+msgid "Profile"
+msgstr "Профиль"
+
+#. InfraSignal custom UI string
+msgid "Choose the name shown on your account and reports."
+msgstr "Выберите имя, отображаемое в вашем аккаунте и обращениях."
+
+#. InfraSignal custom UI string
+msgid "Please enter a shorter name"
+msgstr "Пожалуйста, введите более короткое имя"
+
+#. InfraSignal custom UI string
+msgid "Welcome back"
+msgstr "С возвращением"
+
+#. InfraSignal custom UI string
+msgid "Save your reports, updates, and alert settings in one secure place."
+msgstr ""
+"Храните ваши обращения, обновления и настройки оповещений в одном защищённом"
+" месте."
+
+#. InfraSignal custom UI string
+msgid "End-to-end encrypted reports"
+msgstr "Сквозное шифрование обращений"
+
+#. InfraSignal custom UI string
+msgid "Real-time municipal SLA tracking"
+msgstr "Отслеживание SLA муниципалитета в реальном времени"
+
+#. InfraSignal custom UI string
+msgid "Verified citizen-government channel"
+msgstr "Проверенный канал связи между гражданами и государством"
+
+#. InfraSignal custom UI string
+msgid "GovCloud-grade security"
+msgstr "Безопасность уровня GovCloud"
+
+#. InfraSignal custom UI string
+msgid "SOC 2 aligned"
+msgstr "Соответствие SOC 2"
+
+#. InfraSignal custom UI string
+msgid "Account options"
+msgstr "Параметры аккаунта"
+
+#. InfraSignal custom UI string
+msgid "Create account"
+msgstr "Создать аккаунт"
+
+#. InfraSignal custom UI string
+msgid "Back to sign in"
+msgstr "Назад ко входу"
+
+#. InfraSignal custom UI string
+msgid "Account recovery"
+msgstr "Восстановление аккаунта"
+
+#. InfraSignal custom UI string
+msgid "Password update"
+msgstr "Обновление пароля"
+
+#. InfraSignal custom UI string
+msgid "Get started"
+msgstr "Начать"
+
+#. InfraSignal custom UI string
+msgid ""
+"Enter your email and choose a new password. We will send you a secure sign-"
+"in link to confirm the change."
+msgstr ""
+"Введите ваш адрес электронной почты и выберите новый пароль. Мы отправим вам"
+" защищённую ссылку для входа, чтобы подтвердить изменение."
+
+#. InfraSignal custom UI string
+msgid ""
+"Choose a new password, then confirm it with the secure link we email to you."
+msgstr ""
+"Выберите новый пароль, затем подтвердите его по защищённой ссылке, которую "
+"мы отправим вам по электронной почте."
+
+#. InfraSignal custom UI string
+msgid "Already have an account?"
+msgstr "Уже есть аккаунт?"
+
+#. InfraSignal custom UI string
+msgid "New password"
+msgstr "Новый пароль"
+
+#. InfraSignal custom UI string
+msgid "%d+ characters"
+msgstr "%d+ символов"
+
+#. InfraSignal custom UI string
+msgid "Show password"
+msgstr "Показать пароль"
+
+#. InfraSignal custom UI string
+msgid "Hide password"
+msgstr "Скрыть пароль"
+
+#. InfraSignal custom UI string
+msgid ""
+"Sign in to manage your reports, follow updates, and stay connected with your"
+" municipality."
+msgstr ""
+"Войдите, чтобы управлять своими обращениями, следить за обновлениями и "
+"оставаться на связи с вашим муниципалитетом."
+
+#. InfraSignal custom UI string
+msgid "Sign in to InfraSignal"
+msgstr "Вход в InfraSignal"
+
+#. InfraSignal custom UI string
+msgid "New here?"
+msgstr "Впервые здесь?"
+
+#. InfraSignal custom UI string
+msgid "Continue with Facebook"
+msgstr "Продолжить через Facebook"
+
+#. InfraSignal custom UI string
+msgid "Continue with %s"
+msgstr "Продолжить через %s"
+
+#. InfraSignal custom UI string
+msgid "Continue with Twitter"
+msgstr "Продолжить через Twitter"
+
+#. InfraSignal custom UI string
+msgid "or continue with email"
+msgstr "или продолжить с помощью электронной почты"
+
+#. InfraSignal custom UI string
+msgid "New to InfraSignal?"
+msgstr "Впервые в InfraSignal?"
+
+#. InfraSignal custom UI string
+msgid "Password"
+msgstr "Пароль"
+
+#. InfraSignal custom UI string
+msgid "Forgot password?"
+msgstr "Забыли пароль?"
+
+#. InfraSignal custom UI string
+msgid "Email me a magic sign-in link"
+msgstr "Отправьте мне ссылку для входа по электронной почте"
+
+#. InfraSignal custom UI string
+msgid ""
+"Have you ever reported a problem to a local authority before, or is this "
+"your first time?"
+msgstr ""
+"Сообщали ли вы когда-либо о проблеме в местные органы власти ранее, или это "
+"ваш первый раз?"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you wish to leave a public update on the problem, please enter it here\n"
+"(please note it will not be sent to the local authority)."
+msgstr ""
+"Если вы хотите оставить публичное обновление по проблеме, пожалуйста, введите его здесь\n"
+"(обратите внимание, что оно не будет отправлено в местные органы власти)."
+
+#. InfraSignal custom UI string
+msgid ""
+"Thanks, glad to hear it's been fixed! Could we just ask if you have ever "
+"reported a problem to a local authority before?"
+msgstr ""
+"Спасибо, рады слышать, что проблема решена! Можем ли мы спросить, сообщали "
+"ли вы когда-либо о проблеме в местные органы власти ранее?"
+
+#. InfraSignal custom UI string
+msgid ""
+"Pick the closest match below to view its reports, or try a different search."
+msgstr ""
+"Выберите наиболее подходящий вариант ниже, чтобы просмотреть его обращения, "
+"или попробуйте другой запрос."
+
+#. InfraSignal custom UI string
+msgid ""
+"e.g. '1600 Pennsylvania Ave, Washington DC' or 'Times Square, New York'"
+msgstr ""
+"напр. «1600 Pennsylvania Ave, Washington DC» или «Times Square, New York»"
+
+#. InfraSignal custom UI string
+msgid "Ref:&nbsp;%s"
+msgstr "Номер:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "InfraSignal ref:&nbsp;%s"
+msgstr "Номер InfraSignal:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "Responsible Authority:"
+msgstr "Ответственный орган:"
+
+#. InfraSignal custom UI string
+msgid "(not sent to local authority)"
+msgstr "(не отправлено в местные органы власти)"
+
+#. InfraSignal custom UI string
+msgid "Not reported to local authority"
+msgstr "Не отправлено в местные органы власти"
+
+#. InfraSignal custom UI string
+msgid "the local authority"
+msgstr "местные органы власти"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you let us know your email address, we'll notify you when this problem is"
+" updated or fixed."
+msgstr ""
+"Если вы сообщите нам свой адрес электронной почты, мы уведомим вас, когда "
+"эта проблема будет обновлена или решена."
+
+#. InfraSignal custom UI string
+msgid "It's on its way to the local authority right now."
+msgstr "Прямо сейчас оно отправляется в местные органы власти."
+
+#. InfraSignal custom UI string
+msgid "I just reported a problem on @InfraSignal"
+msgstr "Я только что сообщил о проблеме на @InfraSignal"
 
 #~ msgid "%s admin:"
 #~ msgstr "Администратор сайта %s:"
