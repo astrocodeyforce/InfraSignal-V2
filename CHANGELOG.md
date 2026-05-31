@@ -1,6 +1,111 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — May 31, 2026 (Footer/mobile language switch now loads):
+        - Symptom: clicking a language in the footer ("English / Español / Русский /
+          Türkçe") did not load the page, while the header nav switcher worked.
+        - Cause: footer (and mobile-menu) language links used
+          `c.uri_with({ lang => ... })`, which returns an ABSOLUTE URL built from the
+          configured BASE_URL (no `:3001` port) — so it navigated to
+          `REDACTED-IP/?lang=es` on port 80 where nothing serves. The header desktop
+          switcher worked because it builds a relative URL in JS from
+          `window.location` (preserving the port).
+        - Fix: append `.path_query` to those links in
+          `templates/web/infrasignal/front/footer-marketing.html` and the mobile menu
+          in `templates/web/infrasignal/header_site.html`, so they render relative
+          (`/?lang=es`, preserving existing query params) and the browser keeps the
+          current host/port. Verified rendered hrefs are now `/?lang=<code>`.
+        - Follow-up ("looks like still same"): a page tab loaded BEFORE the template
+          fix still held the old absolute hrefs baked into its HTML, so footer clicks
+          kept failing even though the server was correct (the nav switcher kept
+          working because it builds the URL live in JS at click-time). To make this
+          robust regardless of cached HTML, `web/cobrands/infrasignal/header-nav.js`
+          now rewrites every footer/mobile language link (`.site-footer__lang-link`,
+          `.mobile-menu__langs a`) from `window.location` on load — identical to the
+          desktop switcher — so they can never point at a stale or BASE_URL-derived
+          host/port. Verified the live homepage serves the new `header-nav.js` (fresh
+          content hash) containing the rewrite logic.
+    - InfraSignal — May 31, 2026 (Hero search button no longer clips in ru/es/tr):
+        - Symptom: on the homepage hero the orange action button clipped its label in
+          longer languages — "Сообщить о проблеме" → "Сообщить о пробл", "Reportar un
+          Problema" → "Reportar un Proble".
+        - Cause: the pill is a flex row with `overflow: hidden`; the text input had
+          `min-width: 17rem` and the submit button is `flex: none`, so when the
+          translated label was longer the input refused to shrink and the button
+          overflowed the pill and got clipped.
+        - Fix: changed the hero input to `min-width: 0` in
+          `web/cobrands/infrasignal/base.scss` so it yields space to the button; the
+          button (flex:none, white-space:nowrap) now always shows its full label and
+          the input flex-grows to fill the rest. Rebuilt `base.css`.
+    - InfraSignal — May 31, 2026 (Full translation-leak audit + fix: 87 strings):
+        - Built a reusable audit (`bin/i18n-audit.py`) that extracts every
+          `loc()`/`_()` string used by the InfraSignal custom templates (1,002
+          distinct) and cross-checks each ru/tr/es catalog for MISSING / EMPTY /
+          FUZZY / English-leak entries.
+        - Finding: 87 `loc()`-wrapped strings were absent from all three catalogs
+          (so they rendered English in every language) — concentrated in the error/
+          CAPTCHA page (`errors/generic.html`), the sign-in/register/sign-out/
+          change-name auth pages, report-display partials, the questionnaire, the
+          contact blurb, search-error/postcode hints, and the admin staging warning.
+          0 empty and 0 fuzzy — it was all-or-nothing per string.
+        - Fix: translated all 87 into ru/tr/es and added them to the git-tracked
+          catalogs via `bin/i18n-fill-missing.py` (86 new + 1 updated per language),
+          recompiled `.mo`, restarted the dev app. Re-audit now reports
+          MISSING=0/EMPTY=0/FUZZY=0 for all three languages.
+        - Verified live on dev: 404/error page, /auth sign-in, and /contact render
+          fully translated in ru/tr/es.
+        - Remaining "leak" hits are intentional proper nouns/placeholders (MapIt,
+          JSON, WCAG 2.1 AA, Open311 v2, SocietyWorks, your@email.com) and are left
+          untranslated by design.
+        - Note: About/FAQ/Privacy/Terms/Security use dedicated per-language template
+          files and were already translated; they are out of scope for this catalog
+          audit.
+    - InfraSignal — May 31, 2026 (Marketing top-nav stays on one row across languages):
+        - Symptom: the public header (logo · nav · action buttons) reflowed and even
+          clipped "Admin" in some languages because each language renders the same
+          nav labels at different widths. Russian "For Government" =
+          "Для государственных органов" is ~2x the English width, pushing the
+          right-side buttons off-screen.
+        - Fix has two parts:
+          1. Responsive CSS safety net in `web/cobrands/infrasignal/base.scss`:
+             `.header-actions` now `flex-shrink: 0` so the Start Reporting / Admin
+             buttons can never be clipped; `.header-nav` is the flexible zone
+             (`flex: 0 1 auto; min-width: 0`) and its gap, link padding, and
+             font-size compress via `clamp()` between the 1160px desktop breakpoint
+             and wider screens. Below 1160px the existing hamburger menu still takes
+             over, so phones/tablets are unaffected. (Note: `clamp()` mixed-unit math
+             must be wrapped in `calc()` — `calc(0.55vw + 7px)` — because the bundled
+             libsass aborts on `0.55vw + 7px`.)
+          2. Shortened the longest nav labels to near-English width (these msgids are
+             shared only with the vertical footer list, where the shorter synonyms
+             also read naturally; page titles/sidebar use different msgids and are
+             unchanged):
+             - ru: "For Government" Для государственных органов → Для властей;
+               "View Reports" Смотреть отчёты → Отчёты;
+               "Start Reporting" Начать обращение → Сообщить.
+             - es: "About Us" Acerca de Nosotros → Nosotros;
+               "Start Reporting" Comenzar a Reportar → Reportar.
+             - tr: "View Reports" Bildirimleri Görüntüle → Bildirimler;
+               "Start Reporting" Bildirime Başla → Bildir.
+        - "Contact Us" intentionally left as the natural full phrase in every
+          language; the CSS net handles its width.
+        - Rebuilt `web/cobrands/infrasignal/base.css`, recompiled ru/tr/es `.mo`,
+          restarted the dev app. Verified labels render shortened on dev for
+          en/ru/tr/es.
+    - InfraSignal — May 31, 2026 (Admin body edit form visibility):
+        - Fixed the admin body edit form layout where fields such as Parent, Area
+          covered, Cobrand, External URL, and Send Method appeared cramped or
+          partially hidden in the InfraSignal admin shell.
+        - Added scoped `body.admin .content > form` and `body.admin .admin-box > form`
+          styling so legacy base admin forms render as a full-width card with
+          readable labels and controls. The body edit form lives inside
+          `.admin-box`, so the first attempt (direct `.content > form` only) missed
+          it and the native Parent/Cobrand/Send Method selects stayed narrow with
+          vertically clipped text; the selector now covers the nested form and
+          gives selects an explicit `min-height`/`line-height` so option text is
+          no longer cut off. Report pages and public forms are unaffected.
+        - Rebuilt `web/cobrands/infrasignal/base.css` from `base.scss` inside the
+          dev app container.
     - InfraSignal — May 31, 2026 (Admin language switching and navigation performance):
         - Fixed language switching on dev/staging admin pages where URLs such as
           `?lang=en-gb` could still render Turkish because the staging override

@@ -35,10 +35,10 @@
             <div class="site-footer__lang-switch" aria-label="[% loc('Language') %]">
                 <span class="site-footer__lang-label">[% loc('Language') %]</span>
                 <div class="site-footer__lang-list">
-                    <a href="[% c.uri_with({ lang => 'en-gb' }) %]" class="site-footer__lang-link[% IF lang_code == 'en-gb' OR !lang_code %] is-active[% END %]" lang="en" hreflang="en">English</a>
-                    <a href="[% c.uri_with({ lang => 'es' }) %]" class="site-footer__lang-link[% IF lang_code == 'es' %] is-active[% END %]" lang="es" hreflang="es">Espa&ntilde;ol</a>
-                    <a href="[% c.uri_with({ lang => 'ru' }) %]" class="site-footer__lang-link[% IF lang_code == 'ru' %] is-active[% END %]" lang="ru" hreflang="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</a>
-                    <a href="[% c.uri_with({ lang => 'tr' }) %]" class="site-footer__lang-link[% IF lang_code == 'tr' %] is-active[% END %]" lang="tr" hreflang="tr">T&uuml;rk&ccedil;e</a>
+                    <a href="[% c.uri_with({ lang => 'en-gb' }).path_query %]" class="site-footer__lang-link[% IF lang_code == 'en-gb' OR !lang_code %] is-active[% END %]" lang="en" hreflang="en">English</a>
+                    <a href="[% c.uri_with({ lang => 'es' }).path_query %]" class="site-footer__lang-link[% IF lang_code == 'es' %] is-active[% END %]" lang="es" hreflang="es">Espa&ntilde;ol</a>
+                    <a href="[% c.uri_with({ lang => 'ru' }).path_query %]" class="site-footer__lang-link[% IF lang_code == 'ru' %] is-active[% END %]" lang="ru" hreflang="ru">&#1056;&#1091;&#1089;&#1089;&#1082;&#1080;&#1081;</a>
+                    <a href="[% c.uri_with({ lang => 'tr' }).path_query %]" class="site-footer__lang-link[% IF lang_code == 'tr' %] is-active[% END %]" lang="tr" hreflang="tr">T&uuml;rk&ccedil;e</a>
                 </div>
             </div>
         </div>

@@ -168,6 +168,26 @@
     });
   }
 
+  /* ── Footer & mobile language links — rewrite to live origin ──
+   * The footer/mobile-menu language links are server-rendered. To guarantee they
+   * always target the current host:port (and never a stale or BASE_URL-derived
+   * absolute URL), rewrite their hrefs from window.location at runtime, exactly
+   * like the desktop language switcher above. */
+  (function () {
+    function langUrlFor(code) {
+      var url = new URL(window.location.href);
+      url.searchParams.set('lang', code);
+      return url.pathname + url.search + url.hash;
+    }
+    var sel = '.site-footer__lang-link, .mobile-menu__langs a';
+    document.querySelectorAll(sel).forEach(function (a) {
+      var href = a.getAttribute('href') || '';
+      var m = href.match(/[?&]lang=([^&#]+)/);
+      if (!m) return;
+      a.setAttribute('href', langUrlFor(decodeURIComponent(m[1])));
+    });
+  })();
+
   /* ── Mobile Tab Bar — active state ── */
   var tabBar = document.querySelector('.mobile-tab-bar');
   if (tabBar) {

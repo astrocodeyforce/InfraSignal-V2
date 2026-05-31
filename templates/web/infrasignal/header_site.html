@@ -81,13 +81,13 @@
       [% END %]
       [%# Language links for mobile %]
       <div class="mobile-menu__langs">
-        <a href="[% c.uri_with({ lang => 'en-gb' }) %]" [% IF lang_code == 'en-gb' OR !lang_code %]class="is-active"[% END %]>
+        <a href="[% c.uri_with({ lang => 'en-gb' }).path_query %]" [% IF lang_code == 'en-gb' OR !lang_code %]class="is-active"[% END %]>
           <img src="/cobrands/infrasignal/flags/en.svg" alt=""> EN</a>
-        <a href="[% c.uri_with({ lang => 'es' }) %]" [% IF lang_code == 'es' %]class="is-active"[% END %]>
+        <a href="[% c.uri_with({ lang => 'es' }).path_query %]" [% IF lang_code == 'es' %]class="is-active"[% END %]>
           <img src="/cobrands/infrasignal/flags/es.svg" alt=""> ES</a>
-        <a href="[% c.uri_with({ lang => 'ru' }) %]" [% IF lang_code == 'ru' %]class="is-active"[% END %]>
+        <a href="[% c.uri_with({ lang => 'ru' }).path_query %]" [% IF lang_code == 'ru' %]class="is-active"[% END %]>
           <img src="/cobrands/infrasignal/flags/ru.svg" alt=""> RU</a>
-        <a href="[% c.uri_with({ lang => 'tr' }) %]" [% IF lang_code == 'tr' %]class="is-active"[% END %]>
+        <a href="[% c.uri_with({ lang => 'tr' }).path_query %]" [% IF lang_code == 'tr' %]class="is-active"[% END %]>
           <img src="/cobrands/infrasignal/flags/tr.svg" alt=""> TR</a>
       </div>
     </div>
