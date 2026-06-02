@@ -1,6 +1,16 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 2, 2026 (Deploy compiles translations automatically):
+        - Problem: `bin/deploy` pulled `.po` translation sources from git but never
+          rebuilt gitignored `.mo` binaries, so production could ship stale Russian,
+          Turkish, or Spanish strings until someone copied `.mo` files by hand.
+        - Fix: added `bin/make_msg` to compile `es`, `ru_RU`, and `tr_TR` catalogs via
+          `msgfmt`, and wired it into `bin/deploy` (full, migrate, and rollback paths)
+          before `bin/make_css` and container restart. Deploy also removes legacy
+          `about-en-gb.html` / `faq-en-gb.html` overrides if they reappear on disk.
+        - Prevention: every production deploy from a clean `git pull` now refreshes
+          translations the same way CSS is rebuilt; no manual `.mo` copy step.
     - InfraSignal — Jun 1, 2026 (Report photo lightbox close button anchored):
         - Symptom: when a user clicked a report photo, the lightbox opened correctly
           but the `x` close button floated away from the photo instead of staying on
