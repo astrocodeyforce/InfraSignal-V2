@@ -1,6 +1,72 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 1, 2026 (Report photo lightbox close button anchored):
+        - Symptom: when a user clicked a report photo, the lightbox opened correctly
+          but the `x` close button floated away from the photo instead of staying on
+          the top-right corner of the image.
+        - Cause: `.rpt-photo-lightbox__frame` used flex centering with a fixed
+          `max-width`, so the absolute-positioned close button was anchored to the
+          wider frame, not the actual rendered image.
+        - Fix: make the lightbox frame shrink-wrap the image (`display: inline-block`,
+          `width: auto`, `max-width: calc(100vw - 48px)`) and position the close
+          button inside the frame at `top: 8px; right: 8px`. Because the frame now
+          tracks the image dimensions, the close button remains at the image's
+          top-right corner regardless of photo size.
+    - InfraSignal — Jun 1, 2026 (Report update photo uploader consistent on dev/staging):
+        - Symptom: on the report detail update form, staging showed the intended
+          drag-and-drop photo uploader ("Drag photos here or choose photos"), while
+          dev sometimes showed the raw browser file inputs ("Choose File") for the
+          same report/language.
+        - Cause: the report detail page loads/updates the sidebar asynchronously.
+          The core FixMyStreet Dropzone initializer normally hides `#form_photos` and
+          inserts the styled `.dropzone`, but if that initializer misses the sidebar
+          during a language/page transition the raw fallback inputs remain visible.
+        - Fix: `web/cobrands/infrasignal/filter-pills.js` now calls the platform
+          `fixmystreet.set_up.dropzone()` setup for `#side-report` if raw photo fields
+          are present without a `.dropzone`, then applies the InfraSignal dropzone
+          text/icon styling. This keeps dev and staging visually aligned and preserves
+          the standard upload behavior.
+        - Prevention: `bin/staging-acceptance.py` and
+          `docs/STAGING-TEST-CHECKLIST.md` now include checks for the report update
+          photo uploader so raw browser `Choose File` inputs are caught before
+          production.
+    - InfraSignal — May 31, 2026 (Report detail data consistent across languages):
+        - Symptom: report detail pages showed different information by language. In
+          English `/report/524` showed ref `524`, authority `Buffalo Grove, IL`,
+          `RESOLVED`, a complete timeline, and an official response; in Spanish the
+          same report showed `N/A` for ref/authority, `AWAITING REVIEW`, pending
+          timeline steps, and `Unknown` for the update author.
+        - Cause: `web/cobrands/infrasignal/filter-pills.js` rebuilt the modern report
+          sidebar by parsing visible English text such as `Fixed`, `Responsible
+          Authority`, and `Posted by`. Once those words were translated, the parser
+          could not identify the same data and fell back to defaults.
+        - Fix: report templates now expose language-independent `data-*` attributes
+          for problem state, category, ref number, authority, and update timestamp.
+          `filter-pills.js` reads those attributes and banner classes first, using
+          text parsing only as a fallback. The same report data now renders in every
+          language; only labels/content are translated.
+        - Prevention: do not use translated display text as program logic. Any future
+          report-detail enhancement must read stable machine values (`data-*`,
+          classes, IDs, or API fields), not localized words.
+          `bin/staging-acceptance.py` now checks `/report/524` in English, Spanish,
+          and Turkish for the same stable report state/ref/update timestamp.
+    - InfraSignal — May 31, 2026 (Staging hero "Report a problem" search fixed):
+        - Symptom: on staging (`http://REDACTED-IP:8080`), entering an address and
+          clicking "Reportar un Problema" opened
+          `https://staging.infrasignal.org/around?...` and failed with
+          `DNS_PROBE_FINISHED_NXDOMAIN` (domain does not exist in DNS).
+        - Cause: `conf/general.yml-staging.runtime` had
+          `BASE_URL: https://staging.infrasignal.org`, and the homepage hero form used
+          `c.uri_for('/around')`, which emits absolute URLs from BASE_URL. Users reach
+          staging by IP:8080, not that hostname.
+        - Fix: set staging `BASE_URL` to `http://REDACTED-IP:8080`; hero postcode form
+          and photo upload use relative `action="/around"` and `action="/photo/upload"`;
+          geolocation link uses `.path_query`; `header-nav.js` rewrites any remaining
+          absolute form actions/geolocate href to the current origin on load.
+        - Prevention: document in `docs/STAGING-TEST-CHECKLIST.md`; when staging is
+          accessed by IP, BASE_URL must match that host:port OR forms must use relative
+          paths (same pattern as footer language links).
     - InfraSignal — May 31, 2026 (Footer/mobile language switch now loads):
         - Symptom: clicking a language in the footer ("English / Español / Русский /
           Türkçe") did not load the page, while the header nav switcher worked.

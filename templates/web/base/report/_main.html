@@ -9,7 +9,9 @@ can_moderate_title = c.user.can_moderate_title(problem, can_moderate)
 
 <div class="problem-header clearfix
     [%~ ' show-moderation' IF show_moderation == 'report' ~%]
-    " data-lastupdate="[% problem.lastupdate %]">
+    " data-lastupdate="[% problem.lastupdate %]"
+       data-problem-state="[% problem.state | html %]"
+       data-report-category="[% problem.category_display | html %]">
 
 [% IF permissions.planned_reports %]
 <form method="post" action="/my/planned/change" id="planned_form" class="hidden-label-target">

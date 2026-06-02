@@ -168,6 +168,36 @@
     });
   }
 
+  /* ── Hero/reporting forms — keep actions on current host:port ──
+   * postcode search and geolocation links are server-rendered from BASE_URL;
+   * rewrite any absolute action/href to the current origin (same as language switcher). */
+  (function () {
+    function toRelativeUrl(href) {
+      if (!href || href.charAt(0) === '/' || href.indexOf('javascript:') === 0) {
+        return href;
+      }
+      try {
+        var parsed = new URL(href, window.location.href);
+        if (parsed.origin !== window.location.origin) {
+          return parsed.pathname + parsed.search + parsed.hash;
+        }
+      } catch (e) { /* keep original */ }
+      return href;
+    }
+    document.querySelectorAll(
+      '#postcodeForm, #photoForm, form.postcode-form-box, form.js-geolocate[action]'
+    ).forEach(function (form) {
+      var action = form.getAttribute('action');
+      if (action) {
+        form.setAttribute('action', toRelativeUrl(action));
+      }
+    });
+    var geo = document.getElementById('geolocate_link');
+    if (geo && geo.getAttribute('href')) {
+      geo.setAttribute('href', toRelativeUrl(geo.getAttribute('href')));
+    }
+  })();
+
   /* ── Footer & mobile language links — rewrite to live origin ──
    * The footer/mobile-menu language links are server-rendered. To guarantee they
    * always target the current host:port (and never a stale or BASE_URL-derived

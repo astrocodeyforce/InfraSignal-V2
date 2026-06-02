@@ -301,11 +301,12 @@
         var existingBanner = sideReport.querySelector('.banner');
         if (existingBanner && !existingBanner.querySelector('.rpt-status-badge')) {
             var bText = existingBanner.textContent.trim().toLowerCase();
+            var bannerClass = existingBanner.className || '';
             var eBadge = 'AWAITING REVIEW';
-            if (bText.indexOf('fixed') !== -1) eBadge = 'RESOLVED';
-            else if (bText.indexOf('investigating') !== -1) eBadge = 'UNDER REVIEW';
+            if (bannerClass.indexOf('banner--fixed') !== -1 || bText.indexOf('fixed') !== -1) eBadge = 'RESOLVED';
+            else if (bannerClass.indexOf('banner--progress') !== -1 || bText.indexOf('investigating') !== -1) eBadge = 'UNDER REVIEW';
             else if (bText.indexOf('in progress') !== -1) eBadge = 'IN PROGRESS';
-            else if (bText.indexOf('closed') !== -1) eBadge = 'CLOSED';
+            else if (bannerClass.indexOf('banner--closed') !== -1 || bText.indexOf('closed') !== -1) eBadge = 'CLOSED';
             var badgeEl = document.createElement('span');
             badgeEl.className = 'rpt-status-badge';
             badgeEl.textContent = eBadge;
@@ -332,7 +333,14 @@
         // --- 5. Inject category badge after h1 (inside header content wrapper) ---
         if (h1 && !problemHeader.querySelector('.rpt-cat-badge')) {
             var metaInfo = problemHeader.querySelector('.report_meta_info');
-            if (metaInfo) {
+            if (problemHeader.getAttribute('data-report-category')) {
+                var catBadge = document.createElement('span');
+                catBadge.className = 'rpt-cat-badge';
+                catBadge.textContent = problemHeader.getAttribute('data-report-category');
+                if (h1.parentNode) {
+                    h1.parentNode.appendChild(catBadge);
+                }
+            } else if (metaInfo) {
                 var metaText = metaInfo.textContent || '';
                 var catMatch = metaText.match(/in the (.+?) category/);
                 if (catMatch) {
@@ -436,12 +444,20 @@
             var refNum = '';
             var authority = '';
             for (var r = 0; r < refEl.length; r++) {
+                if (!refNum && refEl[r].getAttribute('data-ref-number')) {
+                    refNum = refEl[r].getAttribute('data-ref-number');
+                }
+                if (!authority && refEl[r].getAttribute('data-authority') && !/^\d+$/.test(refEl[r].getAttribute('data-authority'))) {
+                    authority = refEl[r].getAttribute('data-authority');
+                }
                 var rText = refEl[r].textContent.trim();
                 if (rText.indexOf('ref:') !== -1 || rText.indexOf('Ref:') !== -1) {
                     var rMatch = rText.match(/ref:\s*(\S+)/i);
                     if (rMatch) refNum = rMatch[1].replace(/\.$/, '');
                 } else if (rText.indexOf('Authority') !== -1 || rText.indexOf('Responsible') !== -1) {
                     authority = rText.replace(/Responsible Authority:\s*/i, '').replace(/\s+/g, ' ').trim();
+                } else if (!authority && rText.indexOf(':') !== -1 && rText.toLowerCase().indexOf('ref') === -1) {
+                    authority = rText.replace(/^.*?:\s*/, '').replace(/\s+/g, ' ').trim();
                 }
             }
 
@@ -506,10 +522,16 @@
 
         var currentBanner = sideReport.querySelector('.banner');
         var currentState = 'reported';
-        if (currentBanner) {
+        var rawProblemState = problemHeader.getAttribute('data-problem-state') || '';
+        if (rawProblemState) {
+            if (/^fixed|^closed/.test(rawProblemState)) currentState = 'resolved';
+            else if (rawProblemState.indexOf('in progress') !== -1 || rawProblemState.indexOf('action') !== -1) currentState = 'in-progress';
+            else if (rawProblemState.indexOf('investigating') !== -1 || rawProblemState.indexOf('acknowledged') !== -1) currentState = 'acknowledged';
+        } else if (currentBanner) {
             var bt = currentBanner.textContent.trim().toLowerCase();
-            if (bt.indexOf('fixed') !== -1 || bt.indexOf('closed') !== -1) currentState = 'resolved';
-            else if (bt.indexOf('in progress') !== -1 || bt.indexOf('action') !== -1) currentState = 'in-progress';
+            var bc = currentBanner.className || '';
+            if (bc.indexOf('banner--fixed') !== -1 || bc.indexOf('banner--closed') !== -1 || bt.indexOf('fixed') !== -1 || bt.indexOf('closed') !== -1) currentState = 'resolved';
+            else if (bc.indexOf('banner--progress') !== -1 || bt.indexOf('in progress') !== -1 || bt.indexOf('action') !== -1) currentState = 'in-progress';
             else if (bt.indexOf('investigating') !== -1 || bt.indexOf('acknowledged') !== -1) currentState = 'acknowledged';
         }
 
@@ -524,15 +546,15 @@
         }
 
         var updateDate = '';
-        var am = sideReport.querySelectorAll('.meta-2');
-        for (var j = am.length - 1; j >= 0; j--) {
-            var dm = am[j].textContent.match(/(\d{1,2}:\d{2}),?\s+\w+\s+(\d{1,2})\s+(\w+)\s+(\d{4})/);
-            if (dm) {
-                try {
-                    var pd = new Date(dm[3] + ' ' + dm[2] + ', ' + dm[4]);
-                    if (!isNaN(pd.getTime())) updateDate = pd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-                } catch(e) {}
-                break;
+        var updateItemsForTimeline = sideReport.querySelectorAll('.item-list__item--updates[data-update-epoch]');
+        for (var j = updateItemsForTimeline.length - 1; j >= 0; j--) {
+            var updateEpoch = updateItemsForTimeline[j].getAttribute('data-update-epoch');
+            if (updateEpoch) {
+                var pd = new Date(parseInt(updateEpoch) * 1000);
+                if (!isNaN(pd.getTime())) {
+                    updateDate = pd.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                    break;
+                }
             }
         }
 
@@ -635,18 +657,18 @@
 
                 for (var m = 0; m < metas.length; m++) {
                     var metaText2 = metas[m].textContent.trim();
-                    if (metaText2.indexOf('State changed to:') !== -1) {
+                    if (metaText2.indexOf('State changed to:') !== -1 || metaText2.indexOf(':') !== -1 && !metas[m].querySelector('strong')) {
                         stateChange = metaText2;
                     }
-                    if (metaText2.indexOf('Posted by') !== -1) {
-                        var strongEl = metas[m].querySelector('strong');
-                        if (strongEl) {
-                            authorName = strongEl.textContent.trim();
-                            // Check if it's an official/authority update (has a comma = place name)
-                            if (authorName.indexOf(',') !== -1 || authorName.indexOf('Council') !== -1 || authorName.indexOf('Authority') !== -1) {
-                                isOfficial = true;
-                            }
+                    var strongEl = metas[m].querySelector('strong');
+                    if (strongEl && !authorName) {
+                        authorName = strongEl.textContent.trim();
+                        // Check if it's an official/authority update (has a comma = place name)
+                        if (authorName.indexOf(',') !== -1 || authorName.indexOf('Council') !== -1 || authorName.indexOf('Authority') !== -1) {
+                            isOfficial = true;
                         }
+                    }
+                    if (metaText2.indexOf('Posted by') !== -1) {
                         var dMatch = metaText2.match(/at\s+\d{1,2}:\d{2},?\s+\w+\s+(\d{1,2})\s+(\w+)\s+(\d{4})/);
                         if (dMatch) {
                             try {
@@ -656,6 +678,12 @@
                                 }
                             } catch(e) {}
                         }
+                    }
+                }
+                if (!dateStr && item.getAttribute('data-update-epoch')) {
+                    var updDate = new Date(parseInt(item.getAttribute('data-update-epoch')) * 1000);
+                    if (!isNaN(updDate.getTime())) {
+                        dateStr = updDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
                     }
                 }
 
@@ -721,7 +749,21 @@
         }
 
         // --- 10. Fix dropzone: inject icon, fix text ---
+        function ensureDropzone() {
+            var rawPhotoFields = sideReport.querySelector('#form_photos');
+            var existingDropzone = sideReport.querySelector('.dropzone');
+            if (!rawPhotoFields || existingDropzone) return;
+
+            // The platform normally runs this after loading the side report. If it
+            // misses the report sidebar (for example after an async language/page
+            // transition), force the same setup so users do not see raw file inputs.
+            if (window.fixmystreet && fixmystreet.set_up && fixmystreet.set_up.dropzone && window.jQuery) {
+                fixmystreet.set_up.dropzone(jQuery(sideReport));
+            }
+        }
+
         function fixDropzoneText() {
+            ensureDropzone();
             var dzMessages = sideReport.querySelectorAll('.dropzone .dz-message');
             for (var d = 0; d < dzMessages.length; d++) {
                 var msgEl = dzMessages[d];

@@ -12912,10 +12912,9 @@ html.rpt-photo-lightbox-open {
 
 .rpt-photo-lightbox__frame {
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 720px;
+  display: inline-block;
+  width: auto;
+  max-width: calc(100vw - 48px);
   max-height: calc(100vh - 96px);
   border-radius: $lv-radius-xl;
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32);
@@ -12924,7 +12923,7 @@ html.rpt-photo-lightbox-open {
 .rpt-photo-lightbox__image {
   display: block;
   width: auto;
-  max-width: calc(100vw - 48px);
+  max-width: 100%;
   max-height: calc(100vh - 96px);
   border-radius: $lv-radius-xl;
   object-fit: contain;
@@ -12933,8 +12932,8 @@ html.rpt-photo-lightbox-open {
 
 .rpt-photo-lightbox__close {
   position: absolute;
-  top: -14px;
-  right: -14px;
+  top: 8px;
+  right: 8px;
   z-index: 1;
   display: inline-flex;
   align-items: center;
@@ -12969,8 +12968,8 @@ html.rpt-photo-lightbox-open {
   }
 
   .rpt-photo-lightbox__close {
-    top: 8px;
-    right: 8px;
+    top: 6px;
+    right: 6px;
   }
 }
 
