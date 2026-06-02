@@ -1350,7 +1350,42 @@ textarea:focus {
         }
     }
 
-    // Geolocation link
+    // Geolocation link ("Use my current location")
+    // Platform default sets the hover bg to #fff and the text color to the
+    // translucent white background var, so the label disappears on hover.
+    // Override with a readable inversion: ghost pill -> solid white + trust-blue text.
+    a#geolocate_link {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+        transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+
+        &:hover,
+        &:focus {
+            background-color: #fff;
+            border-color: #fff;
+            color: $primary-700 !important;
+            box-shadow: 0 2px 8px rgba(15, 36, 68, 0.18);
+            text-decoration: none;
+
+            .geolocate-link__icon,
+            .geolocate-link__loading {
+                color: $primary-700;
+            }
+        }
+
+        &:active {
+            background-color: $primary-50;
+            color: $primary-900 !important;
+            box-shadow: none;
+
+            .geolocate-link__icon,
+            .geolocate-link__loading {
+                color: $primary-900;
+            }
+        }
+    }
+
     .geolocate-link__icon {
         color: rgba(255, 255, 255, 0.8);
     }
