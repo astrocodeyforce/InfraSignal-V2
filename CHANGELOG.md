@@ -1,6 +1,115 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 2, 2026 (Three-environment parity audit and sync):
+        - Goal: confirm dev, staging, and production run identical application code
+          (templates, JS, CSS, translations) so the only difference between them is
+          the report data (clean prod vs. populated dev/staging).
+        - Audit covered every file under `templates/`, `web/cobrands/infrasignal/`,
+          and `locale/{es,ru_RU,tr_TR}.UTF-8/LC_MESSAGES/`, comparing dev, staging,
+          and prod working trees by md5 and size.
+        - Result: byte-for-byte identical across all three for:
+            - `web/cobrands/infrasignal/base.css` md5 `853324c31cc0…`
+            - `web/cobrands/infrasignal/filter-pills.js` md5 `3d1045e7…`
+            - `web/cobrands/infrasignal/header-nav.js` md5 `cb6fab49…`
+            - `templates/web/base/report/_main.html` md5 `6867bcd0…`
+            - `templates/web/base/report/update.html` md5 `96320b51…`
+            - `templates/web/infrasignal/around/postcode_form.html` md5 `99a0ae23…`
+            - `templates/web/infrasignal/report/_council_sent_info.html` md5 `7cd0bf12…`
+            - `locale/es.UTF-8/.../FixMyStreet.mo` 273874 B (May 31 build)
+            - `locale/ru_RU.UTF-8/.../FixMyStreet.mo` 359311 B (May 31 build)
+            - `locale/tr_TR.UTF-8/.../FixMyStreet.mo` 269053 B (May 31 build)
+        - Intentional, expected differences kept per-environment: `conf/general.yml`
+          (DB creds, `BASE_URL`, `STAGING_SITE` flag, SMTP keys), `conf/ssl/` (prod
+          TLS only), `docker/.env`, `web/theme/` (prod manifest theme uploads), and
+          per-DB report/user/comment counts. `body` table identical at 28,090 across
+          all three.
+    - InfraSignal — Jun 2, 2026 (Production deployment of staging-verified changes):
+        - Pushed verified changes from `/opt/infrasignal-dev` (commit `a350c3753`,
+          "Harden staging acceptance and multilingual report UI.") to `origin/dev` on
+          GitHub, then promoted to production.
+        - Pre-deploy: ran `bin/staging-acceptance.py` against staging — 138 checks
+          total, 134 PASS, 0 FAIL, 4 expected SKIP. Verdict GO.
+        - Backed up production DB and live config to
+          `/opt/backups/infrasignal/pre-prod-a350c3753_20260602_023325` (full
+          `pg_dump`, `conf/general.yml`, `.env`, `docker/.env`, `conf/ssl/`).
+        - Overlaid the exact committed `dev` tree onto `/opt/infrasignal-v2` via
+          `git archive`, explicitly excluding live config and secret paths
+          (`conf/general.yml`, `conf/general.yml-production`, `docker/.env`, `.env`,
+          `conf/ssl`) so production credentials/certs were preserved.
+        - Rebuilt CSS with `bin/make_css`, restarted production stack with
+          `docker compose -f docker/docker-compose-prod.yml down && up -d`.
+            - All four containers (`docker-db-1`, `docker-fixmystreet-1`,
+              `docker-memcached-1`, `docker-nginx-1`) reached `healthy`.
+            - Health check passed: `https://infrasignal.org/status/health` → 200.
+        - Post-deploy regression discovered and fixed: `/reports` returned 500 in
+          all languages because the missing generated `data/all-reports.json` had not
+          been promoted. Resolved by running
+          `docker exec docker-fixmystreet-1 bin/update-all-reports`. After that
+          fix, full multilingual smoke pass on production returned 200 across
+          `/`, `/reports`, `/around?pc=buffalo`, `/auth`, `/contact`, `/about`,
+          `/how-it-works`, `/about/for-local-government`, `/about/security`, `/faq`,
+          `/alert`, `/about/privacy`, `/about/terms`, and `/report/1` for every
+          language (`en-gb`, `es`, `tr`, `ru`).
+    - InfraSignal — Jun 2, 2026 (Production translation drift detected and synced):
+        - Symptom (post-deploy): although `.po` source files matched dev, the live
+          app on `https://infrasignal.org` still rendered some old English strings
+          in Spanish/Russian/Turkish pages and the English `/about` page still
+          showed the legacy layout.
+        - Root cause: the original `git archive` overlay used to promote
+          `/opt/infrasignal-dev → /opt/infrasignal-v2` only copies files that are
+          tracked in git. The compiled `.mo` translation catalogs that the running
+          gettext loader reads are intentionally gitignored, so production kept
+          stale March-1 `.mo` files (es 174094 B, ru_RU 221242 B, tr_TR 169604 B).
+          Two leftover `about-en-gb.html` / `faq-en-gb.html` templates from an
+          earlier UI also remained on disk, and the platform's `find_template`
+          helper preferred those per-language overrides over the unified
+          `about.html` / `faq.html`, so English visitors saw the old layout.
+        - Fix:
+            - Copied current `.mo` files from dev to production:
+              `locale/es.UTF-8/LC_MESSAGES/FixMyStreet.mo` (May 31, 273874 B),
+              `locale/ru_RU.UTF-8/LC_MESSAGES/FixMyStreet.mo` (May 31, 359311 B),
+              `locale/tr_TR.UTF-8/LC_MESSAGES/FixMyStreet.mo` (May 31, 269053 B).
+            - Removed stale `templates/web/infrasignal/about/about-en-gb.html`
+              (+`.ttc`) and `faq-en-gb.html` (+`.ttc`) from production.
+            - Restarted `docker-fixmystreet-1` so the gettext cache reloaded the
+              new `.mo` binaries.
+            - Backed up the replaced files to
+              `/opt/backups/infrasignal/missing-changes-sync_20260602_025053`.
+        - Verification: 24/24 multilingual page checks PASS on production for
+          `ru/tr/es` covering homepage, `/about`, `/faq`, `/about/privacy`,
+          `/about/terms`, `/contact`, `/auth`, `/alert`.
+        - Long-term fix (separate entry): see the "Deploy compiles translations
+          automatically" change below — `bin/deploy` now runs `bin/make_msg` and
+          deletes stray legacy templates on every deploy so this drift cannot
+          recur.
+    - InfraSignal — Jun 2, 2026 (Hero "Use my current location" hover readable):
+        - Symptom: on the homepage hero, hovering the "Use my current location"
+          button turned the pill solid white with white text, so the label
+          completely disappeared until the cursor moved away.
+        - Cause: the platform `_base.scss` rule for `a#geolocate_link:hover`
+          swaps the background to `$geolocation-link` (set to `#fff` for the
+          dark hero) and the text color to `$geolocation-link-background-color`
+          (`rgba(255,255,255,0.1)` — almost transparent white). On a dark hero
+          background that becomes white-on-white.
+        - Fix: scoped override in `web/cobrands/infrasignal/base.scss` under
+          `.frontpage` — hover/focus now uses the InfraSignal inverted button
+          palette (solid white background, trust-blue text/icon, subtle shadow)
+          matching the rest of the app's primary-button hover behavior.
+          Active state darkens to `$primary-900` for tactile feedback.
+        - Prevention: any future button colors on dark surfaces must verify the
+          hover background and text color are not the same value (the platform
+          variable pair is footgun-prone when `$geolocation-link == #fff`).
+        - Rollout: rebuilt `web/cobrands/infrasignal/base.css`
+          (md5 `853324c31cc0…`) in production and staging containers, copied to
+          the dev tree, and restarted each `fixmystreet` container so the
+          template version stamp regenerated. Verified via
+          `cobrands/infrasignal/base.css?853324c31cc0` cachebuster on all three:
+            - Production: `https://infrasignal.org`
+            - Staging: `http://REDACTED-IP:8080`
+            - Dev: `http://REDACTED-IP:3001`
+        - GitHub: commit `bac895509` pushed to `origin/dev`
+          ("Fix hero 'Use my current location' hover going white-on-white.").
     - InfraSignal — Jun 2, 2026 (Deploy compiles translations automatically):
         - Problem: `bin/deploy` pulled `.po` translation sources from git but never
           rebuilt gitignored `.mo` binaries, so production could ship stale Russian,
@@ -11,6 +120,12 @@
           `about-en-gb.html` / `faq-en-gb.html` overrides if they reappear on disk.
         - Prevention: every production deploy from a clean `git pull` now refreshes
           translations the same way CSS is rebuilt; no manual `.mo` copy step.
+        - Rollout: `bin/make_msg` and the updated `bin/deploy` were copied to
+          `/opt/infrasignal-v2/bin/` so the next `./bin/deploy` on the production
+          host uses them immediately, even before a full git sync of that tree.
+        - GitHub: commit `958815357` ("Deploy: compile gettext catalogs on every
+          production release.") and `d78aef272` ("Document automatic translation
+          compile step in deploy runbook.") pushed to `origin/dev`.
     - InfraSignal — Jun 1, 2026 (Report photo lightbox close button anchored):
         - Symptom: when a user clicked a report photo, the lightbox opened correctly
           but the `x` close button floated away from the photo instead of staying on
