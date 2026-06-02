@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+# ============================================================
+# make_msg — Compile gettext .po catalogs to .mo binaries
+# ============================================================
+# The app reads FixMyStreet.mo at runtime; .po files are in git
+# but .mo files are gitignored. Run this after pulling translation
+# changes and before restarting the app (bin/deploy does this).
+#
+# Only InfraSignal active locales are compiled (en-gb uses msgids).
+#
+# Usage:
+#   ./bin/make_msg
+#   ./bin/make_msg --verbose
+# ============================================================
+
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+VERBOSE=0
+if [[ "${1:-}" == "--verbose" || "${1:-}" == "-v" ]]; then
+    VERBOSE=1
+fi
+
+# Languages served on infrasignal.org (see conf/general.yml LANGUAGES).
+LOCALES=(es.UTF-8 ru_RU.UTF-8 tr_TR.UTF-8)
+
+if ! command -v msgfmt >/dev/null 2>&1; then
+    echo "make_msg: msgfmt not found (install gettext)" >&2
+    exit 1
+fi
+
+for dir in "${LOCALES[@]}"; do
+    po="locale/${dir}/LC_MESSAGES/FixMyStreet.po"
+    mo="locale/${dir}/LC_MESSAGES/FixMyStreet.mo"
+    if [[ ! -f "$po" ]]; then
+        echo "make_msg: missing $po" >&2
+        exit 1
+    fi
+    # Do not pass -c: Russian catalog has legacy plural-form warnings that
+    # still compile; -c would block deploy despite valid runtime .mo files.
+    if [[ "$VERBOSE" -eq 1 ]]; then
+        msgfmt -v -o "$mo" "$po"
+    else
+        msgfmt -o "$mo" "$po"
+    fi
+    echo "make_msg: $mo"
+done
