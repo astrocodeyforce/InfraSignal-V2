@@ -9377,7 +9377,7 @@ msgid "Enter address or ZIP"
 msgstr "Ingrese dirección o código postal"
 
 msgid "Enter your address or zipcode"
-msgstr "Ingrese su dirección o código postal"
+msgstr "Dirección o código postal"
 
 msgid "Explore reports"
 msgstr "Explorar reportes"

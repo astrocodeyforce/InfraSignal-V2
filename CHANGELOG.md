@@ -1,6 +1,52 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 4, 2026 (Hero search pill: placeholder clipping in es/tr/ru):
+        - Symptom: on the homepage hero, the input placeholder was being cut
+          off before reaching the orange "Report" button in Spanish ("Ingrese
+          su dirección o có…"), Turkish ("Adresinizi veya posta kodunuzu
+          girir…"), and Russian ("Введите ваш адрес ил…"). English fit fine.
+        - Root cause: two compounding factors. (1) The pill container was
+          capped at `max-width: 640px` in `.frontpage .postcode-form-box div`,
+          and (2) translated placeholders were full imperative sentences while
+          the submit button label in non-English locales is also longer
+          ("Reportar un Problema", "Сообщить о проблеме"). The submit button
+          is `flex:none` and gets its full label first, so the input gets
+          whatever is left — clipped by the container's `overflow:hidden`.
+        - Fix (two-part, applied together so layout stays balanced):
+            1. Widened the pill: `max-width: 640px` → `720px` in
+               `web/cobrands/infrasignal/base.scss` under `.frontpage
+               .postcode-form-box div` (with a comment explaining why).
+            2. Shortened placeholders to idiomatic noun phrases (how native
+               speakers actually phrase form prompts) in the three .po
+               catalogs for msgid "Enter your address or zipcode":
+                 - es: "Ingrese su dirección o código postal"
+                     → "Dirección o código postal"
+                 - tr: "Adresinizi veya posta kodunuzu girin"
+                     → "Adres veya posta kodu"
+                 - ru: "Введите ваш адрес или индекс"
+                     → "Адрес или индекс"
+            English msgid (and the en-gb default) unchanged.
+        - Rollout (dev → staging → production):
+            - Edited base.scss and the three .po files in /opt/infrasignal-dev.
+            - Compiled .mo via `bin/make_msg` (es/ru/tr), rebuilt CSS with
+              `docker exec … bin/make_css web/cobrands/infrasignal`, restarted
+              `infrasignal-dev-dev-fixmystreet-1`. Verified at
+              http://REDACTED-IP:3001/?lang={en-gb,es,tr,ru}.
+            - Synced base.scss + the three .po files from dev to
+              /opt/infrasignal-staging and /opt/infrasignal-v2. Copied
+              `bin/make_msg` to staging where it was missing.
+            - Compiled .mo in both, rebuilt CSS in both, restarted
+              memcached (to drop stale template version stamps) and the
+              fixmystreet containers (`staging-fixmystreet-1`,
+              `docker-fixmystreet-1`).
+        - Verification: same cachebuster `bfd9af3540f9` on dev, staging,
+          and production; rendered HTML now shows the new placeholders and
+          CSS contains `max-width:720px` inside `.frontpage
+          .postcode-form-box div{…}` on all three.
+        - Prevention: `bin/make_msg` (already added to `bin/deploy` for
+          full/migrate/rollback) keeps .mo in sync on future deploys, so
+          translation-only fixes like this only need an edit + redeploy.
     - InfraSignal — Jun 2, 2026 (Three-environment parity audit and sync):
         - Goal: confirm dev, staging, and production run identical application code
           (templates, JS, CSS, translations) so the only difference between them is
