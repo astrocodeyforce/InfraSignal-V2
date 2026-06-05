@@ -9258,7 +9258,7 @@ msgid "Enter address or ZIP"
 msgstr "Adres veya posta kodu girin"
 
 msgid "Enter your address or zipcode"
-msgstr "Adres veya posta kodu"
+msgstr "Adres veya posta kodu girin"
 
 msgid "Explore reports"
 msgstr "Bildirimleri keşfedin"

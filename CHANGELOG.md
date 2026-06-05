@@ -17,16 +17,20 @@
             1. Widened the pill: `max-width: 640px` → `720px` in
                `web/cobrands/infrasignal/base.scss` under `.frontpage
                .postcode-form-box div` (with a comment explaining why).
-            2. Shortened placeholders to idiomatic noun phrases (how native
-               speakers actually phrase form prompts) in the three .po
-               catalogs for msgid "Enter your address or zipcode":
+            2. Shortened placeholders in the three .po catalogs for msgid
+               "Enter your address or zipcode". Kept the imperative verb so
+               the call-to-action tone matches the English "Enter…":
                  - es: "Ingrese su dirección o código postal"
-                     → "Dirección o código postal"
+                     → "Ingrese dirección o código postal" (drops "su")
                  - tr: "Adresinizi veya posta kodunuzu girin"
-                     → "Adres veya posta kodu"
+                     → "Adres veya posta kodu girin" (drops possessives,
+                        keeps "girin" = "enter")
                  - ru: "Введите ваш адрес или индекс"
-                     → "Адрес или индекс"
-            English msgid (and the en-gb default) unchanged.
+                     → "Введите адрес или индекс" (drops "ваш" = "your")
+            English msgid (and the en-gb default) unchanged. Initial pass
+            briefly used pure noun phrases ("Dirección o código postal",
+            etc.); reverted to imperative form on user feedback that the
+            action verb is part of the prompt's UX.
         - Rollout (dev → staging → production):
             - Edited base.scss and the three .po files in /opt/infrasignal-dev.
             - Compiled .mo via `bin/make_msg` (es/ru/tr), rebuilt CSS with

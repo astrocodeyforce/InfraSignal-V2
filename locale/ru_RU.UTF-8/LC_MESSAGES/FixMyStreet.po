@@ -9281,7 +9281,7 @@ msgid "Enter address or ZIP"
 msgstr "Введите адрес или индекс"
 
 msgid "Enter your address or zipcode"
-msgstr "Адрес или индекс"
+msgstr "Введите адрес или индекс"
 
 msgid "Explore reports"
 msgstr "Просмотреть отчёты"
