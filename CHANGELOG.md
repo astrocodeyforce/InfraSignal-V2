@@ -1,6 +1,43 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 4, 2026 (Hero search pill: placeholder clipping, round 2):
+        - Symptom (follow-up): after widening the pill to 720px and rewording
+          the placeholders to "Ingrese dirección o código postal",
+          "Adres veya posta kodu girin", "Введите адрес или индекс", the
+          placeholders were still being clipped on common viewport widths
+          (user screenshots showed only ~24 visible chars in Latin, ~20 in
+          Cyrillic for es/ru — Spanish ended at "Ingrese dirección o códig"
+          and Russian at "Введите адрес или ин").
+        - Root cause: the pill is `width:100%` capped by `max-width`, and
+          on common laptop viewports the *available* width (after the hero
+          padding) was ~530px, not 720. Spanish "Reportar un Problema"
+          (~200px) and Russian "Сообщить о проблеме" eat most of that,
+          leaving only ~260-280px for the placeholder text.
+        - Fix (both axes):
+            1. Widened the pill again: `max-width: 720px -> 820px` on
+               `.frontpage .postcode-form-box div` (helps on wider screens).
+            2. Shortened placeholders so they fit even on narrower screens.
+               Kept the imperative verb (matching English "Enter…") and
+               followed the natural "Enter your address" pattern; dropped
+               the "or zipcode" hint since the same input also accepts zips:
+                 - es: "Ingrese dirección o código postal"
+                     → "Ingrese su dirección"     (20 chars)
+                 - tr: "Adres veya posta kodu girin"
+                     → "Adresinizi girin"          (16 chars)
+                 - ru: "Введите адрес или индекс"
+                     → "Введите ваш адрес"         (17 chars)
+            English msgid (and en-gb default) unchanged.
+        - Rollout: edited dev (.scss + 3 .po), compiled .mo via
+          `bin/make_msg`, rebuilt CSS via
+          `docker exec … bin/make_css web/cobrands/infrasignal`; synced the
+          four files to /opt/infrasignal-staging and /opt/infrasignal-v2,
+          compiled .mo and rebuilt CSS in both, restarted memcached then
+          fixmystreet on all three envs.
+        - Verification: cachebuster `ff6e0540a12f` and `max-width:820px`
+          inside `.frontpage .postcode-form-box div{…}` identical on dev,
+          staging, and production; new placeholders render correctly in
+          all four languages.
     - InfraSignal — Jun 4, 2026 (Hero search pill: placeholder clipping in es/tr/ru):
         - Symptom: on the homepage hero, the input placeholder was being cut
           off before reaching the orange "Report" button in Spanish ("Ingrese
