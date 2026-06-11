@@ -45,6 +45,9 @@ Classify a location by nearby OSM zones.
 Options:
   radius_m  - search radius (default: 500m, covers max configured zone radius)
   use_cache - whether to use DB cache (default: 1)
+  body_ids  - arrayref of body ids; a body's own zone override (same
+              osm_key/osm_value, body_id set) takes precedence over the
+              global default config (body_id NULL)
 
 Returns hashref: {
     priority_level => 'Emergency'|'High'|'Normal'|'Low',
@@ -63,11 +66,25 @@ sub classify {
     my $radius_m  = $options->{radius_m} || 500;
     my $use_cache = exists $options->{use_cache} ? $options->{use_cache} : 1;
 
-    # Load enabled zone configs
+    # Load zone configs: global defaults (body_id NULL) plus, when the
+    # report's bodies are known, those bodies' own overrides. An override
+    # replaces the global config for the same osm_key=osm_value tag, so a
+    # disabled override also suppresses that zone for the body.
+    my @body_ids = @{ $options->{body_ids} || [] };
     my @configs = FixMyStreet::DB->resultset('PriorityZoneConfig')->search(
-        { enabled => 1 },
+        { body_id => [ undef, @body_ids ] },
         { order_by => 'priority_level' }
     )->all;
+
+    my %by_tag;
+    for my $cfg (@configs) {
+        my $tag = $cfg->osm_key . '=' . $cfg->osm_value;
+        # Body override wins over global default
+        if (!$by_tag{$tag} || (defined $cfg->body_id && !defined $by_tag{$tag}->body_id)) {
+            $by_tag{$tag} = $cfg;
+        }
+    }
+    @configs = grep { $_->enabled } values %by_tag;
 
     return undef unless @configs;
 
@@ -143,7 +160,9 @@ sub classify_and_save {
     # Don't override admin manual overrides
     return undef if $report->osm_zone_admin_override;
 
-    my $result = eval { $class->classify($report->latitude, $report->longitude) };
+    # Pass the report's bodies so their zone overrides apply
+    my $body_ids = [ grep { /^\d+$/ } @{ $report->bodies_str_ids || [] } ];
+    my $result = eval { $class->classify($report->latitude, $report->longitude, { body_ids => $body_ids }) };
     if ($@ || !$result) {
         warn "PriorityClassifier error for problem " . $report->id . ": " . ($@ || 'no result') . "\n";
         return undef;
@@ -190,7 +209,10 @@ sub reclassify_all {
     $search{osm_zone_admin_override} = 0 unless $force;
 
     if ($options->{body_id}) {
-        $search{bodies_str} = { 'like', '%' . $options->{body_id} . '%' };
+        # Exact id match within the comma-separated bodies_str list
+        # (LIKE '%123%' would also match 1234 / 5123).
+        my $id = int($options->{body_id});
+        $search{bodies_str} = { '~', "(^|,)$id(,|\$)" };
     }
 
     my @reports = FixMyStreet::DB->resultset('Problem')->search(

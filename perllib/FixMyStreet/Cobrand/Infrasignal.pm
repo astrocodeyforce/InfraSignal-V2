@@ -384,15 +384,47 @@ sub admin_pages {
     my $self = shift;
     my $pages = $self->SUPER::admin_pages();
 
-    # Duplicate Reports and Priority Zones query reports across ALL bodies,
-    # so they are superuser-only — body staff must not see other bodies' data.
+    # Superusers see these platform-wide; body staff with report_inspect get
+    # body-scoped versions (the controllers filter every query and action to
+    # the staff user's own body).
     my $user = $self->{c}->user;
-    if ($user && $user->is_superuser) {
+    if ($user && ($user->is_superuser || $user->has_body_permission_to('report_inspect'))) {
         $pages->{duplicate_reports} = [ _('Duplicate Reports'), 2.5 ];
         $pages->{priority_zones} = [ _('Priority Zones'), 2.6 ];
     }
 
     return $pages;
+}
+
+# Scope the admin Users area for body staff: they only see users connected to
+# their own body — its staff, plus people who have reported or updated there.
+# Superusers see everyone. Same pattern as UKCouncils upstream.
+sub users_restriction {
+    my ($self, $rs) = @_;
+
+    my $c = $self->{c};
+    return $rs unless $c && $c->user_exists;
+    my $user = $c->user;
+    return $rs if $user->is_superuser || !$user->from_body;
+
+    my $body_id = $user->from_body->id;
+    my $match = '(^|,)' . $body_id . '(,|$)';
+
+    my $problem_user_ids = FixMyStreet::DB->resultset('Problem')->search(
+        { bodies_str => { '~' => $match } },
+        { columns => ['user_id'], distinct => 1 },
+    )->as_query;
+    my $update_user_ids = FixMyStreet::DB->resultset('Comment')->search(
+        { 'problem.bodies_str' => { '~' => $match } },
+        { join => 'problem', columns => ['me.user_id'], distinct => 1 },
+    )->as_query;
+
+    return $rs->search({
+        -or => [
+            'me.from_body' => $body_id,
+            'me.id' => [ { -in => $problem_user_ids }, { -in => $update_user_ids } ],
+        ],
+    });
 }
 
 # Cookie-based language override for the language switcher UI.

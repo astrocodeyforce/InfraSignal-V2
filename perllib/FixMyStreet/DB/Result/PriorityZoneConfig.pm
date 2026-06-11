@@ -40,9 +40,23 @@ __PACKAGE__->add_columns(
     default_value => \"CURRENT_TIMESTAMP",
     is_nullable   => 0,
   },
+  # NULL = global default config; set = a body's own override of that zone
+  "body_id",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
 );
 
 __PACKAGE__->set_primary_key("id");
-__PACKAGE__->add_unique_constraint("priority_zone_config_osm_key_osm_value_key", ["osm_key", "osm_value"]);
+
+__PACKAGE__->belongs_to(
+  "body",
+  "FixMyStreet::DB::Result::Body",
+  { id => "body_id" },
+  {
+    is_deferrable => 0,
+    join_type     => "LEFT",
+    on_delete     => "CASCADE",
+    on_update     => "NO ACTION",
+  },
+);
 
 1;

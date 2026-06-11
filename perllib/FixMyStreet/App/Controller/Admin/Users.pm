@@ -156,6 +156,13 @@ sub add : Local : Args(0) {
     # body, we simply return an existence error.)
     my $from_body = $c->get_param('body') || undef;
 
+    # Non-superuser staff can only ever create users for their own body —
+    # the form locks the field, but enforce it server-side too (mirrors the
+    # own-body check in the edit flow's user_assign_body handling).
+    if (!$c->user->is_superuser && $c->cobrand->moniker ne 'zurich' && $c->user->from_body) {
+        $from_body = $c->user->from_body->id;
+    }
+
     my $user_from_email = $email_v && $c->model('DB::User')->find( { email => $email } );
     my $user_from_phone = $phone_v && $c->model('DB::User')->find( { phone => $phone } );
     my $user = $user_from_email || $user_from_phone;

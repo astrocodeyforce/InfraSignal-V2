@@ -1,6 +1,82 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 10, 2026 (Body-scoped Duplicate Reports, Priority Zones,
+      and self-service staff management — dev only):
+        - Goal: let each government body run its own territory independently —
+          duplicates, priority zones, and staff accounts — with zero access to
+          any other body, while the superuser experience stays exactly as it was.
+        - Duplicate Reports (Admin/DuplicateReports.pm):
+            - Access widened from superuser-only to superuser OR staff with
+              report_inspect. For staff, every query is filtered to reports
+              whose bodies_str matches their own body (regex word match, not
+              LIKE, so id 123 can't match 1234).
+            - mark/dismiss verify each affected report belongs to the staff
+              user's body before acting; cross-body POSTs are silently no-ops.
+            - Verified: staff page showed 12 reports (all body 10588);
+              superuser page 38 reports across 5 bodies. Cross-body mark
+              attempt left victim reports untouched; in-scope mark worked
+              (then reverted).
+        - Priority Zones — per-body overrides:
+            - New nullable body_id column on priority_zone_config
+              (db/schema_0095-priority-zones-per-body.sql): NULL = global
+              default, set = that body's override of the same osm_key/osm_value
+              zone. Partial unique indexes per scope.
+            - PriorityZones controller: staff with report_inspect see the
+              effective config for their body (override beats global).
+              Editing/toggling a global zone as staff copy-on-writes an
+              override row for their body; global rows are never modified by
+              staff. Reclassify for staff is restricted to their own body's
+              reports. Superusers manage global rows exactly as before and
+              additionally see a read-only "Per-body overrides" table.
+            - PriorityClassifier: classify() accepts body_ids and merges
+              configs (body override wins per tag; a disabled override
+              suppresses that zone for the body). classify_and_save passes the
+              report's bodies. reclassify_all body filter switched from
+              LIKE '%id%' to exact word-match regex.
+            - Bonus fix: the index/edit pages never stashed a CSRF token, so
+              the Reclassify/Toggle buttons were broken (silent 400) even for
+              superusers — both actions now forward to /auth/get_csrf_token.
+            - Verified: staff edit of "Hospital" (250m→400m) created override
+              row body_id=10588; global row unchanged; staff toggle of
+              "School" created a disabled override; superuser still sees
+              global 250m + the overrides table; staff GET of another body's
+              override returns 404.
+        - Self-service staff management (Account Admin profile):
+            - New role on dev body 10588: Account Admin = user_edit +
+              user_assign_body + user_manage_permissions. One trusted person
+              per government can onboard/manage their own staff.
+            - users_restriction added to the Infrasignal cobrand: staff only
+              see users connected to their own body (its staff + people who
+              reported/updated there). Superusers see everyone. Same pattern
+              as UKCouncils upstream.
+            - Server-side hardening in Admin/Users.pm add flow: non-superuser
+              staff creations force from_body to the creator's own body, even
+              if the POST claims another body (mirrors the edit flow's
+              user_assign_body check). Superuser-creation remains hard-gated
+              to superusers (verified: is_superuser=1 in a staff POST is
+              ignored).
+            - Verified: acct-admin sees only own-body users in search
+              (user-10/user-11; out-of-scope users hidden); direct
+              /admin/users/9 (out of scope) 404; cross-body create forced to
+              own body; superuser-escalation attempt produced a normal staff
+              user.
+        - Pre-existing bug fixed (Admin.pm fetch_body_areas): opening ANY
+          staff user's edit page 500ed ("Can't use string (\"Everywhere\") as
+          a HASH ref") because the fake MapIt returns a single area hash
+          instead of id-keyed areas. Now treated defensively as "no areas".
+          This had made /admin/users/<id> unusable even for superusers.
+        - Roles on dev body 10588 now: Auth (legacy), Body Manager, Inspector,
+          Customer Service, Account Admin. New demo user:
+          acct-admin@buffalogrove.test (Account Admin).
+        - Full regression on dev: superuser all admin pages 200 (incl.
+          duplicate_reports + priority_zones unchanged); Body Manager staff
+          sees Stats/Templates/Priorities/Duplicate Reports/Priority Zones,
+          404 on users/config/bodies; citizen /admin 403; public pages and
+          es/tr/ru all 200.
+        - Rollout: dev only. Staging/production promotion needs: code overlay,
+          schema_0095 migration, the five roles per customer body, and demo
+          users if wanted.
     - InfraSignal — Jun 10, 2026 (Scoped admin access for government body staff — dev only):
         - Why: previously /admin was superuser-only (the Infrasignal cobrand
           inherited the default admin_allow_user). The only way to give a

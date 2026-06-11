@@ -40,7 +40,7 @@
 [% END %]
 
 <div class="pz-header">
-    <h2>OSM Priority Zones</h2>
+    <h2>OSM Priority Zones[% IF pz_body %] &mdash; [% pz_body.name | html %][% END %]</h2>
     <div class="pz-actions">
         <form method="POST" action="[% c.uri_for('/admin/priority_zones/reclassify') %]" style="display:inline" onsubmit="return confirm('Reclassify all unclassified reports? This may take a moment.')">
             <input type="hidden" name="token" value="[% csrf_token %]">
@@ -53,6 +53,12 @@
         </form>
     </div>
 </div>
+
+[% IF pz_body %]
+<p style="background:#d1ecf1; color:#0c5460; border:1px solid #bee5eb; border-radius:4px; padding:8px 12px; font-size:13px;">
+    [% tprintf(loc('You are viewing the effective zone settings for %s. Editing a zone creates an override for your area only; global defaults stay unchanged. Reclassification only touches your reports.'), pz_body.name) | html %]
+</p>
+[% END %]
 
 <div class="pz-stats">
 [% FOREACH level IN priority_order %]
@@ -83,7 +89,12 @@
             <tbody>
             [% FOREACH zone IN level_zones %]
                 <tr>
-                    <td><strong>[% zone.label || zone.osm_value | html %]</strong></td>
+                    <td>
+                        <strong>[% zone.label || zone.osm_value | html %]</strong>
+                        [% IF pz_body && zone.body_id %]
+                        <span class="pz-badge" style="background:#cce5ff; color:#004085;" title="Override for [% pz_body.name | html %]">customized</span>
+                        [% END %]
+                    </td>
                     <td><span class="pz-tag">[% zone.osm_key | html %]=[% zone.osm_value | html %]</span></td>
                     <td>[% zone.radius_m %]m</td>
                     <td>
@@ -107,6 +118,46 @@
             </tbody>
         </table>
     </div>
+[% END %]
+
+[% IF body_overrides.size %]
+<div class="pz-group">
+    <div class="pz-group-title" style="background:#cce5ff; color:#004085;">Per-body overrides ([% body_overrides.size %])</div>
+    <table class="pz-table">
+        <thead>
+            <tr>
+                <th>Body</th>
+                <th>Zone Type</th>
+                <th>OSM Tag</th>
+                <th>Priority</th>
+                <th>Radius</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        [% FOREACH zone IN body_overrides %]
+            <tr>
+                <td>[% zone.body.name | html %]</td>
+                <td><strong>[% zone.label || zone.osm_value | html %]</strong></td>
+                <td><span class="pz-tag">[% zone.osm_key | html %]=[% zone.osm_value | html %]</span></td>
+                <td>[% zone.priority_level | html %]</td>
+                <td>[% zone.radius_m %]m</td>
+                <td>
+                    [% IF zone.enabled %]
+                    <span class="pz-badge enabled">Enabled</span>
+                    [% ELSE %]
+                    <span class="pz-badge disabled">Disabled</span>
+                    [% END %]
+                </td>
+                <td>
+                    <a href="[% c.uri_for('/admin/priority_zones/' _ zone.id) %]" class="pz-btn pz-btn-primary pz-btn-sm">Edit</a>
+                </td>
+            </tr>
+        [% END %]
+        </tbody>
+    </table>
+</div>
 [% END %]
 
 <p style="color:#666; font-size:12px; margin-top:20px;">

@@ -603,14 +603,18 @@ sub fetch_body_areas : Private {
     my ($self, $c, $body ) = @_;
 
     my $children = $body->area_children;
-    unless ($children) {
+    # A fake/misconfigured MapIt can return a single area hash (plain string
+    # values) instead of an id-keyed hash of areas; treat that as no areas
+    # rather than crashing the user admin pages.
+    my @areas = $children ? grep { ref $_ eq 'HASH' && defined $_->{name} } values %$children : ();
+    unless (@areas) {
         # Body doesn't have any areas defined.
         delete $c->stash->{areas};
         delete $c->stash->{fetched_areas_body_id};
         return;
     }
 
-    $c->stash->{areas} = [ sort { strcoll($a->{name}, $b->{name}) } values %$children ];
+    $c->stash->{areas} = [ sort { strcoll($a->{name}, $b->{name}) } @areas ];
     # Keep track of the areas we've fetched to prevent a duplicate fetch later on
     $c->stash->{fetched_areas_body_id} = $body->id;
 }

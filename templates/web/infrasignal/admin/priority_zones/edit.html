@@ -23,6 +23,16 @@
 <div class="pz-edit-form">
     <h3>Edit Zone: [% zone.label || zone.osm_value | html %]</h3>
 
+    [% IF pz_body %]
+    <p style="background:#d1ecf1; color:#0c5460; border:1px solid #bee5eb; border-radius:4px; padding:8px 12px; font-size:13px;">
+        [% IF zone.body_id %]
+        [% tprintf(loc('This is your override for %s. Changes apply only to your reports.'), pz_body.name) | html %]
+        [% ELSE %]
+        [% tprintf(loc('Saving will create an override for %s. The global default stays unchanged and your changes apply only to your reports.'), pz_body.name) | html %]
+        [% END %]
+    </p>
+    [% END %]
+
     <form method="POST" action="[% c.uri_for('/admin/priority_zones/' _ zone.id) %]">
         <input type="hidden" name="token" value="[% csrf_token %]">
 
