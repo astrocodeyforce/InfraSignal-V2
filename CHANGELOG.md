@@ -1,6 +1,27 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 11, 2026 (Body Manager can manage own-body staff accounts — dev only):
+        - Why the manager couldn't see it: the admin "Users" section only
+          appears for users holding the user_edit permission. That permission
+          lived only on the separate Account Admin role, so the Body Manager
+          demo account had no Users/Roles pages in its sidebar.
+        - Change (data only, no code): added user_edit, user_assign_body and
+          user_manage_permissions to the Buffalo Grove "Body Manager" role.
+          Body Managers now see Users and Roles (8 admin sections) and can
+          create/edit staff accounts for their own body. The Account Admin
+          role is unchanged and remains available as a narrower
+          accounts-only profile.
+        - All existing body-scoping guards apply to the manager exactly as
+          to the Account Admin: user list restricted to own-body users,
+          created users forced to from_body = own body, superuser flag in
+          staff POSTs ignored, Roles page already limited to own-body roles
+          (body field forced server-side).
+        - Verified on dev as staff-demo (Body Manager): Users + Roles
+          visible; user list shows only Buffalo-Grove-related accounts;
+          created a staff user (forced to body 10588); a crafted POST asking
+          for body=24482 + is_superuser=1 was created as body 10588,
+          non-superuser. Test accounts removed afterwards.
     - InfraSignal — Jun 10, 2026 (Strict own-body-only admin UI for staff — dev only):
         - Goal: body staff must never see cross-body information anywhere in
           the admin — no other states/bodies in dropdowns, no platform-wide
