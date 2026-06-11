@@ -1,6 +1,33 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 11, 2026 (Second test body + two-profile isolation test — dev only):
+        - Added a second government to test alongside Buffalo Grove: Raleigh,
+          NC (body 24482, 31 real reports). Mirrored all five Buffalo Grove
+          roles (Auth, Body Manager, Inspector, Customer Service, Account
+          Admin — same permissions, including the category_edit /
+          emergency_message_edit grants) onto Raleigh, and created two scoped
+          demo accounts (dev DB data, no code change):
+            - staff-demo@raleigh.test  / RALstaff-demo-2026!  (Body Manager)
+            - acct-admin@raleigh.test  / RALacct-admin-2026!  (Account Admin)
+          (Buffalo Grove equivalents: staff-demo@buffalogrove.test /
+          BGstaff-demo-2026!, acct-admin@buffalogrove.test / BGacct-admin-2026!)
+        - Hard isolation suite across BOTH profiles (32 checks, all pass),
+          including cross-body attacks in both directions (Raleigh staff vs
+          Buffalo Grove and vice versa):
+            - Each manager: 10 admin sections; Summary count equals their own
+              body's unsent queue (BG 128, Raleigh 10); Reports search returns
+              zero foreign reports; cannot open a foreign report's edit page
+              (404); Users list shows no foreign-body staff; cannot open a
+              foreign staff edit page (404); cannot edit the other body's
+              categories or site message (403); /admin/bodies redirects to
+              their OWN body; Priorities has no state picker; Stats blocked.
+            - Active attacks blocked both ways: add-user into the other body
+              with is_superuser=1 was forced to own body + non-superuser; bulk
+              remove-staff against the other body's manager left them
+              untouched.
+            - Superuser unchanged: searches across bodies, Stats works, can
+              open either body's staff.
     - InfraSignal — Jun 11, 2026 (Body Manager fully self-sufficient for local government — dev only):
         - Goal: a government's Body Manager should run their territory end to
           end — including initial setup — without needing the platform
