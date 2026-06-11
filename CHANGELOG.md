@@ -1,6 +1,32 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 11, 2026 (Body Manager fully self-sufficient for local government — dev only):
+        - Goal: a government's Body Manager should run their territory end to
+          end — including initial setup — without needing the platform
+          superuser, while still never touching another body or the platform.
+        - Change (data only, no code): added category_edit and
+          emergency_message_edit to the Buffalo Grove "Body Manager" role.
+          This unlocks two setup capabilities that were previously
+          superuser-only:
+            - Categories & contacts: manage their own body's service
+              categories and the email routing for each, plus report extra
+              fields (category_edit).
+            - Site / emergency messages: post their own banner (emergency_message_edit).
+        - Both are inherently body-scoped by the existing controllers:
+          /admin/bodies redirects a non-superuser straight to their own
+          body's edit page and every category action checks
+          has_permission_to('category_edit', body_id); SiteMessage forces a
+          non-superuser to edit only their own from_body and keeps the
+          arbitrary-body edit and the all-bodies list superuser-only.
+        - Body Manager now has 10 admin sections. Verified on dev: Categories
+          and Site message pages appear; editing own body works (saved and
+          cleared a test banner); /admin/body/<other> and
+          /admin/sitemessage/edit/<other> and the all-bodies list all return
+          403; nothing changed for superusers.
+        - Still intentionally superuser-only: global Config, States, Manifest
+          Theme, Flagged, bulk user import, the platform Bodies list,
+          whole-system Stats, creating superusers, and any cross-body action.
     - InfraSignal — Jun 11, 2026 (Lock down staff user-management against privilege escalation — dev only):
         - Audited every way a body-staff user with user management could gain
           superuser power or reach across bodies. Found and fixed four gaps;
