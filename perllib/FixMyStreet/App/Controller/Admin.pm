@@ -43,6 +43,24 @@ sub auto : Private {
     $c->forward('check_page_allowed');
 }
 
+=head2 _scope_to_staff_body
+
+Restrict a Problem resultset to the logged-in staff user's own body. Has no
+effect for superusers (or Zurich, which has its own admin model), so the
+platform-wide view is unchanged for them.
+
+=cut
+
+sub _scope_to_staff_body {
+    my ($c, $rs, $column) = @_;
+    my $user = $c->user;
+    return $rs if !$user || $user->is_superuser || !$user->from_body;
+    return $rs if $c->cobrand->moniker eq 'zurich';
+    $column ||= 'me.bodies_str';
+    my $id = $user->from_body->id;
+    return $rs->search({ $column => { '~' => "(^|,)$id(,|\$)" } });
+}
+
 =head2 summary
 
 Redirect to index page. There to make the allowed pages stuff neater
@@ -63,7 +81,7 @@ Displays some summary information for the requests.
 sub _admin_dashboard_json {
     my ($self, $c) = @_;
 
-    my $reports = $c->cobrand->problems;
+    my $reports = _scope_to_staff_body($c, $c->cobrand->problems);
     my $today = DateTime->today(time_zone => FixMyStreet->time_zone || FixMyStreet->local_time_zone);
     my $start = $today->clone->subtract(days => 6);
     my $end = $today->clone->add(days => 1);
@@ -136,7 +154,7 @@ sub index : Path : Args(0) {
     $c->stash->{edit_body_contacts} = 1
         if grep { $_ eq 'body' } keys %{$c->stash->{allowed_pages}};
 
-    my @unsent = $c->cobrand->problems->search( {
+    my @unsent = _scope_to_staff_body($c, $c->cobrand->problems)->search( {
         send_state => ['unprocessed', 'acknowledged'],
         'me.state' => [ FixMyStreet::DB::Result::Problem::open_states() ],
         bodies_str => { '!=', undef },
@@ -151,7 +169,7 @@ sub index : Path : Args(0) {
     } )->all;
     $c->stash->{unsent_reports} = \@unsent;
 
-    my @recent_reports = $c->cobrand->problems->search({}, {
+    my @recent_reports = _scope_to_staff_body($c, $c->cobrand->problems)->search({}, {
         order_by => [ { -desc => 'created' }, { -desc => 'id' } ],
         rows => 4,
     })->all;

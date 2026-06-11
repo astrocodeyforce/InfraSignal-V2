@@ -1,6 +1,41 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 10, 2026 (Strict own-body-only admin UI for staff — dev only):
+        - Goal: body staff must never see cross-body information anywhere in
+          the admin — no other states/bodies in dropdowns, no platform-wide
+          report queues, statistics or charts. Whole-system statistics are
+          superuser-only. Superuser views unchanged.
+        - Admin Summary dashboard (Controller/Admin.pm):
+            - New `_scope_to_staff_body` helper restricts any Problem/Comment
+              resultset to the logged-in staff user's own body via the same
+              word-match regex used elsewhere ((^|,)ID(,|$)). No effect for
+              superusers or Zurich.
+            - Applied to the "Reports waiting to be sent" queue, the "Recent
+              reports" list and all dashboard chart data (reports-per-day,
+              By Category, By Status). Verified: staff header shows 128
+              (Buffalo Grove only) vs superuser 154 (platform-wide).
+        - Admin Reports search (Controller/Admin/Reports.pm):
+            - Problem and update searches are now scoped to the staff user's
+              body (updates filtered via join to problem.bodies_str, using
+              search_rs to avoid list-context execution). Verified: staff
+              search "pothole" returns only body-10588 reports; superuser
+              search unchanged (50/page platform-wide). Report edit was
+              already protected by per-body report_edit permission.
+        - Stats and Timeline pages (Cobrand/Infrasignal.pm admin_pages):
+            - Removed from the admin for non-superusers — both nav links are
+              gone and direct URLs return 404 for staff. Staff keep their
+              own-body numbers on the Summary page and the public /dashboard.
+        - Response Priorities (templates/web/infrasignal/admin/responsepriorities/index.html):
+            - The state → county → city body picker (which listed all 50
+              states and every body) is now rendered only for superusers.
+            - Staff instead get a plain list of their own body's response
+              priorities with Edit links and a "New priority" button — the
+              controller was already body-scoped server-side; this removes
+              the leaky superuser UI that was shown to everyone.
+        - Verification: 14-point automated check (staff demo, account admin,
+          superuser) — all green; cross-checked returned report IDs against
+          the database (0 results outside body 10588).
     - InfraSignal — Jun 10, 2026 (Body-scoped Duplicate Reports, Priority Zones,
       and self-service staff management — dev only):
         - Goal: let each government body run its own territory independently —

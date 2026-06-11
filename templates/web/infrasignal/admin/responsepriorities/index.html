@@ -15,6 +15,8 @@
   #admin_bodies .section-header:hover td { background:#5a5a5a !important; color:#fff !important; }
 </style>
 
+[% IF c.user.is_superuser %]
+
 <p style="color:#555;">[% loc('Select a state to find a body, then click to manage its response priorities.') %]</p>
 
 <div class="filter-row">
@@ -311,5 +313,48 @@
   });
 })();
 </script>
+
+[% ELSE %]
+[%# Body staff: only their own body's response priorities — no state/body picker %]
+
+<p style="color:#555;">[% tprintf(loc('Response priorities for %s.'), c.user.from_body.name) %]</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>[% loc('Name') %]</th>
+        <th>[% loc('Description') %]</th>
+        <th>[% loc('Categories') %]</th>
+        <th>[% loc('Default') %]</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+      [% FOR p IN response_priorities %]
+        <tr [% 'class="is-deleted"' IF p.deleted %]>
+            <td>[% p.name | html %]</td>
+            <td>[% p.description | html %]</td>
+            <td>
+              [% UNLESS p.contacts.size %]
+                <em>[% loc('All categories') %]</em>
+              [% ELSE %]
+                [% FOR contact IN p.contacts %]
+                  [% contact.category_display %][% ',' UNLESS loop.last %]
+                [% END %]
+              [% END %]
+            </td>
+            <td>[% IF p.is_default %]X[% END %]</td>
+            <td><a href="[% c.uri_for(c.controller.action_for('edit'), [p.body_id, p.id]) %]" class="btn">[% loc('Edit') %]</a></td>
+        </tr>
+      [% END %]
+      [% UNLESS response_priorities.size %]
+        <tr><td colspan="5"><em>[% loc('None') %]</em></td></tr>
+      [% END %]
+    </tbody>
+</table>
+
+<p><a href="[% c.uri_for(c.controller.action_for('create'), [c.user.from_body.id]) %]" class="btn">[% loc('New priority') %]</a></p>
+
+[% END %]
 
 [% INCLUDE 'admin/footer.html' %]

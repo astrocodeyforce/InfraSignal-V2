@@ -52,7 +52,7 @@ sub index : Path {
 
     return if $c->cobrand->call_hook(report_search_query => $query, $p_page, $u_page, $order);
 
-    my $problems = $c->cobrand->problems;
+    my $problems = FixMyStreet::App::Controller::Admin::_scope_to_staff_body($c, $c->cobrand->problems);
 
     if (my $search = $c->get_param('search')) {
         $search = $self->trim($search);
@@ -117,7 +117,9 @@ sub index : Path {
         $c->stash->{problems} = [ $problems->all ];
         $c->stash->{problems_pager} = $problems->pager;
 
-        my $updates = $c->cobrand->updates;
+        my $updates = FixMyStreet::App::Controller::Admin::_scope_to_staff_body(
+            $c, $c->cobrand->updates->search_rs(undef, { join => 'problem' }),
+            'problem.bodies_str');
         $order = { -desc => 'me.id' };
         if ($valid_email) {
             # If you naively put: 'user.email' => { ilike => $like_search },

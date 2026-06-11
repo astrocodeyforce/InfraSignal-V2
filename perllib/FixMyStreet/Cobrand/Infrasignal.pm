@@ -393,6 +393,14 @@ sub admin_pages {
         $pages->{priority_zones} = [ _('Priority Zones'), 2.6 ];
     }
 
+    # Whole-system statistics and the platform-wide activity timeline are
+    # superuser-only; body staff get their own-body numbers on the Summary
+    # page and the public /dashboard instead.
+    unless ($user && $user->is_superuser) {
+        delete $pages->{stats};
+        delete $pages->{timeline};
+    }
+
     return $pages;
 }
 
