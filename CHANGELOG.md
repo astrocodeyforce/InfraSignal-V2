@@ -1,6 +1,42 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 11, 2026 (Lock down staff user-management against privilege escalation — dev only):
+        - Audited every way a body-staff user with user management could gain
+          superuser power or reach across bodies. Found and fixed four gaps;
+          the add/edit "is_superuser" and "move to another body" paths were
+          already safe and were re-confirmed.
+        - Gap 1 — Users list leaked every body's staff. The default
+          users_staff_admin returns all staff platform-wide; body staff saw
+          other cities' staff in /admin/users. Added an Infrasignal
+          users_staff_admin override that scopes the list to the staff user's
+          own from_body (superusers still see everyone).
+        - Gap 2 — bulk /admin/users POST was unscoped. The role-assign and
+          remove-staff bulk actions looked up users with the raw User
+          resultset by id, with no body check and no role validation — a body
+          staff member could POST any user id (another body's staff, or a
+          superuser) and any role id. Now the affected users are taken from
+          $c->cobrand->users (own-body only for staff), superusers are
+          excluded for non-superuser admins, and assignable roles are
+          filtered to the staff user's own body's roles.
+        - Gap 3 — body staff could open a superuser's edit page if that
+          superuser happened to share their body (cobrand->users includes
+          own-body users). The edit form would then let them demote/alter it.
+          The user chained action now 404s when a non-superuser tries to open
+          any is_superuser account (Zurich exempt, unchanged).
+        - Gap 4 (defence in depth) — confirmed the add flow already forces
+          from_body to the staff user's own body and ignores is_superuser,
+          and the edit flow ignores is_superuser and can't move a user to
+          another body.
+        - Files: perllib/FixMyStreet/Cobrand/Infrasignal.pm (users_staff_admin),
+          perllib/FixMyStreet/App/Controller/Admin/Users.pm (index bulk POST
+          scoping + role validation; user chained action superuser guard).
+        - Verification: 19-point automated suite as Body Manager, plus a
+          second "other city" body/role/user fixture. All 19 pass: every
+          escalation/cross-body attempt blocked, superuser experience
+          unchanged (can open superusers, sees all bodies), and legitimate
+          own-body management (assign own roles, grant own-body permissions)
+          still works. Test fixtures removed afterwards.
     - InfraSignal — Jun 11, 2026 (Body Manager can manage own-body staff accounts — dev only):
         - Why the manager couldn't see it: the admin "Users" section only
           appears for users holding the user_edit permission. That permission

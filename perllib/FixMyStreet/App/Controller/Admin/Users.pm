@@ -29,7 +29,15 @@ sub index :Path : Args(0) {
 
     if ($c->req->method eq 'POST') {
         my @uids = $c->get_param_list('uid');
-        my $user_rs = FixMyStreet::DB->resultset("User")->search({ id => \@uids });
+        # Scope the affected users to those this admin is actually allowed to
+        # manage. For body staff that's their own body's users only (via the
+        # cobrand restriction); superusers are unaffected. Crucially this stops
+        # a body staff member passing arbitrary user ids (another body's staff,
+        # or a superuser) to the bulk role/remove-staff actions.
+        my $user_rs = $c->cobrand->users->search({ 'me.id' => \@uids });
+        unless ($c->user->is_superuser || $c->cobrand->moniker eq 'zurich') {
+            $user_rs = $user_rs->search({ 'me.is_superuser' => 0 });
+        }
         if ( $c->get_param('remove-staff') ) {
             foreach my $user ($user_rs->all) {
                 $user->remove_staff;
@@ -40,6 +48,14 @@ sub index :Path : Args(0) {
             }
         } else {
             my @role_ids = $c->get_param_list('roles');
+            # Body staff may only assign roles that belong to their own body —
+            # never another body's role, and never a global/superuser role.
+            unless ($c->user->is_superuser || $c->cobrand->moniker eq 'zurich') {
+                my %own_roles = $c->user->from_body
+                    ? map { $_->id => 1 } $c->user->from_body->roles->all
+                    : ();
+                @role_ids = grep { $own_roles{$_} } @role_ids;
+            }
             foreach my $user ($user_rs->all) {
                 $user->admin_user_body_permissions->delete;
                 $user->user_roles->search({
@@ -230,6 +246,14 @@ sub user : Chained('/') PathPart('admin/users') : CaptureArgs(1) {
 
     my $user = $c->cobrand->users->find( { id => $id } );
     $c->detach( '/page_error_404_not_found', [] ) unless $user;
+
+    # Only superusers may view or manage a superuser account. Body staff must
+    # not be able to open one — even a superuser that happens to share their
+    # body — because the edit form would otherwise let them demote or alter it.
+    if ( $user->is_superuser && !$c->user->is_superuser && $c->cobrand->moniker ne 'zurich' ) {
+        $c->detach( '/page_error_404_not_found', [] );
+    }
+
     $c->stash->{user} = $user;
 
     unless ( $c->user->has_body_permission_to('user_edit') || $c->cobrand->moniker eq 'zurich' ) {

@@ -404,6 +404,21 @@ sub admin_pages {
     return $pages;
 }
 
+# The default admin Users list (users_staff_admin) returns every staff user on
+# the whole platform. Body staff must only ever see their own body's staff, so
+# scope it to their from_body. Superusers still see everyone.
+sub users_staff_admin {
+    my $self = shift;
+    my $rs = FixMyStreet::DB->resultset('User')->search({ from_body => { '!=', undef } });
+
+    my $c = $self->{c};
+    return $rs unless $c && $c->user_exists;
+    my $user = $c->user;
+    return $rs if $user->is_superuser || !$user->from_body;
+
+    return $rs->search({ 'me.from_body' => $user->from_body->id });
+}
+
 # Scope the admin Users area for body staff: they only see users connected to
 # their own body — its staff, plus people who have reported or updated there.
 # Superusers see everyone. Same pattern as UKCouncils upstream.
