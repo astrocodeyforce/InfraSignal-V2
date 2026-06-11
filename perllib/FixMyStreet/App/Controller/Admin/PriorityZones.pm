@@ -19,8 +19,10 @@ Allows admins to view, enable/disable, and edit zone type settings.
 
 sub auto :Private {
     my ($self, $c) = @_;
+    # Superuser-only: zone queries and reclassification span ALL bodies, so
+    # body staff (who are now allowed into the admin) must not reach this.
     my $user = $c->user;
-    unless ($user && ($user->is_superuser || $user->has_body_permission_to('report_edit'))) {
+    unless ($user && $user->is_superuser) {
         $c->detach('/page_error_404_not_found');
     }
     return 1;

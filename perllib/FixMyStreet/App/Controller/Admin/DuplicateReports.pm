@@ -18,6 +18,18 @@ proximity + same category.  Groups are ordered by distance (closest first).
 
 =cut
 
+sub auto : Private {
+    my ($self, $c) = @_;
+    # Superuser-only: the duplicate scan and mark/dismiss actions operate on
+    # reports across ALL bodies, so body staff (who are now allowed into the
+    # admin) must not reach this.
+    my $user = $c->user;
+    unless ($user && $user->is_superuser) {
+        $c->detach('/page_error_404_not_found');
+    }
+    return 1;
+}
+
 sub index : Path : Args(0) {
     my ( $self, $c ) = @_;
 

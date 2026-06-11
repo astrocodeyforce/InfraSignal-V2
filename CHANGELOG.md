@@ -1,6 +1,54 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 10, 2026 (Scoped admin access for government body staff — dev only):
+        - Why: previously /admin was superuser-only (the Infrasignal cobrand
+          inherited the default admin_allow_user). The only way to give a
+          government customer any admin capability was full superuser — which
+          exposes all 28k bodies, platform config, and every user. We now use
+          the platform's built-in staff tier instead.
+        - Code changes (all in dev, not yet promoted):
+            1. perllib/FixMyStreet/Cobrand/Infrasignal.pm — new
+               admin_allow_user override: superusers OR from_body staff may
+               enter /admin. Same pattern as the upstream Zurich and
+               NottinghamshirePolice cobrands. For staff, the admin
+               auto-scopes: visible pages depend on role permissions,
+               /admin/bodies redirects to their own body, body-record edits
+               (update_body) and user-privilege changes remain superuser-only.
+            2. Infrasignal.pm admin_pages — Duplicate Reports and Priority
+               Zones tabs are now superuser-only (previously also shown for
+               report_edit staff). Both tools query reports across ALL
+               bodies, so body staff must not reach them.
+            3. Admin/PriorityZones.pm — auto check tightened from
+               "superuser or report_edit" to superuser-only.
+            4. Admin/DuplicateReports.pm — added an auto check
+               (superuser-only); previously the controller had no auth check
+               of its own beyond the sidebar page gating.
+        - Roles created on dev for body 10588 (Buffalo Grove, IL):
+            - Body Manager (10 perms): report_inspect, moderate,
+              report_mark_private, contribute_as_body, default_to_body,
+              view_body_contribute_details, assign_report_to_user,
+              planned_reports, template_edit, responsepriority_edit
+            - Inspector (3): report_inspect, planned_reports,
+              report_mark_private
+            - Customer Service (3): contribute_as_another_user,
+              contribute_as_body, view_body_contribute_details
+            - (Analyst profile = from_body with no role: gets /dashboard only)
+        - Test users created on dev: staff-demo@buffalogrove.test (Body
+          Manager), su-test@example.invalid (superuser),
+          citizen-test@example.invalid (citizen).
+        - Verification on dev (all PASS):
+            - Staff: /admin 200; sidebar shows only Stats/Templates/
+              Priorities; templates redirect to own body /admin/templates/10588;
+              config/states/flagged/manifesttheme/users/reports/
+              duplicate_reports/priority_zones all 404; cross-body
+              /admin/body/52 404; /dashboard 200 scoped to Buffalo Grove.
+            - Superuser: unchanged — full sidebar, custom pages 200.
+            - Citizen: /admin 403.
+            - Public site + all four languages unaffected (200s).
+        - Rollout: dev only for now. Promote to staging + production after
+          user acceptance; staging/prod will also need the three roles
+          created per customer body (SQL or admin Roles page).
     - InfraSignal — Jun 4, 2026 (Hero search pill: placeholder clipping, round 2):
         - Symptom (follow-up): after widening the pill to 720px and rewording
           the placeholders to "Ingrese dirección o código postal",
