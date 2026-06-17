@@ -144,6 +144,7 @@ main              ← Production (always deployable, bin/deploy pulls this)
 | Document | Purpose |
 |----------|---------|
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Full system architecture, topology, and operations guide |
+| [PERMISSIONS.md](PERMISSIONS.md) | Users, roles & access control — who can control what, and how to grant access |
 | [AI-RULES.md](AI-RULES.md) | Mandatory rules for AI assistants working on this codebase |
 | [CHANGELOG.md](CHANGELOG.md) | Version history and release notes |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution guidelines |
