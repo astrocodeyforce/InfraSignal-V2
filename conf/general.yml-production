@@ -48,16 +48,24 @@ SIGHTENGINE_API_USER: ''
 SIGHTENGINE_API_SECRET: ''
 SIGHTENGINE_IMAGE_LIST_ID: ''
 
-MAPIT_URL: 'https://mapit.mysociety.org/'
-MAPIT_TYPES: [ 'DIS', 'LBO', 'MTD', 'UTA', 'CTY', 'COI', 'LGD' ]
+# US setup: use the global MapIt (OSM admin boundaries) so points resolve to
+# the real state/county/township/city areas our bodies are attached to. Do NOT
+# revert to the UK mapit.mysociety.org defaults or fakemapit.
+MAPIT_URL: 'https://global.mapit.mysociety.org/'
+MAPIT_TYPES: [ 'O04', 'O06', 'O07', 'O08' ]
+MAPIT_API_KEY: ''
 MAPIT_ID_WHITELIST: []
-MAPIT_GENERATION: 0
-MAPIT_TYPES_CHILDREN: [ 'DIW', 'LBW', 'MTW', 'UTE', 'UTW', 'CED', 'COP', 'LGW' ]
+MAPIT_GENERATION: 10
+MAPIT_TYPES_CHILDREN: ''
 
-GEOCODER: 'OSM'
+GEOCODER: ''
 GOOGLE_MAPS_API_KEY: ''
 BING_MAPS_API_KEY: ''
-GEOCODING_DISAMBIGUATION: ''
+# Restrict address search to the United States so we never surface UK/other
+# countries (e.g. "Manchester, England"). bounds = continental US.
+GEOCODING_DISAMBIGUATION:
+  country: 'us'
+  bounds: [ 24.396308, -125.0, 49.384358, -66.93457 ]
 MAP_TYPE: 'OSM'
 
 ALLOWED_COBRANDS:

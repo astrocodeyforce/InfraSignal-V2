@@ -20,6 +20,12 @@
                 </span>
                 [% loc('Your account') %]
             </a>
+            <a class="infra-admin-btn infra-admin-btn--danger" href="[% c.uri_for('/auth/sign_out') | html %]">
+                <span class="infra-admin-btn__icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>
+                </span>
+                [% loc('Sign out') %]
+            </a>
             [% IF c.user.has_body_permission_to('report_edit') %]
                 <a class="infra-admin-btn infra-admin-btn--ghost" href="[% c.uri_for('reports') | html %]">
                     <span class="infra-admin-btn__icon" aria-hidden="true">

@@ -47,16 +47,25 @@ SIGHTENGINE_ENABLED: 0
 SIGHTENGINE_API_USER: ''
 SIGHTENGINE_API_SECRET: ''
 
-MAPIT_URL: 'http://localhost:3000/fakemapit/'
-MAPIT_TYPES: [ 'ZZZ' ]
+# US setup: use the global MapIt (OSM admin boundaries) so points resolve to
+# the real state/county/township/city areas our bodies are attached to. Do NOT
+# revert to fakemapit (that returns a single "Everywhere" area 161 and breaks
+# location/body detection).
+MAPIT_URL: 'https://global.mapit.mysociety.org/'
+MAPIT_TYPES: [ 'O04', 'O06', 'O07', 'O08' ]
+MAPIT_API_KEY: ''
 MAPIT_ID_WHITELIST: []
-MAPIT_GENERATION: 0
+MAPIT_GENERATION: 10
 MAPIT_TYPES_CHILDREN: ''
 
 GEOCODER: ''
 GOOGLE_MAPS_API_KEY: ''
 BING_MAPS_API_KEY: ''
-GEOCODING_DISAMBIGUATION: ''
+# Restrict address search to the United States so we never surface UK/other
+# countries (e.g. "Manchester, England"). bounds = continental US.
+GEOCODING_DISAMBIGUATION:
+  country: 'us'
+  bounds: [ 24.396308, -125.0, 49.384358, -66.93457 ]
 MAP_TYPE: 'OSM'
 
 ALLOWED_COBRANDS:

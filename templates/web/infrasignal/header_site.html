@@ -34,6 +34,12 @@
         </button>
       </div>
 
+      [% IF c.user_exists AND NOT c.cobrand.admin_allow_user(c.user) %]
+        <a href="/my" class="header-account-link[% IF c.req.uri.path.match('^/my') %] is-active[% END %]">[% loc('My account') %]</a>
+      [% ELSIF NOT c.user_exists %]
+        <a href="/auth" class="header-account-link[% IF c.req.uri.path.match('^/auth') %] is-active[% END %]">[% loc('Sign in') %]</a>
+      [% END %]
+
       <a href="/#postcodeForm" class="header-signin">[% loc('Start Reporting') %]</a>
 
       [%# Admin link %]
@@ -62,10 +68,14 @@
       <a href="/reports" [% IF c.req.uri.path.match('^/reports') %]class="is-active"[% END %]>[% loc('View Reports') %]</a>
       <a href="/about" [% IF c.req.uri.path == '/about' %]class="is-active"[% END %]>[% loc('About Us') %]</a>
       <a href="/contact" [% IF c.req.uri.path == '/contact' %]class="is-active"[% END %]>[% loc('Contact Us') %]</a>
+      [% IF c.user_exists AND NOT c.cobrand.admin_allow_user(c.user) %]
+        <a href="/my" [% IF c.req.uri.path.match('^/my') %]class="is-active"[% END %]>[% loc('My account') %]</a>
+      [% ELSIF NOT c.user_exists %]
+        <a href="/auth" [% IF c.req.uri.path.match('^/auth') %]class="is-active"[% END %]>[% loc('Sign in') %]</a>
+      [% END %]
       <a href="/#postcodeForm" class="mobile-menu__report-btn">[% loc('Start Reporting') %]</a>
       <a href="/about/for-local-government" [% IF c.req.uri.path == '/about/for-local-government' %]class="is-active"[% END %]>[% loc('For Government') %]</a>
       [% IF c.user_exists %]
-        <a href="/my">[% loc('Your account') %]</a>
         [% IF c.user.has_body_permission_to('planned_reports') %]
           <a href="/my/planned">[% loc('Shortlist') %]</a>
         [% END %]

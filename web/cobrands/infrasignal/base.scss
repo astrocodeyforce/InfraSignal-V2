@@ -206,6 +206,43 @@ body.admin #site-header .header-container {
     padding-right: clamp(24px, calc(100vw - 1280px), 120px);
 }
 
+body.accountpage #site-header .header-container {
+    max-width: 1400px;
+    padding-left: 24px;
+    padding-right: clamp(24px, calc(100vw - 1280px), 120px);
+}
+
+// Map pages (/around, /report/new, /report/<id>) must show the SAME header as
+// every other page. Core FixMyStreet pulls #site-header out of flow on
+// body.mappage (position:absolute, height:4em) and expects the legacy #main-nav
+// bar to be the map header — InfraSignal doesn't use #main-nav, so the header
+// would otherwise collapse / the logo float oddly. Re-assert the normal header
+// here. This lives in base.scss (loaded at every width) because the platform's
+// mappage rule and our layout.scss override are both gated to >=48em, leaving
+// the header unstyled on narrow widths.
+body.mappage {
+    #site-header {
+        position: sticky !important;
+        top: 0 !important;
+        left: auto !important;
+        right: auto !important;
+        width: auto !important;
+        height: 64px !important;
+        z-index: 60 !important;
+    }
+
+    // On map pages the sidebar is flush to the far left of the window, so the
+    // header must be full-bleed too — otherwise the centred max-width:1200px
+    // container indents the logo away from the left edge, leaving a big empty
+    // dark gap above the sidebar that makes the header look broken / missing.
+    #site-header .header-container {
+        max-width: none !important;
+    }
+
+    // Legacy empty placeholder the platform would otherwise reserve space for.
+    #main-nav { display: none !important; }
+}
+
 // Logo area — pin + InfraSignal wordmark image
 .header-logo {
     display: flex;
@@ -216,7 +253,9 @@ body.admin #site-header .header-container {
   height: 45px;
 
   @media (min-width: 640px) { width: 235px; }
-  @media (min-width: 1024px) { width: 275px; }
+  // Trimmed from 275px → 250px so the inline nav + pinned actions never collide
+  // inside the fixed 1200px homepage header on the longest English labels.
+  @media (min-width: 1024px) { width: 250px; }
 }
 
 .header-logo-image {
@@ -270,11 +309,15 @@ body.admin #site-header .header-container {
     }
 }
 
-// Header right-side actions — pinned: these must never be clipped/shrunk
+// Header right-side actions — pinned: these must never be clipped/shrunk.
+// margin-left gives clean separation from the nav without a divider line; it is
+// kept small (and the logo is trimmed below) so the row stays within the fixed
+// 1200px container even with the longest English labels.
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 4px;
+    gap: 8px;
+    margin-left: clamp(10px, 1.3vw, 18px);
     flex-shrink: 0;
 }
 
@@ -353,6 +396,39 @@ body.admin #site-header .header-container {
     &__icon {
         flex-shrink: 0;
         color: $accent-500;
+    }
+}
+
+.header-account-link {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 0 clamp(8px, 0.75vw, 12px);
+    border: 1px solid rgba($primary-300, 0.28);
+    border-radius: 8px;
+    color: $primary-300 !important;
+    font-size: clamp(12.5px, 0.7vw, 13.5px);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+
+    @media (min-width: 1160px) { display: inline-flex; }
+
+    &:hover,
+    &:focus-visible,
+    &.is-active {
+        border-color: rgba($primary-300, 0.55);
+        background: rgba($primary-500, 0.16);
+        color: #fff !important;
+        text-decoration: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid $accent-500;
+        outline-offset: 2px;
     }
 }
 
@@ -867,7 +943,7 @@ small, .caption {
 .btn,
 .btn--primary,
 .green-btn,
-input[type="submit"],
+input[type="submit"]:not([class*="shortlist"]),
 .form-txt-submit-div input {
     background: $primary-700 !important;
     background-image: none !important;
@@ -2298,6 +2374,18 @@ textarea:focus {
       &:hover {
         background: $primary-900;
         color: #fff;
+      }
+    }
+
+    .infra-admin-btn--danger {
+      border-color: rgba(220, 38, 38, 0.22);
+      background: #fff;
+      color: #b91c1c;
+
+      &:hover {
+        border-color: rgba(220, 38, 38, 0.38);
+        background: #fef2f2;
+        color: #991b1b;
       }
     }
 
@@ -11318,6 +11406,17 @@ body.mappage .item-list.item-list--reports {
       color: hsl(160, 60%, 30%);
       margin-right: 0.25rem;
     }
+  }
+
+  // The staff "add to shortlist" control (an icon-only <input type="submit"
+  // value="1">) has no room in this compact map sidebar list and would
+  // overlap the report title, so hide it here. It still appears as a proper
+  // star icon on the full admin reports list and report-detail pages.
+  .item-list__item [class*="shortlist"] {
+    display: none !important;
+  }
+  .item-list__item--indented > a {
+    padding-left: 1rem !important;
   }
 }
 

@@ -1,6 +1,149 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 21, 2026 (Add subtle Sign in / My account link to header — dev only):
+        - Added a secondary header account link so logged-out users can reach
+          `/auth` directly from the home page without competing with the primary
+          orange Start Reporting CTA. Logged-in users see `My account` instead;
+          staff users still also see the separate Admin link.
+        - Added the same Sign in / My account behavior to the mobile menu.
+          Styled it as a low-emphasis outline/text link using the existing
+          header palette, recompiled base.css and flushed dev memcached.
+        - Follow-up: staff account pages also show `My account`, `Start
+          Reporting`, and `Admin`, which made the normal 1200px header container
+          too tight and caused the language selector / My account link to
+          overlap. Account pages now use the same wider header container as
+          admin pages, and the account link was compacted slightly. Recompiled
+          base.css and flushed dev memcached.
+        - Follow-up: simplified the logged-in admin/staff header globally:
+          admin-capable users now see `Admin` only (not both `My account` and
+          `Admin`) because the admin dashboard already includes a `Your account`
+          path. Normal logged-in users still see `My account`; logged-out users
+          still see `Sign in`. Applied to desktop and mobile header templates and
+          flushed dev memcached, preventing the overlap on the homepage and all
+          other non-admin pages.
+        - Follow-up: added a `Sign out` action to the admin dashboard header next
+          to `Your account` / report actions, styled as a low-emphasis red outline
+          button so admin/staff users can log out directly from admin after the
+          global header was simplified. Recompiled base.css and flushed dev
+          memcached.
+        - Follow-up: added a subtle divider + extra left margin/padding between the
+          desktop nav group and the language/action group to relieve crowding.
+          This BACKFIRED: the homepage `.header-container` is a fixed centred
+          `max-width: 1200px` (it matches the `.infra-container` content width), so
+          the added ~35px had nowhere to go and pushed the last nav item
+          (`For Government`) into the language flag — it overlapped/clipped.
+        - Fix: reverted the divider/extra padding and instead freed real space
+          inside the fixed 1200px row — trimmed the desktop logo from 275px → 250px
+          and reverted the language button to its compact padding — then used a
+          small `margin-left` on `.header-actions` for clean nav→actions
+          separation. Net result fits comfortably with the longest English labels,
+          no overlap, no divider line. Recompiled base.css and flushed dev
+          memcached. (Header stays width-aligned with the page content below.)
+    - InfraSignal — Jun 21, 2026 (Fix header looking broken/missing on map pages — dev only):
+        - Symptom: on map pages (/around, /report/new, /report/<id>) the top
+          header looked different from the rest of the site — the logo appeared
+          shoved toward the middle/right with a big empty dark gap on the left,
+          and on the narrow report sidebar the header looked like it had
+          collapsed/disappeared.
+        - Cause: the header markup and CSS classes are identical on every page,
+          but `#site-header .header-container` is `max-width: 1200px; margin: 0
+          auto` (centred). On normal pages the body content is also centred so
+          the logo lines up. On map pages the sidebar is flush to the far LEFT of
+          the window, so the centred header indented the logo ~hundreds of px
+          from the left edge, leaving an empty dark band above the sidebar — it
+          read as "the header disappeared." Core FixMyStreet also pulls
+          #site-header out of flow on body.mappage (it expects the legacy
+          #main-nav bar to be the map header, which InfraSignal doesn't use), and
+          both the platform rule and our previous layout.scss sticky override
+          were gated to >=48em, leaving narrow widths unstyled.
+        - Fix (web/cobrands/infrasignal/base.scss, applies at all widths):
+          `body.mappage #site-header` re-asserted as sticky / full-width / 64px /
+          z-index 60; `body.mappage #site-header .header-container { max-width:
+          none }` so the header is full-bleed and the logo sits flush-left,
+          aligned with the sidebar; and `body.mappage #main-nav { display:none }`
+          to drop the empty legacy placeholder. Recompiled base.css, flushed dev
+          memcached. dev only — not yet pushed to staging/production.
+    - InfraSignal — Jun 21, 2026 (Restrict address search to the US + stop config drift recurring):
+        - Symptom: searching e.g. "manchester" returned UK results ("Manchester,
+          Greater Manchester, England", etc.) instead of only US places.
+        - Cause: the geocoder (default OSM/Nominatim) had no country/bounds
+          restriction. Production's live config sets
+          `GEOCODING_DISAMBIGUATION: { country: 'us', bounds: [24.396308, -125.0,
+          49.384358, -66.93457] }`, but dev and staging had
+          `GEOCODING_DISAMBIGUATION: ''`, so Nominatim returned worldwide hits.
+        - Why it kept coming back: the live `conf/general.yml` is gitignored, so
+          the correct US values only ever lived in the (hand-edited) production
+          file. Every git-tracked template still shipped the wrong defaults —
+          `general.yml-docker` and `general.yml-staging` used fakemapit + empty
+          disambiguation, and `general.yml-production` even had the UK
+          mapit.mysociety.org defaults. Any environment regenerated from a
+          template reverted to non-US behaviour.
+        - Fix (durable):
+          1. Set US geocoding restriction in the live dev config
+             (`/opt/infrasignal-dev/conf/general.yml`) and the live staging
+             config (`/opt/infrasignal-staging/conf/general.yml-staging.runtime`)
+             — both also got the MapIt fix below.
+          2. Updated ALL tracked templates — `conf/general.yml-docker`,
+             `conf/general.yml-staging`, `conf/general.yml-production` — to the
+             correct US MapIt (global.mapit, types O04/O06/O07/O08, generation
+             10) and US `GEOCODING_DISAMBIGUATION`, each with a comment warning
+             not to revert to fakemapit/UK. So a rebuild from any template now
+             produces US-correct config.
+          Restarted dev + staging apps, flushed both memcacheds. Verified
+          "manchester" returns US-only on dev and staging (England count 0).
+          Production already had US geocoding live; its template now matches.
+    - InfraSignal — Jun 21, 2026 (Fix "no agency covers this location" on report/new — dev config):
+        - Symptom: starting a report (e.g. /report/new?longitude=-87.95...&
+          latitude=42.13...) showed "We do not yet have details for the agency
+          that covers this location ... will not be reported to the local
+          authority." Location/body detection had stopped working on dev.
+        - Cause: dev (and staging) `conf/general.yml` pointed MAPIT_URL at the
+          built-in FakeMapIt (`http://localhost:3000/fakemapit/`,
+          MAPIT_TYPES ['ZZZ'], generation 0). FakeMapIt returns a single area
+          161 "Everywhere" for *every* point, and no body is tied to area 161,
+          so nothing ever matched. Production, by contrast, uses the real global
+          MapIt (`https://global.mapit.mysociety.org/`, types O04/O06/O07/O08,
+          generation 10) which returns the real nested OSM areas (state /
+          county / township / city) that our bodies are attached to — that is
+          how the existing Buffalo Grove reports got
+          `areas=,1259340,958719,959228,974962,`.
+        - Fix: set dev `conf/general.yml` MapIt block to match production:
+          `MAPIT_URL: 'https://global.mapit.mysociety.org/'`,
+          `MAPIT_TYPES: [ 'O04', 'O06', 'O07', 'O08' ]`, `MAPIT_API_KEY: ''`,
+          `MAPIT_GENERATION: 10`. Verified the dev container can reach the
+          service (200), restarted the dev app and flushed memcached. The clicked
+          point now resolves to Wheeling / Wheeling Township / Cook County /
+          Illinois and the page shows "sent to Wheeling Township, IL, Wheeling,
+          IL" with the category form (warning gone).
+        - Staging had the same FakeMapIt misconfiguration; it has now been fixed
+          too (live runtime config + tracked template) — see the US-geocoding
+          entry above. Production was already on the real global MapIt.
+    - InfraSignal — Jun 21, 2026 (Fix stray blue "1" badge on report list rows — dev only):
+        - Symptom: when a staff member / superuser viewed a report list (e.g.
+          the /around map sidebar), every row had a small blue "1" badge on the
+          left, overlapping the report title. Regular users never saw it.
+        - Cause: that badge is the staff-only "Add to shortlist" control, which
+          the platform renders as `<input type="submit" value="1">` styled into
+          an icon-only star button (`overflow:hidden; height:0; background-image:
+          star`, see core `%list-item-action-button` /
+          `.item-list__item__shortlist-*`). It is permission-gated by
+          `planned_reports`. InfraSignal's global button rule
+          (`input[type="submit"] { background:$primary-700 !important;
+          background-image:none !important; color:#fff !important; padding... }`)
+          overrode that with `!important`, killing the star icon and the
+          text-hiding, so the raw value "1" showed as a solid blue button.
+        - Fix (web/cobrands/infrasignal/base.scss):
+          1. Excluded the shortlist/sort controls from the global submit styling
+             (`input[type="submit"]:not([class*="shortlist"])`) so the platform's
+             star icon and hidden text render correctly on the full admin reports
+             list and report-detail pages.
+          2. In the redesigned compact map sidebar list there is no room for the
+             control, so hid it there (`body.mappage .item-list--reports
+             .item-list__item [class*="shortlist"] { display:none }`) and dropped
+             the now-unneeded indent on `--indented` rows.
+          Recompiled base.css and flushed dev memcached so the cachebuster
+          updates. dev only — not yet pushed to staging/production.
     - InfraSignal — Jun 21, 2026 (Fix "browse photos" dropzone button contrast — dev only):
         - Symptom: the blue "browse photos" pill in the photo-upload area
           (report inspect / public update) had barely-readable text, and on
