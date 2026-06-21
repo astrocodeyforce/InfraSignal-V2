@@ -1,6 +1,21 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 21, 2026 (Fix clipped dropdown text on the report inspect sidebar — dev only):
+        - Symptom: on /report/<id> the inspect sidebar selects (Category,
+          State, Assign to, Priority) showed vertically clipped text — the
+          top and bottom of the option labels were cut off.
+        - Cause: core sass sets `select.form-control { height: 2.2em }`
+          (~35px), but InfraSignal's global select styling adds 10px
+          top/bottom padding and 16px text, which needs ~44px. The fixed
+          height squeezed the content box and clipped the glyphs.
+        - Fix (web/cobrands/infrasignal/base.scss): scoped override
+          `#report_inspect_form select.form-control, #side-inspect
+          select.form-control { height: auto; min-height: 44px;
+          line-height: 1.4 }` so padding drives the height (same pattern
+          already used for admin form selects). The ID selector outspecifies
+          the core rule. Recompiled base.css and flushed dev memcached so the
+          cachebuster updates.
     - InfraSignal — Jun 11, 2026 (Second test body + two-profile isolation test — dev only):
         - Added a second government to test alongside Buffalo Grove: Raleigh,
           NC (body 24482, 31 real reports). Mirrored all five Buffalo Grove
