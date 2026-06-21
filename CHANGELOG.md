@@ -1,6 +1,23 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 21, 2026 (Fix "browse photos" dropzone button contrast — dev only):
+        - Symptom: the blue "browse photos" pill in the photo-upload area
+          (report inspect / public update) had barely-readable text, and on
+          hover it went dark-on-dark.
+        - Cause: core sass styles `.dz-message u` with
+          `color: $dropzone-button-text` which falls back to `$primary_text`
+          (= $gray-700, dark gray) on a `$primary` (dark blue #1E40AF) fill —
+          low contrast. The core hover then inverts to background
+          $primary_text / color $primary (dark gray bg + dark blue text).
+        - Fix: set `$dropzone-button-text: #fff`
+          (web/cobrands/infrasignal/_colours.scss) so the label is white on
+          the blue fill, and add a brand hover
+          (web/cobrands/infrasignal/base.scss) — `.dz-clickable .dz-message u`
+          hover/focus uses $primary-500 (lighter blue) with white text,
+          instead of inverting to a white fill. The report-new page keeps its
+          own orange pill (ID-scoped, higher specificity). Recompiled CSS,
+          flushed dev memcached.
     - InfraSignal — Jun 21, 2026 (Fix clipped dropdown text on the report inspect sidebar — dev only):
         - Symptom: on /report/<id> the inspect sidebar selects (Category,
           State, Assign to, Priority) showed vertically clipped text — the

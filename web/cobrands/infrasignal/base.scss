@@ -1621,6 +1621,20 @@ textarea:focus {
     }
 }
 
+// "browse photos" pill in the dropzone message. Core inverts to dark-on-dark
+// on hover/focus (background -> $primary_text, text -> $primary), which is
+// unreadable. Match the brand primary button instead: solid blue with white
+// text, a lighter blue on hover — never inverting to a white fill. The
+// report-new page keeps its own orange pill (higher, ID-scoped specificity).
+.dz-clickable .dz-message u {
+    &:hover,
+    &:focus {
+        background: $primary-500;
+        color: #fff;
+        border-color: $primary-500;
+    }
+}
+
 // Form title and detail inputs — generous spacing
 #problem_form {
     label {

@@ -58,6 +58,11 @@ $primary: $primary-700;
 $primary_b: $primary-900;
 $primary_text: $gray-700;
 
+// Dropzone "browse photos" pill. Core uses $primary_text (dark gray) for the
+// button label, which is illegible on the $primary (dark blue) fill. Force
+// white so the pill reads like the brand's primary buttons.
+$dropzone-button-text: #fff;
+
 $base_bg: $primary-700;
 $base_fg: #fff;
 
