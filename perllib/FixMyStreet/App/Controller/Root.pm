@@ -41,6 +41,7 @@ sub auto : Private {
 
     # decide which cobrand this request should use
     $c->setup_request();
+    $c->forward('check_session_timeout');
     $c->forward('check_password_expiry');
     $c->detach('/auth/redirect') if $c->cobrand->call_hook('check_login_disallowed');
 
@@ -175,6 +176,64 @@ sub check_login_required : Private {
     return if $c->request->path =~ $whitelist;
 
     $c->detach( '/auth/redirect' );
+}
+
+=head2 check_session_timeout
+
+Security timeout for authenticated sessions. The Catalyst session store keeps a
+session alive for weeks with a rolling expiry, which means a logged-in
+staff/admin effectively never gets signed out. This enforces two stricter limits
+for logged-in users, on top of that:
+
+  * idle timeout     — log out after a period of inactivity (sliding window)
+  * absolute timeout — log out a fixed time after login, regardless of activity
+
+Anonymous sessions (in-progress reports, language overrides, etc.) are not
+affected; only requests with a real logged-in user and an existing session are.
+
+=cut
+
+# Tunable limits (seconds). Adjust here if policy changes.
+use constant SESSION_IDLE_TIMEOUT     => 60 * 60;       # 60 minutes of inactivity
+use constant SESSION_ABSOLUTE_TIMEOUT => 8 * 60 * 60;   # 8 hours since login
+
+sub check_session_timeout : Private {
+    my ($self, $c) = @_;
+
+    return unless $c->user_exists;
+    # Only applies to genuine cookie/session logins, not stateless token auth.
+    return unless $c->sessionid;
+
+    # Never interfere with the auth pages themselves (sign in / sign out must
+    # stay reachable) or the JS translation-strings endpoint (avoid breaking XHR).
+    return if $c->controller eq $c->controller('Auth');
+    return if $c->action eq $c->controller('JS')->action_for('translation_strings');
+
+    my $now        = time();
+    my $login_time = $c->session->{auth_login_time};
+    my $last_seen  = $c->session->{auth_last_active};
+
+    # Sessions created before this feature shipped won't have the stamps yet.
+    # Start tracking from now rather than force-logging them out mid-request.
+    if ( !$login_time || !$last_seen ) {
+        $c->session->{auth_login_time}  ||= $now;
+        $c->session->{auth_last_active}   = $now;
+        return;
+    }
+
+    my $idle_expired     = ( $now - $last_seen )  > SESSION_IDLE_TIMEOUT;
+    my $absolute_expired = ( $now - $login_time ) > SESSION_ABSOLUTE_TIMEOUT;
+
+    if ( $idle_expired || $absolute_expired ) {
+        my $reason = $absolute_expired ? 'session_max' : 'session_idle';
+        $c->logout();
+        $c->delete_session($reason);
+        $c->res->redirect( $c->uri_for('/auth', { expired => 1 }) );
+        $c->detach;
+    }
+
+    # Within limits — record activity to slide the idle window forward.
+    $c->session->{auth_last_active} = $now;
 }
 
 sub check_password_expiry : Private {

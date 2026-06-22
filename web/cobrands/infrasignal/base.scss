@@ -1070,12 +1070,14 @@ input[type="text"].form-control[name="search"] {
     font-size: 16px;
 }
 
-// Inspect report sidebar (Category / State / Assign to / Priority).
-// Core sets `select.form-control { height: 2.2em }` (~35px), but our larger
-// padding (10px top/bottom) plus 16px text needs more room, so the option
+// Inspect report sidebar (Category / State / Assign to / Priority) and the
+// staff "Report as" selector on /report/new (#form_as). Core sets
+// `select.form-control { height: 2.2em }` (~35px), but our larger padding
+// (10px top/bottom) plus 16px text needs more room, so the selected option
 // text was being clipped top and bottom. Let padding drive the height.
 #report_inspect_form select.form-control,
-#side-inspect select.form-control {
+#side-inspect select.form-control,
+select#form_as.form-control {
     height: auto;
     min-height: 44px;
     line-height: 1.4;

@@ -1,6 +1,42 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 21, 2026 (Fix clipped "Report as" select on /report/new — dev only):
+        - Symptom: on /report/new the staff "Report as" dropdown (#form_as)
+          showed its selected value (e.g. the body name "Buffalo Grove, IL")
+          vertically clipped at the top.
+        - Cause: same as the inspect-sidebar selects — core sets
+          `select.form-control { height: 2.2em }`, too short for InfraSignal's
+          larger padding + 16px text.
+        - Fix: extended the existing clipping-fix rule to also match
+          `select#form_as.form-control` (height:auto; min-height:44px;
+          line-height:1.4). Scoped to that one select only; nothing else touched.
+          Recompiled base.css and flushed dev memcached.
+    - InfraSignal — Jun 21, 2026 (Session security: idle + absolute auth timeouts — dev only):
+        - Problem: the Catalyst session store keeps a login alive for 4 weeks
+          with a *rolling* expiry (the timer resets on every request), so a
+          logged-in staff/admin was effectively never signed out automatically —
+          e.g. still logged in a day (or weeks) later. No idle timeout, no
+          absolute cap, no stricter rule for privileged accounts.
+        - Fix: added `Root::check_session_timeout` (called from `Root::auto`)
+          enforcing two limits for authenticated, cookie-session users only:
+            * idle timeout = 60 minutes of inactivity (sliding window), and
+            * absolute timeout = 8 hours since login (regardless of activity).
+          On expiry the user is logged out (`$c->logout` + `delete_session`) and
+          redirected to `/auth?expired=1`.
+        - Login time is now stamped at real authentication time via the
+          `RotateSession` plugin (`auth_login_time` / `auth_last_active`), so the
+          absolute cap measures from the actual login, not session restore.
+        - Scope/safety: anonymous sessions (in-progress reports, language
+          overrides) and stateless token/API auth are NOT affected; the check
+          skips the Auth controller and the JS translation-strings endpoint to
+          avoid logout/login loops and broken XHR. Sessions created before this
+          shipped start tracking from first request rather than being killed
+          mid-request. Limits are tunable constants in `Root.pm`
+          (SESSION_IDLE_TIMEOUT / SESSION_ABSOLUTE_TIMEOUT). Applies to ALL
+          logged-in users (incl. residents), not only admins — can be narrowed
+          to staff-only on request. Verified: files compile, dev app boots
+          clean, anonymous homepage/auth still return 200.
     - InfraSignal — Jun 21, 2026 (Add subtle Sign in / My account link to header — dev only):
         - Added a secondary header account link so logged-out users can reach
           `/auth` directly from the home page without competing with the primary
