@@ -1,6 +1,37 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 21, 2026 (PRODUCTION DEPLOY: dev→prod catch-up + parity check):
+        - First prod deploy in ~7 weeks. Production advanced from its frozen
+          commit `39b493aed` (May 3) to `origin/dev` HEAD `45c6cae05`,
+          bringing 153 commits of staging-validated work live — headlined by
+          the session security timeouts and the "Report as" select fix below.
+        - Prod was found with a *dirty* working tree (77 uncommitted stale
+          files) and 153 commits behind, so `bin/deploy` (require_clean_tree)
+          could not run. Safe path: full backup (DB dump + uncommitted patch +
+          untracked tarball + rollback commit, all under
+          `/opt/backups/infrasignal/` ts `20260622_004725`), then
+          `git reset --hard origin/dev`. Prod-critical config
+          (`nginx.conf-prod`, `docker-compose-prod.yml`) already matched dev
+          and `conf/general.yml` (secrets/Turnstile/OIDC/MapIt) is gitignored,
+          so neither changed.
+        - Applied `schema_0095` (per-body priority zones / `body_id`) to the
+          prod DB transactionally. No `cpanfile` change → no image rebuild;
+          recompiled CSS + es/ru/tr translations, restarted the app container
+          (~15s downtime) + flushed memcached + refreshed reports cache.
+        - Verified: healthcheck 9/9, key endpoints 200, "Report as" fix live
+          in `base.css?48f2d9c52e89`, session-timeout code present. Rollback
+          path documented (reset to `39b493aed` + restore dump, or
+          `bin/deploy --rollback`).
+        - Created a TEMPORARY Buffalo Grove test admin on prod for live
+          testing — `bg-admin-test@infrasignal.org` (user id 17, body 10588,
+          role "Auth", non-superuser). MUST be deleted after testing.
+        - Parity check (reports list + /report/new): confirmed dev = staging =
+          prod for code/templates/CSS (`45c6cae05`, `base.css?48f2d9c52e89`).
+          Remaining visual differences are data (demo reports), env flags
+          (staging notice, dev debug toolbar), prod-only config (Turnstile +
+          Google/OIDC), and login state (staff vs public) — not deploy gaps.
+        - Full details: `notes/2026-06-21-prod-deploy-and-parity.md`.
     - InfraSignal — Jun 21, 2026 (Fix clipped "Report as" select on /report/new — dev only):
         - Symptom: on /report/new the staff "Report as" dropdown (#form_as)
           showed its selected value (e.g. the body name "Buffalo Grove, IL")
