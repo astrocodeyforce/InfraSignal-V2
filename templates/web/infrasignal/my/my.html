@@ -23,6 +23,19 @@
       <p class="form-success account-flash">[% flash_message %]</p>
     [% END %]
 
+    [% IF c.user.get_extra_metadata('closure_requested_at') %]
+      <div class="account-closure-notice" role="alert">
+        <div class="account-closure-notice__text">
+          <strong>[% loc('Your account is scheduled to be closed.') %]</strong>
+          <span>[% loc('Your personal information will be permanently removed after the 30-day grace period. If this was a mistake, you can stop it now.') %]</span>
+        </div>
+        <form method="post" action="[% c.uri_for_action('/auth/profile/cancel_close_account') %]">
+          <input type="hidden" name="token" value="[% csrf_token %]">
+          <input type="submit" class="btn" value="[% loc('Keep my account') %]">
+        </form>
+      </div>
+    [% END %]
+
     <header class="account-hero">
       <div class="account-hero__identity">
         <div class="account-avatar" aria-hidden="true">[% account_initials | html %]</div>
@@ -187,6 +200,13 @@
             <input class="account-primary-btn" type="submit" value="[% loc('Update preferences') %]">
           </div>
         </form>
+
+        [% UNLESS c.user.get_extra_metadata('closure_requested_at') %]
+        <p class="account-danger-zone">
+          <a href="/auth/close_account">[% loc('Close account') %]</a>
+          <span>[% loc('Permanently remove your personal information from InfraSignal.') %]</span>
+        </p>
+        [% END %]
       </div>
 
       <aside class="account-side">

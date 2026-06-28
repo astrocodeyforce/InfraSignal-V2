@@ -11835,3 +11835,52 @@ msgstr "@InfraSignal üzerinden az önce bir sorun bildirdim"
 
 #~ msgid "Place pin on map"
 #~ msgstr "Harita üzerine işaretleyin"
+
+# InfraSignal accuracy & compliance corrections (2026-06)
+msgid "✓ Open source"
+msgstr "✓ Açık kaynak"
+
+msgid "✓ Available in 4 languages"
+msgstr "✓ 4 dilde mevcut"
+
+msgid "Open source"
+msgstr "Açık kaynak"
+
+msgid "Built to route across"
+msgstr "Şuralara yönlendirmek için tasarlandı"
+
+msgid "Report infrastructure issues and get them fixed. Built to serve communities across all 50 US states and D.C."
+msgstr "Altyapı sorunlarını bildirin ve çözülmesini sağlayın. ABD'nin 50 eyaletinin tamamı ve D.C. genelindeki topluluklara hizmet etmek için tasarlandı."
+
+msgid "Source code"
+msgstr "Kaynak kodu"
+
+msgid "Created and engineered by"
+msgstr "Tasarlayan ve geliştiren:"
+
+msgid "InfraSignal is built on <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, open-source software by <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, and is distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+msgstr "InfraSignal, <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a> üzerine kurulmuştur; <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a> tarafından geliştirilen açık kaynaklı bir yazılımdır ve <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a> kapsamında dağıtılır."
+
+msgid "An established civic-reporting model"
+msgstr "Yerleşik bir sivil bildirim modeli"
+
+msgid "Similar civic-reporting services include FixMyStreet and SocietyWorks (United Kingdom), FixaMinGata (Sweden), and Z&uuml;ri wie neu (Switzerland). They are referenced only as background on the model &mdash; not as InfraSignal customers or endorsements."
+msgstr "Benzer sivil bildirim hizmetleri arasında FixMyStreet ve SocietyWorks (Birleşik Krallık), FixaMinGata (İsveç) ve Z&uuml;ri wie neu (İsviçre) bulunur. Bunlara yalnızca model hakkında arka plan bilgisi olarak atıfta bulunulmuştur &mdash; InfraSignal müşterileri veya onayları olarak değil."
+
+msgid "Accessibility-minded"
+msgstr "Erişilebilirliğe önem veren"
+
+msgid "Privacy-conscious &middot; CCPA-aware"
+msgstr "Gizliliğe duyarlı &middot; CCPA'ya uygun"
+
+msgid "Local Government"
+msgstr "Yerel yönetim"
+
+msgid "Secure, encrypted connection"
+msgstr "Güvenli, şifreli bağlantı"
+
+msgid "Reports routed to the responsible authority"
+msgstr "Bildirimler sorumlu makama yönlendirilir"
+
+msgid "Privacy-conscious"
+msgstr "Gizliliğe duyarlı"

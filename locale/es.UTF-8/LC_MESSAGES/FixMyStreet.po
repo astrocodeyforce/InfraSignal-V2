@@ -12018,3 +12018,52 @@ msgstr "Acabo de reportar un problema en @InfraSignal"
 
 #~ msgid "Place pin on map"
 #~ msgstr "Coloque el marcador en el mapa"
+
+# InfraSignal accuracy & compliance corrections (2026-06)
+msgid "✓ Open source"
+msgstr "✓ Código abierto"
+
+msgid "✓ Available in 4 languages"
+msgstr "✓ Disponible en 4 idiomas"
+
+msgid "Open source"
+msgstr "Código abierto"
+
+msgid "Built to route across"
+msgstr "Diseñado para enrutar en"
+
+msgid "Report infrastructure issues and get them fixed. Built to serve communities across all 50 US states and D.C."
+msgstr "Reporte problemas de infraestructura y consiga que se resuelvan. Diseñado para servir a comunidades en los 50 estados de EE. UU. y D.C."
+
+msgid "Source code"
+msgstr "Código fuente"
+
+msgid "Created and engineered by"
+msgstr "Creado y desarrollado por"
+
+msgid "InfraSignal is built on <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, open-source software by <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, and is distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+msgstr "InfraSignal está construido sobre <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, software de código abierto de <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, y se distribuye bajo la <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+
+msgid "An established civic-reporting model"
+msgstr "Un modelo consolidado de reportes cívicos"
+
+msgid "Similar civic-reporting services include FixMyStreet and SocietyWorks (United Kingdom), FixaMinGata (Sweden), and Z&uuml;ri wie neu (Switzerland). They are referenced only as background on the model &mdash; not as InfraSignal customers or endorsements."
+msgstr "Servicios similares de reportes cívicos incluyen FixMyStreet y SocietyWorks (Reino Unido), FixaMinGata (Suecia) y Z&uuml;ri wie neu (Suiza). Se mencionan únicamente como contexto sobre el modelo &mdash; no como clientes ni respaldos de InfraSignal."
+
+msgid "Accessibility-minded"
+msgstr "Enfocado en la accesibilidad"
+
+msgid "Privacy-conscious &middot; CCPA-aware"
+msgstr "Respetuoso con la privacidad &middot; conforme a la CCPA"
+
+msgid "Local Government"
+msgstr "Gobierno local"
+
+msgid "Secure, encrypted connection"
+msgstr "Conexión segura y cifrada"
+
+msgid "Reports routed to the responsible authority"
+msgstr "Reportes enrutados a la autoridad responsable"
+
+msgid "Privacy-conscious"
+msgstr "Respetuoso con la privacidad"

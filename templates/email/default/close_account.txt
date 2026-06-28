@@ -1,0 +1,23 @@
+Subject: Confirm closing your [% site_name %] account
+
+You (or someone using your email address) asked to close your account
+on [% site_name %].
+
+If you want to go ahead, click the link below to confirm:
+
+[% c.uri_for('/auth/close_account/confirm', token) %]
+
+After you confirm, your account will be scheduled for closure and then
+permanently removed after a 30-day grace period. Your reports will remain
+online but will no longer be linked to you or show your name.
+
+Changed your mind? You can cancel any time during those 30 days by signing
+in again and choosing "Keep my account".
+
+If you did NOT request this, you can safely ignore this email and your
+account will be left exactly as it is.
+
+[% signature %]
+
+This email was sent automatically, from an unmonitored email account - so
+please do not reply to it.

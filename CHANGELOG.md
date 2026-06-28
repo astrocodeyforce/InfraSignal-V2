@@ -1,6 +1,38 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 22, 2026 (Self-service "Close my account" — dev only):
+        - New requirement: let users delete their own account (the privacy
+          policy already promises a "Right to Delete", but there was no
+          in-product way to do it — only an admin could anonymize via
+          Admin → Users, or the inactive-accounts script).
+        - Added a self-service closure flow in `Auth/Profile.pm`:
+            * `GET /auth/close_account` — warning screen explaining the action
+              is permanent and that reports stay as an anonymous public record.
+            * `POST` requires a typed confirmation phrase ("DELETE") AND the
+              current password (when the account has one); then emails a
+              one-time confirmation link. Nothing changes until that link is
+              followed (token scoped `close_account`, 1-day lifetime).
+            * `GET /auth/close_account/confirm/<token>` — validates the token,
+              runs the existing core `User->anonymize_account` (scrubs email,
+              name, phone, password, social IDs; anonymizes the user's
+              reports/updates; disables alerts; removes staff), burns the
+              token, signs the user out, shows a done page.
+        - Reuses vetted core logic (anonymize, not hard-delete) so the civic
+          record of reports is preserved per the privacy policy. Superusers
+          are blocked from self-closing (must be handled by another admin) to
+          avoid locking the platform out of admin access.
+        - The emailed confirm link works even if the login session has since
+          expired (authenticates via the token, not the session).
+        - New templates: `auth/close_account.html` (warning form + "check your
+          email" state), `auth/close_account_done.html` (success / invalid-link),
+          `email/default/close_account.txt`. Added a discreet "Close account"
+          danger link on the `/my` account page, plus `.btn--danger` /
+          `.account-danger-zone` styles; recompiled base.css.
+        - Verified end-to-end on dev: wrong phrase and wrong password are
+          rejected; correct submission emails a token; confirming anonymizes
+          the account (email → removed-<id>@…, name/password cleared,
+          unverified) and the link is single-use. NOT yet on staging/prod.
     - InfraSignal — Jun 21, 2026 (PRODUCTION DEPLOY: dev→prod catch-up + parity check):
         - First prod deploy in ~7 weeks. Production advanced from its frozen
           commit `39b493aed` (May 3) to `origin/dev` HEAD `45c6cae05`,

@@ -4130,6 +4130,31 @@ a[href="/report"] {
     color: rgba($primary-300, 0.6);
 }
 
+// Open-source attribution required for AGPL compliance (FixMyStreet / mySociety).
+.site-footer__attribution {
+    margin-top: 40px;
+    padding-top: 24px;
+    border-top: 1px solid rgba($primary-500, 0.15);
+    text-align: center;
+
+    p {
+        font-size: 0.78rem;
+        line-height: 1.6;
+        margin: 0;
+        color: rgba($primary-300, 0.7);
+    }
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+
+        &:hover,
+        &:focus {
+            color: rgba(#fff, 0.9);
+        }
+    }
+}
+
 .site-footer__lang-switch {
   display: flex;
   align-items: center;
@@ -16210,6 +16235,80 @@ body.mappage #report-a-problem-main #form_category_legend {
         letter-spacing: 0;
         color: $lv-text-muted;
         font-weight: 600;
+    }
+}
+
+// Self-service account closure: a red "Close my account" button (used on the
+// /auth/close_account warning page) and a low-emphasis danger link on /my.
+.btn--danger {
+    background: #b91c1c;
+    border-color: #b91c1c;
+    color: #fff;
+
+    &:hover,
+    &:focus {
+        background: #991b1b;
+        border-color: #991b1b;
+        color: #fff;
+    }
+}
+
+.account-danger-zone {
+    margin-top: 1.5em;
+    padding-top: 1em;
+    border-top: 1px solid $lv-border;
+    font-size: 0.9em;
+
+    a {
+        color: #b91c1c;
+        font-weight: 600;
+        text-decoration: underline;
+
+        &:hover,
+        &:focus {
+            color: #991b1b;
+        }
+    }
+
+    span {
+        display: block;
+        margin-top: 0.25em;
+        color: $lv-text-muted;
+    }
+}
+
+// Banner shown on /my while a self-service account closure is pending its
+// 30-day grace period, with a "Keep my account" button to cancel.
+.account-closure-notice {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1em;
+    margin-bottom: 1.5em;
+    padding: 1em 1.25em;
+    border: 1px solid #f0c36d;
+    border-left: 4px solid #b45309;
+    border-radius: 4px;
+    background: #fff8e6;
+
+    &__text {
+        strong {
+            display: block;
+            color: #92400e;
+        }
+
+        span {
+            display: block;
+            margin-top: 0.25em;
+            color: $lv-text-muted;
+            font-size: 0.9em;
+        }
+    }
+
+    form {
+        margin: 0;
+        flex: 0 0 auto;
     }
 }
 

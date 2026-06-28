@@ -11915,3 +11915,52 @@ msgstr "Я только что сообщил о проблеме на @InfraSig
 
 #~ msgid "Place pin on map"
 #~ msgstr "Поставить метку на карте"
+
+# InfraSignal accuracy & compliance corrections (2026-06)
+msgid "✓ Open source"
+msgstr "✓ Открытый исходный код"
+
+msgid "✓ Available in 4 languages"
+msgstr "✓ Доступно на 4 языках"
+
+msgid "Open source"
+msgstr "Открытый исходный код"
+
+msgid "Built to route across"
+msgstr "Создано для маршрутизации по"
+
+msgid "Report infrastructure issues and get them fixed. Built to serve communities across all 50 US states and D.C."
+msgstr "Сообщайте о проблемах инфраструктуры и добивайтесь их устранения. Создано для сообществ во всех 50 штатах США и округе Колумбия."
+
+msgid "Source code"
+msgstr "Исходный код"
+
+msgid "Created and engineered by"
+msgstr "Создано и разработано"
+
+msgid "InfraSignal is built on <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, open-source software by <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, and is distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+msgstr "InfraSignal создан на основе <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a> — программного обеспечения с открытым исходным кодом от <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a> — и распространяется по лицензии <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+
+msgid "An established civic-reporting model"
+msgstr "Признанная модель гражданских обращений"
+
+msgid "Similar civic-reporting services include FixMyStreet and SocietyWorks (United Kingdom), FixaMinGata (Sweden), and Z&uuml;ri wie neu (Switzerland). They are referenced only as background on the model &mdash; not as InfraSignal customers or endorsements."
+msgstr "Похожие сервисы гражданских обращений включают FixMyStreet и SocietyWorks (Великобритания), FixaMinGata (Швеция) и Z&uuml;ri wie neu (Швейцария). Они приведены только как пример модели &mdash; а не как клиенты или рекомендации InfraSignal."
+
+msgid "Accessibility-minded"
+msgstr "С вниманием к доступности"
+
+msgid "Privacy-conscious &middot; CCPA-aware"
+msgstr "Уважение к приватности &middot; с учётом CCPA"
+
+msgid "Local Government"
+msgstr "Местные органы власти"
+
+msgid "Secure, encrypted connection"
+msgstr "Безопасное зашифрованное соединение"
+
+msgid "Reports routed to the responsible authority"
+msgstr "Обращения направляются ответственному органу"
+
+msgid "Privacy-conscious"
+msgstr "Уважение к приватности"
