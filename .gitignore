@@ -50,6 +50,8 @@ docker/ssl.key
 # Environment secrets (NEVER commit)
 .env
 *.env.local
+*.runtime
+/backups/
 
 # JS coverage
 /.nyc_output

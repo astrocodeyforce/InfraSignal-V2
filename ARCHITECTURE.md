@@ -3,7 +3,7 @@
 **Last Updated:** 2026-02-28  
 **Version:** 2.3  
 **Live URL:** https://infrasignal.org  
-**Server:** `REDACTED-HOST` — 2 vCPU, 8 GB RAM, 96 GB disk (x86_64)
+**Server:** Linux VPS (origin behind Cloudflare) — 2 vCPU, 8 GB RAM, 96 GB disk (x86_64)
 
 ---
 
@@ -12,7 +12,7 @@
 InfraSignal is a civic infrastructure reporting platform built on [FixMyStreet Platform](https://fixmystreet.org/) v6.0 (AGPL v3). It runs as a set of Docker containers on a single Linux server, fronted by Cloudflare for DNS, SSL termination, and DDoS protection.
 
 ```
-Internet → Cloudflare (DNS + SSL) → Server (REDACTED-HOST)
+Internet → Cloudflare (DNS + SSL) → Origin Server
                                         ├── nginx (reverse proxy, ports 80/443)
                                         ├── fixmystreet (Perl/Starman app, port 9000)
                                         ├── db (PostgreSQL 13.11 + PostGIS)
@@ -70,7 +70,7 @@ All services log to `json-file` with 10 MB max size, 3 rotated files.
 | **css_watcher** | SCSS auto-compile on file change (dev only) |
 | **setup** | One-shot DB migration + asset build (dev only) |
 
-> **CRITICAL:** The dev compose file must NEVER serve production traffic. See [AI-RULES.md](AI-RULES.md).
+> **CRITICAL:** The dev compose file must NEVER serve production traffic.
 
 ---
 
@@ -126,8 +126,8 @@ main              ← Production branch. Always deployable. bin/deploy pulls fro
 
 | Remote | URL | Purpose |
 |--------|-----|---------|
-| `origin` | `InfraSignal-V2.git` (GitHub) | Public repo (AGPL code only) |
-| `private` | `infrasignal-v3.git` | Private repo (same code, backup) |
+| `origin` | GitHub | Public repo (AGPL code only) |
+| `private` | (private mirror) | Private repo (same code, backup) |
 
 ### Archived Branches
 
@@ -141,7 +141,7 @@ All old version branches (`Version-1` through `Version-2.2`) have been archived 
 
 | Aspect | Value |
 |--------|-------|
-| **Server** | `REDACTED-HOST` |
+| **Server** | Linux VPS (origin behind Cloudflare) |
 | **Compose File** | `docker/docker-compose-prod.yml` |
 | **Branch** | `main` |
 | **URL** | https://infrasignal.org |

@@ -16,7 +16,7 @@ if ('geolocation' in navigator && https && window.addEventListener) {
 ```
 
 ## Current Status
-- **Server**: running on `http://REDACTED-IP:3000` (HTTP, not HTTPS)
+- **Server**: running on the dev environment (HTTP, not HTTPS)
 - **Result**: Button is hidden by JS after page loads
 - **Behavior**: Button flashes briefly (cache/render) then disappears when JS executes
 

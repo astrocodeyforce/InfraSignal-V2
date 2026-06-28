@@ -66,7 +66,6 @@ The dev environment will be available at `http://localhost:3000` with additional
 services (MailHog email catcher, CSS watcher, setup container).
 
 > **Important:** Never use `docker-compose-dev.yml` for production.
-> See [AI-RULES.md](AI-RULES.md) for the full set of operational rules.
 
 ### Configuration
 
@@ -135,7 +134,6 @@ main              ← Production (always deployable, bin/deploy pulls this)
 | Document | Purpose |
 |----------|---------|
 | [ARCHITECTURE.md](ARCHITECTURE.md) | Full system architecture, topology, and operations guide |
-| [AI-RULES.md](AI-RULES.md) | Mandatory rules for AI assistants working on this codebase |
 | [CHANGELOG.md](CHANGELOG.md) | Version history and release notes |
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contribution guidelines |
 

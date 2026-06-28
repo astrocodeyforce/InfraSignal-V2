@@ -38,18 +38,13 @@
         - Data Cleanup:
             - Removed all 59 test/junk reports from production database (owner decision:
               clean start from zero).
-            - Removed 4 test user accounts. Kept `REDACTED-EMAIL` (regular user).
-            - Created `admin@infrasignal.org` superuser with is_superuser flag.
-            - Pre-cleanup full backup preserved: `backup_20260228_pre-cleanup.sql` (137 MB).
+            - Removed 4 test user accounts; kept the existing regular user account.
+            - Created the superuser admin account (is_superuser flag).
+            - Pre-cleanup full backup preserved.
         - Documentation:
             - Created `ARCHITECTURE.md`: full system architecture guide covering container
               topology, technology stack, directory structure, git branching, environment
               separation, backup system, monitoring, deployment, cron jobs, external services.
-            - Created `AI-RULES.md`: 10 mandatory rules for AI assistants working on the
-              codebase — environment verification, dev/prod separation, file identification,
-              change process, Docker operations, database rules, configuration handling,
-              documentation requirements, secret handling, communication standards. Includes
-              4 documented real incidents as lessons learned.
             - Updated `README.md`: added version, production deployment section, key scripts
               table, git branching guide, documentation index. Replaced dev-only installation
               instructions with both production and development quick starts.
@@ -138,7 +133,7 @@
             - Production: /opt/infrasignal-v2 on Version-1.9 branch
               — serves https://infrasignal.org via ports 80/443
             - Development: /opt/infrasignal-dev on dev branch
-              — serves http://REDACTED-IP:3000 (plain HTTP)
+              — serves the dev environment over plain HTTP
             - Dev shares production DB/memcached/mailhog via Docker
               external network (docker_default), no data duplication.
             - Dev docker-compose-local.yml with project name "infrasignal-dev".
