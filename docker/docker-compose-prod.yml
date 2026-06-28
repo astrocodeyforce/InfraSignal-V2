@@ -30,7 +30,7 @@ services:
       - ../conf/nginx-main.conf:/etc/nginx/nginx.conf:ro
       - ../conf/ssl:/etc/nginx/ssl:ro
     healthcheck:
-      test: ["CMD-SHELL", "curl -sf http://localhost/ || exit 1"]
+      test: ["CMD-SHELL", "curl -sf -H 'Host: infrasignal.org' http://localhost/ || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 3

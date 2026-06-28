@@ -1,0 +1,178 @@
+{
+  "languages": ["en-gb", "tr", "es", "ru"],
+  "categories": [
+    "Abandoned Vehicle",
+    "Bridge / Guardrail Damage",
+    "Drainage / Flooding",
+    "Fallen Tree / Vegetation",
+    "Graffiti / Vandalism",
+    "Illegal Dumping",
+    "Park / Public Space Issue",
+    "Pothole / Road Damage",
+    "Sidewalk Damage",
+    "Streetlight Outage",
+    "Traffic Signal / Sign Issue",
+    "Water / Sewer Issue",
+    "Other"
+  ],
+  "public_pages": [
+    "/",
+    "/how-it-works",
+    "/about",
+    "/about/for-local-government",
+    "/faq",
+    "/about/privacy",
+    "/about/terms",
+    "/about/security",
+    "/contact",
+    "/reports",
+    "/alert"
+  ],
+  "admin_pages": [
+    "/admin",
+    "/admin/stats",
+    "/admin/bodies",
+    "/admin/reports",
+    "/admin/duplicate_reports",
+    "/admin/priority_zones",
+    "/admin/templates",
+    "/admin/responsepriorities",
+    "/admin/users",
+    "/admin/roles",
+    "/admin/sitemessage",
+    "/admin/config",
+    "/admin/manifesttheme"
+  ],
+  "admin_size_threshold_kb": 400,
+  "i18n_markers": {
+    "ru": {
+      "/": {
+        "expect": ["Сообщить о проблеме", "Язык"],
+        "forbid": ["Report an Issue"]
+      },
+      "/about": {
+        "expect": ["О нас"],
+        "forbid": ["About Us"]
+      },
+      "/faq": {
+        "expect": ["Часто задаваемые вопросы"],
+        "forbid": ["Frequently Asked Questions"]
+      },
+      "/about/privacy": {
+        "expect": ["Политика конфиденциальности"],
+        "forbid": ["Privacy Policy"]
+      },
+      "/about/terms": {
+        "expect": ["Условия использования"],
+        "forbid": ["Terms"]
+      },
+      "/contact": {
+        "expect": ["Свяжитесь с нами"],
+        "forbid": []
+      },
+      "/auth": {
+        "expect": ["Войти"],
+        "forbid": []
+      },
+      "/alert": {
+        "expect": ["оповещения"],
+        "forbid": []
+      }
+    },
+    "tr": {
+      "/": {
+        "expect": ["Sorun Bildir", "Dil"],
+        "forbid": ["Report an Issue"]
+      },
+      "/about": {
+        "expect": ["Hakkımızda"],
+        "forbid": ["About Us"]
+      },
+      "/faq": {
+        "expect": ["Sıkça Sorulan Sorular"],
+        "forbid": ["Frequently Asked Questions"]
+      },
+      "/about/privacy": {
+        "expect": ["Gizlilik Politikası"],
+        "forbid": ["Privacy Policy"]
+      },
+      "/about/terms": {
+        "expect": ["Kullanım Koşulları"],
+        "forbid": ["Terms"]
+      },
+      "/contact": {
+        "expect": ["Bize Ulaşın"],
+        "forbid": []
+      },
+      "/auth": {
+        "expect": ["Giriş"],
+        "forbid": []
+      },
+      "/alert": {
+        "expect": ["Uyarılar"],
+        "forbid": []
+      }
+    },
+    "es": {
+      "/": {
+        "expect": ["Reportar un Problema", "Idioma"],
+        "forbid": ["Report an Issue"]
+      },
+      "/about": {
+        "expect": ["Acerca de"],
+        "forbid": ["About Us"]
+      },
+      "/faq": {
+        "expect": ["Preguntas Frecuentes"],
+        "forbid": ["Frequently Asked Questions"]
+      },
+      "/about/privacy": {
+        "expect": ["Política de Privacidad"],
+        "forbid": ["Privacy Policy"]
+      },
+      "/about/terms": {
+        "expect": ["Términos y Condiciones"],
+        "forbid": ["Terms"]
+      },
+      "/contact": {
+        "expect": ["Contáctenos"],
+        "forbid": []
+      },
+      "/auth": {
+        "expect": ["Iniciar sesión"],
+        "forbid": []
+      },
+      "/alert": {
+        "expect": ["Alertas"],
+        "forbid": []
+      }
+    }
+  },
+  "admin_sidebar_translations": {
+    "ru": {
+      "Duplicate Reports": "Дублирующие отчёты",
+      "Priority Zones": "Приоритетные зоны"
+    },
+    "tr": {
+      "Duplicate Reports": "Yinelenen Bildirimler",
+      "Priority Zones": "Öncelik Bölgeleri"
+    },
+    "es": {
+      "Duplicate Reports": "Reportes Duplicados",
+      "Priority Zones": "Zonas de Prioridad"
+    }
+  },
+  "docker_containers": [
+    "staging-fixmystreet-1",
+    "staging-nginx-1",
+    "staging-db-1",
+    "staging-memcached-1"
+  ],
+  "test_coords": {
+    "latitude": "42.995640",
+    "longitude": "-71.454789"
+  },
+  "test_category": "Pothole / Road Damage",
+  "staging_db_container": "staging-db-1",
+  "staging_db_name": "infrasignal"
+}

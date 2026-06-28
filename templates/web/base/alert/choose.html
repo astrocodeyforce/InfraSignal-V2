@@ -7,7 +7,12 @@
     <p>[% loc('We found more than one match for that location.') %]</p>
     <ul class="pc_alternatives">
         [% FOREACH match IN possible_location_matches %]
-        <li><a href="[% choose_target_uri %]?latitude=[% match.latitude | uri %];longitude=[% match.longitude | uri %]">[% match.address | html %]</a></li>
+                [%
+                    SET match_address = match.address.replace(', United States of America', '');
+                    SET match_address = match_address.replace(', United States', '');
+                    SET match_address = match_address.replace(', USA', '');
+                %]
+                <li><a href="[% choose_target_uri %]?pc=[% match_address | uri %];latitude=[% match.latitude | uri %];longitude=[% match.longitude | uri %]">[% match_address | html %]</a></li>
         [% END %]
     </ul>
     <p>[% loc('We show up to ten matches, please try a different search if yours is not here.') %]</p>

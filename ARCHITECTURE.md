@@ -1,9 +1,190 @@
 # InfraSignal — Architecture Guide
 
-**Last Updated:** 2026-02-28  
-**Version:** 2.3  
+**Last Updated:** 2026-05-27  
+**Version:** 2.6  
 **Live URL:** https://infrasignal.org  
 **Server:** Linux VPS (origin behind Cloudflare) — 2 vCPU, 8 GB RAM, 96 GB disk (x86_64)
+
+> See also: [`SYSTEM-MAP.md`](SYSTEM-MAP.md) for a visual map of containers,
+> networks, request flow, and where-to-edit-what cheat-sheet.
+
+---
+
+## Current Production State (as of 2026-05-26)
+
+### What is live right now
+
+| Aspect | Value |
+| --- | --- |
+| URL | `https://infrasignal.org` (HTTP 200) |
+| Hostname filter | Only `infrasignal.org` + `www.infrasignal.org`. All other Host headers → 444. |
+| Compose project | `docker` (not `infrasignal-v2` — that one is legacy, stopped) |
+| Compose file | `docker/docker-compose-prod.yml` |
+| Source mount | `/opt/infrasignal-v2 → /var/www/fixmystreet` (live bind mount; deploys are "git pull on the box") |
+| Branch the prod checkout sits on | `dev` (113+ commits ahead of `main` at the time of tagging) |
+| Rollback marker | git tag `prod-2026-05-03` on commit `39b493ae` |
+
+### Intended workflow
+
+```
+local dev work  →  staging.infrasignal.org  →  infrasignal.org (prod)
+   (/opt/infrasignal-dev)   (compose project staging)   (compose project docker)
+```
+
+- Dev is a separate checkout (`/opt/infrasignal-dev`) with its own
+  postgres and memcached as of 2026-05-26 — see "Development
+  environment" below.
+- Staging is its own compose project, runs on `0.0.0.0:8080` (public
+  demo link **http://REDACTED-IP:8080/** as of 2026-05-29), has its
+  own DB and memcached, fully isolated network, and its own source
+  tree at `/opt/infrasignal-staging`.
+- Prod runs whatever's currently checked out at `/opt/infrasignal-v2`
+  on whatever branch it's on. The `bin/deploy` script enforces a
+  clean working tree before `git pull` and defaults to `dev` branch.
+
+#### Promotion is MANUAL (by design — never automatic)
+
+The three environments are deliberately decoupled. Changes flow one
+direction, and only when a human pushes them:
+
+```
+1. make + verify change on dev        (/opt/infrasignal-dev, :3001)
+2. git commit + push to origin/dev
+3. promote CODE to staging (manual rsync):
+     sudo rsync -a --delete --exclude='.git/' --exclude='local/' \
+       --exclude='web/photo/' /opt/infrasignal-dev/ /opt/infrasignal-staging/
+4. (optional) promote DATA with bin/refresh-db or bin/seed-demo-photos.sh
+5. only after staging looks right → promote to prod
+```
+
+- There is **no** live link or auto-sync between environments. Each has
+  its own source tree and its own database.
+- There are no `staging`/`production` git branches: all work lands on
+  `dev`; environments are deployed/promoted from there.
+
+### Recent changes to the deploy script
+
+- `BRANCH` default changed from `main` (which is 2 months stale) to
+  `dev`. Override with `DEPLOY_BRANCH=main ./bin/deploy ...`.
+- `--full` and `--migrate` now call `require_clean_tree()` and abort
+  on uncommitted changes (with a `git status --short` of what to fix).
+- `--quick` and `--rollback` skip the clean-tree check (those are
+  valid in emergencies).
+
+### Legacy `infrasignal-v2` compose project
+
+Four containers (`infrasignal-v2-nginx-1`, `-fixmystreet-1`, `-postgres-1`,
+`-memcached-1`) — original FixMyStreet bring-up before the prod stack
+was refactored into compose project `docker`. They were in a
+`Restarting (127)` loop because their image referenced a missing
+`bin/cron-wrapper`. Stopped on 2026-05-26 and `--restart=no` set.
+Volumes (`infrasignal-v2_postgres-data`) and network preserved. The
+DB inside was verified empty before stopping.
+
+### CI-built image: where it lives and how to deploy it
+
+GitHub Actions builds and pushes an image to
+`ghcr.io/astrocodeyforce/infrasignal-v2` on every push to `main`,
+`dev`, or `staging`. Tags applied:
+
+| Tag | Created from |
+| --- | --- |
+| `ghcr.io/astrocodeyforce/infrasignal-v2:dev` | every push to `dev` |
+| `ghcr.io/astrocodeyforce/infrasignal-v2:<sha7>` | every push to any tracked branch |
+| `ghcr.io/astrocodeyforce/infrasignal-v2:latest` | every push to `main` |
+
+`docker/docker-compose-prod-image.yml` is a **draft** compose file
+that pulls one of those images instead of bind-mounting the source.
+Not active yet. Activate (once staging has validated a tag):
+
+```
+IMAGE_TAG=<sha-or-dev> sudo docker compose -p docker \
+    -f docker/docker-compose-prod-image.yml --env-file docker/.env up -d
+```
+
+### Staging environment
+
+Compose project `staging`, file `docker/docker-compose-staging.yml`.
+Four services on isolated `staging_default` network:
+
+| Service | Notes |
+| --- | --- |
+| `staging-nginx-1` | `nginx:1.27.2`, ports `0.0.0.0:8080:80` (public demo link `http://REDACTED-IP:8080/`), uses `conf/nginx.conf-docker` (NOT prod) |
+| `staging-fixmystreet-1` | Built from `Dockerfile-development`. Mounts whole source tree AND overrides `conf/general.yml` with `conf/general.yml-staging.runtime` |
+| `staging-db-1` | Postgres 13.11. Its own volume `staging_staging-pgdata`. Uses `fms` role + `infrasignal` database (created at bootstrap) |
+| `staging-memcached-1` | `memcached -m 64 -c 512` |
+
+The runtime config (`conf/general.yml-staging.runtime`) is generated
+from `conf/general.yml-staging` (template) by substituting
+`POSTGRES_PASSWORD` from `docker/.env`. The runtime file is
+gitignored. Use `sudo bin/staging-deploy --regen` to refresh it.
+
+Access via SSH tunnel (no public hostname yet):
+
+```
+ssh -L 8080:127.0.0.1:8080 root@REDACTED-HOST
+# then visit http://localhost:8080 in your browser
+```
+
+**Known follow-up:** `bin/update-schema --commit` on a fresh staging
+DB only loaded the base schema (v0093). The custom
+`db/schema_0094-priority-zones.sql` had to be applied manually. Future
+bootstraps should sweep numbered SQL above the base version.
+
+### Development environment (`/opt/infrasignal-dev`)
+
+The dev checkout is a **second copy of the repo** at
+`/opt/infrasignal-dev` that runs its own app + nginx on `:3001` (HTTP
+only) and is the day-to-day editor target. Compose project
+`infrasignal-dev`, file `/opt/infrasignal-dev/docker/docker-compose-local.yml`.
+
+**As of 2026-05-26, dev is fully DB-isolated.** It no longer shares
+production's postgres / memcached. Two new services were added to
+dev's compose:
+
+| Service | Image / build | Alias on docker_default | Backing volume |
+| --- | --- | --- | --- |
+| `dev-db` | `postgres:13.11` with `en_GB.UTF-8` baked in | `dev-postgres.svc` | `infrasignal-dev_dev-pgdata` |
+| `dev-memcached` | `memcached:1.6.32` | `dev-memcached.svc` | n/a (in-memory) |
+
+`/opt/infrasignal-dev/conf/general.yml` was switched from `postgres.svc`
+to `dev-postgres.svc` and from `memcached.svc` to `dev-memcached.svc`.
+The pre-isolation file is preserved at
+`/opt/infrasignal-dev/conf/general.yml.pre-isolation-2026-05-26.bak`.
+
+Why this mattered: before isolation, dev connected as the postgres
+**superuser** with the prod superuser password, against the prod
+database. Any test in dev (sign-ins, report creation, schema poking)
+mutated production data. Dev is now a clean empty DB; data flows
+prod → dev only on demand (planned `bin/refresh-db` script — not yet
+built).
+
+To bootstrap a fresh dev DB if it ever needs reloading:
+
+```
+cd /opt/infrasignal-dev
+sudo docker compose -p infrasignal-dev -f docker/docker-compose-local.yml up -d dev-db dev-memcached
+sudo docker exec infrasignal-dev-dev-db-1 psql -U postgres -c "CREATE DATABASE infrasignal;"
+sudo docker compose -p infrasignal-dev -f docker/docker-compose-local.yml run --rm dev-fixmystreet bin/update-schema --commit
+sudo docker restart infrasignal-dev-dev-fixmystreet-1
+```
+
+Dev still attaches to the `docker_default` bridge so the hand-started
+`dev-nginx-proxy` container can reach `dev-fixmystreet.svc`. The dev
+DB and dev memcached share that bridge but expose **different**
+aliases than prod, so resolution never crosses streams.
+
+### Things that are still pending (deliberately not done yet)
+
+- Switching prod off the live `../:/var/www/fixmystreet` bind mount in
+  favour of the CI-built image. The variant compose file
+  (`docker/docker-compose-prod-image.yml`) is in place; flip when
+  staging has validated an image tag end-to-end.
+- Exposing staging via a public hostname + SSL cert.
+- Adding a public `staging` server_name to the prod nginx (currently
+  locked to `infrasignal.org` and `www.infrasignal.org`).
+- A `bin/refresh-db` script for PII-scrubbed one-way prod → staging
+  and prod → dev seeding.
 
 ---
 

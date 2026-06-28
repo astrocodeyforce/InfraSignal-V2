@@ -19,12 +19,56 @@ verifying email, phone, password.
 
 =cut
 
+use constant CLOSE_ACCOUNT_PHRASE => 'DELETE';
+
+# Undo-able grace period before a confirmed closure is actually anonymized.
+# Kept in sync with bin/process-account-closures (the purge job).
+use constant CLOSURE_GRACE_DAYS => 30;
+
 sub auto : Private {
     my ( $self, $c ) = @_;
+
+    # The emailed account-closure confirmation link must keep working even if
+    # the login session has since expired, so it authenticates via the one-time
+    # token rather than the session.
+    return 1 if $c->action->name eq 'close_account_confirm';
 
     $c->detach( '/auth/redirect' ) unless $c->user;
 
     return 1;
+}
+
+sub change_name : Path('/auth/change_name') {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{template} = 'auth/change_name.html';
+
+    $c->forward('/auth/get_csrf_token');
+
+    # If not a post then no submission
+    return unless $c->req->method eq 'POST';
+
+    $c->forward('/auth/check_csrf_token');
+
+    my $name = $c->get_param('name') // '';
+    $name =~ s/^\s+//;
+    $name =~ s/\s+$//;
+    $c->stash->{profile_name} = $name;
+
+    if (!$name) {
+        $c->stash->{name_error} = 'missing';
+        return;
+    }
+
+    if (length $name > 100) {
+        $c->stash->{name_error} = 'too_long';
+        return;
+    }
+
+    $c->user->update({ name => $name });
+    $c->flash->{flash_message} = _('You have successfully updated your name.');
+    $c->res->redirect('/my');
+    $c->detach;
 }
 
 =head2 change_password
@@ -170,6 +214,132 @@ sub change_password_success : Path('/auth/change_password/success') {
     my ( $self, $c ) = @_;
     $c->flash->{flash_message} = _('Your password has been changed');
     $c->res->redirect('/my');
+}
+
+=head2 close_account
+
+Self-service account closure, step 1. Shows a warning screen and, on a valid
+POST (typed confirmation phrase + current password where the account has one),
+emails a one-time confirmation link. Nothing is changed until that link is
+followed, so an accidental or malicious request cannot remove an account.
+
+=cut
+
+sub close_account : Path('/auth/close_account') {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{template}       = 'auth/close_account.html';
+    $c->stash->{confirm_phrase} = CLOSE_ACCOUNT_PHRASE;
+    $c->stash->{has_password}   = $c->user->password ? 1 : 0;
+    $c->stash->{grace_days}     = CLOSURE_GRACE_DAYS;
+
+    $c->forward('/auth/get_csrf_token');
+
+    return unless $c->req->method eq 'POST';
+
+    $c->forward('/auth/check_csrf_token');
+
+    # Platform superusers cannot self-close (avoids accidentally removing the
+    # only admin); they must be handled by another superuser via /admin.
+    if ( $c->user->is_superuser ) {
+        $c->stash->{close_error} = 'superuser';
+        return;
+    }
+
+    # Typed confirmation phrase (case-insensitive).
+    my $typed = $c->get_param('confirm_phrase') // '';
+    $typed =~ s/^\s+//;
+    $typed =~ s/\s+$//;
+    unless ( uc($typed) eq CLOSE_ACCOUNT_PHRASE ) {
+        $c->stash->{close_error} = 'phrase';
+        return;
+    }
+
+    # Current password, when the account has one set.
+    if ( $c->user->password ) {
+        my $current = $c->get_param('current_password') // '';
+        unless ( length $current && $c->user->check_password($current) ) {
+            $c->stash->{close_error} = 'password';
+            return;
+        }
+    }
+
+    # One-time token carrying the user id; get_token enforces a 1-day lifetime.
+    my $token_obj = $c->model('DB::Token')->create({
+        scope => 'close_account',
+        data  => { user_id => $c->user->id },
+    });
+
+    $c->stash->{token} = $token_obj->token;
+    $c->send_email( 'close_account.txt', { to => $c->user->email } );
+    $c->stash->{email_sent} = 1;
+}
+
+=head2 close_account_confirm
+
+Self-service account closure, step 2. Validates the emailed one-time token and
+*schedules* the account for closure after a grace period (CLOSURE_GRACE_DAYS),
+rather than anonymizing immediately. This lets the user undo an accidental or
+malicious (account-takeover) request by signing back in and cancelling. The
+actual anonymization is performed by bin/process-account-closures once the grace
+period elapses. The user is signed out here.
+
+=cut
+
+sub close_account_confirm : Path('/auth/close_account/confirm') : Args(1) {
+    my ( $self, $c, $token ) = @_;
+
+    $c->stash->{template} = 'auth/close_account_done.html';
+
+    my $data = $c->forward( '/auth/get_token', [ $token, 'close_account' ] );
+    return if $c->stash->{token_not_found};
+
+    my $user = $c->model('DB::User')->find({ id => $data->{user_id} });
+    $c->stash->{token_not_found} = 1, return unless $user;
+
+    # Already anonymized (e.g. by an admin) — nothing to schedule.
+    unless ( $user->email && $user->email =~ /^removed-\d+\@/ ) {
+        my $now = time();
+        $user->set_extra_metadata( closure_requested_at => $now );
+        $user->set_extra_metadata( closure_method       => 'self' );
+        $user->update;
+        $c->stash->{closure_date} = $now + CLOSURE_GRACE_DAYS * 24 * 60 * 60;
+    }
+
+    # Burn the token so the link cannot be reused.
+    $c->model('DB::Token')
+        ->search({ scope => 'close_account', token => $token })->delete;
+
+    # End the active session if it belongs to this account; the user can sign
+    # back in during the grace period to cancel.
+    $c->logout() if $c->user_exists && $c->user->id == $data->{user_id};
+
+    $c->stash->{grace_days}        = CLOSURE_GRACE_DAYS;
+    $c->stash->{closure_scheduled} = 1;
+}
+
+=head2 cancel_close_account
+
+Lets a signed-in user cancel a pending account closure during the grace period
+("Keep my account").
+
+=cut
+
+sub cancel_close_account : Path('/auth/close_account/cancel') {
+    my ( $self, $c ) = @_;
+
+    $c->forward('/auth/get_csrf_token');
+
+    if ( $c->req->method eq 'POST' ) {
+        $c->forward('/auth/check_csrf_token');
+        $c->user->unset_extra_metadata('closure_requested_at');
+        $c->user->unset_extra_metadata('closure_method');
+        $c->user->update;
+        $c->flash->{flash_message} = _('Your account closure has been cancelled — welcome back.');
+    }
+
+    $c->res->redirect('/my');
+    $c->detach;
 }
 
 sub generate_token : Path('/auth/generate_token') {

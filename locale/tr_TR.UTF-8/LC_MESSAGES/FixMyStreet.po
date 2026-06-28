@@ -1582,7 +1582,7 @@ msgstr "Doğu/Kuzey:"
 #: templates/web/zurich/admin/problem_row.html:52
 #: templates/web/zurich/admin/templates/view.html:20
 msgid "Edit"
-msgstr "Ekle"
+msgstr "Düzenle"
 
 #: templates/web/base/admin/bodies/body.html:148
 #: templates/web/base/admin/index.html:40
@@ -2806,8 +2806,8 @@ msgid ""
 "It's often quickest to <a href=\"%s\">check our FAQs</a> and see if the "
 "answer is there."
 msgstr ""
-" FAQs'ı kontrol et</a> bu çözüme ulaşmak için <a href=\"%s\">en hızlı "
-"yoldur."
+"Genellikle en hızlısı <a href=\"%s\">sık sorulan sorularımıza bakmak</a> ve "
+"cevabın orada olup olmadığını görmektir."
 
 #: templates/web/base/tokens/confirm_problem.html:34
 msgid "It’s on its way to the council right now."
@@ -3543,7 +3543,7 @@ msgstr "Yalnızca orijinal rapor sahibi güncelleme bırakabilir."
 #: templates/web/base/dashboard/index.html:145
 #: templates/web/zurich/admin/update_edit.html:18
 msgid "Open"
-msgstr "Aç"
+msgstr "Açık"
 
 #: templates/web/base/admin/bodies/open311-form-fields.html:47
 msgid "Open311 API Key"
@@ -8346,6 +8346,3466 @@ msgstr "Şehir"
 msgid "cities in"
 msgstr "şehir:"
 
+# >>> InfraSignal marketing-page strings (auto-added)
+# added 2026-05-30 for home/how-it-works/for-local-government/security
+msgid "&ldquo;It has been a resounding success.&rdquo;"
+msgstr "&ldquo;Büyük bir başarı oldu.&rdquo;"
+
+msgid ""
+"&ldquo;Members of the public are choosing to use the platform...&rdquo;"
+msgstr "&ldquo;Halk, platformu kullanmayı tercih ediyor...&rdquo;"
+
+msgid "&ldquo;a catalyst for change.&rdquo;"
+msgstr "&ldquo;değişim için bir katalizör.&rdquo;"
+
+msgid "&ldquo;easier, faster to use, and more interactive&rdquo;"
+msgstr "&ldquo;daha kolay, daha hızlı ve daha etkileşimli&rdquo;"
+
+msgid ""
+"&ldquo;simple for the user, but deal with some complex routing behind the "
+"scenes&rdquo;"
+msgstr ""
+"&ldquo;kullanıcı için basit, ancak arka planda karmaşık yönlendirmeyi "
+"yönetir&rdquo;"
+
+msgid "+45% online reporting"
+msgstr "+%45 çevrimiçi bildirim"
+
+msgid "-24% reporting costs"
+msgstr "-%24 bildirim maliyeti"
+
+msgid "13 standardized infrastructure categories"
+msgstr "13 standartlaştırılmış altyapı kategorisi"
+
+msgid "200,000+ updates each year"
+msgstr "yılda 200.000+ güncelleme"
+
+msgid "30+ UK councils live"
+msgstr "30+ İngiltere belediyesi aktif"
+
+msgid "4 languages"
+msgstr "4 dil"
+
+msgid "92% resolution rate shown"
+msgstr "%92 çözüm oranı gösterildi"
+
+msgid "99.5% fewer duplicates"
+msgstr "%99,5 daha az yinelenen"
+
+msgid ""
+"A behind-the-scenes look at how InfraSignal turns a quick submission into a "
+"routed, trackable record."
+msgstr ""
+"InfraSignal'in hızlı bir gönderimi yönlendirilmiş, izlenebilir bir kayda "
+"nasıl dönüştürdüğüne perde arkası bir bakış."
+
+msgid ""
+"A simple way to report issues in your neighborhood and ensure they reach the"
+" right people."
+msgstr ""
+"Mahallenizdeki sorunları bildirmenin ve doğru kişilere ulaşmasını sağlamanın"
+" basit bir yolu."
+
+msgid "A structured public reporting channel for infrastructure teams."
+msgstr "Altyapı ekipleri için yapılandırılmış bir kamu bildirim kanalı."
+
+msgid "AI-assisted intake"
+msgstr "Yapay zeka destekli alım"
+
+msgid "About Us"
+msgstr "Hakkımızda"
+
+msgid "Action Scheduled"
+msgstr "Eylem Planlandı"
+
+msgid "Add a location, description, and photos."
+msgstr "Konum, açıklama ve fotoğraf ekleyin."
+
+msgid "Add a photo, location, and short description in one guided step."
+msgstr ""
+"Tek bir yönlendirmeli adımda fotoğraf, konum ve kısa açıklama ekleyin."
+
+msgid "Agency workflow"
+msgstr "Kurum iş akışı"
+
+msgid "All rights reserved."
+msgstr "Tüm hakları saklıdır."
+
+msgid "Anatomy"
+msgstr "Yapısı"
+
+msgid "Audience"
+msgstr "Hedef Kitle"
+
+msgid "Better insight into recurring infrastructure issues."
+msgstr "Tekrar eden altyapı sorunlarına daha iyi içgörü."
+
+msgid "Boundary matching"
+msgstr "Sınır eşleştirme"
+
+msgid "Boundary routing"
+msgstr "Sınıra göre yönlendirme"
+
+msgid "Bridge / Guard"
+msgstr "Köprü / Korkuluk"
+
+msgid ""
+"Browse reported issues on the public map and see what has already been "
+"submitted."
+msgstr ""
+"Bildirilen sorunlara herkese açık haritada göz atın ve nelerin zaten "
+"gönderildiğini görün."
+
+msgid ""
+"Buckinghamshire reported fewer calls, fewer emails, fewer duplicate reports,"
+" and lower handling costs."
+msgstr ""
+"Buckinghamshire daha az çağrı, daha az e-posta, daha az yinelenen bildirim "
+"ve daha düşük işleme maliyeti bildirdi."
+
+msgid "Built for Public Reporting"
+msgstr "Kamu Bildirimi İçin Tasarlandı"
+
+msgid "Built for government"
+msgstr "Devlet için tasarlandı"
+
+msgid "Built for residents"
+msgstr "Sakinler için tasarlandı"
+
+msgid "Category is used for routing"
+msgstr "Kategori yönlendirme için kullanılır"
+
+msgid "Category routing"
+msgstr "Kategoriye göre yönlendirme"
+
+msgid ""
+"Category suggestions and photo moderation support cleaner report review."
+msgstr ""
+"Kategori önerileri ve fotoğraf denetimi daha temiz bildirim incelemesini "
+"destekler."
+
+msgid ""
+"Central Bedfordshire reported a 46% increase in online reports and a 24% "
+"reduction in reporting costs."
+msgstr ""
+"Central Bedfordshire çevrimiçi bildirimlerde %46 artış ve bildirim "
+"maliyetlerinde %24 azalma bildirdi."
+
+msgid "Channel shift"
+msgstr "Kanal değişimi"
+
+msgid "Cities & Towns"
+msgstr "Şehirler ve Kasabalar"
+
+msgid "City & County Public Works"
+msgstr "Şehir ve İlçe Kamu Hizmetleri"
+
+msgid "City infrastructure reporting service for Z&uuml;rich."
+msgstr "Zürih için şehir altyapısı bildirim hizmeti."
+
+msgid "City-wide &middot; since 2013"
+msgstr "Şehir genelinde &middot; 2013'ten beri"
+
+msgid "Company"
+msgstr "Şirket"
+
+msgid "Cost efficiency"
+msgstr "Maliyet verimliliği"
+
+msgid "Council reference quotes"
+msgstr "Belediye referans alıntıları"
+
+msgid "Council references"
+msgstr "Belediye referansları"
+
+msgid "Drain / Flood"
+msgstr "Drenaj / Su Baskını"
+
+msgid "Duplicates are reduced"
+msgstr "Yinelenenler azaltılır"
+
+msgid ""
+"Each submitted report is intended to give staff enough context to decide who"
+" should review it and what should happen next."
+msgstr ""
+"Gönderilen her bildirim, personele kimin inceleyeceğine ve sonraki adımın ne"
+" olacağına karar vermek için yeterli bağlamı vermeyi amaçlar."
+
+msgid "Email and Open311 GeoReport v2-compatible routing where configured."
+msgstr ""
+"Yapılandırıldığı yerlerde e-posta ve Open311 GeoReport v2 uyumlu "
+"yönlendirme."
+
+msgid "Email intake"
+msgstr "E-posta ile alım"
+
+msgid "Emergency, high, normal, and low priority levels help teams triage."
+msgstr ""
+"Acil, yüksek, normal ve düşük öncelik düzeyleri ekiplerin "
+"önceliklendirmesine yardımcı olur."
+
+msgid "English, Spanish, Russian, and Turkish support are built in."
+msgstr "İngilizce, İspanyolca, Rusça ve Türkçe desteği yerleşiktir."
+
+msgid "FAQ"
+msgstr "SSS"
+
+msgid "Fewer irrelevant reports"
+msgstr "Daha az alakasız bildirim"
+
+msgid "Follow progress as updates are added."
+msgstr "Güncellemeler eklendikçe ilerlemeyi takip edin."
+
+msgid "Follow status updates as the issue is reviewed and resolved."
+msgstr "Sorun incelenip çözülürken durum güncellemelerini takip edin."
+
+msgid "For Government"
+msgstr "Devlet İçin"
+
+msgid "For Local Authorities"
+msgstr "Yerel Yönetimler İçin"
+
+msgid "For Local Government"
+msgstr "Yerel Yönetim İçin"
+
+msgid "For Residents"
+msgstr "Sakinler İçin"
+
+msgid ""
+"From a quick resident report to a trackable public record, InfraSignal keeps"
+" the process clear."
+msgstr ""
+"Hızlı bir sakin bildiriminden izlenebilir bir kamu kaydına kadar, "
+"InfraSignal süreci net tutar."
+
+msgid "GDPR-aligned"
+msgstr "GDPR uyumlu"
+
+msgid "Geographic data helps route reports to the right public authority."
+msgstr ""
+"Coğrafi veriler bildirimleri doğru kamu kurumuna yönlendirmeye yardımcı "
+"olur."
+
+msgid "Get email alerts for local activity."
+msgstr "Yerel etkinlik için e-posta uyarıları alın."
+
+msgid ""
+"Gloucestershire saw a 45% increase in online reporting within four months "
+"while improving transparency for residents."
+msgstr ""
+"Gloucestershire dört ay içinde çevrimiçi bildirimde %45 artış gördü ve "
+"sakinler için şeffaflığı artırdı."
+
+msgid "Go to quote 1"
+msgstr "1. alıntıya git"
+
+msgid "Go to quote 2"
+msgstr "2. alıntıya git"
+
+msgid "Go to quote 3"
+msgstr "3. alıntıya git"
+
+msgid "Go to quote 4"
+msgstr "4. alıntıya git"
+
+msgid "Go to quote 5"
+msgstr "5. alıntıya git"
+
+msgid "Go to quote 6"
+msgstr "6. alıntıya git"
+
+msgid "Graffiti"
+msgstr "Grafiti"
+
+msgid "High priority"
+msgstr "Yüksek öncelik"
+
+msgid "How InfraSignal Works"
+msgstr "InfraSignal Nasıl Çalışır"
+
+msgid "How It Works"
+msgstr "Nasıl Çalışır"
+
+msgid ""
+"How a resident report moves through your team &mdash; from inbox to public "
+"update."
+msgstr ""
+"Bir sakin bildiriminin ekibinizde nasıl ilerlediği &mdash; gelen kutusundan "
+"herkese açık güncellemeye."
+
+msgid "Illegal Dumping"
+msgstr "Yasadışı Atık"
+
+msgid ""
+"Implementation can be aligned around the way an agency already receives and "
+"assigns work."
+msgstr ""
+"Uygulama, bir kurumun işi halihazırda nasıl aldığı ve atadığı etrafında "
+"hizalanabilir."
+
+msgid "In Progress"
+msgstr "Devam Ediyor"
+
+msgid ""
+"InfraSignal follows a public reporting pattern already used by civic "
+"reporting services internationally: residents submit location-based reports,"
+" agencies receive structured intake, and communities can follow public "
+"updates over time."
+msgstr ""
+"InfraSignal, dünya çapında sivil bildirim hizmetleri tarafından zaten "
+"kullanılan bir kamu bildirim modelini izler: sakinler konum tabanlı "
+"bildirimler gönderir, kurumlar yapılandırılmış alım alır ve topluluklar "
+"zaman içinde herkese açık güncellemeleri takip edebilir."
+
+msgid ""
+"InfraSignal gives residents one simple place to report local problems "
+"without needing to know which department to contact."
+msgstr ""
+"InfraSignal, sakinlere hangi departmanla iletişime geçeceklerini bilmelerine"
+" gerek kalmadan yerel sorunları bildirebilecekleri basit tek bir yer sunar."
+
+msgid ""
+"InfraSignal helps public teams receive resident reports with location, "
+"category, details, photos, and follow-up context in a consistent format."
+msgstr ""
+"InfraSignal, kamu ekiplerinin sakin bildirimlerini konum, kategori, "
+"ayrıntılar, fotoğraflar ve takip bağlamıyla tutarlı bir biçimde almasına "
+"yardımcı olur."
+
+msgid ""
+"InfraSignal is not just a reporting form. Reports can be viewed publicly, "
+"followed individually, or monitored through local alerts."
+msgstr ""
+"InfraSignal yalnızca bir bildirim formu değildir. Bildirimler herkese açık "
+"olarak görüntülenebilir, tek tek takip edilebilir veya yerel uyarılar "
+"aracılığıyla izlenebilir."
+
+msgid "InfraSignal pins the issue to the right place on the map."
+msgstr "InfraSignal, sorunu haritada doğru yere sabitler."
+
+msgid ""
+"InfraSignal turns resident reports into structured, location-based "
+"information that is easier to review, route, and respond to."
+msgstr ""
+"InfraSignal, sakin bildirimlerini incelemesi, yönlendirmesi ve yanıtlaması "
+"daha kolay olan yapılandırılmış, konum tabanlı bilgilere dönüştürür."
+
+msgid ""
+"InfraSignal uses the address, zipcode, or map pin to understand exactly "
+"where the issue is located."
+msgstr ""
+"InfraSignal, sorunun tam olarak nerede olduğunu anlamak için adresi, posta "
+"kodunu veya harita iğnesini kullanır."
+
+msgid "Intake"
+msgstr "Alım"
+
+msgid "Investigating"
+msgstr "Araştırılıyor"
+
+msgid ""
+"Jurisdiction and boundary matching for location-based assignment to the "
+"responsible authority."
+msgstr ""
+"Sorumlu kuruma konum tabanlı atama için yargı yetkisi ve sınır eşleştirme."
+
+msgid ""
+"Large pothole near pedestrian crossing &mdash; water pooling after rain."
+msgstr ""
+"Yaya geçidi yakınında büyük çukur &mdash; yağmurdan sonra su birikmesi."
+
+msgid "Latest issues reported by community members near you."
+msgstr "Yakınınızdaki topluluk üyeleri tarafından bildirilen en son sorunlar."
+
+msgid "Legal"
+msgstr "Yasal"
+
+msgid ""
+"Lincolnshire reports around 80% online reporting and automatic status "
+"updates at county scale."
+msgstr ""
+"Lincolnshire, ilçe ölçeğinde yaklaşık %80 çevrimiçi bildirim ve otomatik "
+"durum güncellemeleri bildiriyor."
+
+msgid "Local Admins for Routing & Updates"
+msgstr "Yönlendirme ve Güncellemeler için Yerel Yöneticiler"
+
+msgid "Local Alerts"
+msgstr "Yerel Uyarılar"
+
+msgid "Locate"
+msgstr "Konumu Belirleyin"
+
+msgid "Location is matched"
+msgstr "Konum eşleştirildi"
+
+msgid "Map position, coordinates, and address context"
+msgstr "Harita konumu, koordinatlar ve adres bağlamı"
+
+msgid "Model"
+msgstr "Model"
+
+msgid "Multi-language access"
+msgstr "Çok dilli erişim"
+
+msgid "National &middot; 290 cities"
+msgstr "Ulusal &middot; 290 şehir"
+
+msgid "National local issue reporting service for Sweden."
+msgstr "İsveç için ulusal yerel sorun bildirim hizmeti."
+
+msgid ""
+"Nearby existing reports may be shown so residents can avoid reporting the "
+"same issue twice."
+msgstr ""
+"Sakinlerin aynı sorunu iki kez bildirmemesi için yakındaki mevcut "
+"bildirimler gösterilebilir."
+
+msgid "Next quote"
+msgstr "Sonraki alıntı"
+
+msgid "Noise"
+msgstr "Gürültü"
+
+msgid ""
+"Northumberland used public updates, asset mapping, and workflow messages to "
+"handle heavy drainage demand more clearly."
+msgstr ""
+"Northumberland, yoğun drenaj talebini daha net karşılamak için herkese açık "
+"güncellemeleri, varlık haritalamasını ve iş akışı mesajlarını kullandı."
+
+msgid "Open311 v2"
+msgstr "Open311 v2"
+
+msgid "Operations"
+msgstr "Operasyonlar"
+
+msgid "Operations and integration"
+msgstr "Operasyonlar ve entegrasyon"
+
+msgid "Platform"
+msgstr "Platform"
+
+msgid ""
+"Post public updates so residents can follow progress without submitting "
+"again."
+msgstr ""
+"Sakinlerin tekrar göndermeden ilerlemeyi takip edebilmesi için herkese açık "
+"güncellemeler yayınlayın."
+
+msgid "Pothole"
+msgstr "Çukur"
+
+msgid "Pothole & Road"
+msgstr "Çukur / Yol"
+
+msgid "Previous quote"
+msgstr "Önceki alıntı"
+
+msgid "Priority context"
+msgstr "Öncelik bağlamı"
+
+msgid "Priority context for triage"
+msgstr "Önceliklendirme için öncelik bağlamı"
+
+msgid "Priority levels for emergency, high, normal, and low reports."
+msgstr "Acil, yüksek, normal ve düşük bildirimler için öncelik düzeyleri."
+
+msgid ""
+"Priority levels help teams triage emergency, high, normal, and low reports."
+msgstr ""
+"Öncelik düzeyleri, ekiplerin acil, yüksek, normal ve düşük bildirimleri "
+"önceliklendirmesine yardımcı olur."
+
+msgid "Proven civic reporting model"
+msgstr "Kanıtlanmış sivil bildirim modeli"
+
+msgid "Public adoption"
+msgstr "Kamusal benimseme"
+
+msgid "Public report link and update history"
+msgstr "Herkese açık bildirim bağlantısı ve güncelleme geçmişi"
+
+msgid ""
+"Public reports can be viewed on the map so residents and local teams can see"
+" what has already been reported."
+msgstr ""
+"Herkese açık bildirimler haritada görüntülenebilir, böylece sakinler ve "
+"yerel ekipler nelerin zaten bildirildiğini görebilir."
+
+msgid "Public visibility into reported issues."
+msgstr "Bildirilen sorunlarda kamusal görünürlük."
+
+msgid ""
+"Public visibility that can reduce duplicate reports and clarify status."
+msgstr ""
+"Yinelenen bildirimleri azaltabilen ve durumu netleştirebilen kamusal "
+"görünürlük."
+
+msgid "Public-sector civic reporting deployments and integrations."
+msgstr "Kamu sektörü sivil bildirim uygulamaları ve entegrasyonları."
+
+msgid "Public-sector proof points"
+msgstr "Kamu sektörü kanıt noktaları"
+
+msgid "Quote slides"
+msgstr "Alıntı slaytları"
+
+msgid "Read the case study"
+msgstr "Vaka çalışmasını okuyun"
+
+msgid "Ready to report an issue?"
+msgstr "Bir sorun bildirmeye hazır mısınız?"
+
+msgid "Receive"
+msgstr "Alma"
+
+msgid ""
+"Receive reports directly into a shared inbox for teams that manage requests "
+"via email today."
+msgstr ""
+"Bugün talepleri e-posta yoluyla yöneten ekipler için bildirimleri doğrudan "
+"paylaşılan bir gelen kutusuna alın."
+
+msgid "Recently Reported Problems"
+msgstr "Son Bildirilen Sorunlar"
+
+msgid "Reduced duplicate reports."
+msgstr "Yinelenen bildirimler azaldı."
+
+msgid "Report an Issue"
+msgstr "Sorun Bildir"
+
+msgid ""
+"Report infrastructure issues and get them fixed. Serving communities across "
+"all 51 US states."
+msgstr ""
+"Altyapı sorunlarını bildirin ve çözülmelerini sağlayın. ABD'nin 51 "
+"bölgesinin tamamında topluluklara hizmet veriyoruz."
+
+msgid ""
+"Report potholes, broken streetlights, sidewalk damage, drainage issues, "
+"trash overflow, graffiti, abandoned vehicles, and other infrastructure "
+"problems."
+msgstr ""
+"Çukurları, bozuk sokak lambalarını, kaldırım hasarlarını, drenaj "
+"sorunlarını, taşan çöpleri, grafitileri, terk edilmiş araçları ve diğer "
+"altyapı sorunlarını bildirin."
+
+msgid "Report, route, and track in four simple steps"
+msgstr "Dört basit adımda bildirin, yönlendirin ve takip edin"
+
+msgid ""
+"Reports are public, location-based, and easy to follow, helping residents "
+"and public teams work from the same information."
+msgstr ""
+"Bildirimler herkese açık, konum tabanlı ve takibi kolaydır; sakinlerin ve "
+"kamu ekiplerinin aynı bilgilerle çalışmasına yardımcı olur."
+
+msgid ""
+"Reports can be sent to responsible authorities by email or service "
+"integrations such as Open311 where configured."
+msgstr ""
+"Bildirimler, yapılandırıldığı yerlerde e-posta veya Open311 gibi hizmet "
+"entegrasyonları aracılığıyla sorumlu yetkililere gönderilebilir."
+
+msgid "Resident contact details where required"
+msgstr "Gerektiğinde sakin iletişim bilgileri"
+
+msgid "Resident experience"
+msgstr "Sakin deneyimi"
+
+msgid ""
+"Residents can follow updates, subscribe to alerts, and check report progress"
+" over time."
+msgstr ""
+"Sakinler güncellemeleri takip edebilir, uyarılara abone olabilir ve zaman "
+"içinde bildirim ilerlemesini kontrol edebilir."
+
+msgid "Respond"
+msgstr "Yanıtlama"
+
+msgid "Review"
+msgstr "İnceleme"
+
+msgid "Review by category, priority, location, and available contact context."
+msgstr ""
+"Kategoriye, önceliğe, konuma ve mevcut iletişim bağlamına göre inceleyin."
+
+msgid ""
+"Review repeated categories, locations, and response patterns over time."
+msgstr ""
+"Zaman içinde tekrarlanan kategorileri, konumları ve yanıt kalıplarını "
+"inceleyin."
+
+msgid "Route"
+msgstr "Yönlendirme"
+
+msgid ""
+"Route reports to the right service area or department based on the resident-"
+"selected category."
+msgstr ""
+"Sakinin seçtiği kategoriye göre bildirimleri doğru hizmet alanına veya "
+"departmana yönlendirin."
+
+msgid "Routed"
+msgstr "Yönlendirildi"
+
+msgid "Routing and setup options"
+msgstr "Yönlendirme ve kurulum seçenekleri"
+
+msgid "SOC 2-ready"
+msgstr "SOC 2'ye hazır"
+
+msgid "Scale"
+msgstr "Ölçek"
+
+msgid "See reports from other residents."
+msgstr "Diğer sakinlerin bildirimlerini görün."
+
+msgid "Selected category and report description"
+msgstr "Seçilen kategori ve bildirim açıklaması"
+
+msgid "Send issues to the right department, inbox, or integration channel."
+msgstr ""
+"Sorunları doğru departmana, gelen kutusuna veya entegrasyon kanalına "
+"gönderin."
+
+msgid "Service Coordinators & Intake Teams"
+msgstr "Hizmet Koordinatörleri ve Alım Ekipleri"
+
+msgid "Setup"
+msgstr "Kurulum"
+
+msgid "Setup options"
+msgstr "Kurulum seçenekleri"
+
+msgid ""
+"Short excerpts and published outcomes from real SocietyWorks case studies."
+msgstr ""
+"Gerçek SocietyWorks vaka çalışmalarından kısa alıntılar ve yayınlanmış "
+"sonuçlar."
+
+msgid ""
+"Short quote excerpts and published figures from publicly available "
+"SocietyWorks case studies, shown as reference points for the civic reporting"
+" model. These councils are not InfraSignal customers or endorsers."
+msgstr ""
+"Herkese açık SocietyWorks vaka çalışmalarından kısa alıntılar ve yayınlanmış"
+" rakamlar; sivil bildirim modeli için referans noktası olarak "
+"gösterilmiştir. Bu belediyeler InfraSignal müşterisi veya destekçisi "
+"değildir."
+
+msgid "Sidewalk"
+msgstr "Kaldırım"
+
+msgid "Smart routing"
+msgstr "Akıllı yönlendirme"
+
+msgid "Snap a photo and describe the issue. Our AI helps fill in the details."
+msgstr ""
+"Bir fotoğraf çekin ve sorunu açıklayın. Yapay zekamız ayrıntıları doldurmaya"
+" yardımcı olur."
+
+msgid "SocietyWorks"
+msgstr "SocietyWorks"
+
+msgid "Staff admin"
+msgstr "Personel yönetimi"
+
+msgid ""
+"Staff and admin access for reviewing reports, posting updates, and managing "
+"routing rules."
+msgstr ""
+"Bildirimleri incelemek, güncellemeler yayınlamak ve yönlendirme kurallarını "
+"yönetmek için personel ve yönetici erişimi."
+
+msgid "Staff/admin tools for reviewing reports and updates."
+msgstr ""
+"Bildirimleri ve güncellemeleri incelemek için personel/yönetici araçları."
+
+msgid "Standardized categories aligned with common public works operations."
+msgstr ""
+"Yaygın kamu hizmetleri operasyonlarıyla uyumlu standartlaştırılmış "
+"kategoriler."
+
+msgid "Start Reporting"
+msgstr "Bildir"
+
+msgid ""
+"Start with an address, add the details, and let InfraSignal help your report"
+" reach the right place."
+msgstr ""
+"Bir adresle başlayın, ayrıntıları ekleyin ve InfraSignal'in bildiriminizin "
+"doğru yere ulaşmasına yardımcı olmasına izin verin."
+
+msgid "States + D.C."
+msgstr "Eyaletler + D.C."
+
+msgid "Streetlight"
+msgstr "Sokak Lambası"
+
+msgid ""
+"Structured intake, routing, priority context, and integration details are "
+"now grouped on one page for public teams."
+msgstr ""
+"Yapılandırılmış alım, yönlendirme, öncelik bağlamı ve entegrasyon "
+"ayrıntıları artık kamu ekipleri için tek bir sayfada gruplanmıştır."
+
+msgid ""
+"Structured reports from residents with location, category, details, and "
+"photos."
+msgstr ""
+"Sakinlerden konum, kategori, ayrıntılar ve fotoğraflarla yapılandırılmış "
+"bildirimler."
+
+msgid "Structured reports with category, location, details, and photos."
+msgstr ""
+"Kategori, konum, ayrıntılar ve fotoğraflarla yapılandırılmış bildirimler."
+
+msgid "Structured reports, cleaner intake"
+msgstr "Yapılandırılmış bildirimler, daha temiz alım"
+
+msgid ""
+"Structured, geolocated reports with photos and resident contact context."
+msgstr ""
+"Fotoğraflar ve sakin iletişim bağlamıyla yapılandırılmış, coğrafi konumlu "
+"bildirimler."
+
+msgid "Subscribe to updates for reports near an address or area."
+msgstr ""
+"Bir adresin veya bölgenin yakınındaki bildirimler için güncellemelere abone "
+"olun."
+
+msgid "Sweden"
+msgstr "İsveç"
+
+msgid "Switzerland"
+msgstr "İsviçre"
+
+msgid "Terms & Conditions"
+msgstr "Kullanım Koşulları"
+
+msgid ""
+"The issue category helps determine which local department or service should "
+"receive the report."
+msgstr ""
+"Sorun kategorisi, bildirimin hangi yerel departman veya hizmete ulaşması "
+"gerektiğini belirlemeye yardımcı olur."
+
+msgid ""
+"The public reporting experience stays simple for residents, while agencies "
+"receive cleaner information for triage, routing, and response."
+msgstr ""
+"Kamu bildirim deneyimi sakinler için basit kalırken, kurumlar "
+"önceliklendirme, yönlendirme ve yanıt için daha temiz bilgi alır."
+
+msgid "The report becomes visible"
+msgstr "Bildirim görünür hale gelir"
+
+msgid "The report is sent"
+msgstr "Bildirim gönderilir"
+
+msgid "The report is sent to the responsible local team or agency."
+msgstr "Bildirim, sorumlu yerel ekibe veya kuruma gönderilir."
+
+msgid ""
+"These examples are included as reference points for the wider civic "
+"reporting model, not as InfraSignal customers or endorsements."
+msgstr ""
+"Bu örnekler, InfraSignal müşterileri veya onayları olarak değil, daha geniş "
+"sivil bildirim modeli için referans noktaları olarak dahil edilmiştir."
+
+msgid ""
+"This page is for public teams that receive, review, route, or respond to "
+"resident infrastructure reports."
+msgstr ""
+"Bu sayfa, sakin altyapı bildirimlerini alan, inceleyen, yönlendiren veya "
+"yanıtlayan kamu ekipleri içindir."
+
+msgid "Three simple steps to get infrastructure problems fixed."
+msgstr "Altyapı sorunlarının çözülmesi için üç basit adım."
+
+msgid "Track"
+msgstr "Takip"
+
+msgid "Track issues across your community"
+msgstr "Topluluğunuz genelinde sorunları takip edin"
+
+msgid "Track your own reports from your account."
+msgstr "Kendi bildirimlerinizi hesabınızdan takip edin."
+
+msgid "Traffic Signal"
+msgstr "Trafik Işığı"
+
+msgid ""
+"Transport for London uses smart routing so residents do not need to know "
+"which body owns each street asset."
+msgstr ""
+"Transport for London, sakinlerin her sokak varlığının hangi kuruma ait "
+"olduğunu bilmesine gerek kalmaması için akıllı yönlendirme kullanır."
+
+msgid "Transportation, Streets, Parks & Facilities"
+msgstr "Ulaşım, Sokaklar, Parklar ve Tesisler"
+
+msgid "Tree Hazard"
+msgstr "Ağaç Tehlikesi"
+
+msgid "Triage"
+msgstr "Önceliklendirme"
+
+msgid "United Kingdom"
+msgstr "Birleşik Krallık"
+
+msgid "Up to 98.69% savings per report."
+msgstr "Bildirim başına %98,69'a varan tasarruf."
+
+msgid "Updates keep people informed"
+msgstr "Güncellemeler insanları bilgilendirir"
+
+msgid "Uploaded photos where provided"
+msgstr "Sağlandığında yüklenen fotoğraflar"
+
+msgid "Useful for local authorities and service teams"
+msgstr "Yerel yönetimler ve hizmet ekipleri için yararlı"
+
+msgid "Vehicle / Parking"
+msgstr "Araç / Park"
+
+msgid "View All Reports"
+msgstr "Tüm Bildirimleri Görüntüle"
+
+msgid "View Reports"
+msgstr "Bildirimler"
+
+msgid "View all reports"
+msgstr "Tüm bildirimleri görüntüle"
+
+msgid "View public reports"
+msgstr "Herkese açık bildirimleri görüntüle"
+
+msgid ""
+"View your reports, manage notification preferences, and follow updates from "
+"one place."
+msgstr ""
+"Bildirimlerinizi görüntüleyin, bildirim tercihlerinizi yönetin ve "
+"güncellemeleri tek bir yerden takip edin."
+
+msgid "Visit"
+msgstr "Ziyaret et"
+
+msgid "WCAG 2.1 AA"
+msgstr "WCAG 2.1 AA"
+
+msgid "Water Leak"
+msgstr "Su Sızıntısı"
+
+msgid "We detect your location and identify the exact address automatically."
+msgstr "Konumunuzu algılar ve tam adresi otomatik olarak belirleriz."
+
+msgid "What You Can Report"
+msgstr "Neleri Bildirebilirsiniz"
+
+msgid "What each report includes"
+msgstr "Her bildirimin içeriği"
+
+msgid "What happens after you submit a report?"
+msgstr "Bir bildirim gönderdikten sonra ne olur?"
+
+msgid "Who this is for"
+msgstr "Bu kimin için"
+
+msgid "Workflow"
+msgstr "İş akışı"
+
+msgid "Your Account"
+msgstr "Hesabınız"
+
+msgid "Your report is sent directly to the responsible local government."
+msgstr "Bildiriminiz doğrudan sorumlu yerel yönetime gönderilir."
+
+msgid "1–2 business days"
+msgstr "1–2 iş günü"
+
+msgid "Active"
+msgstr "Aktif"
+
+msgid "Average fix time"
+msgstr "Ortalama çözüm süresi"
+
+msgid "Avg. Days to Fix"
+msgstr "Çözüm için ort. gün"
+
+msgid "Check our FAQ first"
+msgstr "Önce SSS bölümümüze bakın"
+
+msgid "Computed from fixed reports"
+msgstr "Çözülen bildirimlerden hesaplandı"
+
+msgid "Daily report volume this week"
+msgstr "Bu hafta günlük bildirim hacmi"
+
+msgid "Don&rsquo;t report infrastructure problems here"
+msgstr "Altyapı sorunlarını buradan bildirmeyin"
+
+msgid "Drag or browse a photo"
+msgstr "Bir fotoğraf sürükleyin veya seçin"
+
+msgid "Email us directly at <a href=\"mailto:%s\">%s</a>"
+msgstr "Bize doğrudan şu adresten e-posta gönderin: <a href=\"mailto:%s\">%s</a>"
+
+msgid "Enter address or ZIP"
+msgstr "Adres veya posta kodu girin"
+
+msgid "Enter your address or zipcode"
+msgstr "Adresinizi girin"
+
+msgid "Explore reports"
+msgstr "Bildirimleri keşfedin"
+
+msgid ""
+"Fill out the form below and we&rsquo;ll get back to you within 1&ndash;2 "
+"business days."
+msgstr "Aşağıdaki formu doldurun, size 1&ndash;2 iş günü içinde geri dönelim."
+
+msgid "Government Inquiries"
+msgstr "Devlet Talepleri"
+
+msgid "Have a question or need help? We&rsquo;re here for you."
+msgstr "Bir sorunuz mu var ya da yardıma mı ihtiyacınız var? Buradayız."
+
+msgid "How can we help?"
+msgstr "Nasıl yardımcı olabiliriz?"
+
+msgid "Jurisdiction"
+msgstr "Yargı bölgesi"
+
+msgid "Last 100"
+msgstr "Son 100"
+
+msgid "Last 100 reports"
+msgstr "Son 100 bildirim"
+
+msgid ""
+"Many common questions are answered in our <a href=\"%s\">Frequently Asked "
+"Questions</a> page."
+msgstr ""
+"Birçok yaygın sorunun yanıtı <a href=\"%s\">Sıkça Sorulan Sorular</a> "
+"sayfamızdadır."
+
+msgid "Monthly reports submitted vs. problems fixed"
+msgstr "Aylık gönderilen bildirimler ile çözülen sorunların karşılaştırması"
+
+msgid "Most common issue types in the last 7 days."
+msgstr "Son 7 gündeki en yaygın sorun türleri."
+
+msgid "No activity"
+msgstr "Etkinlik yok"
+
+msgid "No activity in the last 7 days"
+msgstr "Son 7 günde etkinlik yok"
+
+msgid "No categories have reports in the last 7 days."
+msgstr "Son 7 günde hiçbir kategoride bildirim yok."
+
+msgid "No category activity"
+msgstr "Kategori etkinliği yok"
+
+msgid "No reports recorded"
+msgstr "Kayıtlı bildirim yok"
+
+msgid "No reports, updates, or fixes were recorded for this period."
+msgstr "Bu dönem için bildirim, güncelleme veya çözüm kaydedilmedi."
+
+msgid "Or search by address"
+msgstr "Veya adrese göre arayın"
+
+msgid "Overall regional average"
+msgstr "Genel bölgesel ortalama"
+
+msgid "Performance over time"
+msgstr "Zaman içindeki performans"
+
+msgid ""
+"Pick your local authority or search an address to see community-specific "
+"reports."
+msgstr ""
+"Topluluğa özel bildirimleri görmek için yerel yönetiminizi seçin veya bir "
+"adres arayın."
+
+msgid "Problems Fixed"
+msgstr "Çözülen Sorunlar"
+
+msgid ""
+"Real-time overview of infrastructure reports across all communities. See "
+"what is being reported, what is getting fixed, and how responsive local "
+"government is."
+msgstr ""
+"Tüm topluluklardaki altyapı bildirimlerine gerçek zamanlı genel bakış. Neyin"
+" bildirildiğini, neyin çözüldüğünü ve yerel yönetimin ne kadar duyarlı "
+"olduğunu görün."
+
+msgid ""
+"Report infrastructure issues in your community. It only takes a minute."
+msgstr ""
+"Topluluğunuzdaki altyapı sorunlarını bildirin. Yalnızca bir dakika sürer."
+
+msgid "Report issues. Improve your neighborhood with Infrasignal."
+msgstr "Sorunları bildirin. Mahallenizi Infrasignal ile iyileştirin."
+
+msgid "Reported"
+msgstr "Bildirildi"
+
+msgid "Reports Dashboard"
+msgstr "Bildirim Panosu"
+
+msgid "Reports This Week"
+msgstr "Bu Haftaki Bildirimler"
+
+msgid "Reports in your area"
+msgstr "Bölgenizdeki bildirimler"
+
+msgid "Reports submitted vs. problems fixed by period"
+msgstr ""
+"Döneme göre gönderilen bildirimler ile çözülen sorunların karşılaştırması"
+
+msgid ""
+"Residents report problems. Local authorities fix them. Track everything."
+msgstr ""
+"Sakinler sorunları bildirir. Yerel yönetimler çözer. Her şeyi takip edin."
+
+msgid "Response Time"
+msgstr "Yanıt Süresi"
+
+msgid "See something that needs fixing?"
+msgstr "Düzeltilmesi gereken bir şey mi gördünüz?"
+
+msgid "Select a jurisdiction..."
+msgstr "Bir yargı bölgesi seçin..."
+
+msgid "Send Message"
+msgstr "Mesaj Gönder"
+
+msgid "Send Us a Message"
+msgstr "Bize Mesaj Gönderin"
+
+msgid "Start report from photo"
+msgstr "Fotoğraftan bildirim başlat"
+
+msgid "Tell us more about your inquiry..."
+msgstr "Talebiniz hakkında daha fazla bilgi verin..."
+
+msgid ""
+"Thanks for uploading your photo. We now need to locate your problem, so "
+"please enter a nearby street name or postcode in the box below."
+msgstr ""
+"Fotoğrafınızı yüklediğiniz için teşekkürler. Şimdi sorununuzun yerini "
+"belirlememiz gerekiyor; lütfen aşağıdaki kutuya yakın bir sokak adı veya "
+"posta kodu girin."
+
+msgid ""
+"To report a pothole, streetlight, or other issue, use our <a "
+"href=\"/#postcodeForm\">Report Form</a> instead."
+msgstr ""
+"Bir çukur, sokak lambası veya başka bir sorun bildirmek için <a "
+"href=\"/#postcodeForm\">Bildirim Formumuzu</a> kullanın."
+
+msgid "Today"
+msgstr "Bugün"
+
+msgid "Top 5 Most Reported Categories"
+msgstr "En Çok Bildirilen 5 Kategori"
+
+msgid "Top 5 Responsive Authorities"
+msgstr "En Duyarlı 5 Kurum"
+
+msgid "Total Reports"
+msgstr "Toplam Bildirim"
+
+msgid "View nearby"
+msgstr "Yakındakileri görüntüle"
+
+msgid "Your full name"
+msgstr "Adınız ve soyadınız"
+
+msgid "Your uploaded photo"
+msgstr "Yüklediğiniz fotoğraf"
+
+msgid "avg days"
+msgstr "ort. gün"
+
+msgid "d"
+msgstr "g"
+
+msgid "resolution rate"
+msgstr "çözüm oranı"
+
+msgid "your@email.com"
+msgstr "your@email.com"
+
+msgid "✓ 10,000+ reports filed"
+msgstr "✓ 10.000+ bildirim yapıldı"
+
+msgid "✓ Free to use"
+msgstr "✓ Ücretsiz"
+
+msgid "✓ Government trusted"
+msgstr "✓ Devlet güvenilirliği"
+
+msgid "%sm apart"
+msgstr "%s m mesafede"
+
+msgid "-- All cities --"
+msgstr "-- Tüm şehirler --"
+
+msgid "-- All cities in county --"
+msgstr "-- İlçedeki tüm şehirler --"
+
+msgid "-- All counties --"
+msgstr "-- Tüm ilçeler --"
+
+msgid "-- Select a state --"
+msgstr "-- Bir eyalet seçin --"
+
+msgid "Access"
+msgstr "Erişim"
+
+msgid "Admin Console"
+msgstr "Yönetici Konsolu"
+
+msgid "Admin navigation"
+msgstr "Yönetici gezinmesi"
+
+msgid "Admin sections"
+msgstr "Yönetici bölümleri"
+
+msgid "All Categories"
+msgstr "Tüm Kategoriler"
+
+msgid "All report issue types"
+msgstr "Tüm bildirim sorun türleri"
+
+msgid "All report lifecycle distribution"
+msgstr "Tüm bildirim yaşam döngüsü dağılımı"
+
+msgid "Available for your account"
+msgstr "Hesabınız için kullanılabilir"
+
+msgid "Awaiting send"
+msgstr "Gönderim bekliyor"
+
+msgid "Bodies with Site Messages"
+msgstr "Site Mesajı Olan Kurumlar"
+
+msgid "By Category"
+msgstr "Kategoriye Göre"
+
+msgid "By Status"
+msgstr "Duruma Göre"
+
+msgid "City / Town"
+msgstr "Şehir / Kasaba"
+
+msgid "Created reports per day"
+msgstr "Günlük oluşturulan bildirimler"
+
+msgid "Denied"
+msgstr "Reddedildi"
+
+msgid "Detection Radius"
+msgstr "Tespit Yarıçapı"
+
+msgid "Dismiss"
+msgstr "Kapat"
+
+msgid "Duplicate Groups"
+msgstr "Yinelenen Gruplar"
+
+msgid "Duplicate Reports"
+msgstr "Yinelenen Bildirimler"
+
+msgid "Edit Priority Zone"
+msgstr "Öncelik Bölgesini Düzenle"
+
+msgid "Find reports and users"
+msgstr "Bildirim ve kullanıcı bul"
+
+msgid "Good morning"
+msgstr "Günaydın"
+
+msgid "Granted"
+msgstr "Verildi"
+
+msgid "Latest submissions"
+msgstr "Son gönderimler"
+
+msgid "Mark"
+msgstr "İşaretle"
+
+msgid "Mark as duplicate:"
+msgstr "Yinelenen olarak işaretle:"
+
+msgid "Name or email address"
+msgstr "Ad veya e-posta adresi"
+
+msgid "New report"
+msgstr "Yeni bildirim"
+
+msgid "No bodies found for %s."
+msgstr "%s için kurum bulunamadı."
+
+msgid "No duplicate reports detected"
+msgstr "Yinelenen bildirim tespit edilmedi"
+
+msgid "No recent reports to show."
+msgstr "Gösterilecek son bildirim yok."
+
+msgid "No reports are currently waiting to be sent."
+msgstr "Şu anda gönderilmeyi bekleyen bildirim yok."
+
+msgid ""
+"No reports found within the specified radius sharing the same category. Try "
+"increasing the radius."
+msgstr ""
+"Belirtilen yarıçap içinde aynı kategoride bildirim bulunamadı. Yarıçapı "
+"artırmayı deneyin."
+
+msgid "Open only"
+msgstr "Yalnızca açık"
+
+msgid "Open reports manager"
+msgstr "Bildirim yöneticisini aç"
+
+msgid "Open reports pending delivery"
+msgstr "Teslim bekleyen açık bildirimler"
+
+msgid "Priority Zone Configuration"
+msgstr "Öncelik Bölgesi Yapılandırması"
+
+msgid "Radius (metres)"
+msgstr "Yarıçap (metre)"
+
+msgid "Recent reports"
+msgstr "Son bildirimler"
+
+msgid "Report ID, title, or email"
+msgstr "Bildirim kimliği, başlık veya e-posta"
+
+msgid "Report Pairs"
+msgstr "Bildirim Çiftleri"
+
+msgid "Report State"
+msgstr "Bildirim Durumu"
+
+msgid ""
+"Reports in the same category within a geographic radius that may be "
+"duplicates."
+msgstr ""
+"Coğrafi yarıçap içinde aynı kategorideki, yinelenen olabilecek bildirimler."
+
+msgid "Reports this week"
+msgstr "Bu haftaki bildirimler"
+
+msgid ""
+"Scroll inside this table to review the full queue without stretching the "
+"page."
+msgstr ""
+"Sayfayı uzatmadan tüm kuyruğu incelemek için bu tablonun içinde kaydırın."
+
+msgid "View all"
+msgstr "Tümünü görüntüle"
+
+msgid "View reports"
+msgstr "Bildirimleri görüntüle"
+
+msgid "admin sections available"
+msgstr "kullanılabilir yönetici bölümü"
+
+msgid "is duplicate of"
+msgstr "şunun kopyası"
+
+msgid "last 7 days"
+msgstr "son 7 gün"
+
+msgid "reports"
+msgstr "bildirim"
+
+msgid "reports waiting to be sent"
+msgstr "bildirim gönderilmeyi bekliyor"
+
+msgid "Priority Zones"
+msgstr "Öncelik Bölgeleri"
+
+msgid "%s bodies in %s"
+msgstr "%s kuruluş, %s eyaleti"
+
+msgid "%s counties"
+msgstr "%s ilçe"
+
+msgid "%s cities/towns"
+msgstr "%s şehir/kasaba"
+
+msgid "%s cities/towns in %s"
+msgstr "%s şehir/kasaba, %s"
+
+msgid "county"
+msgstr "ilçe"
+
+msgid "Error loading bodies."
+msgstr "Kuruluşlar yüklenirken hata oluştu."
+
+msgid "Error loading cities"
+msgstr "Şehirler yüklenirken hata oluştu"
+
+msgid "Manage Priorities"
+msgstr "Öncelikleri Yönet"
+
+msgid "Edit Message"
+msgstr "Mesajı Düzenle"
+
+msgid ""
+"Select a state to find a body, then click to manage its response priorities."
+msgstr ""
+"Bir kuruluş bulmak için bir eyalet seçin, ardından yanıt önceliklerini "
+"yönetmek için tıklayın."
+
+msgid "Select a state to find a body, then click to manage its site message."
+msgstr ""
+"Bir kuruluş bulmak için bir eyalet seçin, ardından site mesajını yönetmek "
+"için tıklayın."
+
+msgid "A summary of this site's configuration, running version %s."
+msgstr "Bu sitenin yapılandırmasının özeti, çalışan sürüm %s."
+
+msgid "unknown"
+msgstr "bilinmiyor"
+
+msgid "View %s configuration"
+msgstr "%s yapılandırmasını görüntüle"
+
+msgid "Variable"
+msgstr "Değişken"
+
+msgid "general.yml value"
+msgstr "general.yml değeri"
+
+msgid "Cobrand module override"
+msgstr "Cobrand modülü geçersiz kılma"
+
+msgid "URLs"
+msgstr "URL'ler"
+
+msgid "Display"
+msgstr "Görünüm"
+
+msgid "Geocoder"
+msgstr "Coğrafi kodlayıcı"
+
+msgid "MapIt"
+msgstr "MapIt"
+
+msgid "Database"
+msgstr "Veritabanı"
+
+msgid "Development"
+msgstr "Geliştirme"
+
+msgid "Site title"
+msgstr "Site başlığı"
+
+msgid "Web templates"
+msgstr "Web şablonları"
+
+msgid "Language override"
+msgstr "Dil geçersiz kılma"
+
+msgid "Database site configuration"
+msgstr "Veritabanı site yapılandırması"
+
+msgid "Key"
+msgstr "Anahtar"
+
+msgid "Value"
+msgstr "Değer"
+
+msgid "JSON:"
+msgstr "JSON:"
+
+msgid "FixMyStreet name"
+msgstr "FixMyStreet adı"
+
+msgid "FixMyStreet short name"
+msgstr "FixMyStreet kısa adı"
+
+msgid "Wasteworks name"
+msgstr "WasteWorks adı"
+
+msgid "Wasteworks short name"
+msgstr "WasteWorks kısa adı"
+
+msgid "Theme colour"
+msgstr "Tema rengi"
+
+msgid "Background colour"
+msgstr "Arka plan rengi"
+
+msgid "Add icon"
+msgstr "Simge ekle"
+
+msgid "Select a cobrand"
+msgstr "Bir cobrand seçin"
+
+msgid "Icon"
+msgstr "Simge"
+
+msgid "Size"
+msgstr "Boyut"
+
+msgid "Delete?"
+msgstr "Sil?"
+
+msgid "Return to themes list"
+msgstr "Temalar listesine dön"
+
+msgid "Account details and notification preferences"
+msgstr "Hesap bilgileri ve bildirim tercihleri"
+
+msgid "Add phone"
+msgstr "Telefon ekle"
+
+msgid "Changes are saved when you update preferences"
+msgstr "Değişiklikler, tercihleri güncellediğinizde kaydedilir"
+
+msgid "Civic impact"
+msgstr "Toplumsal etki"
+
+msgid "Help improve municipal services"
+msgstr "Belediye hizmetlerini iyileştirmeye yardımcı olun"
+
+msgid "Needs verification"
+msgstr "Doğrulama gerekiyor"
+
+msgid "New reports near your area"
+msgstr "Bölgenizdeki yeni bildirimler"
+
+msgid "Not provided"
+msgstr "Belirtilmemiş"
+
+msgid "Notification preferences"
+msgstr "Bildirim tercihleri"
+
+msgid "Profile details"
+msgstr "Profil bilgileri"
+
+msgid "Questionnaires"
+msgstr "Anketler"
+
+msgid "Report a new issue"
+msgstr "Yeni bir sorun bildir"
+
+msgid "Update notifications"
+msgstr "Güncelleme bildirimleri"
+
+msgid "Update preferences"
+msgstr "Tercihleri güncelle"
+
+msgid "Verified account"
+msgstr "Doğrulanmış hesap"
+
+msgid "When your reports change status"
+msgstr "Bildirimlerinizin durumu değiştiğinde"
+
+msgid "issue"
+msgstr "sorun"
+
+msgid "issues"
+msgstr "sorun"
+
+msgid "reported through your account"
+msgstr "hesabınız aracılığıyla bildirildi"
+
+msgid ""
+"Empowering residents to improve their communities, one report at a time."
+msgstr ""
+"Sakinlerin topluluklarını her seferinde bir bildirimle geliştirmesini "
+"sağlıyoruz."
+
+msgid "What We Do"
+msgstr "Ne Yapıyoruz"
+
+msgid ""
+"Across the United States, infrastructure problems like potholes, broken "
+"streetlights, damaged sidewalks, and illegal dumping go unreported because "
+"residents don&rsquo;t know who to contact. InfraSignal solves this with a "
+"single, easy-to-use platform."
+msgstr ""
+"Amerika Birleşik Devletleri genelinde çukurlar, bozuk sokak lambaları, "
+"hasarlı kaldırımlar ve yasa dışı çöp dökme gibi altyapı sorunları, sakinler "
+"kime başvuracaklarını bilmedikleri için bildirilmeden kalıyor. InfraSignal "
+"bunu tek ve kullanımı kolay bir platformla çözüyor."
+
+msgid "Pin the problem on the map"
+msgstr "Sorunu haritada işaretleyin"
+
+msgid "Auto-route to the right authority"
+msgstr "Doğru makama otomatik yönlendirme"
+
+msgid "Get email updates on status"
+msgstr "Durumla ilgili e-posta güncellemeleri alın"
+
+msgid "Map"
+msgstr "Harita"
+
+msgid "Public visibility for community"
+msgstr "Topluluk için herkese açık görünürlük"
+
+msgid "All 50 + D.C."
+msgstr "Tüm 50 eyalet + D.C."
+
+msgid "County governments"
+msgstr "İlçe yönetimleri"
+
+msgid "Cities"
+msgstr "Şehirler"
+
+msgid "City &amp; town governments"
+msgstr "Şehir ve kasaba yönetimleri"
+
+msgid "Standardized types"
+msgstr "Standartlaştırılmış türler"
+
+msgid ""
+"Reports move through a clear lifecycle: residents add a location and "
+"details, InfraSignal helps route the report, and everyone can follow public "
+"updates over time."
+msgstr ""
+"Bildirimler net bir yaşam döngüsünden geçer: sakinler konum ve ayrıntıları "
+"ekler, InfraSignal bildirimi yönlendirmeye yardımcı olur ve herkes zaman "
+"içinde herkese açık güncellemeleri takip edebilir."
+
+msgid "See the full process"
+msgstr "Tüm süreci görün"
+
+msgid ""
+"InfraSignal gives public teams a standardized channel for receiving "
+"structured, location-based reports from residents. Operational, integration,"
+" and partnership details now live on the local government page."
+msgstr ""
+"InfraSignal, kamu ekiplerine sakinlerden yapılandırılmış, konuma dayalı "
+"bildirimler almak için standartlaştırılmış bir kanal sunar. Operasyonel, "
+"entegrasyon ve ortaklık ayrıntıları artık yerel yönetim sayfasında yer "
+"alıyor."
+
+msgid "Contact Form"
+msgstr "İletişim Formu"
+
+msgid "Get in Touch"
+msgstr "Bize Ulaşın"
+
+msgid "Questions, suggestions, or partnership inquiries?"
+msgstr "Sorular, öneriler veya ortaklık talepleri mi?"
+
+msgid "Find answers to common questions about InfraSignal."
+msgstr "InfraSignal hakkında sık sorulan soruların yanıtlarını bulun."
+
+msgid "General"
+msgstr "Genel"
+
+msgid "Is InfraSignal free?"
+msgstr "InfraSignal ücretsiz mi?"
+
+msgid ""
+"Yes. InfraSignal is free for all users. There is no charge to create an "
+"account, submit reports, receive status updates, or subscribe to local "
+"alerts."
+msgstr ""
+"Evet. InfraSignal tüm kullanıcılar için ücretsizdir. Hesap oluşturmak, "
+"bildirim göndermek, durum güncellemeleri almak veya yerel uyarılara abone "
+"olmak için herhangi bir ücret alınmaz."
+
+msgid "Reporting a Problem"
+msgstr "Bir Sorun Bildirme"
+
+msgid "How do I report a problem?"
+msgstr "Bir sorunu nasıl bildiririm?"
+
+msgid ""
+"Start from the <a href=\"/\">home page</a>, enter the location, place the "
+"pin on the map, choose the best category, add details and photos, then "
+"submit the report for routing."
+msgstr ""
+"<a href=\"/\">Ana sayfadan</a> başlayın, konumu girin, işaretçiyi haritaya "
+"yerleştirin, en uygun kategoriyi seçin, ayrıntıları ve fotoğrafları ekleyin,"
+" ardından bildirimi yönlendirme için gönderin."
+
+msgid ""
+"For the full report journey, see <a href=\"/how-it-works\">How It Works</a>."
+msgstr ""
+"Bildirimin tüm yolculuğu için <a href=\"/how-it-works\">Nasıl Çalışır</a> "
+"sayfasına bakın."
+
+msgid "What categories of problems can I report?"
+msgstr "Hangi kategorilerde sorun bildirebilirim?"
+
+msgid "InfraSignal supports 13 standard infrastructure categories:"
+msgstr "InfraSignal 13 standart altyapı kategorisini destekler:"
+
+msgid "What should I not report on InfraSignal?"
+msgstr "InfraSignal üzerinde neleri bildirmemeliyim?"
+
+msgid ""
+"InfraSignal is designed for non-emergency infrastructure issues. <strong>Do "
+"not use InfraSignal for:</strong>"
+msgstr ""
+"InfraSignal, acil olmayan altyapı sorunları için tasarlanmıştır. "
+"<strong>InfraSignal'i şunlar için kullanmayın:</strong>"
+
+msgid "Emergencies"
+msgstr "Acil durumlar"
+
+msgid "call <strong>911</strong> immediately for any threat to life or safety"
+msgstr ""
+"yaşam veya güvenlik için herhangi bir tehdit durumunda hemen "
+"<strong>911</strong>'i arayın"
+
+msgid "Crimes in progress or suspicious activity"
+msgstr "Devam eden suçlar veya şüpheli faaliyetler"
+
+msgid ""
+"Utility outages (gas, electric, water) &mdash; contact your utility provider"
+" directly"
+msgstr ""
+"Altyapı kesintileri (gaz, elektrik, su) &mdash; doğrudan hizmet "
+"sağlayıcınızla iletişime geçin"
+
+msgid "Noise complaints or neighbor disputes"
+msgstr "Gürültü şikayetleri veya komşu anlaşmazlıkları"
+
+msgid "Missed trash or recycling pickup"
+msgstr "Kaçırılan çöp veya geri dönüşüm toplaması"
+
+msgid "Building permits or code enforcement inquiries"
+msgstr "İnşaat ruhsatları veya imar denetimi soruları"
+
+msgid "Animal control"
+msgstr "Hayvan kontrolü"
+
+msgid "Parking or traffic enforcement"
+msgstr "Park veya trafik denetimi"
+
+msgid "Do I need an account?"
+msgstr "Hesaba ihtiyacım var mı?"
+
+msgid ""
+"You must provide a valid email address when submitting a report so that "
+"InfraSignal can send a confirmation link and deliver status updates. You may"
+" also create a full account to manage all your reports and subscriptions "
+"from one dashboard."
+msgstr ""
+"Bir bildirim gönderirken geçerli bir e-posta adresi sağlamalısınız; böylece "
+"InfraSignal bir onay bağlantısı gönderebilir ve durum güncellemelerini "
+"iletebilir. Tüm bildirimlerinizi ve aboneliklerinizi tek bir panelden "
+"yönetmek için tam bir hesap da oluşturabilirsiniz."
+
+msgid "Can I upload photos?"
+msgstr "Fotoğraf yükleyebilir miyim?"
+
+msgid ""
+"Yes. You may attach up to 3 photos per report. Photos are automatically "
+"screened for inappropriate content before being published."
+msgstr ""
+"Evet. Her bildirime en fazla 3 fotoğraf ekleyebilirsiniz. Fotoğraflar "
+"yayınlanmadan önce uygunsuz içerik açısından otomatik olarak taranır."
+
+msgid "Can I report anonymously?"
+msgstr "Anonim olarak bildirebilir miyim?"
+
+msgid ""
+"You may choose to hide your name from the public-facing report page. "
+"However, your name and email address are always shared with the responsible "
+"local authority so they can investigate and, if needed, contact you about "
+"the issue."
+msgstr ""
+"Adınızı herkese açık bildirim sayfasında gizlemeyi seçebilirsiniz. Ancak "
+"adınız ve e-posta adresiniz, sorumlu yerel makamın soruşturma yapabilmesi ve"
+" gerekirse sizinle iletişime geçebilmesi için her zaman onlarla paylaşılır."
+
+msgid "After Submitting"
+msgstr "Gönderdikten Sonra"
+
+msgid "How are reports delivered to local authorities?"
+msgstr "Bildirimler yerel makamlara nasıl iletilir?"
+
+msgid ""
+"Reports are sent via email to the designated contact address for the "
+"responsible local authority. Each report includes the problem location "
+"(coordinates and address), the selected category, your description, any "
+"attached photos, and your contact information."
+msgstr ""
+"Bildirimler, sorumlu yerel makamın belirlenen iletişim adresine e-posta "
+"yoluyla gönderilir. Her bildirim, sorunun konumunu (koordinatlar ve adres), "
+"seçilen kategoriyi, açıklamanızı, eklenen fotoğrafları ve iletişim "
+"bilgilerinizi içerir."
+
+msgid "How are reports prioritized?"
+msgstr "Bildirimler nasıl önceliklendirilir?"
+
+msgid ""
+"InfraSignal assigns one of four priority levels to each report: "
+"<strong>Emergency</strong> (immediate safety hazard), <strong>High</strong> "
+"(needs attention within 24 hours), <strong>Normal</strong> (standard "
+"response time), and <strong>Low</strong> (non-urgent). Local authorities can"
+" adjust priority as part of their investigation."
+msgstr ""
+"InfraSignal her bildirime dört öncelik düzeyinden birini atar: "
+"<strong>Acil</strong> (anında güvenlik tehlikesi), <strong>Yüksek</strong> "
+"(24 saat içinde ilgilenilmesi gerekir), <strong>Normal</strong> (standart "
+"yanıt süresi) ve <strong>Düşük</strong> (acil değil). Yerel makamlar, "
+"soruşturmaları kapsamında önceliği ayarlayabilir."
+
+msgid "How long will it take to fix my problem?"
+msgstr "Sorunumun çözülmesi ne kadar sürer?"
+
+msgid ""
+"Response times depend on the category, severity, and the local "
+"authority&rsquo;s workload. InfraSignal does not control how quickly "
+"authorities respond; it enables you to track your report&rsquo;s status and "
+"receive email updates when action is taken."
+msgstr ""
+"Yanıt süreleri kategoriye, ciddiyete ve yerel makamın iş yüküne bağlıdır. "
+"InfraSignal, makamların ne kadar hızlı yanıt verdiğini kontrol etmez; "
+"bildiriminizin durumunu takip etmenize ve harekete geçildiğinde e-posta "
+"güncellemeleri almanıza olanak tanır."
+
+msgid "How do I check the status of my report?"
+msgstr "Bildirimimin durumunu nasıl kontrol ederim?"
+
+msgid ""
+"You will receive email notifications when the status changes. You can also "
+"log in to your account and view all your reports under <strong>Your "
+"account</strong>. Each report shows its current status: open, investigating,"
+" in progress, fixed, or closed."
+msgstr ""
+"Durum değiştiğinde e-posta bildirimleri alırsınız. Ayrıca hesabınıza giriş "
+"yapabilir ve tüm bildirimlerinizi <strong>Hesabınız</strong> altında "
+"görüntüleyebilirsiniz. Her bildirim mevcut durumunu gösterir: açık, "
+"araştırılıyor, devam ediyor, çözüldü veya kapalı."
+
+msgid "What if my problem has not been addressed?"
+msgstr "Sorunum çözülmediyse ne olur?"
+
+msgid ""
+"You can post an update on your existing report at any time to provide "
+"additional photos, note that the problem persists, or add new details. The "
+"responsible authority is notified of each update."
+msgstr ""
+"Mevcut bildiriminize istediğiniz zaman bir güncelleme ekleyerek ek "
+"fotoğraflar sağlayabilir, sorunun devam ettiğini belirtebilir veya yeni "
+"ayrıntılar ekleyebilirsiniz. Sorumlu makam her güncellemeden haberdar "
+"edilir."
+
+msgid "Can I see reports submitted by others?"
+msgstr "Başkalarının gönderdiği bildirimleri görebilir miyim?"
+
+msgid ""
+"Yes. The <a href=\"/reports\">All Reports</a> page displays all public "
+"reports with their status, location, and category. You can browse by area or"
+" search for specific locations."
+msgstr ""
+"Evet. <a href=\"/reports\">Tüm Bildirimler</a> sayfası, tüm herkese açık "
+"bildirimleri durumu, konumu ve kategorisiyle birlikte gösterir. Bölgeye göre"
+" göz atabilir veya belirli konumları arayabilirsiniz."
+
+msgid "Can I get alerts about problems near me?"
+msgstr "Yakınımdaki sorunlarla ilgili uyarı alabilir miyim?"
+
+msgid ""
+"Yes. Visit <a href=\"/alert\">Local Alerts</a> to subscribe to email "
+"notifications for new reports in your area. You can set alerts by geographic"
+" radius or by specific local authority."
+msgstr ""
+"Evet. Bölgenizdeki yeni bildirimler için e-posta bildirimlerine abone olmak "
+"üzere <a href=\"/alert\">Yerel Uyarılar</a> sayfasını ziyaret edin. "
+"Uyarıları coğrafi yarıçapa veya belirli bir yerel makama göre "
+"ayarlayabilirsiniz."
+
+msgid "Technical"
+msgstr "Teknik"
+
+msgid "What devices are supported?"
+msgstr "Hangi cihazlar desteklenir?"
+
+msgid ""
+"InfraSignal is a responsive web application that works on smartphones, "
+"tablets, and desktop computers. No app installation is required &mdash; "
+"access through any modern web browser."
+msgstr ""
+"InfraSignal, akıllı telefonlarda, tabletlerde ve masaüstü bilgisayarlarda "
+"çalışan duyarlı bir web uygulamasıdır. Uygulama kurulumu gerekmez &mdash; "
+"herhangi bir modern web tarayıcısı üzerinden erişin."
+
+msgid "Still have questions?"
+msgstr "Hâlâ sorularınız mı var?"
+
+msgid ""
+"Can&rsquo;t find what you&rsquo;re looking for? We&rsquo;re happy to help."
+msgstr "Aradığınızı bulamıyor musunuz? Yardımcı olmaktan memnuniyet duyarız."
+
+msgid "How we collect, use, and protect your information."
+msgstr "Bilgilerinizi nasıl topladığımız, kullandığımız ve koruduğumuz."
+
+msgid "Questions about your privacy?"
+msgstr "Gizliliğinizle ilgili sorularınız mı var?"
+
+msgid ""
+"If you have questions or concerns about this Privacy Policy, reach out to "
+"us."
+msgstr ""
+"Bu Gizlilik Politikası hakkında sorularınız veya endişeleriniz varsa bize "
+"ulaşın."
+
+msgid "Please read these terms carefully before using InfraSignal."
+msgstr "InfraSignal'i kullanmadan önce lütfen bu koşulları dikkatlice okuyun."
+
+msgid "Questions about these terms?"
+msgstr "Bu koşullarla ilgili sorularınız mı var?"
+
+msgid "If you have questions or concerns, reach out to us."
+msgstr "Sorularınız veya endişeleriniz varsa bize ulaşın."
+
+msgid "About"
+msgstr "Hakkımızda"
+
+msgid "Terms"
+msgstr "Koşullar"
+
+msgid "Local RSS Feeds & Email Alerts – InfraSignal"
+msgstr "Yerel RSS Beslemeleri ve E-posta Uyarıları – InfraSignal"
+
+msgid "Local RSS Feeds & Email Alerts"
+msgstr "Yerel RSS Beslemeleri ve E-posta Uyarıları"
+
+msgid ""
+"Stay informed about infrastructure reports in your area with customizable "
+"alerts and RSS feeds."
+msgstr ""
+"Özelleştirilebilir uyarılar ve RSS beslemeleriyle bölgenizdeki altyapı "
+"bildirimlerinden haberdar olun."
+
+msgid "Find Local Alerts"
+msgstr "Yerel Uyarıları Bulun"
+
+msgid ""
+"InfraSignal offers a variety of RSS feeds and email alerts for local "
+"problems, including alerts for all problems within a particular ward or "
+"local authority, or all problems within a certain distance of a particular "
+"location."
+msgstr ""
+"InfraSignal, belirli bir bölge veya yerel makam içindeki tüm sorunlar ya da "
+"belirli bir konumun belirli bir mesafesi içindeki tüm sorunlar için uyarılar"
+" dahil olmak üzere yerel sorunlar için çeşitli RSS beslemeleri ve e-posta "
+"uyarıları sunar."
+
+msgid ""
+"To find out what local alerts we have for you, please enter your street name"
+" and area."
+msgstr ""
+"Sizin için hangi yerel uyarılara sahip olduğumuzu öğrenmek için lütfen sokak"
+" adınızı ve bölgenizi girin."
+
+msgid "Address or ZIP code"
+msgstr "Adres veya posta kodu"
+
+msgid "RSS Feeds"
+msgstr "RSS Beslemeleri"
+
+msgid ""
+"Subscribe via your favorite RSS reader to get real-time updates on reports "
+"in your area."
+msgstr ""
+"Bölgenizdeki bildirimlerle ilgili gerçek zamanlı güncellemeler almak için "
+"favori RSS okuyucunuz aracılığıyla abone olun."
+
+msgid "New reports within your chosen radius"
+msgstr "Seçtiğiniz yarıçap içindeki yeni bildirimler"
+
+msgid "Status changes on watched reports"
+msgstr "İzlenen bildirimlerdeki durum değişiklikleri"
+
+msgid "Weekly digest option available"
+msgstr "Haftalık özet seçeneği mevcut"
+
+msgid "Want to browse first?"
+msgstr "Önce göz atmak ister misiniz?"
+
+msgid ""
+"Use All Reports to browse public report activity. Return here when you are "
+"ready to subscribe to alerts for a specific place."
+msgstr ""
+"Herkese açık bildirim etkinliğine göz atmak için Tüm Bildirimler'i kullanın."
+" Belirli bir yer için uyarılara abone olmaya hazır olduğunuzda buraya geri "
+"dönün."
+
+msgid "You can unsubscribe from email alerts at any time."
+msgstr ""
+"E-posta uyarılarından istediğiniz zaman aboneliğinizi iptal edebilirsiniz."
+
+msgid "e.g. '%s' or '%s'"
+msgstr "örn. '%s' veya '%s'"
+
+msgid "What you'll receive"
+msgstr "Ne alacaksınız"
+
+msgid "Choose a location for Local Alerts"
+msgstr "Yerel Uyarılar için bir konum seçin"
+
+msgid "Choose an alert area"
+msgstr "Bir uyarı bölgesi seçin"
+
+msgid "Which location did you mean?"
+msgstr "Hangi konumu kastettiniz?"
+
+msgid "We found more than one match for \"%s\"."
+msgstr "\"%s\" için birden fazla eşleşme bulduk."
+
+msgid "We found more than one matching location."
+msgstr "Birden fazla eşleşen konum bulduk."
+
+msgid "Help & Info"
+msgstr "Yardım ve Bilgi"
+
+msgid "Try a more specific search"
+msgstr "Daha belirli bir arama deneyin"
+
+msgid "Add a street, ZIP code, or nearby landmark to narrow the results."
+msgstr ""
+"Sonuçları daraltmak için bir sokak, posta kodu veya yakındaki bir simge yapı"
+" ekleyin."
+
+msgid "Select your location"
+msgstr "Konumunuzu seçin"
+
+msgid "Choose the area you want to use for Local Alerts."
+msgstr "Yerel Uyarılar için kullanmak istediğiniz bölgeyi seçin."
+
+msgid "Location match"
+msgstr "Konum eşleşmesi"
+
+msgid "Local Alerts match"
+msgstr "Yerel Uyarılar eşleşmesi"
+
+msgid "selected area"
+msgstr "seçilen bölge"
+
+msgid "Trees"
+msgstr "Ağaçlar"
+
+msgid "Fallen tree blocking road"
+msgstr "Yolu kapatan devrilmiş ağaç"
+
+msgid "School zone"
+msgstr "Okul bölgesi"
+
+msgid "Road damage near school"
+msgstr "Okul yakınında yol hasarı"
+
+msgid "Pothole at intersection"
+msgstr "Kavşakta çukur"
+
+msgid "Deep pothole on Main St"
+msgstr "Main St'te derin çukur"
+
+msgid "Road"
+msgstr "Yol"
+
+msgid "Crumbling road surface"
+msgstr "Dağılan yol yüzeyi"
+
+msgid "RSS & email alerts for"
+msgstr "Şunun için RSS ve e-posta uyarıları:"
+
+msgid ""
+"Subscribe to a quiet, useful feed of new infrastructure reports near you by "
+"radius, county, or state."
+msgstr ""
+"Yakınınızdaki yeni altyapı bildirimlerinin sessiz ve faydalı bir beslemesine"
+" yarıçapa, ilçeye veya eyalete göre abone olun."
+
+msgid "Alert area"
+msgstr "Uyarı bölgesi"
+
+msgid "Recent nearby reports"
+msgstr "Yakındaki son bildirimler"
+
+msgid "A preview of what your feed will look like."
+msgstr "Beslemenizin nasıl görüneceğine dair bir önizleme."
+
+msgid "Local RSS feeds and email alerts for '%s'"
+msgstr "'%s' için yerel RSS beslemeleri ve e-posta uyarıları"
+
+msgid "Pick the area you care about. You can change this any time."
+msgstr ""
+"İlgilendiğiniz bölgeyi seçin. Bunu istediğiniz zaman değiştirebilirsiniz."
+
+msgid ""
+"Reports near %s are sent to different local authorities, depending on the "
+"type of problem."
+msgstr ""
+"%s yakınındaki bildirimler, sorunun türüne bağlı olarak farklı yerel "
+"makamlara gönderilir."
+
+msgid "Alert scope"
+msgstr "Uyarı kapsamı"
+
+msgid "Covers roughly 200,000 people"
+msgstr "Yaklaşık 200.000 kişiyi kapsar"
+
+msgid "Or specify a different radius:"
+msgstr "Veya farklı bir yarıçap belirtin:"
+
+msgid "Km"
+msgstr "Km"
+
+msgid ""
+"We will not use your email for anything beyond sending you alerts within "
+"this area. See our <a href=\"%s\">privacy policy</a>."
+msgstr ""
+"E-posta adresinizi bu bölge içindeki uyarıları göndermek dışında hiçbir şey "
+"için kullanmayacağız. <a href=\"%s\">Gizlilik politikamıza</a> bakın."
+
+msgid "Plug your feed into any RSS reader."
+msgstr "Beslemenizi herhangi bir RSS okuyucuya bağlayın."
+
+msgid "Effective Date:"
+msgstr "Yürürlük Tarihi:"
+
+msgid "Last Revised:"
+msgstr "Son Düzenleme:"
+
+msgid ""
+"InfraSignal (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) takes"
+" the private nature of your personal information seriously. This Privacy "
+"Policy describes how we collect, use, retain, share, and protect the "
+"personal information of users (&ldquo;you&rdquo; or &ldquo;your&rdquo;) of "
+"the InfraSignal platform (the &ldquo;Service&rdquo;), accessible at %s."
+msgstr ""
+"InfraSignal (&ldquo;biz&rdquo;, &ldquo;bize&rdquo; veya &ldquo;bizim&rdquo;)"
+" kişisel bilgilerinizin özel niteliğini ciddiye alır. Bu Gizlilik "
+"Politikası, %s adresinden erişilebilen InfraSignal platformunun "
+"(&ldquo;Hizmet&rdquo;) kullanıcılarının (&ldquo;siz&rdquo; veya "
+"&ldquo;sizin&rdquo;) kişisel bilgilerini nasıl topladığımızı, "
+"kullandığımızı, sakladığımızı, paylaştığımızı ve koruduğumuzu açıklar."
+
+msgid ""
+"By using the Service, you consent to the practices described in this Privacy"
+" Policy. If you do not agree with this Privacy Policy, please do not use the"
+" Service."
+msgstr ""
+"Hizmeti kullanarak, bu Gizlilik Politikasında açıklanan uygulamaları kabul "
+"etmiş olursunuz. Bu Gizlilik Politikasını kabul etmiyorsanız, lütfen Hizmeti"
+" kullanmayın."
+
+msgid "1. Information We Collect"
+msgstr "1. Topladığımız Bilgiler"
+
+msgid "1.1 Information You Provide Directly"
+msgstr "1.1 Doğrudan Sağladığınız Bilgiler"
+
+msgid ""
+"<strong>Account &amp; Report Information:</strong> Name and email address "
+"when you create an account or submit a report."
+msgstr ""
+"<strong>Hesap ve Bildirim Bilgileri:</strong> Bir hesap oluşturduğunuzda "
+"veya bir bildirim gönderdiğinizde adınız ve e-posta adresiniz."
+
+msgid ""
+"<strong>Report Content:</strong> Text descriptions of infrastructure "
+"problems, photographs you upload, and the geographic coordinates you select "
+"on the map."
+msgstr ""
+"<strong>Bildirim İçeriği:</strong> Altyapı sorunlarının metin açıklamaları, "
+"yüklediğiniz fotoğraflar ve haritada seçtiğiniz coğrafi koordinatlar."
+
+msgid ""
+"<strong>Report Updates:</strong> Follow-up information you post to an "
+"existing report."
+msgstr ""
+"<strong>Bildirim Güncellemeleri:</strong> Mevcut bir bildirime eklediğiniz "
+"takip bilgileri."
+
+msgid ""
+"<strong>Contact Form Submissions:</strong> Messages submitted through the "
+"platform&rsquo;s contact form."
+msgstr ""
+"<strong>İletişim Formu Gönderimleri:</strong> Platformun iletişim formu "
+"aracılığıyla gönderilen mesajlar."
+
+msgid "1.2 Information Collected Automatically"
+msgstr "1.2 Otomatik Olarak Toplanan Bilgiler"
+
+msgid ""
+"<strong>Device &amp; Browser Data:</strong> Browser type, operating system, "
+"screen resolution, and referring URL."
+msgstr ""
+"<strong>Cihaz ve Tarayıcı Verileri:</strong> Tarayıcı türü, işletim sistemi,"
+" ekran çözünürlüğü ve yönlendiren URL."
+
+msgid ""
+"<strong>Session Data:</strong> A session cookie to maintain login state (see"
+" Section 6)."
+msgstr ""
+"<strong>Oturum Verileri:</strong> Oturum durumunu korumak için bir oturum "
+"çerezi (bkz. Bölüm 6)."
+
+msgid ""
+"<strong>Map Interaction Data:</strong> Geographic coordinates when you place"
+" a pin on the map. We do not track your real-time device location unless you"
+" explicitly use your browser&rsquo;s geolocation feature."
+msgstr ""
+"<strong>Harita Etkileşim Verileri:</strong> Haritaya bir işaretçi "
+"yerleştirdiğinizde coğrafi koordinatlar. Tarayıcınızın konum belirleme "
+"özelliğini açıkça kullanmadığınız sürece cihazınızın gerçek zamanlı konumunu"
+" izlemeyiz."
+
+msgid "1.3 Information from Third-Party Services"
+msgstr "1.3 Üçüncü Taraf Hizmetlerinden Gelen Bilgiler"
+
+msgid ""
+"We use third-party services for mapping, geographic boundary lookups, "
+"automated image moderation, and email delivery. These providers process data"
+" only as necessary to perform their functions. Uploaded photos are "
+"transmitted to a third-party moderation service to detect inappropriate "
+"content; we do not receive or store personal information from that service "
+"beyond moderation results."
+msgstr ""
+"Harita, coğrafi sınır aramaları, otomatik görüntü denetimi ve e-posta "
+"teslimi için üçüncü taraf hizmetlerini kullanırız. Bu sağlayıcılar verileri "
+"yalnızca işlevlerini yerine getirmek için gerekli olduğu ölçüde işler. "
+"Yüklenen fotoğraflar, uygunsuz içeriği tespit etmek için üçüncü taraf bir "
+"denetim hizmetine iletilir; bu hizmetten denetim sonuçları dışında kişisel "
+"bilgi almaz veya saklamayız."
+
+msgid "2. How We Use Your Information"
+msgstr "2. Bilgilerinizi Nasıl Kullanırız"
+
+msgid "What do we use your information for?"
+msgstr "Bilgilerinizi ne için kullanırız?"
+
+msgid ""
+"We use the information we collect to provide, operate, and improve the "
+"Service, including:"
+msgstr ""
+"Topladığımız bilgileri Hizmeti sağlamak, işletmek ve geliştirmek için "
+"kullanırız; bunlar şunları içerir:"
+
+msgid ""
+"Delivering your infrastructure report to the responsible local authority"
+msgstr "Altyapı bildiriminizi sorumlu yerel makama iletmek"
+
+msgid ""
+"Sending confirmation emails, report status updates, and alert notifications"
+msgstr ""
+"Onay e-postaları, bildirim durumu güncellemeleri ve uyarı bildirimleri "
+"göndermek"
+
+msgid "Enabling local authorities to contact you regarding your report"
+msgstr ""
+"Yerel makamların bildiriminizle ilgili sizinle iletişime geçmesini sağlamak"
+
+msgid "Moderating uploaded photos and text for inappropriate content"
+msgstr "Yüklenen fotoğrafları ve metni uygunsuz içerik açısından denetlemek"
+
+msgid "Maintaining, securing, and improving the Service"
+msgstr "Hizmeti sürdürmek, güvenliğini sağlamak ve geliştirmek"
+
+msgid "Preventing abuse, spam, and fraudulent activity"
+msgstr "Kötüye kullanımı, spam'i ve sahtekârlık faaliyetlerini önlemek"
+
+msgid ""
+"Conducting research and analytics to improve public infrastructure outcomes"
+msgstr ""
+"Kamu altyapısı sonuçlarını iyileştirmek için araştırma ve analiz yapmak"
+
+msgid "Developing new products, features, and services"
+msgstr "Yeni ürünler, özellikler ve hizmetler geliştirmek"
+
+msgid "Personalizing your experience with the Service"
+msgstr "Hizmetle olan deneyiminizi kişiselleştirmek"
+
+msgid ""
+"Communicating about updates and information of interest (you may opt out)"
+msgstr ""
+"Güncellemeler ve ilgi çekici bilgiler hakkında iletişim kurmak "
+"(vazgeçebilirsiniz)"
+
+msgid "Aggregating and de-identifying data for public reporting and research"
+msgstr ""
+"Kamuya açık raporlama ve araştırma için verileri toplulaştırmak ve "
+"kimliksizleştirmek"
+
+msgid "Complying with applicable legal obligations"
+msgstr "Geçerli yasal yükümlülüklere uymak"
+
+msgid "3. How We Share Your Information"
+msgstr "3. Bilgilerinizi Nasıl Paylaşırız"
+
+msgid "3.1 With Local Authorities"
+msgstr "3.1 Yerel Makamlarla"
+
+msgid ""
+"When you submit a report, your name, email address, report description, "
+"photos, and the GPS coordinates of the problem are shared with the local "
+"government authority responsible for that location. This disclosure is "
+"necessary for the authority to investigate, respond to, and resolve the "
+"reported issue."
+msgstr ""
+"Bir bildirim gönderdiğinizde adınız, e-posta adresiniz, bildirim "
+"açıklamanız, fotoğraflarınız ve sorunun GPS koordinatları, o konumdan "
+"sorumlu yerel yönetim makamıyla paylaşılır. Bu açıklama, makamın bildirilen "
+"sorunu araştırması, yanıtlaması ve çözmesi için gereklidir."
+
+msgid "3.2 Public Display"
+msgstr "3.2 Herkese Açık Görüntüleme"
+
+msgid ""
+"Your report description, category, photos, location, and approximate pin "
+"placement are published on the InfraSignal website so that other residents "
+"can view reported problems and their status. You may choose to hide your "
+"name from the public report page; however, your name and email are always "
+"shared with the responsible authority."
+msgstr ""
+"Bildirim açıklamanız, kategoriniz, fotoğraflarınız, konumunuz ve yaklaşık "
+"işaretçi konumunuz, diğer sakinlerin bildirilen sorunları ve durumlarını "
+"görüntüleyebilmesi için InfraSignal web sitesinde yayınlanır. Adınızı "
+"herkese açık bildirim sayfasında gizlemeyi seçebilirsiniz; ancak adınız ve "
+"e-postanız her zaman sorumlu makamla paylaşılır."
+
+msgid "3.3 Service Providers and Partners"
+msgstr "3.3 Hizmet Sağlayıcılar ve Ortaklar"
+
+msgid ""
+"We work with third-party service providers, partners, and other entities to "
+"help us operate, provide, improve, understand, customize, support, and "
+"market our Service. When we share information with these entities, we "
+"require them to use your information in accordance with our instructions and"
+" terms."
+msgstr ""
+"Hizmetimizi işletmemize, sağlamamıza, geliştirmemize, anlamamıza, "
+"özelleştirmemize, desteklememize ve pazarlamamıza yardımcı olmak için üçüncü"
+" taraf hizmet sağlayıcılarla, ortaklarla ve diğer kuruluşlarla çalışırız. Bu"
+" kuruluşlarla bilgi paylaştığımızda, bilgilerinizi talimatlarımıza ve "
+"koşullarımıza uygun olarak kullanmalarını şart koşarız."
+
+msgid ""
+"These third parties may include: hosting and infrastructure providers, "
+"content moderation services, analytics providers, email delivery services, "
+"mapping and geolocation services, customer support tools, and professional "
+"advisors."
+msgstr ""
+"Bu üçüncü taraflar şunları içerebilir: barındırma ve altyapı sağlayıcıları, "
+"içerik denetim hizmetleri, analiz sağlayıcıları, e-posta teslim hizmetleri, "
+"harita ve konum hizmetleri, müşteri destek araçları ve profesyonel "
+"danışmanlar."
+
+msgid "3.4 Aggregated and De-identified Data"
+msgstr "3.4 Toplulaştırılmış ve Kimliksizleştirilmiş Veriler"
+
+msgid ""
+"We may share aggregated, anonymized, or de-identified data &mdash; which "
+"cannot reasonably be used to identify you &mdash; with third parties for "
+"research, analytics, urban planning, public policy analysis, trend "
+"reporting, or any other lawful purpose, including commercial use."
+msgstr ""
+"Toplulaştırılmış, anonimleştirilmiş veya kimliksizleştirilmiş verileri "
+"&mdash; sizi tanımlamak için makul olarak kullanılamayan &mdash; araştırma, "
+"analiz, kentsel planlama, kamu politikası analizi, eğilim raporlaması veya "
+"ticari kullanım dahil olmak üzere herhangi bir yasal amaç için üçüncü "
+"taraflarla paylaşabiliriz."
+
+msgid "3.5 Legal Requirements"
+msgstr "3.5 Yasal Gereklilikler"
+
+msgid ""
+"We may disclose personal information if required by law, subpoena, court "
+"order, or other legal process, or if we reasonably believe that disclosure "
+"is necessary to:"
+msgstr ""
+"Yasa, mahkeme celbi, mahkeme kararı veya diğer yasal süreçler tarafından "
+"gerekli görülmesi durumunda ya da açıklamanın şunlar için gerekli olduğuna "
+"makul olarak inanmamız halinde kişisel bilgileri açıklayabiliriz:"
+
+msgid "Comply with applicable law or legal process"
+msgstr "Geçerli yasalara veya yasal sürece uymak"
+
+msgid ""
+"Protect the rights, property, or safety of InfraSignal, our users, or the "
+"public"
+msgstr ""
+"InfraSignal'in, kullanıcılarımızın veya kamunun haklarını, mülkiyetini veya "
+"güvenliğini korumak"
+
+msgid "Enforce our <a href=\"/about/terms\">Terms of Use</a>"
+msgstr "<a href=\"/about/terms\">Kullanım Koşullarımızı</a> uygulamak"
+
+msgid "Respond to law enforcement requests"
+msgstr "Kolluk kuvvetlerinin taleplerine yanıt vermek"
+
+msgid "3.6 Business Transfers"
+msgstr "3.6 İş Devirleri"
+
+msgid ""
+"If InfraSignal is involved in a merger, acquisition, sale of assets, "
+"reorganization, dissolution, bankruptcy, or similar transaction, your "
+"information may be transferred as part of that transaction. We will notify "
+"you of any such change in ownership or control of your personal information."
+msgstr ""
+"InfraSignal bir birleşme, satın alma, varlık satışı, yeniden yapılanma, "
+"fesih, iflas veya benzer bir işleme dahil olursa, bilgileriniz bu işlemin "
+"bir parçası olarak devredilebilir. Kişisel bilgilerinizin sahipliğindeki "
+"veya kontrolündeki herhangi bir değişiklik hakkında sizi bilgilendireceğiz."
+
+msgid "3.7 With Your Consent"
+msgstr "3.7 Onayınızla"
+
+msgid ""
+"We may share your information for purposes not described in this Privacy "
+"Policy when we have obtained your consent to do so."
+msgstr ""
+"Bunu yapmak için onayınızı aldığımızda, bilgilerinizi bu Gizlilik "
+"Politikasında açıklanmayan amaçlar için paylaşabiliriz."
+
+msgid "4. Aggregated and Public Data"
+msgstr "4. Toplulaştırılmış ve Kamuya Açık Veriler"
+
+msgid "How is aggregated and public data handled?"
+msgstr "Toplulaştırılmış ve kamuya açık veriler nasıl işlenir?"
+
+msgid ""
+"Infrastructure reports submitted through InfraSignal are intended to be made"
+" available to the public and to government authorities by design. Report "
+"descriptions, categories, photos, locations, and status updates are publicly"
+" visible on the platform."
+msgstr ""
+"InfraSignal aracılığıyla gönderilen altyapı bildirimleri, tasarımı gereği "
+"kamuya ve devlet makamlarına sunulmak üzere tasarlanmıştır. Bildirim "
+"açıklamaları, kategorileri, fotoğrafları, konumları ve durum güncellemeleri "
+"platformda herkese açık olarak görülebilir."
+
+msgid ""
+"We may compile, aggregate, anonymize, or de-identify information collected "
+"through the Service for use in research, analytics, public policy studies, "
+"urban planning tools, trend reports, or any other lawful purpose. Aggregated"
+" and de-identified data is not subject to the restrictions in this Privacy "
+"Policy because it does not constitute personal information."
+msgstr ""
+"Hizmet aracılığıyla toplanan bilgileri araştırma, analiz, kamu politikası "
+"çalışmaları, kentsel planlama araçları, eğilim raporları veya diğer herhangi"
+" bir yasal amaçla kullanmak üzere derleyebilir, toplulaştırabilir, "
+"anonimleştirebilir veya kimliksizleştirebiliriz. Toplulaştırılmış ve "
+"kimliksizleştirilmiş veriler, kişisel bilgi teşkil etmediğinden bu Gizlilik "
+"Politikasındaki kısıtlamalara tabi değildir."
+
+msgid "5. Data Retention"
+msgstr "5. Veri Saklama"
+
+msgid "How long do we keep your data?"
+msgstr "Verilerinizi ne kadar süre saklarız?"
+
+msgid ""
+"We retain your account information and reports for as long as your account "
+"is active or as needed to provide the Service. Infrastructure reports and "
+"associated data (descriptions, photos, location, status) are retained "
+"indefinitely to maintain a public record of civic issues and their "
+"resolution, unless you request deletion."
+msgstr ""
+"Hesap bilgilerinizi ve bildirimlerinizi, hesabınız etkin olduğu sürece veya "
+"Hizmeti sağlamak için gerektiği sürece saklarız. Altyapı bildirimleri ve "
+"ilgili veriler (açıklamalar, fotoğraflar, konum, durum), silinmesini talep "
+"etmediğiniz sürece, sivil sorunların ve çözümlerinin kamuya açık bir kaydını"
+" tutmak için süresiz olarak saklanır."
+
+msgid "6. Cookies"
+msgstr "6. Çerezler"
+
+msgid "What cookies does InfraSignal use?"
+msgstr "InfraSignal hangi çerezleri kullanır?"
+
+msgid "InfraSignal uses a single essential cookie for session management:"
+msgstr "InfraSignal, oturum yönetimi için tek bir temel çerez kullanır:"
+
+msgid ""
+"<strong>infrasignal_session</strong> &mdash; Maintains your authenticated "
+"login session and stores preferences. Duration: session (cleared when "
+"browser closes), or 4 weeks if &ldquo;Keep me signed in&rdquo; is selected."
+msgstr ""
+"<strong>infrasignal_session</strong> &mdash; Kimliği doğrulanmış oturumunuzu"
+" korur ve tercihleri saklar. Süre: oturum (tarayıcı kapandığında temizlenir)"
+" veya &ldquo;Oturumumu açık tut&rdquo; seçilirse 4 hafta."
+
+msgid ""
+"We do not use advertising cookies, tracking pixels, social media widgets, or"
+" third-party analytics cookies."
+msgstr ""
+"Reklam çerezleri, izleme pikselleri, sosyal medya bileşenleri veya üçüncü "
+"taraf analiz çerezleri kullanmayız."
+
+msgid "7. Data Security"
+msgstr "7. Veri Güvenliği"
+
+msgid "How do we protect your information?"
+msgstr "Bilgilerinizi nasıl koruruz?"
+
+msgid ""
+"We implement reasonable administrative, technical, and physical safeguards "
+"to protect personal information against unauthorized access, alteration, "
+"disclosure, or destruction. These measures include encrypted data "
+"transmission, secure password storage, automated content moderation, and "
+"access controls limiting staff access to administrative functions."
+msgstr ""
+"Kişisel bilgileri yetkisiz erişime, değiştirilmeye, açıklanmaya veya imha "
+"edilmeye karşı korumak için makul idari, teknik ve fiziksel önlemler "
+"uygularız. Bu önlemler, şifreli veri iletimini, güvenli parola saklamayı, "
+"otomatik içerik denetimini ve personelin yönetim işlevlerine erişimini "
+"sınırlayan erişim kontrollerini içerir."
+
+msgid ""
+"No method of electronic transmission or storage is 100% secure. While we "
+"strive to protect your information, we cannot guarantee absolute security."
+msgstr ""
+"Hiçbir elektronik iletim veya saklama yöntemi %100 güvenli değildir. "
+"Bilgilerinizi korumaya çalışsak da mutlak güvenliği garanti edemeyiz."
+
+msgid "8. Children&rsquo;s Privacy"
+msgstr "8. Çocukların Gizliliği"
+
+msgid "Do we collect data from children?"
+msgstr "Çocuklardan veri topluyor muyuz?"
+
+msgid ""
+"The Service is not directed at children under the age of 13. We do not "
+"knowingly collect personal information from children under 13, consistent "
+"with the Children&rsquo;s Online Privacy Protection Act (COPPA). If you "
+"believe a child under 13 has provided personal information through the "
+"Service, please <a href=\"/contact\">contact us</a> immediately and we will "
+"delete it."
+msgstr ""
+"Hizmet, 13 yaşın altındaki çocuklara yönelik değildir. Çocukların Çevrimiçi "
+"Gizliliğini Koruma Yasası'na (COPPA) uygun olarak 13 yaşın altındaki "
+"çocuklardan bilerek kişisel bilgi toplamayız. 13 yaşın altındaki bir çocuğun"
+" Hizmet aracılığıyla kişisel bilgi verdiğini düşünüyorsanız, lütfen hemen <a"
+" href=\"/contact\">bizimle iletişime geçin</a>, bunu sileceğiz."
+
+msgid "9. Your Rights"
+msgstr "9. Haklarınız"
+
+msgid "What are my privacy rights?"
+msgstr "Gizlilik haklarım nelerdir?"
+
+msgid ""
+"Depending on your state of residence, you may have rights under applicable "
+"data privacy laws (CCPA, VCDPA, and similar). These rights may include:"
+msgstr ""
+"İkamet ettiğiniz eyalete bağlı olarak, geçerli veri gizliliği yasaları "
+"(CCPA, VCDPA ve benzerleri) kapsamında haklara sahip olabilirsiniz. Bu "
+"haklar şunları içerebilir:"
+
+msgid ""
+"<strong>Right to Know:</strong> Request disclosure of the personal "
+"information we have collected about you"
+msgstr ""
+"<strong>Bilme Hakkı:</strong> Sizin hakkınızda topladığımız kişisel "
+"bilgilerin açıklanmasını talep etme"
+
+msgid ""
+"<strong>Right to Delete:</strong> Request deletion of your personal "
+"information, subject to certain exceptions"
+msgstr ""
+"<strong>Silme Hakkı:</strong> Belirli istisnalara tabi olarak kişisel "
+"bilgilerinizin silinmesini talep etme"
+
+msgid ""
+"<strong>Right to Correct:</strong> Request correction of inaccurate personal"
+" information"
+msgstr ""
+"<strong>Düzeltme Hakkı:</strong> Yanlış kişisel bilgilerin düzeltilmesini "
+"talep etme"
+
+msgid ""
+"<strong>Right to Non-Discrimination:</strong> Exercise your privacy rights "
+"without facing discriminatory treatment"
+msgstr ""
+"<strong>Ayrımcılık Yapılmaması Hakkı:</strong> Ayrımcı muamele görmeden "
+"gizlilik haklarınızı kullanma"
+
+msgid ""
+"To exercise any of these rights, please <a href=\"/contact\">contact us</a>."
+" We will verify your identity and respond within the timeframe required by "
+"applicable law (typically 45 days)."
+msgstr ""
+"Bu haklardan herhangi birini kullanmak için lütfen <a "
+"href=\"/contact\">bizimle iletişime geçin</a>. Kimliğinizi doğrulayacak ve "
+"geçerli yasaların gerektirdiği süre içinde (genellikle 45 gün) yanıt "
+"vereceğiz."
+
+msgid "Does InfraSignal sell personal information?"
+msgstr "InfraSignal kişisel bilgileri satıyor mu?"
+
+msgid ""
+"InfraSignal does not sell personal information in exchange for monetary "
+"consideration. However, certain data-sharing arrangements &mdash; such as "
+"sharing with service providers, partners, or analytics providers &mdash; may"
+" be broadly interpreted as a &ldquo;sale&rdquo; or &ldquo;sharing&rdquo; "
+"under some state privacy laws. To the extent applicable law provides you "
+"with the right to opt out, you may exercise that right by <a "
+"href=\"/contact\">contacting us</a>."
+msgstr ""
+"InfraSignal, parasal karşılık karşılığında kişisel bilgi satmaz. Ancak, "
+"hizmet sağlayıcılar, ortaklar veya analiz sağlayıcılarıyla paylaşım gibi "
+"bazı veri paylaşım düzenlemeleri &mdash; bazı eyalet gizlilik yasaları "
+"kapsamında geniş anlamda bir &ldquo;satış&rdquo; veya &ldquo;paylaşım&rdquo;"
+" olarak yorumlanabilir. Geçerli yasanın size vazgeçme hakkı tanıdığı ölçüde,"
+" bu hakkı <a href=\"/contact\">bizimle iletişime geçerek</a> "
+"kullanabilirsiniz."
+
+msgid "10. Changes to This Policy"
+msgstr "10. Bu Politikadaki Değişiklikler"
+
+msgid "How will we notify you of changes?"
+msgstr "Değişiklikler hakkında sizi nasıl bilgilendireceğiz?"
+
+msgid ""
+"We may update this Privacy Policy from time to time. When we make material "
+"changes, we will revise the &ldquo;Last Revised&rdquo; date at the top of "
+"this page. Your continued use of the Service after changes are posted "
+"constitutes your acceptance of the updated policy."
+msgstr ""
+"Bu Gizlilik Politikasını zaman zaman güncelleyebiliriz. Önemli değişiklikler"
+" yaptığımızda, bu sayfanın üst kısmındaki &ldquo;Son Düzenleme&rdquo; "
+"tarihini revize edeceğiz. Değişiklikler yayınlandıktan sonra Hizmeti "
+"kullanmaya devam etmeniz, güncellenmiş politikayı kabul ettiğiniz anlamına "
+"gelir."
+
+msgid "Getting Started"
+msgstr "Başlarken"
+
+msgid "1. Description of Service"
+msgstr "1. Hizmetin Tanımı"
+
+msgid ""
+"InfraSignal is a civic infrastructure reporting platform that enables "
+"residents of the United States to report problems such as potholes, broken "
+"streetlights, drainage issues, and other infrastructure concerns to the "
+"responsible local government authority. Reports are delivered to cities, "
+"counties, boroughs, and state agencies across all 50 states and the District"
+" of Columbia."
+msgstr ""
+"InfraSignal, Amerika Birleşik Devletleri sakinlerinin çukurlar, bozuk sokak "
+"lambaları, drenaj sorunları ve diğer altyapı endişeleri gibi sorunları "
+"sorumlu yerel yönetim makamına bildirmesini sağlayan bir sivil altyapı "
+"bildirim platformudur. Bildirimler, 50 eyaletin tamamında ve Columbia "
+"Bölgesi'nde şehirlere, ilçelere, beldelere ve eyalet kurumlarına iletilir."
+
+msgid "The Service allows you to:"
+msgstr "Hizmet şunları yapmanıza olanak tanır:"
+
+msgid ""
+"Submit geo-located reports of infrastructure problems with descriptions and "
+"photos"
+msgstr ""
+"Altyapı sorunlarının açıklamalar ve fotoğraflarla coğrafi konumlu "
+"bildirimlerini göndermek"
+
+msgid "Track the status of your reports"
+msgstr "Bildirimlerinizin durumunu takip etmek"
+
+msgid "View reports submitted by other users in your area"
+msgstr ""
+"Bölgenizdeki diğer kullanıcılar tarafından gönderilen bildirimleri "
+"görüntülemek"
+
+msgid "Subscribe to alerts about problems in a specific geographic area"
+msgstr "Belirli bir coğrafi bölgedeki sorunlarla ilgili uyarılara abone olmak"
+
+msgid "2. Eligibility"
+msgstr "2. Uygunluk"
+
+msgid ""
+"You must be at least 13 years of age to use the Service. By using the "
+"Service, you represent that you are at least 13 years old and have the legal"
+" capacity to enter into these Terms. If you are under 18, you represent that"
+" your parent or legal guardian has reviewed and agrees to these Terms on "
+"your behalf."
+msgstr ""
+"Hizmeti kullanmak için en az 13 yaşında olmalısınız. Hizmeti kullanarak, en "
+"az 13 yaşında olduğunuzu ve bu Koşulları kabul etmek için yasal ehliyete "
+"sahip olduğunuzu beyan edersiniz. 18 yaşın altındaysanız, ebeveyninizin veya"
+" yasal vasinizin bu Koşulları sizin adınıza incelediğini ve kabul ettiğini "
+"beyan edersiniz."
+
+msgid "3. Account Registration"
+msgstr "3. Hesap Kaydı"
+
+msgid ""
+"You may submit reports without creating an account by providing your name "
+"and email address with each submission. Optionally, you may create an "
+"account to manage your reports and preferences. If you create an account, "
+"you are responsible for:"
+msgstr ""
+"Her gönderimde adınızı ve e-posta adresinizi sağlayarak hesap oluşturmadan "
+"bildirim gönderebilirsiniz. İsteğe bağlı olarak, bildirimlerinizi ve "
+"tercihlerinizi yönetmek için bir hesap oluşturabilirsiniz. Bir hesap "
+"oluşturursanız, şunlardan sorumlusunuz:"
+
+msgid "Providing accurate, current, and complete information"
+msgstr "Doğru, güncel ve eksiksiz bilgi sağlamak"
+
+msgid "Maintaining the security and confidentiality of your login credentials"
+msgstr "Giriş kimlik bilgilerinizin güvenliğini ve gizliliğini korumak"
+
+msgid "All activity occurring under your account"
+msgstr "Hesabınız altında gerçekleşen tüm etkinlikler"
+
+msgid "Notifying us promptly of any unauthorized use of your account"
+msgstr "Hesabınızın herhangi bir yetkisiz kullanımını bize derhal bildirmek"
+
+msgid "Usage Rules"
+msgstr "Kullanım Kuralları"
+
+msgid "4. Acceptable Use"
+msgstr "4. Kabul Edilebilir Kullanım"
+
+msgid ""
+"You agree to use the Service only for its intended purpose&mdash;reporting "
+"legitimate infrastructure problems to local government authorities. You "
+"agree that you will <strong>not</strong>:"
+msgstr ""
+"Hizmeti yalnızca amacına uygun olarak&mdash;meşru altyapı sorunlarını yerel "
+"yönetim makamlarına bildirmek için kullanmayı kabul edersiniz. Şunları "
+"<strong>yapmayacağınızı</strong> kabul edersiniz:"
+
+msgid "Submit false, misleading, or fraudulent reports"
+msgstr "Yanlış, yanıltıcı veya hileli bildirimler göndermek"
+
+msgid ""
+"Upload photos or content that is obscene, pornographic, sexually explicit, "
+"violent, threatening, hateful, defamatory, or otherwise objectionable"
+msgstr ""
+"Müstehcen, pornografik, cinsel içerikli, şiddet içeren, tehditkâr, nefret "
+"dolu, iftira niteliğinde veya başka bir şekilde sakıncalı fotoğraf veya "
+"içerik yüklemek"
+
+msgid ""
+"Upload images depicting nudity, weapons, drugs, alcohol, self-harm, or "
+"graphic violence"
+msgstr ""
+"Çıplaklık, silah, uyuşturucu, alkol, kendine zarar verme veya açık şiddet "
+"içeren görüntüler yüklemek"
+
+msgid ""
+"Use the Service to harass, stalk, or intimidate any individual, including "
+"government employees"
+msgstr ""
+"Hizmeti, devlet çalışanları dahil herhangi bir kişiyi taciz etmek, takip "
+"etmek veya korkutmak için kullanmak"
+
+msgid ""
+"Submit reports containing personal information about third parties without "
+"their consent"
+msgstr ""
+"Üçüncü tarafların rızası olmadan onlar hakkında kişisel bilgiler içeren "
+"bildirimler göndermek"
+
+msgid ""
+"Submit spam, duplicate, or bulk reports for purposes unrelated to "
+"infrastructure issues"
+msgstr ""
+"Altyapı sorunlarıyla ilgisi olmayan amaçlarla spam, yinelenen veya toplu "
+"bildirimler göndermek"
+
+msgid ""
+"Attempt to gain unauthorized access to the Service, other accounts, servers,"
+" or databases"
+msgstr ""
+"Hizmete, diğer hesaplara, sunuculara veya veritabanlarına yetkisiz erişim "
+"sağlamaya çalışmak"
+
+msgid ""
+"Use automated scripts, bots, or scraping tools without our prior written "
+"consent"
+msgstr ""
+"Önceden yazılı iznimiz olmadan otomatik komut dosyaları, botlar veya kazıma "
+"araçları kullanmak"
+
+msgid "Interfere with or disrupt the operation of the Service"
+msgstr "Hizmetin işleyişine müdahale etmek veya onu kesintiye uğratmak"
+
+msgid ""
+"Reverse engineer, decompile, or disassemble the Service, except as permitted"
+" by the applicable open-source license"
+msgstr ""
+"Geçerli açık kaynak lisansının izin verdiği durumlar dışında Hizmeti tersine"
+" mühendislik yapmak, kaynak koda dönüştürmek veya parçalarına ayırmak"
+
+msgid "Use the Service to violate any applicable local, state, or federal law"
+msgstr ""
+"Hizmeti, geçerli herhangi bir yerel, eyalet veya federal yasayı ihlal etmek "
+"için kullanmak"
+
+msgid "5. Content Moderation"
+msgstr "5. İçerik Denetimi"
+
+msgid ""
+"All photos uploaded to InfraSignal are subject to automated content "
+"moderation. Our moderation system analyzes images for prohibited content, "
+"including but not limited to nudity, weapons, violence, drugs, and other "
+"inappropriate material. Photos that violate our content guidelines may be "
+"automatically rejected."
+msgstr ""
+"InfraSignal'e yüklenen tüm fotoğraflar otomatik içerik denetimine tabidir. "
+"Denetim sistemimiz, görüntüleri çıplaklık, silahlar, şiddet, uyuşturucu ve "
+"diğer uygunsuz materyaller dahil ancak bunlarla sınırlı olmamak üzere "
+"yasaklanmış içerik açısından analiz eder. İçerik yönergelerimizi ihlal eden "
+"fotoğraflar otomatik olarak reddedilebilir."
+
+msgid ""
+"We also reserve the right to review, edit, or remove any report content "
+"(including text and photos) at our sole discretion if it violates these "
+"Terms, is inappropriate, or is unrelated to legitimate infrastructure "
+"reporting."
+msgstr ""
+"Ayrıca, bu Koşulları ihlal etmesi, uygunsuz olması veya meşru altyapı "
+"bildirimiyle ilgisiz olması durumunda, kendi takdirimize bağlı olarak "
+"herhangi bir bildirim içeriğini (metin ve fotoğraflar dahil) inceleme, "
+"düzenleme veya kaldırma hakkını saklı tutarız."
+
+msgid "Content &amp; Intellectual Property"
+msgstr "İçerik ve Fikri Mülkiyet"
+
+msgid "6. User-Generated Content"
+msgstr "6. Kullanıcı Tarafından Oluşturulan İçerik"
+
+msgid "6.1 Your Content"
+msgstr "6.1 İçeriğiniz"
+
+msgid ""
+"You retain ownership of the text descriptions and photos you submit "
+"(&ldquo;User Content&rdquo;). By submitting User Content, you grant "
+"InfraSignal a non-exclusive, royalty-free, worldwide, perpetual, "
+"irrevocable, transferable, and sub-licensable license to use, host, store, "
+"display, reproduce, modify, create derivative works from, distribute, and "
+"transmit your User Content for any purpose, including but not limited to "
+"operating and improving the Service, sharing reports with local government "
+"authorities, displaying them publicly on the platform, conducting research "
+"and analytics, training models and algorithms, developing new products and "
+"features, and for promotional and commercial purposes."
+msgstr ""
+"Gönderdiğiniz metin açıklamalarının ve fotoğrafların (&ldquo;Kullanıcı "
+"İçeriği&rdquo;) mülkiyetini elinizde tutarsınız. Kullanıcı İçeriği "
+"göndererek, InfraSignal'e Kullanıcı İçeriğinizi; Hizmeti işletmek ve "
+"geliştirmek, bildirimleri yerel yönetim makamlarıyla paylaşmak, bunları "
+"platformda herkese açık olarak görüntülemek, araştırma ve analiz yapmak, "
+"modeller ve algoritmalar eğitmek, yeni ürünler ve özellikler geliştirmek ve "
+"tanıtım ve ticari amaçlar dahil ancak bunlarla sınırlı olmamak üzere "
+"herhangi bir amaçla kullanmak, barındırmak, saklamak, görüntülemek, "
+"çoğaltmak, değiştirmek, türev çalışmalar oluşturmak, dağıtmak ve iletmek "
+"için münhasır olmayan, telifsiz, dünya çapında, süresiz, geri alınamaz, "
+"devredilebilir ve alt lisans verilebilir bir lisans vermiş olursunuz."
+
+msgid ""
+"You understand that User Content may be used in an aggregated or de-"
+"identified form that does not personally identify you."
+msgstr ""
+"Kullanıcı İçeriğinin, sizi kişisel olarak tanımlamayan toplulaştırılmış veya"
+" kimliksizleştirilmiş bir biçimde kullanılabileceğini anlarsınız."
+
+msgid "6.2 Representations"
+msgstr "6.2 Beyanlar"
+
+msgid "By submitting User Content, you represent and warrant that:"
+msgstr "Kullanıcı İçeriği göndererek şunları beyan ve garanti edersiniz:"
+
+msgid "You own or have the necessary rights to submit the content"
+msgstr ""
+"İçeriği göndermek için gerekli haklara sahip olduğunuzu veya onun sahibi "
+"olduğunuzu"
+
+msgid ""
+"The content does not infringe any third-party intellectual property, "
+"privacy, publicity, or other rights"
+msgstr ""
+"İçeriğin herhangi bir üçüncü taraf fikri mülkiyet, gizlilik, kamuya açıklık "
+"veya diğer hakları ihlal etmediğini"
+
+msgid "The content is truthful and not misleading"
+msgstr "İçeriğin doğru ve yanıltıcı olmadığını"
+
+msgid "The content complies with all applicable laws and these Terms"
+msgstr "İçeriğin tüm geçerli yasalara ve bu Koşullara uygun olduğunu"
+
+msgid "6.3 No Obligation"
+msgstr "6.3 Yükümlülük Yok"
+
+msgid ""
+"We are under no obligation to publish, forward, or retain any User Content. "
+"We may remove or decline to publish content that violates these Terms."
+msgstr ""
+"Herhangi bir Kullanıcı İçeriğini yayınlama, iletme veya saklama "
+"yükümlülüğümüz yoktur. Bu Koşulları ihlal eden içeriği kaldırabilir veya "
+"yayınlamayı reddedebiliriz."
+
+msgid "7. Intellectual Property"
+msgstr "7. Fikri Mülkiyet"
+
+msgid ""
+"The InfraSignal name, logo, and brand elements are proprietary to "
+"InfraSignal and may not be used without our prior written consent. Certain "
+"components of the Service are licensed under the GNU Affero General Public "
+"License (AGPL v3)."
+msgstr ""
+"InfraSignal adı, logosu ve marka unsurları InfraSignal'e özeldir ve önceden "
+"yazılı iznimiz olmadan kullanılamaz. Hizmetin belirli bileşenleri GNU Affero"
+" Genel Kamu Lisansı (AGPL v3) altında lisanslanmıştır."
+
+msgid "8. Third-Party Services and Links"
+msgstr "8. Üçüncü Taraf Hizmetleri ve Bağlantıları"
+
+msgid ""
+"The Service uses third-party services for mapping, geographic boundary "
+"lookups, image moderation, and email delivery. Your use of these third-party"
+" services is subject to their respective terms and privacy policies. We are "
+"not responsible for the practices of third-party providers."
+msgstr ""
+"Hizmet, harita, coğrafi sınır aramaları, görüntü denetimi ve e-posta teslimi"
+" için üçüncü taraf hizmetlerini kullanır. Bu üçüncü taraf hizmetlerini "
+"kullanmanız, ilgili koşullarına ve gizlilik politikalarına tabidir. Üçüncü "
+"taraf sağlayıcıların uygulamalarından sorumlu değiliz."
+
+msgid ""
+"The Service may contain links to third-party websites. We do not endorse or "
+"assume responsibility for the content or practices of linked websites."
+msgstr ""
+"Hizmet, üçüncü taraf web sitelerine bağlantılar içerebilir. Bağlantılı web "
+"sitelerinin içeriğini veya uygulamalarını onaylamaz veya bunlardan "
+"sorumluluk kabul etmeyiz."
+
+msgid "9. Disclaimers"
+msgstr "9. Sorumluluk Reddi"
+
+msgid ""
+"THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; "
+"WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT"
+" LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,"
+" NON-INFRINGEMENT, OR AVAILABILITY."
+msgstr ""
+"HİZMET, TİCARETE ELVERİŞLİLİK, BELİRLİ BİR AMACA UYGUNLUK, İHLAL ETMEME VEYA"
+" KULLANILABİLİRLİK GARANTİLERİ DAHİL ANCAK BUNLARLA SINIRLI OLMAMAK ÜZERE, "
+"AÇIK VEYA ZIMNİ HERHANGİ BİR TÜRDE GARANTİ VERİLMEKSİZİN &ldquo;OLDUĞU "
+"GİBİ&rdquo; VE &ldquo;MEVCUT OLDUĞU ŞEKİLDE&rdquo; SAĞLANIR."
+
+msgid ""
+"Without limiting the foregoing, we make no warranties or representations "
+"that:"
+msgstr ""
+"Yukarıdakileri sınırlamaksızın, şunlara dair hiçbir garanti veya beyanda "
+"bulunmayız:"
+
+msgid "The Service will be uninterrupted, timely, secure, or error-free"
+msgstr "Hizmetin kesintisiz, zamanında, güvenli veya hatasız olacağı"
+
+msgid ""
+"Reports submitted through the Service will be received, acknowledged, or "
+"acted upon by any local government authority"
+msgstr ""
+"Hizmet aracılığıyla gönderilen bildirimlerin herhangi bir yerel yönetim "
+"makamı tarafından alınacağı, kabul edileceği veya işleme konulacağı"
+
+msgid ""
+"Any infrastructure problem reported through the Service will be resolved"
+msgstr ""
+"Hizmet aracılığıyla bildirilen herhangi bir altyapı sorununun çözüleceği"
+
+msgid ""
+"The information, content, or categories available on the Service will be "
+"accurate or complete"
+msgstr ""
+"Hizmette bulunan bilgilerin, içeriğin veya kategorilerin doğru veya eksiksiz"
+" olacağı"
+
+msgid ""
+"InfraSignal is a communication platform. <strong>We are not a government "
+"agency and do not perform infrastructure repairs.</strong> Submission of a "
+"report through InfraSignal does not constitute an official government "
+"filing. For emergencies, always call 911 or your local emergency services."
+msgstr ""
+"InfraSignal bir iletişim platformudur. <strong>Bir devlet kurumu değiliz ve "
+"altyapı onarımları yapmayız.</strong> InfraSignal aracılığıyla bir bildirim "
+"gönderilmesi, resmi bir devlet başvurusu teşkil etmez. Acil durumlar için "
+"her zaman 911'i veya yerel acil servislerinizi arayın."
+
+msgid "10. Limitation of Liability"
+msgstr "10. Sorumluluğun Sınırlandırılması"
+
+msgid ""
+"TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL "
+"INFRASIGNAL OR ITS DIRECTORS, OFFICERS, EMPLOYEES, AGENTS, OR AFFILIATES BE "
+"LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE "
+"DAMAGES, OR ANY LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE "
+"LOSSES, ARISING OUT OF OR IN CONNECTION WITH:"
+msgstr ""
+"GEÇERLİ YASALARIN İZİN VERDİĞİ AZAMİ ÖLÇÜDE, INFRASIGNAL VEYA YÖNETİCİLERİ, "
+"MEMURLARI, ÇALIŞANLARI, TEMSİLCİLERİ VEYA İŞTİRAKLERİ HİÇBİR DURUMDA, "
+"ŞUNLARDAN KAYNAKLANAN VEYA BUNLARLA BAĞLANTILI HERHANGİ BİR DOLAYLI, ARIZİ, "
+"ÖZEL, SONUÇSAL VEYA CEZAİ ZARARDAN YA DA HERHANGİ BİR KÂR, VERİ, KULLANIM, "
+"İTİBAR KAYBINDAN VEYA DİĞER MADDİ OLMAYAN KAYIPLARDAN SORUMLU OLMAYACAKTIR:"
+
+msgid "Your use of or inability to use the Service"
+msgstr "Hizmeti kullanmanız veya kullanamamanız"
+
+msgid ""
+"Any failure of a local government authority to respond to or resolve a "
+"reported problem"
+msgstr ""
+"Bir yerel yönetim makamının bildirilen bir soruna yanıt vermemesi veya onu "
+"çözememesi"
+
+msgid "Unauthorized access to or alteration of your data"
+msgstr "Verilerinize yetkisiz erişim veya verilerinizin değiştirilmesi"
+
+msgid "Any third-party conduct on the Service"
+msgstr "Hizmette herhangi bir üçüncü taraf davranışı"
+
+msgid "Any other matter relating to the Service"
+msgstr "Hizmetle ilgili diğer herhangi bir konu"
+
+msgid ""
+"OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS RELATED TO THE SERVICE SHALL "
+"NOT EXCEED ONE HUNDRED DOLLARS ($100.00)."
+msgstr ""
+"HİZMETLE İLGİLİ TÜM TALEPLER İÇİN TOPLAM SORUMLULUĞUMUZ YÜZ DOLARI ($100.00)"
+" AŞMAYACAKTIR."
+
+msgid "11. Indemnification"
+msgstr "11. Tazminat"
+
+msgid ""
+"You agree to indemnify and hold harmless InfraSignal and its officers, "
+"directors, employees, agents, and affiliates from and against any claims, "
+"liabilities, damages, losses, costs, and expenses (including reasonable "
+"attorneys&rsquo; fees) arising from or related to your use of the Service, "
+"your User Content, or your violation of these Terms."
+msgstr ""
+"InfraSignal'i ve memurlarını, yöneticilerini, çalışanlarını, temsilcilerini "
+"ve iştiraklerini, Hizmeti kullanmanızdan, Kullanıcı İçeriğinizden veya bu "
+"Koşulları ihlal etmenizden kaynaklanan ya da bunlarla ilgili her türlü "
+"talep, yükümlülük, zarar, kayıp, maliyet ve masraflara (makul avukatlık "
+"ücretleri dahil) karşı tazmin etmeyi ve zarardan korumayı kabul edersiniz."
+
+msgid "12. Account Suspension and Termination"
+msgstr "12. Hesabın Askıya Alınması ve Feshi"
+
+msgid ""
+"We may suspend or terminate your access to the Service at any time, with or "
+"without notice, if we reasonably believe you have violated these Terms or "
+"engaged in conduct that is harmful to the Service, other users, or third "
+"parties. Upon termination, your right to use the Service ceases immediately."
+" Sections 6, 9, 10, 11, and 14 survive termination."
+msgstr ""
+"Bu Koşulları ihlal ettiğinize veya Hizmete, diğer kullanıcılara ya da üçüncü"
+" taraflara zarar veren bir davranışta bulunduğunuza makul olarak inanırsak, "
+"Hizmete erişiminizi bildirimli veya bildirimsiz olarak istediğimiz zaman "
+"askıya alabilir veya sonlandırabiliriz. Fesih üzerine, Hizmeti kullanma "
+"hakkınız derhal sona erer. 6, 9, 10, 11 ve 14. Bölümler fesihten sonra da "
+"geçerliliğini korur."
+
+msgid "13. Digital Millennium Copyright Act (DMCA)"
+msgstr "13. Dijital Binyıl Telif Hakkı Yasası (DMCA)"
+
+msgid ""
+"If you believe that content on the Service infringes your copyright, please "
+"send a notice to our designated agent at %s with the following information:"
+msgstr ""
+"Hizmetteki içeriğin telif hakkınızı ihlal ettiğine inanıyorsanız, lütfen "
+"aşağıdaki bilgilerle birlikte belirlenen temsilcimize %s adresinden bir "
+"bildirim gönderin:"
+
+msgid "Identification of the copyrighted work you claim has been infringed"
+msgstr ""
+"İhlal edildiğini iddia ettiğiniz telif hakkıyla korunan çalışmanın "
+"tanımlanması"
+
+msgid ""
+"Identification of the material on the Service that you claim is infringing, "
+"with sufficient detail for us to locate it"
+msgstr ""
+"Hizmette ihlal ettiğini iddia ettiğiniz materyalin, bizim onu bulmamıza "
+"yetecek ayrıntıyla tanımlanması"
+
+msgid "Your contact information (name, address, telephone, email)"
+msgstr "İletişim bilgileriniz (ad, adres, telefon, e-posta)"
+
+msgid ""
+"A statement that you have a good faith belief the use is not authorized by "
+"the copyright owner, its agent, or the law"
+msgstr ""
+"Kullanımın telif hakkı sahibi, temsilcisi veya yasa tarafından "
+"yetkilendirilmediğine iyi niyetle inandığınıza dair bir beyan"
+
+msgid ""
+"A statement, under penalty of perjury, that the information in the notice is"
+" accurate and you are authorized to act on behalf of the copyright owner"
+msgstr ""
+"Bildirimdeki bilgilerin doğru olduğuna ve telif hakkı sahibi adına hareket "
+"etmeye yetkili olduğunuza dair, yalan beyan cezası altında bir beyan"
+
+msgid "Your physical or electronic signature"
+msgstr "Fiziksel veya elektronik imzanız"
+
+msgid "14. Governing Law and Dispute Resolution"
+msgstr "14. Geçerli Hukuk ve Uyuşmazlık Çözümü"
+
+msgid ""
+"These Terms are governed by and construed in accordance with the laws of the"
+" United States and the State of Delaware, without regard to conflict of law "
+"principles. Any legal action or proceeding arising from these Terms shall be"
+" brought exclusively in the state or federal courts located in the State of "
+"Delaware, and you consent to the personal jurisdiction of such courts."
+msgstr ""
+"Bu Koşullar, kanunlar ihtilafı ilkeleri dikkate alınmaksızın, Amerika "
+"Birleşik Devletleri ve Delaware Eyaleti yasalarına göre yönetilir ve "
+"yorumlanır. Bu Koşullardan kaynaklanan herhangi bir yasal işlem veya dava, "
+"yalnızca Delaware Eyaleti'nde bulunan eyalet veya federal mahkemelerde "
+"açılacaktır ve bu mahkemelerin kişisel yargı yetkisini kabul edersiniz."
+
+msgid "General Provisions"
+msgstr "Genel Hükümler"
+
+msgid "15. Modifications to Terms"
+msgstr "15. Koşullarda Değişiklikler"
+
+msgid ""
+"We reserve the right to modify these Terms at any time. If we make material "
+"changes, we will update the &ldquo;Last Revised&rdquo; date at the top of "
+"this page. Your continued use of the Service after changes are posted "
+"constitutes your acceptance of the updated Terms."
+msgstr ""
+"Bu Koşulları istediğimiz zaman değiştirme hakkını saklı tutarız. Önemli "
+"değişiklikler yaparsak, bu sayfanın üst kısmındaki &ldquo;Son "
+"Düzenleme&rdquo; tarihini güncelleyeceğiz. Değişiklikler yayınlandıktan "
+"sonra Hizmeti kullanmaya devam etmeniz, güncellenmiş Koşulları kabul "
+"ettiğiniz anlamına gelir."
+
+msgid "16. Severability"
+msgstr "16. Bölünebilirlik"
+
+msgid ""
+"If any provision of these Terms is held to be invalid, illegal, or "
+"unenforceable, the remaining provisions shall continue in full force and "
+"effect."
+msgstr ""
+"Bu Koşulların herhangi bir hükmü geçersiz, yasa dışı veya uygulanamaz olarak"
+" değerlendirilirse, kalan hükümler tam olarak yürürlükte kalmaya devam eder."
+
+msgid "17. Entire Agreement"
+msgstr "17. Tüm Sözleşme"
+
+msgid ""
+"These Terms, together with the <a href=\"/about/privacy\">Privacy "
+"Policy</a>, constitute the entire agreement between you and InfraSignal "
+"regarding your use of the Service and supersede all prior agreements and "
+"understandings."
+msgstr ""
+"Bu Koşullar, <a href=\"/about/privacy\">Gizlilik Politikası</a> ile "
+"birlikte, Hizmeti kullanımınızla ilgili sizinle InfraSignal arasındaki tüm "
+"sözleşmeyi oluşturur ve önceki tüm sözleşmelerin ve mutabakatların yerine "
+"geçer."
+
+#. InfraSignal custom UI string
+msgid "Something went wrong"
+msgstr "Bir şeyler ters gitti"
+
+#. InfraSignal custom UI string
+msgid "Quick check"
+msgstr "Hızlı kontrol"
+
+#. InfraSignal custom UI string
+msgid "CAPTCHA verification failed"
+msgstr "CAPTCHA doğrulaması başarısız oldu"
+
+#. InfraSignal custom UI string
+msgid "The CAPTCHA check did not complete. Please try the form again."
+msgstr "CAPTCHA kontrolü tamamlanmadı. Lütfen formu tekrar deneyin."
+
+#. InfraSignal custom UI string
+msgid "Please complete the CAPTCHA verification"
+msgstr "Lütfen CAPTCHA doğrulamasını tamamlayın"
+
+#. InfraSignal custom UI string
+msgid "Complete the CAPTCHA check to continue with your alert subscription."
+msgstr "Uyarı aboneliğinize devam etmek için CAPTCHA kontrolünü tamamlayın."
+
+#. InfraSignal custom UI string
+msgid "Access blocked"
+msgstr "Erişim engellendi"
+
+#. InfraSignal custom UI string
+msgid "You do not have permission to view this"
+msgstr "Bunu görüntüleme izniniz yok"
+
+#. InfraSignal custom UI string
+msgid "Page not found"
+msgstr "Sayfa bulunamadı"
+
+#. InfraSignal custom UI string
+msgid "We cannot find that page"
+msgstr "Bu sayfayı bulamıyoruz"
+
+#. InfraSignal custom UI string
+msgid "Return home"
+msgstr "Ana sayfaya dön"
+
+#. InfraSignal custom UI string
+msgid "Our server hit a snag"
+msgstr "Sunucumuzda bir sorun oluştu"
+
+#. InfraSignal custom UI string
+msgid "This is on our side, not yours. Please try again in a moment."
+msgstr ""
+"Bu sizin değil, bizim tarafımızdaki bir sorun. Lütfen birazdan tekrar "
+"deneyin."
+
+#. InfraSignal custom UI string
+msgid "Help and info"
+msgstr "Yardım ve bilgi"
+
+#. InfraSignal custom UI string
+msgid "Contact us"
+msgstr "Bize ulaşın"
+
+#. InfraSignal custom UI string
+msgid "Still stuck?"
+msgstr "Hâlâ takıldınız mı?"
+
+#. InfraSignal custom UI string
+msgid "Our team replies within one business day."
+msgstr "Ekibimiz bir iş günü içinde yanıt verir."
+
+#. InfraSignal custom UI string
+msgid "Verification required"
+msgstr "Doğrulama gerekli"
+
+#. InfraSignal custom UI string
+msgid ""
+"Return to the alert form, complete the CAPTCHA check, and submit again."
+msgstr ""
+"Uyarı formuna dönün, CAPTCHA kontrolünü tamamlayın ve tekrar gönderin."
+
+#. InfraSignal custom UI string
+msgid "Go back"
+msgstr "Geri dön"
+
+#. InfraSignal custom UI string
+msgid "Read the FAQ"
+msgstr "SSS'yi okuyun"
+
+#. InfraSignal custom UI string
+msgid "Contact support"
+msgstr "Destek ile iletişime geçin"
+
+#. InfraSignal custom UI string
+msgid "Reference code"
+msgstr "Referans kodu"
+
+#. InfraSignal custom UI string
+msgid "Copy"
+msgstr "Kopyala"
+
+#. InfraSignal custom UI string
+msgid "Copied"
+msgstr "Kopyalandı"
+
+#. InfraSignal custom UI string
+msgid "Copy reference code"
+msgstr "Referans kodunu kopyala"
+
+#. InfraSignal custom UI string
+msgid ""
+"As this is a staging site and %s is false, reports made on this site will be"
+" sent to the problem reporter, not the contact given for the report's "
+"category."
+msgstr ""
+"Bu bir hazırlık (staging) sitesi olduğundan ve %s değeri false olduğundan, "
+"bu sitede yapılan bildirimler, bildirimin kategorisi için verilen iletişim "
+"adresine değil, bildirimi yapan kişiye gönderilecektir."
+
+#. InfraSignal custom UI string
+msgid "Signed out"
+msgstr "Çıkış yapıldı"
+
+#. InfraSignal custom UI string
+msgid "Session ended"
+msgstr "Oturum sona erdi"
+
+#. InfraSignal custom UI string
+msgid "Please feel free to"
+msgstr "Dilerseniz"
+
+#. InfraSignal custom UI string
+msgid "sign in again"
+msgstr "tekrar giriş yapın"
+
+#. InfraSignal custom UI string
+msgid "or go back to the"
+msgstr "ya da geri dönün:"
+
+#. InfraSignal custom UI string
+msgid "front page"
+msgstr "ana sayfa"
+
+#. InfraSignal custom UI string
+msgid "Sign in again"
+msgstr "Tekrar giriş yap"
+
+#. InfraSignal custom UI string
+msgid "Back to home"
+msgstr "Ana sayfaya dön"
+
+#. InfraSignal custom UI string
+msgid "Change name"
+msgstr "Adı değiştir"
+
+#. InfraSignal custom UI string
+msgid "Add name"
+msgstr "Ad ekle"
+
+#. InfraSignal custom UI string
+msgid "Back to account"
+msgstr "Hesaba dön"
+
+#. InfraSignal custom UI string
+msgid "Profile"
+msgstr "Profil"
+
+#. InfraSignal custom UI string
+msgid "Choose the name shown on your account and reports."
+msgstr "Hesabınızda ve bildirimlerinizde görünen adı seçin."
+
+#. InfraSignal custom UI string
+msgid "Please enter a shorter name"
+msgstr "Lütfen daha kısa bir ad girin"
+
+#. InfraSignal custom UI string
+msgid "Welcome back"
+msgstr "Tekrar hoş geldiniz"
+
+#. InfraSignal custom UI string
+msgid "Save your reports, updates, and alert settings in one secure place."
+msgstr ""
+"Bildirimlerinizi, güncellemelerinizi ve uyarı ayarlarınızı tek bir güvenli "
+"yerde saklayın."
+
+#. InfraSignal custom UI string
+msgid "End-to-end encrypted reports"
+msgstr "Uçtan uca şifreli bildirimler"
+
+#. InfraSignal custom UI string
+msgid "Real-time municipal SLA tracking"
+msgstr "Gerçek zamanlı belediye SLA takibi"
+
+#. InfraSignal custom UI string
+msgid "Verified citizen-government channel"
+msgstr "Doğrulanmış vatandaş-devlet kanalı"
+
+#. InfraSignal custom UI string
+msgid "GovCloud-grade security"
+msgstr "GovCloud düzeyinde güvenlik"
+
+#. InfraSignal custom UI string
+msgid "SOC 2 aligned"
+msgstr "SOC 2 uyumlu"
+
+#. InfraSignal custom UI string
+msgid "Account options"
+msgstr "Hesap seçenekleri"
+
+#. InfraSignal custom UI string
+msgid "Create account"
+msgstr "Hesap oluştur"
+
+#. InfraSignal custom UI string
+msgid "Back to sign in"
+msgstr "Girişe dön"
+
+#. InfraSignal custom UI string
+msgid "Account recovery"
+msgstr "Hesap kurtarma"
+
+#. InfraSignal custom UI string
+msgid "Password update"
+msgstr "Parola güncelleme"
+
+#. InfraSignal custom UI string
+msgid "Get started"
+msgstr "Başlayın"
+
+#. InfraSignal custom UI string
+msgid ""
+"Enter your email and choose a new password. We will send you a secure sign-"
+"in link to confirm the change."
+msgstr ""
+"E-posta adresinizi girin ve yeni bir parola seçin. Değişikliği onaylamak "
+"için size güvenli bir giriş bağlantısı göndereceğiz."
+
+#. InfraSignal custom UI string
+msgid ""
+"Choose a new password, then confirm it with the secure link we email to you."
+msgstr ""
+"Yeni bir parola seçin, ardından size e-posta ile gönderdiğimiz güvenli "
+"bağlantı ile onaylayın."
+
+#. InfraSignal custom UI string
+msgid "Already have an account?"
+msgstr "Zaten bir hesabınız var mı?"
+
+#. InfraSignal custom UI string
+msgid "New password"
+msgstr "Yeni parola"
+
+#. InfraSignal custom UI string
+msgid "%d+ characters"
+msgstr "%d+ karakter"
+
+#. InfraSignal custom UI string
+msgid "Show password"
+msgstr "Parolayı göster"
+
+#. InfraSignal custom UI string
+msgid "Hide password"
+msgstr "Parolayı gizle"
+
+#. InfraSignal custom UI string
+msgid ""
+"Sign in to manage your reports, follow updates, and stay connected with your"
+" municipality."
+msgstr ""
+"Bildirimlerinizi yönetmek, güncellemeleri takip etmek ve belediyenizle "
+"bağlantıda kalmak için giriş yapın."
+
+#. InfraSignal custom UI string
+msgid "Sign in to InfraSignal"
+msgstr "InfraSignal'e giriş yapın"
+
+#. InfraSignal custom UI string
+msgid "New here?"
+msgstr "Yeni misiniz?"
+
+#. InfraSignal custom UI string
+msgid "Continue with Facebook"
+msgstr "Facebook ile devam et"
+
+#. InfraSignal custom UI string
+msgid "Continue with %s"
+msgstr "%s ile devam et"
+
+#. InfraSignal custom UI string
+msgid "Continue with Twitter"
+msgstr "Twitter ile devam et"
+
+#. InfraSignal custom UI string
+msgid "or continue with email"
+msgstr "ya da e-posta ile devam edin"
+
+#. InfraSignal custom UI string
+msgid "New to InfraSignal?"
+msgstr "InfraSignal'de yeni misiniz?"
+
+#. InfraSignal custom UI string
+msgid "Password"
+msgstr "Parola"
+
+#. InfraSignal custom UI string
+msgid "Forgot password?"
+msgstr "Parolanızı mı unuttunuz?"
+
+#. InfraSignal custom UI string
+msgid "Email me a magic sign-in link"
+msgstr "Bana e-posta ile sihirli giriş bağlantısı gönder"
+
+#. InfraSignal custom UI string
+msgid ""
+"Have you ever reported a problem to a local authority before, or is this "
+"your first time?"
+msgstr ""
+"Daha önce yerel bir yönetime hiç sorun bildirdiniz mi, yoksa bu ilk kez mi?"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you wish to leave a public update on the problem, please enter it here\n"
+"(please note it will not be sent to the local authority)."
+msgstr ""
+"Sorunla ilgili herkese açık bir güncelleme bırakmak isterseniz, lütfen buraya girin\n"
+"(lütfen bunun yerel yönetime gönderilmeyeceğini unutmayın)."
+
+#. InfraSignal custom UI string
+msgid ""
+"Thanks, glad to hear it's been fixed! Could we just ask if you have ever "
+"reported a problem to a local authority before?"
+msgstr ""
+"Teşekkürler, sorunun çözüldüğünü duymak güzel! Daha önce yerel bir yönetime "
+"hiç sorun bildirip bildirmediğinizi sorabilir miyiz?"
+
+#. InfraSignal custom UI string
+msgid ""
+"Pick the closest match below to view its reports, or try a different search."
+msgstr ""
+"Bildirimlerini görüntülemek için aşağıdan en yakın eşleşmeyi seçin ya da "
+"farklı bir arama deneyin."
+
+#. InfraSignal custom UI string
+msgid ""
+"e.g. '1600 Pennsylvania Ave, Washington DC' or 'Times Square, New York'"
+msgstr ""
+"örn. '1600 Pennsylvania Ave, Washington DC' veya 'Times Square, New York'"
+
+#. InfraSignal custom UI string
+msgid "Ref:&nbsp;%s"
+msgstr "Referans:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "InfraSignal ref:&nbsp;%s"
+msgstr "InfraSignal referansı:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "Responsible Authority:"
+msgstr "Sorumlu yönetim:"
+
+#. InfraSignal custom UI string
+msgid "(not sent to local authority)"
+msgstr "(yerel yönetime gönderilmedi)"
+
+#. InfraSignal custom UI string
+msgid "Not reported to local authority"
+msgstr "Yerel yönetime bildirilmedi"
+
+#. InfraSignal custom UI string
+msgid "the local authority"
+msgstr "yerel yönetim"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you let us know your email address, we'll notify you when this problem is"
+" updated or fixed."
+msgstr ""
+"E-posta adresinizi bize bildirirseniz, bu sorun güncellendiğinde veya "
+"çözüldüğünde sizi bilgilendiririz."
+
+#. InfraSignal custom UI string
+msgid "It's on its way to the local authority right now."
+msgstr "Şu anda yerel yönetime iletiliyor."
+
+#. InfraSignal custom UI string
+msgid "I just reported a problem on @InfraSignal"
+msgstr "@InfraSignal üzerinden az önce bir sorun bildirdim"
+
 #~ msgid "%s admin:"
 #~ msgstr "%s yönetici:"
 
@@ -8375,3 +11835,52 @@ msgstr "şehir:"
 
 #~ msgid "Place pin on map"
 #~ msgstr "Harita üzerine işaretleyin"
+
+# InfraSignal accuracy & compliance corrections (2026-06)
+msgid "✓ Open source"
+msgstr "✓ Açık kaynak"
+
+msgid "✓ Available in 4 languages"
+msgstr "✓ 4 dilde mevcut"
+
+msgid "Open source"
+msgstr "Açık kaynak"
+
+msgid "Built to route across"
+msgstr "Şuralara yönlendirmek için tasarlandı"
+
+msgid "Report infrastructure issues and get them fixed. Built to serve communities across all 50 US states and D.C."
+msgstr "Altyapı sorunlarını bildirin ve çözülmesini sağlayın. ABD'nin 50 eyaletinin tamamı ve D.C. genelindeki topluluklara hizmet etmek için tasarlandı."
+
+msgid "Source code"
+msgstr "Kaynak kodu"
+
+msgid "Created and engineered by"
+msgstr "Tasarlayan ve geliştiren:"
+
+msgid "InfraSignal is built on <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, open-source software by <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, and is distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+msgstr "InfraSignal, <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a> üzerine kurulmuştur; <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a> tarafından geliştirilen açık kaynaklı bir yazılımdır ve <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a> kapsamında dağıtılır."
+
+msgid "An established civic-reporting model"
+msgstr "Yerleşik bir sivil bildirim modeli"
+
+msgid "Similar civic-reporting services include FixMyStreet and SocietyWorks (United Kingdom), FixaMinGata (Sweden), and Z&uuml;ri wie neu (Switzerland). They are referenced only as background on the model &mdash; not as InfraSignal customers or endorsements."
+msgstr "Benzer sivil bildirim hizmetleri arasında FixMyStreet ve SocietyWorks (Birleşik Krallık), FixaMinGata (İsveç) ve Z&uuml;ri wie neu (İsviçre) bulunur. Bunlara yalnızca model hakkında arka plan bilgisi olarak atıfta bulunulmuştur &mdash; InfraSignal müşterileri veya onayları olarak değil."
+
+msgid "Accessibility-minded"
+msgstr "Erişilebilirliğe önem veren"
+
+msgid "Privacy-conscious &middot; CCPA-aware"
+msgstr "Gizliliğe duyarlı &middot; CCPA'ya uygun"
+
+msgid "Local Government"
+msgstr "Yerel yönetim"
+
+msgid "Secure, encrypted connection"
+msgstr "Güvenli, şifreli bağlantı"
+
+msgid "Reports routed to the responsible authority"
+msgstr "Bildirimler sorumlu makama yönlendirilir"
+
+msgid "Privacy-conscious"
+msgstr "Gizliliğe duyarlı"

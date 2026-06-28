@@ -1,0 +1,40 @@
+[%
+IF c.user.name;
+    SET title = loc('Change name');
+ELSE;
+    SET title = loc('Add name');
+END;
+DEFAULT profile_name = c.user.name;
+-%]
+[% INCLUDE 'header.html' bodyclass = 'authpage' %]
+
+<h1>[% title %]</h1>
+
+[% IF c.user.name %]
+[% loc('Your name') %]: [% c.user.name | html %]
+[% END %]
+
+<form method="post" name="change_name">
+    <input type="hidden" name="token" value="[% csrf_token %]">
+
+    [% IF name_error;
+        errors = {
+            missing = loc('Please enter your name'),
+            too_long = loc('Please enter a shorter name')
+        };
+        loc_name_error = errors.$name_error || errors.missing;
+    %]
+    <div class="form-error">[% loc_name_error %]</div>
+    [% END %]
+
+    <div class="form-field">
+        <label for="name">[% loc('Name:') %]</label>
+        <input class="form-control" type="text" name="name" id="name" value="[% profile_name | html %]" autocomplete="name" maxlength="100">
+    </div>
+    <div class="final-submit">
+        <input type="submit" class="btn" value="[% title %]">
+    </div>
+
+</form>
+
+[% INCLUDE 'footer.html' %]

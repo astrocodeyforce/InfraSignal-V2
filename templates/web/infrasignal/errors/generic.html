@@ -1,0 +1,232 @@
+[% IF message == 'invalid id_token' ~%]
+[% title = BLOCK %][% TRY %][% PROCESS 'errors/_sso_title.html' %][% CATCH file %]Sign in[% END %][% END ~%]
+[% END %]
+[% DEFAULT title = loc('Error') %]
+
+[% IF message == 'invalid id_token' %]
+  [% INCLUDE 'header.html' %]
+  [% PROCESS 'errors/sso.html' %]
+  [% INCLUDE 'footer.html' %]
+[% ELSE %]
+  [% DEFAULT message = loc('Unknown error') %]
+  [% status_code = c.response.status || 0 %]
+  [% error_kind = 'server' %]
+  [% hero_title = title %]
+  [% hero_message = message %]
+  [% eyebrow_text = loc('Something went wrong') %]
+  [% primary_url = c.req.uri.path %]
+  [% primary_label = loc('Try again') %]
+
+  [% IF message.match('CAPTCHA') %]
+    [% error_kind = 'captcha' %]
+    [% eyebrow_text = loc('Quick check') %]
+    [% IF message.match('failed') %]
+      [% hero_title = loc('CAPTCHA verification failed') %]
+      [% hero_message = loc('The CAPTCHA check did not complete. Please try the form again.') %]
+    [% ELSE %]
+      [% hero_title = loc('Please complete the CAPTCHA verification') %]
+      [% hero_message = loc('Complete the CAPTCHA check to continue with your alert subscription.') %]
+    [% END %]
+    [% primary_url = '/alert' %]
+  [% ELSIF status_code == 403 %]
+    [% error_kind = 'forbidden' %]
+    [% eyebrow_text = loc('Access blocked') %]
+    [% hero_title = title || loc('You do not have permission to view this') %]
+    [% hero_message = message %]
+    [% primary_url = '/auth' %]
+    [% primary_label = loc('Sign in') %]
+  [% ELSIF status_code == 404 %]
+    [% error_kind = 'not_found' %]
+    [% eyebrow_text = loc('Page not found') %]
+    [% hero_title = loc('We cannot find that page') %]
+    [% hero_message = message %]
+    [% primary_url = '/' %]
+    [% primary_label = loc('Return home') %]
+  [% ELSIF status_code >= 500 %]
+    [% error_kind = 'server' %]
+    [% eyebrow_text = loc('Something went wrong') %]
+    [% hero_title = loc('Our server hit a snag') %]
+    [% hero_message = loc('This is on our side, not yours. Please try again in a moment.') %]
+  [% END %]
+
+  [% INCLUDE 'header.html', title = hero_title, bodyclass = 'errorpage' %]
+
+  [% BLOCK err_icon_shield %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+  [% END %]
+  [% BLOCK err_icon_pin %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s-8-7.58-8-13a8 8 0 1 1 16 0c0 5.42-8 13-8 13z"/><circle cx="12" cy="9" r="3"/></svg>
+  [% END %]
+  [% BLOCK err_icon_lock %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+  [% END %]
+  [% BLOCK err_icon_warn %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/></svg>
+  [% END %]
+  [% BLOCK err_icon_refresh %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 4v5h-5"/></svg>
+  [% END %]
+  [% BLOCK err_icon_arrow_left %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+  [% END %]
+  [% BLOCK err_icon_help %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+  [% END %]
+  [% BLOCK err_icon_mail %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+  [% END %]
+  [% BLOCK err_icon_copy %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+  [% END %]
+  [% BLOCK err_icon_info %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+  [% END %]
+
+  <article class="errpage errpage--[% error_kind | html %]">
+    <header class="errpage-hero">
+      <span class="errpage-hero__pattern" aria-hidden="true"></span>
+      <span class="errpage-hero__glow" aria-hidden="true"></span>
+      [% INCLUDE 'front/hero-pulse.html' %]
+      <div class="infra-container errpage-hero__inner" data-hero-exclude>
+        <span class="errpage-hero__eyebrow">
+          [% IF error_kind == 'captcha' %]
+            [% PROCESS err_icon_shield %]
+          [% ELSIF error_kind == 'not_found' %]
+            [% PROCESS err_icon_pin %]
+          [% ELSIF error_kind == 'forbidden' %]
+            [% PROCESS err_icon_lock %]
+          [% ELSE %]
+            [% PROCESS err_icon_warn %]
+          [% END %]
+          [% eyebrow_text | html %]
+        </span>
+        <h1 class="errpage-hero__title">[% hero_title | html %]</h1>
+        [% IF hero_message %]
+          <p class="errpage-hero__lead">[% hero_message | html %]</p>
+        [% END %]
+      </div>
+    </header>
+
+    <section class="errpage-body">
+      <div class="infra-container errpage-body__grid">
+        <aside class="errpage-sidebar" aria-label="[% loc('Help and info') %]">
+          <nav class="errpage-sidebar__nav">
+            <p class="errpage-sidebar__title">[% loc('Help and info') %]</p>
+            <a class="errpage-sidebar__link" href="/about">[% loc('About') %]</a>
+            <a class="errpage-sidebar__link" href="/faq">[% loc('FAQ') %]</a>
+            <a class="errpage-sidebar__link" href="/about/privacy">[% loc('Privacy') %]</a>
+            <a class="errpage-sidebar__link" href="/about/terms">[% loc('Terms') %]</a>
+            <a class="errpage-sidebar__link" href="/contact">[% loc('Contact us') %]</a>
+            <a class="errpage-sidebar__link" href="/alert">[% loc('Local Alerts') %]</a>
+          </nav>
+          <div class="errpage-sidebar__card">
+            <p class="errpage-sidebar__card-title">[% loc('Still stuck?') %]</p>
+            <p class="errpage-sidebar__card-text">[% loc('Our team replies within one business day.') %]</p>
+            <a href="/contact" class="errpage-sidebar__button">[% loc('Contact us') %]</a>
+          </div>
+        </aside>
+
+        <div class="errpage-main">
+          <div class="errpage-card">
+            <div class="errpage-card__art" aria-hidden="true">
+              <span class="errpage-art__ring"></span>
+              <span class="errpage-art__ring errpage-art__ring--2"></span>
+              <span class="errpage-art__badge">
+                [% IF error_kind == 'captcha' %]
+                  [% PROCESS err_icon_shield %]
+                [% ELSIF error_kind == 'not_found' %]
+                  [% PROCESS err_icon_pin %]
+                [% ELSIF error_kind == 'forbidden' %]
+                  [% PROCESS err_icon_lock %]
+                [% ELSE %]
+                  [% PROCESS err_icon_warn %]
+                [% END %]
+              </span>
+              <span class="errpage-art__spark errpage-art__spark--1"></span>
+              <span class="errpage-art__spark errpage-art__spark--2"></span>
+              <span class="errpage-art__spark errpage-art__spark--3"></span>
+            </div>
+
+            <div class="errpage-card__body">
+              [% IF error_kind == 'captcha' %]
+                <div class="errpage-captcha">
+                  <div class="errpage-captcha__box">
+                    <span class="errpage-captcha__check" aria-hidden="true"></span>
+                    <span class="errpage-captcha__label">[% loc('Verification required') %]</span>
+                    <span class="errpage-captcha__brand" aria-hidden="true">
+                      [% PROCESS err_icon_shield %]
+                      <small>[% loc('Privacy') %] / [% loc('Terms') %]</small>
+                    </span>
+                  </div>
+                  <p class="errpage-captcha__hint">
+                    [% PROCESS err_icon_info %]
+                    [% loc('Return to the alert form, complete the CAPTCHA check, and submit again.') %]
+                  </p>
+                </div>
+              [% END %]
+
+              <div class="errpage-actions">
+                <a href="[% primary_url | html %]" class="btn btn--accent">
+                  [% PROCESS err_icon_refresh %]
+                  [% primary_label | html %]
+                </a>
+                <button type="button" class="btn errpage-back-button" data-errpage-back data-fallback-url="/alert">
+                  [% PROCESS err_icon_arrow_left %]
+                  [% loc('Go back') %]
+                </button>
+                <a href="/" class="errpage-link">[% loc('Return home') %]</a>
+              </div>
+
+              <ul class="errpage-quick">
+                <li><a href="/faq">[% PROCESS err_icon_help %] [% loc('Read the FAQ') %]</a></li>
+                <li><a href="/contact">[% PROCESS err_icon_mail %] [% loc('Contact support') %]</a></li>
+                <li><a href="/about/privacy">[% PROCESS err_icon_shield %] [% loc('Privacy') %]</a></li>
+              </ul>
+
+              [% IF error_id %]
+                <p class="errpage-code">
+                  [% loc('Reference code') %]:
+                  <code>[% error_id | html %]</code>
+                  <button type="button" class="errpage-copy" data-copy="[% error_id | html %]" data-copy-label="[% loc('Copy') %]" data-copied-label="[% loc('Copied') %]" aria-label="[% loc('Copy reference code') %]">
+                    [% PROCESS err_icon_copy %]
+                    <span class="errpage-copy__label">[% loc('Copy') %]</span>
+                  </button>
+                </p>
+              [% END %]
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </article>
+
+  <script>
+  (function(){
+    var copyButton = document.querySelector('.errpage-copy');
+    if (copyButton) {
+      copyButton.addEventListener('click', function(){
+        var value = copyButton.getAttribute('data-copy') || '';
+        var label = copyButton.querySelector('.errpage-copy__label');
+        var original = copyButton.getAttribute('data-copy-label') || 'Copy';
+        var copied = copyButton.getAttribute('data-copied-label') || 'Copied';
+        if (navigator.clipboard) { navigator.clipboard.writeText(value); }
+        if (label) { label.textContent = copied; }
+        setTimeout(function(){ if (label) { label.textContent = original; } }, 1400);
+      });
+    }
+
+    var backButton = document.querySelector('[data-errpage-back]');
+    if (backButton) {
+      backButton.addEventListener('click', function(){
+        if (window.history.length > 1) {
+          window.history.back();
+        } else {
+          window.location.href = backButton.getAttribute('data-fallback-url') || '/';
+        }
+      });
+    }
+  })();
+  </script>
+
+  [% INCLUDE 'footer.html' %]
+[% END %]

@@ -1,0 +1,334 @@
+[% INCLUDE 'header.html',
+    title = loc('How InfraSignal Works'),
+  bodyclass = 'infopage how-it-works-page'
+%]
+
+[% BLOCK hiw_icon -%]
+  [% IF name == 'camera' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+  [% ELSIF name == 'map-pin' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+  [% ELSIF name == 'send' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+  [% ELSIF name == 'bell' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+  [% ELSIF name == 'search' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+  [% ELSIF name == 'layers' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+  [% ELSIF name == 'copy' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+  [% ELSIF name == 'mail' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 7L2 7"/></svg>
+  [% ELSIF name == 'eye' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>
+  [% ELSIF name == 'activity' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+  [% ELSIF name == 'check' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+  [% ELSIF name == 'chevron-right' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+  [% ELSIF name == 'chevron-down' %]
+    <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+  [% END %]
+[%- END %]
+
+[% BLOCK hiw_scene -%]
+  [% IF name == 'report' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g class="sc-phone">
+        <rect x="92" y="14" width="56" height="84" rx="8" fill="#fff" stroke="#1E40AF" stroke-width="2.5"/>
+        <rect x="98" y="24" width="44" height="58" rx="3" fill="#EFF6FF"/>
+        <circle cx="120" cy="90" r="3.5" fill="#F97316"/>
+        <clipPath id="hiw-phone-screen">
+          <rect x="98" y="24" width="44" height="58" rx="3"/>
+        </clipPath>
+        <g clip-path="url(#hiw-phone-screen)">
+          <rect x="98" y="24" width="44" height="46" fill="#CFE3F7"/>
+          <rect x="98" y="70" width="44" height="12" fill="#DAC9A3"/>
+          <g>
+            <rect x="105" y="62" width="7" height="8" fill="#5A3A20"/>
+            <path d="M105 62 L107 60 L109 63 L111 60 L112 62 Z" fill="#3F2916"/>
+          </g>
+          <g class="sc-tree">
+            <path d="M105 63 C105.4 53 106.1 41 106.4 31 L112 31 C111.7 41 112.2 53 113 63 Z" fill="#7C4A22"/>
+            <path d="M108.5 48 C113 43 117 38 124 34" stroke="#7C4A22" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+            <path d="M108.5 40 C105 36 102 33 98 30" stroke="#7C4A22" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M106 63 C108 58 111 58 113 63 Z" fill="#4B2E18" opacity="0.55"/>
+            <g>
+              <circle cx="108" cy="25" r="8.5" fill="#2F7A3A"/>
+              <circle cx="116" cy="27" r="7.2" fill="#2F7A3A"/>
+              <circle cx="101" cy="29" r="7" fill="#3A8C45"/>
+              <circle cx="112" cy="18" r="6.5" fill="#3F9249"/>
+              <circle cx="121" cy="32" r="5.8" fill="#266A32"/>
+              <circle cx="106" cy="34" r="6.2" fill="#266A32"/>
+            </g>
+          </g>
+        </g>
+        <rect class="sc-flash" x="98" y="24" width="44" height="58" rx="3" fill="#fff"/>
+      </g>
+      <g class="sc-print">
+        <rect x="100" y="86" width="40" height="28" rx="2" fill="#fff" stroke="#D1D5DB" stroke-width="1.2"/>
+        <clipPath id="hiw-print-photo">
+          <rect x="100" y="86" width="40" height="18" rx="2"/>
+        </clipPath>
+        <g clip-path="url(#hiw-print-photo)">
+          <rect x="100" y="86" width="40" height="14" fill="#CFE3F7"/>
+          <rect x="100" y="100" width="40" height="4" fill="#DAC9A3"/>
+          <rect x="108" y="97" width="5" height="7" fill="#5A3A20"/>
+          <path d="M110 97 L131 88 L134 91 L113 101 Z" fill="#7C4A22"/>
+          <path d="M116 95 C123 93 127 91 132 88" stroke="#4B2E18" stroke-width="1.1" fill="none" stroke-linecap="round" opacity="0.6"/>
+          <circle cx="132" cy="88" r="5.4" fill="#2F7A3A"/>
+          <circle cx="137" cy="91" r="5" fill="#266A32"/>
+          <circle cx="128" cy="92" r="4.8" fill="#3A8C45"/>
+          <circle cx="133" cy="95" r="4.3" fill="#3F9249"/>
+        </g>
+        <rect x="100" y="104" width="40" height="10" fill="#DAC9A3"/>
+        <rect x="103" y="108" width="34" height="3" rx="0.5" fill="#F3F4F6"/>
+      </g>
+      <g class="sc-sparkles" fill="#F97316">
+        <circle cx="78" cy="34" r="1.8"/>
+        <circle cx="166" cy="32" r="1.4"/>
+        <circle cx="170" cy="56" r="1.6"/>
+        <circle cx="74" cy="62" r="1.2"/>
+      </g>
+    </svg>
+  [% ELSIF name == 'locate' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <g class="sc-map">
+        <rect x="20" y="14" width="200" height="92" rx="6" fill="#EFF6FF"/>
+        <g stroke="rgba(59,130,246,.45)" stroke-width="0.6">
+          <line x1="20" y1="36" x2="220" y2="36"/>
+          <line x1="20" y1="60" x2="220" y2="60"/>
+          <line x1="20" y1="84" x2="220" y2="84"/>
+          <line x1="68" y1="14" x2="68" y2="106"/>
+          <line x1="120" y1="14" x2="120" y2="106"/>
+          <line x1="172" y1="14" x2="172" y2="106"/>
+        </g>
+        <path d="M20 78 Q 80 72 120 60 T 220 40" stroke="#93C5FD" stroke-width="3" fill="none" stroke-linecap="round"/>
+      </g>
+      <g class="sc-crosshair" stroke="#F97316" stroke-width="1.4" stroke-dasharray="3 3">
+        <line class="sc-cross-h" x1="20" y1="60" x2="220" y2="60"/>
+        <line class="sc-cross-v" x1="120" y1="14" x2="120" y2="106"/>
+      </g>
+      <circle class="sc-scan" cx="120" cy="60" r="2" fill="none" stroke="#F97316" stroke-width="1.5"/>
+      <g class="sc-pin">
+        <path d="M120 38 C 112 38 106 44 106 52 C 106 62 120 78 120 78 C 120 78 134 62 134 52 C 134 44 128 38 120 38 Z" fill="#F97316" stroke="#EA580C" stroke-width="1.2"/>
+        <circle cx="120" cy="52" r="4.5" fill="#fff"/>
+      </g>
+    </svg>
+  [% ELSIF name == 'route' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <line x1="10" y1="100" x2="230" y2="100" stroke="#D1D5DB" stroke-width="1.2"/>
+      <g class="sc-sender">
+        <path d="M28 100 L28 75 L46 60 L64 75 L64 100 Z" fill="#EFF6FF" stroke="#1E40AF" stroke-width="1.8"/>
+        <rect x="40" y="82" width="12" height="18" fill="#1E40AF"/>
+      </g>
+      <path class="sc-path" d="M70 80 Q 120 16 178 78" fill="none" stroke="#F97316" stroke-width="1.6" stroke-dasharray="3 4"/>
+      <g class="sc-doc">
+        <rect x="-7" y="-9" width="14" height="18" rx="1.5" fill="#fff" stroke="#EA580C" stroke-width="1.2"/>
+        <line x1="-4" y1="-5" x2="4" y2="-5" stroke="#F97316" stroke-width="0.8"/>
+        <line x1="-4" y1="-1" x2="4" y2="-1" stroke="#D1D5DB" stroke-width="0.8"/>
+        <line x1="-4" y1="3" x2="4" y2="3" stroke="#D1D5DB" stroke-width="0.8"/>
+      </g>
+      <g class="sc-receiver">
+        <line x1="200" y1="62" x2="200" y2="48" stroke="#374151" stroke-width="1"/>
+        <path class="sc-flag" d="M200 48 L210 51 L200 54 Z" fill="#F97316"/>
+        <path d="M178 70 L200 58 L222 70 Z" fill="#1E40AF"/>
+        <rect x="182" y="72" width="36" height="28" fill="#EFF6FF" stroke="#1E40AF" stroke-width="1.2"/>
+        <line x1="190" y1="74" x2="190" y2="100" stroke="#1E40AF" stroke-width="1.2"/>
+        <line x1="200" y1="74" x2="200" y2="100" stroke="#1E40AF" stroke-width="1.2"/>
+        <line x1="210" y1="74" x2="210" y2="100" stroke="#1E40AF" stroke-width="1.2"/>
+        <rect class="sc-glow" x="178" y="58" width="44" height="42" rx="2" fill="rgba(22,163,74,0)"/>
+      </g>
+    </svg>
+  [% ELSIF name == 'track' %]
+    <svg viewBox="0 0 240 120" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+      <line x1="36" y1="58" x2="172" y2="58" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round"/>
+      <line class="sc-progress" x1="36" y1="58" x2="172" y2="58" stroke="#16A34A" stroke-width="3" stroke-linecap="round"/>
+      <g class="sc-node sc-node-1">
+        <circle cx="36" cy="58" r="10" fill="#16A34A"/>
+        <path d="M31 58 L35 62 L42 54" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="36" y="84" text-anchor="middle" fill="#374151" font-size="9" font-weight="600">Submitted</text>
+      </g>
+      <g class="sc-node sc-node-2">
+        <circle cx="104" cy="58" r="10" fill="#16A34A"/>
+        <path d="M99 58 L103 62 L110 54" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="104" y="84" text-anchor="middle" fill="#374151" font-size="9" font-weight="600">In Review</text>
+      </g>
+      <g class="sc-node sc-node-3">
+        <circle cx="172" cy="58" r="10" fill="#16A34A"/>
+        <path d="M167 58 L171 62 L178 54" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <text x="172" y="84" text-anchor="middle" fill="#374151" font-size="9" font-weight="600">Resolved</text>
+      </g>
+      <g transform="translate(212 40)">
+        <g class="sc-waves" fill="none" stroke="#F97316" stroke-width="1.4" stroke-linecap="round">
+          <path d="M-16 -2 Q -19 2 -16 6"/>
+          <path d="M16 -2 Q 19 2 16 6"/>
+        </g>
+        <g class="sc-bell">
+          <path d="M0 -8 C -7 -8 -10 -3 -10 4 C -10 8 -12 10 -12 10 L 12 10 C 12 10 10 8 10 4 C 10 -3 7 -8 0 -8 Z" fill="#1E40AF"/>
+          <path d="M-3 12 C -3 14 3 14 3 12" stroke="#1E40AF" stroke-width="1.6" fill="none"/>
+          <circle class="sc-badge" cx="8" cy="-6" r="4" fill="#F97316"/>
+        </g>
+      </g>
+    </svg>
+  [% END %]
+[%- END %]
+
+<article class="hiw">
+  <section class="hiw-hero">
+    <div class="hiw-hero__bg" aria-hidden="true"></div>
+    [% INCLUDE 'front/hero-pulse.html' %]
+    <div class="infra-container hiw-hero__inner" data-hero-exclude>
+      <h1 class="hiw-hero__title">[% loc('How InfraSignal Works') %]</h1>
+      <p class="hiw-hero__lead">[% loc('A simple way to report issues in your neighborhood and ensure they reach the right people.') %]</p>
+    </div>
+  </section>
+
+  <section class="contact-body hiw-body">
+    <div class="infra-container">
+      <div class="contact-layout">
+        <aside class="contact-sidebar">
+          <nav class="contact-sidebar__nav">
+            <ul class="contact-sidebar__list">
+              [% INCLUDE 'about/_public-sidebar-links.html'
+                  public_sidebar_active = 'how'
+                  public_sidebar_link_class = 'contact-sidebar__link'
+                  public_sidebar_active_class = 'contact-sidebar__link--active'
+                  public_sidebar_list_items = 1
+              %]
+            </ul>
+          </nav>
+        </aside>
+
+        <div class="contact-main hiw-main">
+          <section class="hiw-section hiw-section--first">
+            <header class="hiw-section__head">
+              <h2 class="hiw-section__title">[% loc('Report, route, and track in four simple steps') %]</h2>
+              <p class="hiw-section__lead">[% loc('From a quick resident report to a trackable public record, InfraSignal keeps the process clear.') %]</p>
+            </header>
+
+            <ol class="hiw-steps">
+              <li class="hiw-step">
+                <div class="hiw-step__head">
+                  <span class="hiw-step__num">1</span>
+                  <h3 class="hiw-step__title">[% loc('Report') %]</h3>
+                </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--report is-playing">[% INCLUDE hiw_scene name='report' %]</div>
+                </div>
+                <p class="hiw-step__desc">[% loc('Add a photo, location, and short description in one guided step.') %]</p>
+              </li>
+              <li class="hiw-step">
+                <div class="hiw-step__head">
+                  <span class="hiw-step__num">2</span>
+                  <h3 class="hiw-step__title">[% loc('Locate') %]</h3>
+                </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--locate is-playing">[% INCLUDE hiw_scene name='locate' %]</div>
+                </div>
+                <p class="hiw-step__desc">[% loc('InfraSignal pins the issue to the right place on the map.') %]</p>
+              </li>
+              <li class="hiw-step">
+                <div class="hiw-step__head">
+                  <span class="hiw-step__num">3</span>
+                  <h3 class="hiw-step__title">[% loc('Route') %]</h3>
+                </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--route is-playing">[% INCLUDE hiw_scene name='route' %]</div>
+                </div>
+                <p class="hiw-step__desc">[% loc('The report is sent to the responsible local team or agency.') %]</p>
+              </li>
+              <li class="hiw-step">
+                <div class="hiw-step__head">
+                  <span class="hiw-step__num">4</span>
+                  <h3 class="hiw-step__title">[% loc('Track') %]</h3>
+                </div>
+                <div class="hiw-step__scene step-scene">
+                  <div class="scene scene--track is-playing">[% INCLUDE hiw_scene name='track' %]</div>
+                </div>
+                <p class="hiw-step__desc">[% loc('Follow status updates as the issue is reviewed and resolved.') %]</p>
+              </li>
+            </ol>
+          </section>
+
+          <section class="hiw-section hiw-section--tint">
+            <header class="hiw-section__head">
+              <h2 class="hiw-section__title">[% loc('What happens after you submit a report?') %]</h2>
+              <p class="hiw-section__lead">[% loc('A behind-the-scenes look at how InfraSignal turns a quick submission into a routed, trackable record.') %]</p>
+            </header>
+
+            <div class="hiw-grid hiw-grid--3">
+              <div class="hiw-feature"><div class="hiw-feature__icon">[% INCLUDE hiw_icon name='search' %]</div><h3 class="hiw-feature__title">[% loc('Location is matched') %]</h3><p class="hiw-feature__desc">[% loc('InfraSignal uses the address, zipcode, or map pin to understand exactly where the issue is located.') %]</p></div>
+              <div class="hiw-feature"><div class="hiw-feature__icon">[% INCLUDE hiw_icon name='layers' %]</div><h3 class="hiw-feature__title">[% loc('Category is used for routing') %]</h3><p class="hiw-feature__desc">[% loc('The issue category helps determine which local department or service should receive the report.') %]</p></div>
+              <div class="hiw-feature"><div class="hiw-feature__icon">[% INCLUDE hiw_icon name='copy' %]</div><h3 class="hiw-feature__title">[% loc('Duplicates are reduced') %]</h3><p class="hiw-feature__desc">[% loc('Nearby existing reports may be shown so residents can avoid reporting the same issue twice.') %]</p></div>
+              <div class="hiw-feature"><div class="hiw-feature__icon">[% INCLUDE hiw_icon name='mail' %]</div><h3 class="hiw-feature__title">[% loc('The report is sent') %]</h3><p class="hiw-feature__desc">[% loc('Reports can be sent to responsible authorities by email or service integrations such as Open311 where configured.') %]</p></div>
+              <div class="hiw-feature"><div class="hiw-feature__icon">[% INCLUDE hiw_icon name='eye' %]</div><h3 class="hiw-feature__title">[% loc('The report becomes visible') %]</h3><p class="hiw-feature__desc">[% loc('Public reports can be viewed on the map so residents and local teams can see what has already been reported.') %]</p></div>
+              <div class="hiw-feature"><div class="hiw-feature__icon">[% INCLUDE hiw_icon name='activity' %]</div><h3 class="hiw-feature__title">[% loc('Updates keep people informed') %]</h3><p class="hiw-feature__desc">[% loc('Residents can follow updates, subscribe to alerts, and check report progress over time.') %]</p></div>
+            </div>
+          </section>
+
+          <section class="hiw-section">
+            <div class="hiw-grid hiw-grid--2">
+              <div class="hiw-pillar hiw-pillar--primary">
+                <span class="hiw-eyebrow hiw-eyebrow--primary">[% loc('For Residents') %]</span>
+                <h2 class="hiw-pillar__title">[% loc('Built for residents') %]</h2>
+                <p class="hiw-pillar__lead">[% loc('InfraSignal gives residents one simple place to report local problems without needing to know which department to contact.') %]</p>
+                <ul class="hiw-checklist">
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Report potholes, broken streetlights, sidewalk damage, drainage issues, trash overflow, graffiti, abandoned vehicles, and other infrastructure problems.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Add a location, description, and photos.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('See reports from other residents.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Track your own reports from your account.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Get email alerts for local activity.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Follow progress as updates are added.') %]</span></li>
+                </ul>
+                <a href="/#postcodeForm" class="hiw-button hiw-button--primary">[% loc('Report an Issue') %] [% INCLUDE hiw_icon name='chevron-right' %]</a>
+              </div>
+
+              <div class="hiw-pillar hiw-pillar--accent">
+                <span class="hiw-eyebrow hiw-eyebrow--accent">[% loc('For Local Authorities') %]</span>
+                <h2 class="hiw-pillar__title">[% loc('Useful for local authorities and service teams') %]</h2>
+                <p class="hiw-pillar__lead">[% loc('InfraSignal turns resident reports into structured, location-based information that is easier to review, route, and respond to.') %]</p>
+                <ul class="hiw-checklist">
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Structured reports with category, location, details, and photos.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Standardized categories aligned with common public works operations.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Priority levels help teams triage emergency, high, normal, and low reports.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Public visibility into reported issues.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Reduced duplicate reports.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Email and Open311 GeoReport v2-compatible routing where configured.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Staff/admin tools for reviewing reports and updates.') %]</span></li>
+                  <li>[% INCLUDE hiw_icon name='check' %]<span>[% loc('Better insight into recurring infrastructure issues.') %]</span></li>
+                </ul>
+                <a href="/contact" class="hiw-button hiw-button--accent">[% loc('Contact Us') %] [% INCLUDE hiw_icon name='chevron-right' %]</a>
+              </div>
+            </div>
+          </section>
+
+          <section class="hiw-section hiw-section--muted">
+            <header class="hiw-section__head">
+              <h2 class="hiw-section__title">[% loc('Track issues across your community') %]</h2>
+              <p class="hiw-section__lead">[% loc('InfraSignal is not just a reporting form. Reports can be viewed publicly, followed individually, or monitored through local alerts.') %]</p>
+            </header>
+            <div class="hiw-grid hiw-grid--3">
+              <a href="/reports" class="hiw-link-card"><h3 class="hiw-link-card__title">[% loc('All Reports') %]</h3><p class="hiw-link-card__desc">[% loc('Browse reported issues on the public map and see what has already been submitted.') %]</p><span class="hiw-link-card__cta">[% loc('Open') %] [% INCLUDE hiw_icon name='chevron-right' %]</span></a>
+              <a href="/alert" class="hiw-link-card"><h3 class="hiw-link-card__title">[% loc('Local Alerts') %]</h3><p class="hiw-link-card__desc">[% loc('Subscribe to updates for reports near an address or area.') %]</p><span class="hiw-link-card__cta">[% loc('Open') %] [% INCLUDE hiw_icon name='chevron-right' %]</span></a>
+              <a href="/my" class="hiw-link-card"><h3 class="hiw-link-card__title">[% loc('Your Account') %]</h3><p class="hiw-link-card__desc">[% loc('View your reports, manage notification preferences, and follow updates from one place.') %]</p><span class="hiw-link-card__cta">[% loc('Open') %] [% INCLUDE hiw_icon name='chevron-right' %]</span></a>
+            </div>
+          </section>
+
+          <section class="hiw-cta">
+            <h2 class="hiw-cta__title">[% loc('Ready to report an issue?') %]</h2>
+            <p class="hiw-cta__lead">[% loc('Start with an address, add the details, and let InfraSignal help your report reach the right place.') %]</p>
+            <div class="hiw-actions hiw-cta__actions">
+              <a href="/#postcodeForm" class="hiw-button hiw-button--accent">[% loc('Report an Issue') %] [% INCLUDE hiw_icon name='chevron-right' %]</a>
+              <a href="/reports" class="hiw-button hiw-button--ghost-light">[% loc('View All Reports') %]</a>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+  </section>
+</article>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

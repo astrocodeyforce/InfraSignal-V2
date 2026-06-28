@@ -6,6 +6,8 @@ BEGIN { extends 'Catalyst::Controller'; }
 
 use POSIX qw(strcoll);
 use List::Util 'first';
+use DateTime;
+use JSON::MaybeXS qw(encode_json);
 use FixMyStreet::SMS;
 
 =head1 NAME
@@ -41,6 +43,24 @@ sub auto : Private {
     $c->forward('check_page_allowed');
 }
 
+=head2 _scope_to_staff_body
+
+Restrict a Problem resultset to the logged-in staff user's own body. Has no
+effect for superusers (or Zurich, which has its own admin model), so the
+platform-wide view is unchanged for them.
+
+=cut
+
+sub _scope_to_staff_body {
+    my ($c, $rs, $column) = @_;
+    my $user = $c->user;
+    return $rs if !$user || $user->is_superuser || !$user->from_body;
+    return $rs if $c->cobrand->moniker eq 'zurich';
+    $column ||= 'me.bodies_str';
+    my $id = $user->from_body->id;
+    return $rs->search({ $column => { '~' => "(^|,)$id(,|\$)" } });
+}
+
 =head2 summary
 
 Redirect to index page. There to make the allowed pages stuff neater
@@ -58,6 +78,67 @@ Displays some summary information for the requests.
 
 =cut
 
+sub _admin_dashboard_json {
+    my ($self, $c) = @_;
+
+    my $reports = _scope_to_staff_body($c, $c->cobrand->problems);
+    my $today = DateTime->today(time_zone => FixMyStreet->time_zone || FixMyStreet->local_time_zone);
+    my $start = $today->clone->subtract(days => 6);
+    my $end = $today->clone->add(days => 1);
+
+    my %daily_counts;
+    my $last7_reports = $reports->search({
+        created => { '>=' => $start, '<' => $end },
+    }, {
+        columns => [ 'created' ],
+    });
+
+    while (my $row = $last7_reports->next) {
+        my $created = $row->created->clone->set_time_zone(FixMyStreet->time_zone || FixMyStreet->local_time_zone);
+        $daily_counts{$created->ymd}++;
+    }
+
+    my @daily_reports = map {
+        my $day = $start->clone->add(days => $_);
+        +{
+            date => $day->ymd,
+            label => $day->strftime('%a'),
+            count => $daily_counts{$day->ymd} || 0,
+        }
+    } 0..6;
+
+    my @categories = map {
+        +{ name => $_->category || 'Other', count => 0 + $_->get_column('count') }
+    } $reports->search({}, {
+        columns => [ 'category', { count => { count => '*' } } ],
+        group_by => [ 'category' ],
+        order_by => [ { -desc => 'count' }, 'category' ],
+    })->all;
+
+    my @statuses = map {
+        my $state = $_->state || 'unknown';
+        +{
+            name => $state =~ /^fixed/ ? 'Fixed' : $state eq 'confirmed' ? 'Open' : ucfirst($state),
+            count => 0 + $_->get_column('count'),
+        }
+    } $reports->search({}, {
+        columns => [ 'state', { count => { count => '*' } } ],
+        group_by => [ 'state' ],
+        order_by => [ { -desc => 'count' }, 'state' ],
+    })->all;
+
+    my $json = encode_json({
+        dailyReports => \@daily_reports,
+        categories => \@categories,
+        statuses => \@statuses,
+    });
+    $json =~ s/&/\\u0026/g;
+    $json =~ s/</\\u003c/g;
+    $json =~ s/>/\\u003e/g;
+    $json =~ s/'/\\u0027/g;
+    return $json;
+}
+
 sub index : Path : Args(0) {
     my ( $self, $c ) = @_;
 
@@ -73,7 +154,7 @@ sub index : Path : Args(0) {
     $c->stash->{edit_body_contacts} = 1
         if grep { $_ eq 'body' } keys %{$c->stash->{allowed_pages}};
 
-    my @unsent = $c->cobrand->problems->search( {
+    my @unsent = _scope_to_staff_body($c, $c->cobrand->problems)->search( {
         send_state => ['unprocessed', 'acknowledged'],
         'me.state' => [ FixMyStreet::DB::Result::Problem::open_states() ],
         bodies_str => { '!=', undef },
@@ -87,6 +168,13 @@ sub index : Path : Args(0) {
         order_by => 'confirmed',
     } )->all;
     $c->stash->{unsent_reports} = \@unsent;
+
+    my @recent_reports = _scope_to_staff_body($c, $c->cobrand->problems)->search({}, {
+        order_by => [ { -desc => 'created' }, { -desc => 'id' } ],
+        rows => 4,
+    })->all;
+    $c->stash->{admin_recent_reports} = \@recent_reports;
+    $c->stash->{admin_dashboard_json} = $self->_admin_dashboard_json($c);
 
     $c->forward('fetch_all_bodies');
 
@@ -533,14 +621,18 @@ sub fetch_body_areas : Private {
     my ($self, $c, $body ) = @_;
 
     my $children = $body->area_children;
-    unless ($children) {
+    # A fake/misconfigured MapIt can return a single area hash (plain string
+    # values) instead of an id-keyed hash of areas; treat that as no areas
+    # rather than crashing the user admin pages.
+    my @areas = $children ? grep { ref $_ eq 'HASH' && defined $_->{name} } values %$children : ();
+    unless (@areas) {
         # Body doesn't have any areas defined.
         delete $c->stash->{areas};
         delete $c->stash->{fetched_areas_body_id};
         return;
     }
 
-    $c->stash->{areas} = [ sort { strcoll($a->{name}, $b->{name}) } values %$children ];
+    $c->stash->{areas} = [ sort { strcoll($a->{name}, $b->{name}) } @areas ];
     # Keep track of the areas we've fetched to prevent a duplicate fetch later on
     $c->stash->{fetched_areas_body_id} = $body->id;
 }

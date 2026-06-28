@@ -3,8 +3,8 @@
 # deploy — Pull latest code and restart production containers
 # ============================================================
 # Usage:
-#   ./bin/deploy              # full deploy (pull + rebuild CSS + restart)
-#   ./bin/deploy --quick      # restart only (no git pull / CSS rebuild)
+#   ./bin/deploy              # full deploy (pull + compile .mo + CSS + restart)
+#   ./bin/deploy --quick      # restart only (no git pull / .mo / CSS rebuild)
 #   ./bin/deploy --migrate    # full deploy + run DB migrations
 #   ./bin/deploy --rollback   # revert to previous git state and restart
 #   ./bin/deploy --dry-run    # show what would happen without doing it
@@ -16,7 +16,9 @@ set -euo pipefail
 
 PROD_DIR="/opt/infrasignal-v2"
 COMPOSE_FILE="docker/docker-compose-prod.yml"
-BRANCH="main"
+# The actually-deployed branch is `dev`, not `main` (see ARCHITECTURE.md).
+# Override with: DEPLOY_BRANCH=main ./bin/deploy ...
+BRANCH="${DEPLOY_BRANCH:-dev}"
 BACKUP_DIR="/opt/backups/infrasignal"
 
 cd "$PROD_DIR"
@@ -25,6 +27,14 @@ cd "$PROD_DIR"
 
 log() { echo "[$(date '+%H:%M:%S')] $*"; }
 
+require_clean_tree() {
+    if [[ -n "$(git status --porcelain)" ]]; then
+        log "✗ Working tree is dirty. Commit, stash, or revert before deploying:"
+        git status --short
+        exit 1
+    fi
+}
+
 backup_db() {
     local timestamp
     timestamp=$(date +%Y%m%d_%H%M%S)
@@ -32,6 +42,28 @@ backup_db() {
     log "Backing up database → ${BACKUP_DIR}/pre-deploy_${timestamp}.sql.gz"
     docker compose -f "$COMPOSE_FILE" exec -T db \
         pg_dump -U postgres infrasignal | gzip > "${BACKUP_DIR}/pre-deploy_${timestamp}.sql.gz"
+}
+
+remove_stale_lang_templates() {
+    # Legacy per-language about/faq overrides shadow the unified templates.
+    local stale=(
+        templates/web/infrasignal/about/about-en-gb.html
+        templates/web/infrasignal/about/about-en-gb.html.ttc
+        templates/web/infrasignal/about/faq-en-gb.html
+        templates/web/infrasignal/about/faq-en-gb.html.ttc
+    )
+    local f
+    for f in "${stale[@]}"; do
+        if [[ -e "$f" ]]; then
+            log "Removing stale template: $f"
+            rm -f "$f"
+        fi
+    done
+}
+
+compile_translations() {
+    log "Compiling gettext catalogs (bin/make_msg) ..."
+    docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_msg
 }
 
 health_check() {
@@ -69,6 +101,7 @@ case "$MODE" in
         log "[DRY RUN] Current commit: $(git log --oneline -1)"
         git fetch origin 2>/dev/null
         log "[DRY RUN] Latest remote: $(git log --oneline origin/$BRANCH -1 2>/dev/null || echo 'unknown')"
+        log "[DRY RUN] Would run: remove_stale_lang_templates, bin/make_msg, bin/make_css, restart"
         log "[DRY RUN] No changes made."
         exit 0
         ;;
@@ -78,14 +111,38 @@ case "$MODE" in
         ;;
 
     --rollback)
-        log "[1/3] Rolling back to previous commit..."
+        log "[1/5] Rolling back to previous commit..."
         PREV_COMMIT=$(git rev-parse HEAD~1 2>/dev/null || { log "No previous commit to rollback to"; exit 1; })
         backup_db
         git checkout "$PREV_COMMIT"
         log "Rolled back to: $(git log --oneline -1)"
+        remove_stale_lang_templates
+        compile_translations
+        log "[4/5] Rebuilding CSS ..."
+        docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
         ;;
 
     --migrate)
+        require_clean_tree
+        backup_db
+
+        log "[1/6] Pulling latest from origin/$BRANCH ..."
+        git fetch origin
+        git checkout "$BRANCH"
+        git pull origin "$BRANCH"
+
+        remove_stale_lang_templates
+        compile_translations
+
+        log "[4/6] Running DB migrations ..."
+        docker compose -f "$COMPOSE_FILE" exec fixmystreet bin/update-schema --commit
+
+        log "[5/6] Rebuilding CSS ..."
+        docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
+        ;;
+
+    --full|full|"")
+        require_clean_tree
         backup_db
 
         log "[1/5] Pulling latest from origin/$BRANCH ..."
@@ -93,22 +150,10 @@ case "$MODE" in
         git checkout "$BRANCH"
         git pull origin "$BRANCH"
 
-        log "[2/5] Running DB migrations ..."
-        docker compose -f "$COMPOSE_FILE" exec fixmystreet bin/update-schema --commit
+        remove_stale_lang_templates
+        compile_translations
 
-        log "[3/5] Rebuilding CSS ..."
-        docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
-        ;;
-
-    --full|full|"")
-        backup_db
-
-        log "[1/4] Pulling latest from origin/$BRANCH ..."
-        git fetch origin
-        git checkout "$BRANCH"
-        git pull origin "$BRANCH"
-
-        log "[2/4] Rebuilding CSS ..."
+        log "[4/5] Rebuilding CSS ..."
         docker compose -f "$COMPOSE_FILE" run --rm fixmystreet bin/make_css
         ;;
 

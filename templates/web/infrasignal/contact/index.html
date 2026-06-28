@@ -1,0 +1,186 @@
+[% extra_js = [
+    version('/js/contact.js')
+] -%]
+[% INCLUDE 'header.html',
+    title = loc('Contact Us'),
+    robots = 'noindex,nofollow',
+    bodyclass = 'contactpage'
+%]
+
+[% INCLUDE 'about/_public-page-hero.html'
+    public_page_title = loc('Contact Us')
+    public_page_subtitle = loc('Have a question or need help? We&rsquo;re here for you.')
+%]
+
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
+
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'contact'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
+
+      [%# Main Content %]
+      <div class="contact-main">
+
+        [%# Notice: Check FAQ first %]
+        <div class="contact-notice contact-notice--info">
+          <span class="contact-notice__icon contact-notice__icon--info">&#9432;</span>
+          <div>
+            <p class="contact-notice__title">[% loc('Check our FAQ first') %]</p>
+            <p class="contact-notice__text">[% tprintf( loc('Many common questions are answered in our <a href="%s">Frequently Asked Questions</a> page.'), c.uri_for('/faq') ) %]</p>
+          </div>
+        </div>
+
+        [%# Notice: Don't report issues here %]
+        <div class="contact-notice contact-notice--warning">
+          <span class="contact-notice__icon contact-notice__icon--warn">&#9888;</span>
+          <div>
+            <p class="contact-notice__title">[% loc('Don&rsquo;t report infrastructure problems here') %]</p>
+            <p class="contact-notice__text">[% loc('To report a pothole, streetlight, or other issue, use our <a href="/#postcodeForm">Report Form</a> instead.') %]</p>
+          </div>
+        </div>
+
+        [%# Form Card %]
+        <div class="contact-form-card">
+          <h2 class="contact-form-card__title">[% loc('Send Us a Message') %]</h2>
+          <p class="contact-form-card__subtitle">[% loc('Fill out the form below and we&rsquo;ll get back to you within 1&ndash;2 business days.') %]</p>
+
+          <form class="contact-form validate" method="post" action="/contact/submit">
+            <input type="hidden" name="token" value="[% csrf_token %]">
+            <input type="hidden" name="s" value="[% s %]">
+
+            [%# Error display %]
+            [% IF errors.size %]
+              <div class="contact-notice contact-notice--warning" style="margin-bottom:1.25rem">
+                <div>
+                  [% FOREACH error IN errors %]
+                  <p class="contact-notice__text">[% error %]</p>
+                  [% END %]
+                </div>
+              </div>
+            [% END %]
+
+            [%# If reporting a problem/update, show context %]
+            [% IF update %]
+              <input type="hidden" name="update_id" value="[% update.id %]">
+              <input type="hidden" name="id" value="[% update.problem_id %]">
+            [% ELSIF problem %]
+              [% IF moderation_complaint %]
+              <input type="hidden" name="m" value="[% moderation_complaint %]">
+              [% END %]
+              <input type="hidden" name="id" value="[% problem.id %]">
+            [% END %]
+
+            <div class="contact-form__row">
+              <div class="contact-form__field">
+                <label class="contact-form__label" for="form_name">[% loc('Name') %] <span class="contact-form__req">*</span></label>
+                [% IF field_errors.name %]<div class="form-error">[% field_errors.name %]</div>[% END %]
+                <input type="text" name="name" id="form_name" required autocomplete="name"
+                       placeholder="[% loc('Your full name') %]"
+                       class="contact-form__input required"
+                       value="[% form_name | html %]">
+              </div>
+              <div class="contact-form__field">
+                <label class="contact-form__label" for="form_email">[% loc('Email') %] <span class="contact-form__req">*</span></label>
+                [% IF field_errors.em %]<div class="form-error">[% field_errors.em %]</div>[% END %]
+                <input type="email" name="em" id="form_email" required autocomplete="email"
+                       placeholder="[% loc('your@email.com') %]"
+                       class="contact-form__input required email"
+                       value="[% em | html %]">
+              </div>
+            </div>
+
+            <div class="contact-form__row">
+              <div class="contact-form__field">
+                <label class="contact-form__label" for="form_phone">[% loc('Phone') %] <span class="contact-form__opt">([% loc('optional') %])</span></label>
+                <input type="tel" name="extra.phone" id="form_phone" autocomplete="tel"
+                       placeholder="(555) 123-4567"
+                       class="contact-form__input">
+              </div>
+              <div class="contact-form__field">
+                <label class="contact-form__label" for="form_subject">[% loc('Subject') %] <span class="contact-form__req">*</span></label>
+                [% IF field_errors.subject %]<div class="form-error">[% field_errors.subject %]</div>[% END %]
+                <input type="text" name="subject" id="form_subject" required
+                       placeholder="[% loc('How can we help?') %]"
+                       class="contact-form__input required"
+                       value="[% subject | html %]">
+              </div>
+            </div>
+
+            <div class="contact-form__group">
+              <label class="contact-form__label" for="form_message">[% loc('Message') %] <span class="contact-form__req">*</span></label>
+              [% IF field_errors.message %]<div class="form-error">[% field_errors.message %]</div>[% END %]
+              <textarea name="message" id="form_message" required rows="5"
+                        placeholder="[% loc('Tell us more about your inquiry...') %]"
+                        class="contact-form__textarea required">[% message | html %]</textarea>
+            </div>
+
+            [% IF NOT problem AND NOT update %]
+            <p class="contact-form__hint">[% loc('If you are contacting us about a specific report or update please include a link to the report in the message.') %]</p>
+            [% END %]
+
+            [%# Cloudflare Turnstile %]
+            [% PROCESS 'auth/form_extra.html' %]
+
+            <button type="submit" class="contact-form__submit">
+              [% loc('Send Message') %]
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </form>
+        </div>
+
+        [%# Don't like forms? %]
+        <div class="contact-alt">
+          <p class="contact-alt__title">[% loc("Don't like forms?") %]</p>
+          <p class="contact-alt__text">[% tprintf( loc('Email us directly at <a href="mailto:%s">%s</a>'), contact_email, contact_email ) %]</p>
+        </div>
+
+        [%# Info cards %]
+        <div class="contact-info-cards">
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <p class="contact-info-card__label">[% loc('Email') %]</p>
+              <p class="contact-info-card__value">[% contact_email %]</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9h1"/><path d="M9 13h1"/><path d="M9 17h1"/></svg>
+            </div>
+            <div>
+              <p class="contact-info-card__label">[% loc('Local Government') %]</p>
+              <p class="contact-info-card__value"><a href="/about/for-local-government">[% loc('For Local Government') %]</a></p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <p class="contact-info-card__label">[% loc('Response Time') %]</p>
+              <p class="contact-info-card__value">[% loc('1–2 business days') %]</p>
+            </div>
+          </div>
+        </div>
+
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

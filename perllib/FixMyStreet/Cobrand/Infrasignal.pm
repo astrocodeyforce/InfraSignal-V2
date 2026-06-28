@@ -9,6 +9,61 @@ use FixMyStreet::OSM::PriorityClassifier;
 use LWP::UserAgent;
 use JSON::MaybeXS;
 
+my %US_STATE_ABBREVIATIONS = (
+    'alabama' => 'AL',
+    'alaska' => 'AK',
+    'arizona' => 'AZ',
+    'arkansas' => 'AR',
+    'california' => 'CA',
+    'colorado' => 'CO',
+    'connecticut' => 'CT',
+    'delaware' => 'DE',
+    'district of columbia' => 'DC',
+    'florida' => 'FL',
+    'georgia' => 'GA',
+    'hawaii' => 'HI',
+    'idaho' => 'ID',
+    'illinois' => 'IL',
+    'indiana' => 'IN',
+    'iowa' => 'IA',
+    'kansas' => 'KS',
+    'kentucky' => 'KY',
+    'louisiana' => 'LA',
+    'maine' => 'ME',
+    'maryland' => 'MD',
+    'massachusetts' => 'MA',
+    'michigan' => 'MI',
+    'minnesota' => 'MN',
+    'mississippi' => 'MS',
+    'missouri' => 'MO',
+    'montana' => 'MT',
+    'nebraska' => 'NE',
+    'nevada' => 'NV',
+    'new hampshire' => 'NH',
+    'new jersey' => 'NJ',
+    'new mexico' => 'NM',
+    'new york' => 'NY',
+    'north carolina' => 'NC',
+    'north dakota' => 'ND',
+    'ohio' => 'OH',
+    'oklahoma' => 'OK',
+    'oregon' => 'OR',
+    'pennsylvania' => 'PA',
+    'rhode island' => 'RI',
+    'south carolina' => 'SC',
+    'south dakota' => 'SD',
+    'tennessee' => 'TN',
+    'texas' => 'TX',
+    'utah' => 'UT',
+    'vermont' => 'VT',
+    'virginia' => 'VA',
+    'washington' => 'WA',
+    'west virginia' => 'WV',
+    'wisconsin' => 'WI',
+    'wyoming' => 'WY',
+);
+my %US_STATE_CODES = map { $_ => 1 } values %US_STATE_ABBREVIATIONS;
+
 =head1 NAME
 
 FixMyStreet::Cobrand::Infrasignal
@@ -49,6 +104,78 @@ sub admin_fetch_all_bodies {
 # Instead, we return an empty type list and handle areas via the hook below.
 sub area_types_for_admin {
     return [];
+}
+
+sub us_state_abbreviation {
+    my ($self, $state) = @_;
+    return '' unless defined $state;
+
+    $state =~ s/\A\s+|\s+\z//g;
+    $state =~ s/\A(?:State|Commonwealth)\s+of\s+//i;
+    $state =~ s/\s+\d{5}(?:-\d{4})?\z//;
+    return '' unless length $state;
+
+    my $code = uc $state;
+    return $code if $code =~ /\A[A-Z]{2}\z/ && $US_STATE_CODES{$code};
+
+    return $US_STATE_ABBREVIATIONS{lc $state} || '';
+}
+
+sub compact_us_location_label {
+    my ($self, $label) = @_;
+    return '' unless defined $label;
+
+    $label =~ s/\s+/ /g;
+    $label =~ s/\A\s+|\s+\z//g;
+    $label =~ s/,\s*(?:United States of America|United States|USA)\s*\z//i;
+    return $label unless $label =~ /,/;
+
+    my @parts = grep { length } map {
+        my $part = $_;
+        $part =~ s/\A\s+|\s+\z//g;
+        $part;
+    } split /,/, $label;
+    return $label unless @parts;
+
+    my $state_code = '';
+    for my $part (reverse @parts) {
+        next if $part =~ /\A\d{5}(?:-\d{4})?\z/;
+        $state_code = $self->us_state_abbreviation($part);
+        last if $state_code;
+    }
+
+    return $parts[0] unless $state_code;
+    return $parts[0] if uc($parts[0]) eq $state_code;
+    return "$parts[0], $state_code";
+}
+
+sub rss_area_title_name {
+    my ($self, $area) = @_;
+    return '' unless $area && ref $area eq 'HASH';
+
+    my $area_name = $area->{name} || '';
+    my $label = $area_name;
+
+    if (my $area_id = $area->{id}) {
+        if (my $c = $self->{c}) {
+            my @body_areas = eval {
+                $c->model('DB::BodyArea')->search(
+                    { area_id => $area_id },
+                    { prefetch => 'body' }
+                )->all;
+            };
+            for my $body_area (@body_areas) {
+                my $body_name = eval { $body_area->body->name } || '';
+                next unless $body_name;
+                if (!$label || index(lc $body_name, lc $area_name) == 0) {
+                    $label = $body_name;
+                    last;
+                }
+            }
+        }
+    }
+
+    return $self->compact_us_location_label($label) || $area_name;
 }
 
 # Instead of fetching all global areas (which times out), only fetch the
@@ -240,20 +367,87 @@ sub nearby_distances { {
     inspector   => 1500,  # 1500m radius for inspector duplicate lookup
 } }
 
+# Allow government body staff (from_body users) into the admin, not just
+# superusers. The admin auto-scopes for non-superusers: which pages appear is
+# driven by their role permissions (admin_pages), /admin/bodies redirects them
+# to their own body, body-record edits and user-privilege changes remain
+# superuser-only. Same pattern as the Zurich and NottinghamshirePolice
+# cobrands upstream.
+sub admin_allow_user {
+    my ( $self, $user ) = @_;
+    return 1 if $user->is_superuser || $user->from_body;
+}
+
 # Add "Duplicate Reports" to admin sidebar navigation.
 # Extends the default admin_pages with our custom page.
 sub admin_pages {
     my $self = shift;
     my $pages = $self->SUPER::admin_pages();
 
-    # Add Duplicate Reports tab (visible to users who can edit reports)
+    # Superusers see these platform-wide; body staff with report_inspect get
+    # body-scoped versions (the controllers filter every query and action to
+    # the staff user's own body).
     my $user = $self->{c}->user;
-    if ($user && ($user->is_superuser || $user->has_body_permission_to('report_edit'))) {
-        $pages->{duplicate_reports} = [ 'Duplicate Reports', 2.5 ];
-        $pages->{priority_zones} = [ 'Priority Zones', 2.6 ];
+    if ($user && ($user->is_superuser || $user->has_body_permission_to('report_inspect'))) {
+        $pages->{duplicate_reports} = [ _('Duplicate Reports'), 2.5 ];
+        $pages->{priority_zones} = [ _('Priority Zones'), 2.6 ];
+    }
+
+    # Whole-system statistics and the platform-wide activity timeline are
+    # superuser-only; body staff get their own-body numbers on the Summary
+    # page and the public /dashboard instead.
+    unless ($user && $user->is_superuser) {
+        delete $pages->{stats};
+        delete $pages->{timeline};
     }
 
     return $pages;
+}
+
+# The default admin Users list (users_staff_admin) returns every staff user on
+# the whole platform. Body staff must only ever see their own body's staff, so
+# scope it to their from_body. Superusers still see everyone.
+sub users_staff_admin {
+    my $self = shift;
+    my $rs = FixMyStreet::DB->resultset('User')->search({ from_body => { '!=', undef } });
+
+    my $c = $self->{c};
+    return $rs unless $c && $c->user_exists;
+    my $user = $c->user;
+    return $rs if $user->is_superuser || !$user->from_body;
+
+    return $rs->search({ 'me.from_body' => $user->from_body->id });
+}
+
+# Scope the admin Users area for body staff: they only see users connected to
+# their own body — its staff, plus people who have reported or updated there.
+# Superusers see everyone. Same pattern as UKCouncils upstream.
+sub users_restriction {
+    my ($self, $rs) = @_;
+
+    my $c = $self->{c};
+    return $rs unless $c && $c->user_exists;
+    my $user = $c->user;
+    return $rs if $user->is_superuser || !$user->from_body;
+
+    my $body_id = $user->from_body->id;
+    my $match = '(^|,)' . $body_id . '(,|$)';
+
+    my $problem_user_ids = FixMyStreet::DB->resultset('Problem')->search(
+        { bodies_str => { '~' => $match } },
+        { columns => ['user_id'], distinct => 1 },
+    )->as_query;
+    my $update_user_ids = FixMyStreet::DB->resultset('Comment')->search(
+        { 'problem.bodies_str' => { '~' => $match } },
+        { join => 'problem', columns => ['me.user_id'], distinct => 1 },
+    )->as_query;
+
+    return $rs->search({
+        -or => [
+            'me.from_body' => $body_id,
+            'me.id' => [ { -in => $problem_user_ids }, { -in => $update_user_ids } ],
+        ],
+    });
 }
 
 # Cookie-based language override for the language switcher UI.
@@ -308,6 +502,17 @@ sub process_additional_metadata_for_email {
 
     $h->{ai_assessment_text} = $assessment->{ai_assessment_text} || '';
     $h->{ai_assessment_html} = $assessment->{ai_assessment_html} || '';
+}
+
+# PWA manifest extras — merged into the base manifest by Offline.pm.
+# The theme (name, colors, icons) is already configured in the
+# manifest_theme DB table; this adds fields the DB doesn't cover.
+sub manifest {
+    return {
+        description => 'Report infrastructure problems to your local government — potholes, streetlights, flooding, and more.',
+        id => '/?pwa',
+        categories => [{ name => 'Government' }, { name => 'Utilities' }],
+    };
 }
 
 1;

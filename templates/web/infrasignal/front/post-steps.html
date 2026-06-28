@@ -1,0 +1,89 @@
+<!-- Category Grid -->
+<section class="category-grid">
+    <div class="category-grid__inner">
+        <h2>[% loc('What You Can Report') %]</h2>
+        <p class="category-grid__subtitle">[% loc('13 standardized infrastructure categories') %]</p>
+        <div class="category-grid__tiles">
+            <a href="/report/new?category=pothole" class="category-grid__tile">
+                <span class="category-grid__icon">&#128371;&#65039;</span>
+                <span class="category-grid__label">[% loc('Pothole & Road') %]</span>
+            </a>
+            <a href="/report/new?category=streetlight" class="category-grid__tile">
+                <span class="category-grid__icon">&#128161;</span>
+                <span class="category-grid__label">[% loc('Streetlight') %]</span>
+            </a>
+            <a href="/report/new?category=sidewalk" class="category-grid__tile">
+                <span class="category-grid__icon">&#128679;</span>
+                <span class="category-grid__label">[% loc('Sidewalk') %]</span>
+            </a>
+            <a href="/report/new?category=tree" class="category-grid__tile">
+                <span class="category-grid__icon">&#127795;</span>
+                <span class="category-grid__label">[% loc('Tree Hazard') %]</span>
+            </a>
+            <a href="/report/new?category=water" class="category-grid__tile">
+                <span class="category-grid__icon">&#128688;</span>
+                <span class="category-grid__label">[% loc('Water Leak') %]</span>
+            </a>
+            <a href="/report/new?category=graffiti" class="category-grid__tile">
+                <span class="category-grid__icon">&#127912;</span>
+                <span class="category-grid__label">[% loc('Graffiti') %]</span>
+            </a>
+            <a href="/report/new?category=vehicle" class="category-grid__tile">
+                <span class="category-grid__icon">&#128663;</span>
+                <span class="category-grid__label">[% loc('Vehicle / Parking') %]</span>
+            </a>
+            <a href="/report/new?category=signal" class="category-grid__tile">
+                <span class="category-grid__icon">&#128678;</span>
+                <span class="category-grid__label">[% loc('Traffic Signal') %]</span>
+            </a>
+            <a href="/report/new?category=drain" class="category-grid__tile">
+                <span class="category-grid__icon">&#127754;</span>
+                <span class="category-grid__label">[% loc('Drain / Flood') %]</span>
+            </a>
+            <a href="/report/new?category=bridge" class="category-grid__tile">
+                <span class="category-grid__icon">&#127753;</span>
+                <span class="category-grid__label">[% loc('Bridge / Guard') %]</span>
+            </a>
+            <a href="/report/new?category=dumping" class="category-grid__tile">
+                <span class="category-grid__icon">&#128465;&#65039;</span>
+                <span class="category-grid__label">[% loc('Illegal Dumping') %]</span>
+            </a>
+            <a href="/report/new?category=noise" class="category-grid__tile">
+                <span class="category-grid__icon">&#128266;</span>
+                <span class="category-grid__label">[% loc('Noise') %]</span>
+            </a>
+            <a href="/report/new?category=other" class="category-grid__tile">
+                <span class="category-grid__icon">&#10067;</span>
+                <span class="category-grid__label">[% loc('Other') %]</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- Social Proof -->
+<section class="social-proof">
+    <div class="social-proof__inner">
+        <h2>[% loc('Built for Public Reporting') %]</h2>
+        <div class="social-proof__quote">
+            <span class="social-proof__star" aria-hidden="true">&#9679;</span>
+            <blockquote>
+                [% loc('Reports are public, location-based, and easy to follow, helping residents and public teams work from the same information.') %]
+            </blockquote>
+            <p class="social-proof__author"><a href="/reports">[% loc('View public reports') %]</a></p>
+        </div>
+    </div>
+</section>
+
+<!-- Coverage Stats -->
+<section class="full-width">
+    [% INCLUDE "front/stats.html" %]
+</section>
+
+<!-- For Local Government CTA -->
+<section class="gov-cta">
+    <div class="gov-cta__inner">
+        <h2>[% loc('For Local Government') %]</h2>
+        <p class="gov-cta__subtitle">[% loc('Structured intake, routing, priority context, and integration details are now grouped on one page for public teams.') %]</p>
+        <a href="/about/for-local-government" class="gov-cta__btn">[% loc('Learn more') %] &#8250;</a>
+    </div>
+</section>

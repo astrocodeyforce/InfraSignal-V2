@@ -1,151 +1,180 @@
-[% INCLUDE 'header.html', title = loc('Frequently Asked Questions'), sidebar='about/_sidebar.html' %]
+[% INCLUDE 'header.html',
+    title = loc('Frequently Asked Questions'),
+    bodyclass = 'infopage'
+%]
 
-<h1>[% loc('Frequently Asked Questions') %]</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'Preguntas Frecuentes'
+    public_page_subtitle = 'Encuentre respuestas a las preguntas más comunes sobre InfraSignal.'
+%]
 
-<h2>General</h2>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<dl>
-    <dt>¿InfraSignal es gratuito?</dt>
-    <dd>Sí. InfraSignal es gratuito para todos los usuarios. No se cobra
-    ninguna tarifa por crear una cuenta, enviar reportes, recibir
-    actualizaciones de estado o suscribirse a alertas locales.</dd>
-</dl>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'faq'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<h2>Reportar Problemas</h2>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<dl>
-    <dt>¿Cómo reporto un problema?</dt>
-    <dd>
-    <ol>
-        <li>En la <a href="/">página principal</a>, ingrese la dirección,
-        nombre de la ciudad o código postal</li>
-        <li>Haga clic en el mapa en la ubicación del problema</li>
-        <li>Seleccione la categoría que mejor describa el problema</li>
-        <li>Escriba una descripción y opcionalmente suba hasta 3
-        fotos</li>
-        <li>Ingrese su nombre y dirección de correo electrónico</li>
-        <li>Envíe &mdash; InfraSignal dirigirá su reporte al gobierno
-        local responsable</li>
-    </ol>
-    </dd>
+        <div class="faq-sections">
 
-    <dt>¿En qué categorías puedo reportar problemas?</dt>
-    <dd>InfraSignal admite 13 categorías estándar de infraestructura:
-    <ul>
-        <li>Vehículo Abandonado</li>
-        <li>Daño en Puente / Baranda</li>
-        <li>Drenaje / Inundación</li>
-        <li>Árbol Caído / Vegetación</li>
-        <li>Grafiti / Vandalismo</li>
-        <li>Vertido Ilegal</li>
-        <li>Problema de Parque / Espacio Público</li>
-        <li>Bache / Daño en Carretera</li>
-        <li>Daño en Acera</li>
-        <li>Avería de Alumbrado Público</li>
-        <li>Problema de Semáforo / Señalización</li>
-        <li>Problema de Agua / Alcantarillado</li>
-        <li>Otro</li>
-    </ul>
-    </dd>
+          <div>
+            <h2 class="faq-section__title">General</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿InfraSignal es gratuito?</summary>
+                <p class="faq-item__answer">Sí. InfraSignal es gratuito para todos los usuarios. No hay cargo por crear una cuenta, enviar reportes, recibir actualizaciones de estado o suscribirse a alertas locales.</p>
+              </details>
+            </div>
+          </div>
 
-    <dt>¿Qué <em>no</em> debería reportar en InfraSignal?</dt>
-    <dd>InfraSignal está diseñado para problemas de infraestructura no
-    urgentes. <strong>No use InfraSignal para:</strong>
-    <ul>
-        <li><strong>Emergencias</strong> &mdash; llame al
-        <strong>911</strong> inmediatamente para situaciones que amenacen
-        la vida o la propiedad</li>
-        <li>Delitos en curso o actividad sospechosa</li>
-        <li>Cortes de servicios no relacionados con infraestructura (gas,
-        electricidad) &mdash; contacte directamente a su proveedor de
-        servicios</li>
-        <li>Quejas por ruido o disputas con vecinos</li>
-        <li>Problemas con la recolección de basura</li>
-        <li>Permisos de construcción o consultas de zonificación</li>
-        <li>Control de animales</li>
-        <li>Infracciones de estacionamiento o tránsito</li>
-    </ul>
-    </dd>
+          <div>
+            <h2 class="faq-section__title">Reportar un Problema</h2>
+            <div class="faq-accordion">
 
-    <dt>¿Necesito crear una cuenta?</dt>
-    <dd>Debe proporcionar una dirección de correo electrónico válida al
-    enviar un reporte para que InfraSignal pueda enviarle un enlace de
-    confirmación y actualizaciones de estado. También puede crear una
-    cuenta completa para gestionar todos sus reportes y suscripciones
-    desde un solo panel.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo reporto un problema?</summary>
+                <div class="faq-item__answer">
+                  <p>Comience desde la <a href="/">página de inicio</a>, ingrese la ubicación, coloque el marcador en el mapa, elija la mejor categoría, agregue detalles y fotos, luego envíe el reporte para su enrutamiento.</p>
+                  <p>Para conocer todo el recorrido del reporte, consulte <a href="/how-it-works">Cómo Funciona</a>.</p>
+                </div>
+              </details>
 
-    <dt>¿Puedo subir fotos?</dt>
-    <dd>Sí. Puede adjuntar hasta 3 fotos por reporte. Las fotos se
-    escanean automáticamente para detectar contenido inapropiado antes
-    de ser publicadas.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Qué categorías de problemas puedo reportar?</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal admite 13 categorías estándar de infraestructura:</p>
+                  <ul>
+                    <li>Vehículo abandonado</li>
+                    <li>Daño en puente / barrera</li>
+                    <li>Drenaje / inundación</li>
+                    <li>Árbol caído / vegetación</li>
+                    <li>Grafiti / vandalismo</li>
+                    <li>Vertido ilegal</li>
+                    <li>Problema en parque / espacio público</li>
+                    <li>Bache / daño en la vía</li>
+                    <li>Daño en la acera</li>
+                    <li>Falla de alumbrado público</li>
+                    <li>Semáforo / señal de tránsito</li>
+                    <li>Agua / alcantarillado</li>
+                    <li>Otro</li>
+                  </ul>
+                </div>
+              </details>
 
-    <dt>¿Puedo enviar un reporte de forma anónima?</dt>
-    <dd>Puede optar por ocultar su nombre de la página pública del
-    reporte. Sin embargo, su nombre y dirección de correo electrónico
-    siempre se comparten con el gobierno local responsable para que
-    puedan investigar el problema y contactarle si es necesario.</dd>
-</dl>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Qué NO debo reportar en InfraSignal?</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal está diseñado para problemas de infraestructura no urgentes. <strong>No use InfraSignal para:</strong></p>
+                  <ul>
+                    <li><strong>Emergencias</strong> &mdash; llame al <strong>911</strong> de inmediato ante cualquier amenaza a la vida o la seguridad</li>
+                    <li>Delitos en curso o actividad sospechosa</li>
+                    <li>Cortes de servicios públicos (gas, electricidad, agua) &mdash; contacte directamente a su proveedor</li>
+                    <li>Quejas por ruido o disputas entre vecinos</li>
+                    <li>Recolección de basura o reciclaje no realizada</li>
+                    <li>Permisos de construcción o consultas de cumplimiento de normas</li>
+                    <li>Control de animales</li>
+                    <li>Control de estacionamiento o tránsito</li>
+                  </ul>
+                </div>
+              </details>
 
-<h2>Después del Envío</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Necesito una cuenta?</summary>
+                <p class="faq-item__answer">Debe proporcionar una dirección de correo electrónico válida al enviar un reporte para que InfraSignal pueda enviar un enlace de confirmación y entregar actualizaciones de estado. También puede crear una cuenta completa para gestionar todos sus reportes y suscripciones desde un solo panel.</p>
+              </details>
 
-<dl>
-    <dt>¿Cómo se envían los reportes a los gobiernos locales?</dt>
-    <dd>Los reportes se envían por correo electrónico a la dirección de
-    contacto designada del gobierno local responsable. Cada correo
-    incluye los detalles completos del reporte: coordenadas de ubicación,
-    categoría, descripción, prioridad, fotos y la información de contacto
-    del reportero. Para actualizar su información de contacto, utilice
-    nuestro <a href="/contact">formulario de contacto</a>.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Puedo subir fotos?</summary>
+                <p class="faq-item__answer">Sí. Puede adjuntar hasta 3 fotos por reporte. Las fotos se revisan automáticamente en busca de contenido inapropiado antes de publicarse.</p>
+              </details>
 
-    <dt>¿Cómo se priorizan los reportes?</dt>
-    <dd>InfraSignal asigna a cada reporte uno de cuatro niveles de
-    prioridad: <strong>Urgente</strong> (peligro inmediato para la
-    seguridad), <strong>Alta</strong> (requiere respuesta en 24 horas),
-    <strong>Normal</strong> (tiempo de respuesta estándar) y
-    <strong>Baja</strong> (no urgente). Los gobiernos locales pueden
-    modificar la prioridad durante su revisión.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Puedo reportar de forma anónima?</summary>
+                <p class="faq-item__answer">Puede optar por ocultar su nombre en la página pública del reporte. Sin embargo, su nombre y dirección de correo electrónico siempre se comparten con la autoridad local responsable para que pueda investigar y, si es necesario, contactarlo sobre el problema.</p>
+              </details>
 
-    <dt>¿Cuánto tiempo tardará en resolverse mi problema?</dt>
-    <dd>Los tiempos de respuesta dependen de la categoría, la gravedad
-    y la carga de trabajo del gobierno local. InfraSignal no controla
-    la rapidez con que las autoridades responden; le permite dar
-    seguimiento al estado de su reporte y recibir actualizaciones por
-    correo electrónico cuando se tomen medidas.</dd>
+            </div>
+          </div>
 
-    <dt>¿Cómo verifico el estado de mi reporte?</dt>
-    <dd>Recibirá notificaciones por correo electrónico cuando cambie el
-    estado. También puede iniciar sesión en su cuenta y ver todos sus
-    reportes en la sección <strong>Su Cuenta</strong>. Cada reporte
-    muestra su estado actual: abierto, investigando, en progreso,
-    resuelto o cerrado.</dd>
+          <div>
+            <h2 class="faq-section__title">Después de Enviar</h2>
+            <div class="faq-accordion">
 
-    <dt>¿Qué hago si mi problema no se ha resuelto?</dt>
-    <dd>Puede agregar una actualización a su reporte existente en
-    cualquier momento para proporcionar fotos adicionales, indicar
-    que el problema persiste o agregar nuevos detalles. La agencia
-    responsable es notificada de cada actualización.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo se entregan los reportes a las autoridades locales?</summary>
+                <p class="faq-item__answer">Los reportes se envían por correo electrónico a la dirección de contacto designada de la autoridad local responsable. Cada reporte incluye la ubicación del problema (coordenadas y dirección), la categoría seleccionada, su descripción, las fotos adjuntas y su información de contacto.</p>
+              </details>
 
-    <dt>¿Puedo ver los reportes enviados por otros?</dt>
-    <dd>Sí. La página <a href="/reports">Todos los Reportes</a> muestra
-    todos los reportes públicos con sus estados, ubicaciones y
-    categorías. Puede navegar por área o buscar ubicaciones
-    específicas.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo se priorizan los reportes?</summary>
+                <p class="faq-item__answer">InfraSignal asigna uno de cuatro niveles de prioridad a cada reporte: <strong>Emergencia</strong> (peligro de seguridad inmediato), <strong>Alta</strong> (requiere atención dentro de 24 horas), <strong>Normal</strong> (tiempo de respuesta estándar) y <strong>Baja</strong> (no urgente). Las autoridades locales pueden ajustar la prioridad durante su investigación.</p>
+              </details>
 
-    <dt>¿Puedo recibir alertas sobre problemas cerca de mí?</dt>
-    <dd>Sí. Visite la página <a href="/alert">Alertas Locales</a> para
-    suscribirse a notificaciones por correo electrónico sobre nuevos
-    reportes en su área. Puede configurar alertas por radio geográfico
-    o por gobierno local específico.</dd>
-</dl>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cuánto tardará en resolverse mi problema?</summary>
+                <p class="faq-item__answer">Los tiempos de respuesta dependen de la categoría, la gravedad y la carga de trabajo de la autoridad local. InfraSignal no controla la rapidez con que responden las autoridades; le permite seguir el estado de su reporte y recibir actualizaciones por correo electrónico cuando se toman medidas.</p>
+              </details>
 
-<h2>Técnico</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo verifico el estado de mi reporte?</summary>
+                <p class="faq-item__answer">Recibirá notificaciones por correo electrónico cuando cambie el estado. También puede iniciar sesión en su cuenta y ver todos sus reportes en <strong>Su cuenta</strong>. Cada reporte muestra su estado actual: abierto, en investigación, en progreso, resuelto o cerrado.</p>
+              </details>
 
-<dl>
-    <dt>¿Qué dispositivos son compatibles?</dt>
-    <dd>InfraSignal es una aplicación web responsiva que funciona en
-    teléfonos inteligentes, tabletas y computadoras de escritorio. No se
-    requiere instalación de aplicación &mdash; se puede acceder a través
-    de cualquier navegador web moderno.</dd>
-</dl>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Qué pasa si mi problema no ha sido atendido?</summary>
+                <p class="faq-item__answer">Puede publicar una actualización en su reporte existente en cualquier momento para proporcionar fotos adicionales, indicar que el problema persiste o agregar nuevos detalles. La autoridad responsable es notificada de cada actualización.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Puedo ver los reportes enviados por otros?</summary>
+                <p class="faq-item__answer">Sí. La página <a href="/reports">Todos los Reportes</a> muestra todos los reportes públicos con su estado, ubicación y categoría. Puede explorar por área o buscar ubicaciones específicas.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Puedo recibir alertas sobre problemas cercanos?</summary>
+                <p class="faq-item__answer">Sí. Visite <a href="/alert">Alertas Locales</a> para suscribirse a notificaciones por correo electrónico sobre nuevos reportes en su área. Puede configurar alertas por radio geográfico o por autoridad local específica.</p>
+              </details>
+
+            </div>
+          </div>
+
+          <div>
+            <h2 class="faq-section__title">Técnico</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Qué dispositivos son compatibles?</summary>
+                <p class="faq-item__answer">InfraSignal es una aplicación web adaptable que funciona en teléfonos inteligentes, tabletas y computadoras de escritorio. No se requiere instalar ninguna aplicación &mdash; acceda a través de cualquier navegador web moderno.</p>
+              </details>
+            </div>
+          </div>
+
+        </div>[%# .faq-sections %]
+
+        [%# Still Have Questions? CTA %]
+        <div class="faq-cta">
+          <h3>¿Aún tiene preguntas?</h3>
+          <p>¿No encuentra lo que busca? Estaremos encantados de ayudar.</p>
+          <a href="/contact" class="faq-cta__btn">Contáctenos →</a>
+        </div>
+
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

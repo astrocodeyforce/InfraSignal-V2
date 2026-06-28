@@ -2824,8 +2824,8 @@ msgid ""
 "It's often quickest to <a href=\"%s\">check our FAQs</a> and see if the "
 "answer is there."
 msgstr ""
-"A menudo es más rápido <a href=\"%s\">consultar nuestro Listado de Preguntas"
-" Frecuentes</a> y ver si la respuesta está allí."
+"A menudo lo más rápido es <a href=\"%s\">consultar nuestras preguntas "
+"frecuentes</a> y ver si la respuesta está allí."
 
 #: templates/web/base/tokens/confirm_problem.html:34
 msgid "It’s on its way to the council right now."
@@ -8449,6 +8449,3518 @@ msgstr "Ciudad"
 msgid "cities in"
 msgstr "ciudades en"
 
+# >>> InfraSignal marketing-page strings (auto-added)
+# added 2026-05-30 for home/how-it-works/for-local-government/security
+msgid "&ldquo;It has been a resounding success.&rdquo;"
+msgstr "&ldquo;Ha sido un rotundo éxito.&rdquo;"
+
+msgid ""
+"&ldquo;Members of the public are choosing to use the platform...&rdquo;"
+msgstr "&ldquo;Los ciudadanos están eligiendo usar la plataforma...&rdquo;"
+
+msgid "&ldquo;a catalyst for change.&rdquo;"
+msgstr "&ldquo;un catalizador del cambio.&rdquo;"
+
+msgid "&ldquo;easier, faster to use, and more interactive&rdquo;"
+msgstr "&ldquo;más fácil, más rápida de usar y más interactiva&rdquo;"
+
+msgid ""
+"&ldquo;simple for the user, but deal with some complex routing behind the "
+"scenes&rdquo;"
+msgstr ""
+"&ldquo;simple para el usuario, pero gestiona un enrutamiento complejo tras "
+"bambalinas&rdquo;"
+
+msgid "+45% online reporting"
+msgstr "+45% de reportes en línea"
+
+msgid "-24% reporting costs"
+msgstr "-24% de costos de reporte"
+
+msgid "13 standardized infrastructure categories"
+msgstr "13 categorías estandarizadas de infraestructura"
+
+msgid "200,000+ updates each year"
+msgstr "más de 200.000 actualizaciones al año"
+
+msgid "30+ UK councils live"
+msgstr "más de 30 municipios del Reino Unido activos"
+
+msgid "4 languages"
+msgstr "4 idiomas"
+
+msgid "92% resolution rate shown"
+msgstr "92% de tasa de resolución mostrada"
+
+msgid "99.5% fewer duplicates"
+msgstr "99,5% menos duplicados"
+
+msgid ""
+"A behind-the-scenes look at how InfraSignal turns a quick submission into a "
+"routed, trackable record."
+msgstr ""
+"Una mirada tras bambalinas a cómo InfraSignal convierte un envío rápido en "
+"un registro enrutado y rastreable."
+
+msgid ""
+"A simple way to report issues in your neighborhood and ensure they reach the"
+" right people."
+msgstr ""
+"Una forma sencilla de reportar problemas en su vecindario y asegurarse de "
+"que lleguen a las personas adecuadas."
+
+msgid "A structured public reporting channel for infrastructure teams."
+msgstr ""
+"Un canal estructurado de reportes públicos para los equipos de "
+"infraestructura."
+
+msgid "AI-assisted intake"
+msgstr "Recepción asistida por IA"
+
+msgid "About Us"
+msgstr "Nosotros"
+
+msgid "Action Scheduled"
+msgstr "Acción Programada"
+
+msgid "Add a location, description, and photos."
+msgstr "Agregue ubicación, descripción y fotos."
+
+msgid "Add a photo, location, and short description in one guided step."
+msgstr ""
+"Agregue una foto, ubicación y una breve descripción en un solo paso guiado."
+
+msgid "Agency workflow"
+msgstr "Flujo de trabajo de la agencia"
+
+msgid "All rights reserved."
+msgstr "Todos los derechos reservados."
+
+msgid "Anatomy"
+msgstr "Anatomía"
+
+msgid "Audience"
+msgstr "Público"
+
+msgid "Better insight into recurring infrastructure issues."
+msgstr "Mejor comprensión de los problemas de infraestructura recurrentes."
+
+msgid "Boundary matching"
+msgstr "Coincidencia de límites"
+
+msgid "Boundary routing"
+msgstr "Enrutamiento por límites"
+
+msgid "Bridge / Guard"
+msgstr "Puente / Barrera"
+
+msgid ""
+"Browse reported issues on the public map and see what has already been "
+"submitted."
+msgstr ""
+"Explore los problemas reportados en el mapa público y vea lo que ya se ha "
+"enviado."
+
+msgid ""
+"Buckinghamshire reported fewer calls, fewer emails, fewer duplicate reports,"
+" and lower handling costs."
+msgstr ""
+"Buckinghamshire reportó menos llamadas, menos correos, menos reportes "
+"duplicados y menores costos de gestión."
+
+msgid "Built for Public Reporting"
+msgstr "Diseñado para Reportes Públicos"
+
+msgid "Built for government"
+msgstr "Diseñado para el gobierno"
+
+msgid "Built for residents"
+msgstr "Diseñado para los residentes"
+
+msgid "Category is used for routing"
+msgstr "La categoría se usa para el enrutamiento"
+
+msgid "Category routing"
+msgstr "Enrutamiento por categoría"
+
+msgid ""
+"Category suggestions and photo moderation support cleaner report review."
+msgstr ""
+"Las sugerencias de categoría y la moderación de fotos facilitan una revisión"
+" más limpia de los reportes."
+
+msgid ""
+"Central Bedfordshire reported a 46% increase in online reports and a 24% "
+"reduction in reporting costs."
+msgstr ""
+"Central Bedfordshire reportó un aumento del 46% en reportes en línea y una "
+"reducción del 24% en los costos de reporte."
+
+msgid "Channel shift"
+msgstr "Cambio de canal"
+
+msgid "Cities & Towns"
+msgstr "Ciudades y Pueblos"
+
+msgid "City & County Public Works"
+msgstr "Obras Públicas Municipales y de Condado"
+
+msgid "City infrastructure reporting service for Z&uuml;rich."
+msgstr "Servicio de reportes de infraestructura urbana para Zúrich."
+
+msgid "City-wide &middot; since 2013"
+msgstr "En toda la ciudad &middot; desde 2013"
+
+msgid "Company"
+msgstr "Empresa"
+
+msgid "Cost efficiency"
+msgstr "Eficiencia de costos"
+
+msgid "Council reference quotes"
+msgstr "Citas de referencia de municipios"
+
+msgid "Council references"
+msgstr "Referencias de municipios"
+
+msgid "Drain / Flood"
+msgstr "Drenaje / Inundación"
+
+msgid "Duplicates are reduced"
+msgstr "Se reducen los duplicados"
+
+msgid ""
+"Each submitted report is intended to give staff enough context to decide who"
+" should review it and what should happen next."
+msgstr ""
+"Cada reporte enviado busca dar al personal suficiente contexto para decidir "
+"quién debe revisarlo y qué debe suceder a continuación."
+
+msgid "Email and Open311 GeoReport v2-compatible routing where configured."
+msgstr ""
+"Enrutamiento por correo electrónico y compatible con Open311 GeoReport v2 "
+"donde esté configurado."
+
+msgid "Email intake"
+msgstr "Recepción por correo electrónico"
+
+msgid "Emergency, high, normal, and low priority levels help teams triage."
+msgstr ""
+"Los niveles de prioridad (emergencia, alta, normal y baja) ayudan a los "
+"equipos a priorizar."
+
+msgid "English, Spanish, Russian, and Turkish support are built in."
+msgstr "Incluye soporte para inglés, español, ruso y turco."
+
+msgid "FAQ"
+msgstr "Preguntas Frecuentes"
+
+msgid "Fewer irrelevant reports"
+msgstr "Menos reportes irrelevantes"
+
+msgid "Follow progress as updates are added."
+msgstr "Siga el progreso a medida que se agregan actualizaciones."
+
+msgid "Follow status updates as the issue is reviewed and resolved."
+msgstr ""
+"Siga las actualizaciones de estado mientras se revisa y resuelve el "
+"problema."
+
+msgid "For Government"
+msgstr "Para el Gobierno"
+
+msgid "For Local Authorities"
+msgstr "Para Autoridades Locales"
+
+msgid "For Local Government"
+msgstr "Para el Gobierno Local"
+
+msgid "For Residents"
+msgstr "Para Residentes"
+
+msgid ""
+"From a quick resident report to a trackable public record, InfraSignal keeps"
+" the process clear."
+msgstr ""
+"Desde un reporte rápido de un residente hasta un registro público "
+"rastreable, InfraSignal mantiene el proceso claro."
+
+msgid "GDPR-aligned"
+msgstr "Alineado con el RGPD"
+
+msgid "Geographic data helps route reports to the right public authority."
+msgstr ""
+"Los datos geográficos ayudan a enrutar los reportes a la autoridad pública "
+"correcta."
+
+msgid "Get email alerts for local activity."
+msgstr "Reciba alertas por correo electrónico sobre la actividad local."
+
+msgid ""
+"Gloucestershire saw a 45% increase in online reporting within four months "
+"while improving transparency for residents."
+msgstr ""
+"Gloucestershire vio un aumento del 45% en los reportes en línea en cuatro "
+"meses, mejorando la transparencia para los residentes."
+
+msgid "Go to quote 1"
+msgstr "Ir a la cita 1"
+
+msgid "Go to quote 2"
+msgstr "Ir a la cita 2"
+
+msgid "Go to quote 3"
+msgstr "Ir a la cita 3"
+
+msgid "Go to quote 4"
+msgstr "Ir a la cita 4"
+
+msgid "Go to quote 5"
+msgstr "Ir a la cita 5"
+
+msgid "Go to quote 6"
+msgstr "Ir a la cita 6"
+
+msgid "Graffiti"
+msgstr "Grafiti"
+
+msgid "High priority"
+msgstr "Prioridad alta"
+
+msgid "How InfraSignal Works"
+msgstr "Cómo Funciona InfraSignal"
+
+msgid "How It Works"
+msgstr "Cómo Funciona"
+
+msgid ""
+"How a resident report moves through your team &mdash; from inbox to public "
+"update."
+msgstr ""
+"Cómo avanza el reporte de un residente por su equipo &mdash; desde la "
+"bandeja de entrada hasta la actualización pública."
+
+msgid "Illegal Dumping"
+msgstr "Vertido Ilegal"
+
+msgid ""
+"Implementation can be aligned around the way an agency already receives and "
+"assigns work."
+msgstr ""
+"La implementación puede alinearse con la forma en que una agencia ya recibe "
+"y asigna el trabajo."
+
+msgid "In Progress"
+msgstr "En Progreso"
+
+msgid ""
+"InfraSignal follows a public reporting pattern already used by civic "
+"reporting services internationally: residents submit location-based reports,"
+" agencies receive structured intake, and communities can follow public "
+"updates over time."
+msgstr ""
+"InfraSignal sigue un patrón de reportes públicos ya utilizado por servicios "
+"cívicos a nivel internacional: los residentes envían reportes basados en "
+"ubicación, las agencias reciben una recepción estructurada y las comunidades"
+" pueden seguir las actualizaciones públicas con el tiempo."
+
+msgid ""
+"InfraSignal gives residents one simple place to report local problems "
+"without needing to know which department to contact."
+msgstr ""
+"InfraSignal ofrece a los residentes un lugar simple para reportar problemas "
+"locales sin necesidad de saber con qué departamento contactar."
+
+msgid ""
+"InfraSignal helps public teams receive resident reports with location, "
+"category, details, photos, and follow-up context in a consistent format."
+msgstr ""
+"InfraSignal ayuda a los equipos públicos a recibir reportes de los "
+"residentes con ubicación, categoría, detalles, fotos y contexto de "
+"seguimiento en un formato coherente."
+
+msgid ""
+"InfraSignal is not just a reporting form. Reports can be viewed publicly, "
+"followed individually, or monitored through local alerts."
+msgstr ""
+"InfraSignal no es solo un formulario de reporte. Los reportes pueden verse "
+"públicamente, seguirse individualmente o monitorearse mediante alertas "
+"locales."
+
+msgid "InfraSignal pins the issue to the right place on the map."
+msgstr "InfraSignal fija el problema en el lugar correcto del mapa."
+
+msgid ""
+"InfraSignal turns resident reports into structured, location-based "
+"information that is easier to review, route, and respond to."
+msgstr ""
+"InfraSignal convierte los reportes de los residentes en información "
+"estructurada y basada en ubicación que es más fácil de revisar, enrutar y "
+"responder."
+
+msgid ""
+"InfraSignal uses the address, zipcode, or map pin to understand exactly "
+"where the issue is located."
+msgstr ""
+"InfraSignal usa la dirección, el código postal o el marcador del mapa para "
+"entender exactamente dónde se ubica el problema."
+
+msgid "Intake"
+msgstr "Recepción"
+
+msgid "Investigating"
+msgstr "En investigación"
+
+msgid ""
+"Jurisdiction and boundary matching for location-based assignment to the "
+"responsible authority."
+msgstr ""
+"Coincidencia de jurisdicción y límites para la asignación basada en "
+"ubicación a la autoridad responsable."
+
+msgid ""
+"Large pothole near pedestrian crossing &mdash; water pooling after rain."
+msgstr ""
+"Bache grande cerca de un paso peatonal &mdash; acumulación de agua tras la "
+"lluvia."
+
+msgid "Latest issues reported by community members near you."
+msgstr ""
+"Últimos problemas reportados por miembros de la comunidad cerca de usted."
+
+msgid "Legal"
+msgstr "Legal"
+
+msgid ""
+"Lincolnshire reports around 80% online reporting and automatic status "
+"updates at county scale."
+msgstr ""
+"Lincolnshire reporta alrededor del 80% de reportes en línea y "
+"actualizaciones de estado automáticas a escala de condado."
+
+msgid "Local Admins for Routing & Updates"
+msgstr "Administradores locales para enrutamiento y actualizaciones"
+
+msgid "Local Alerts"
+msgstr "Alertas Locales"
+
+msgid "Locate"
+msgstr "Ubicar"
+
+msgid "Location is matched"
+msgstr "Se hace coincidir la ubicación"
+
+msgid "Map position, coordinates, and address context"
+msgstr "Posición en el mapa, coordenadas y contexto de la dirección"
+
+msgid "Model"
+msgstr "Modelo"
+
+msgid "Multi-language access"
+msgstr "Acceso multilingüe"
+
+msgid "National &middot; 290 cities"
+msgstr "Nacional &middot; 290 ciudades"
+
+msgid "National local issue reporting service for Sweden."
+msgstr "Servicio nacional de reportes de problemas locales para Suecia."
+
+msgid ""
+"Nearby existing reports may be shown so residents can avoid reporting the "
+"same issue twice."
+msgstr ""
+"Se pueden mostrar reportes existentes cercanos para que los residentes "
+"eviten reportar el mismo problema dos veces."
+
+msgid "Next quote"
+msgstr "Cita siguiente"
+
+msgid "Noise"
+msgstr "Ruido"
+
+msgid ""
+"Northumberland used public updates, asset mapping, and workflow messages to "
+"handle heavy drainage demand more clearly."
+msgstr ""
+"Northumberland usó actualizaciones públicas, mapeo de activos y mensajes de "
+"flujo de trabajo para gestionar con mayor claridad la alta demanda de "
+"drenaje."
+
+msgid "Open311 v2"
+msgstr "Open311 v2"
+
+msgid "Operations"
+msgstr "Operaciones"
+
+msgid "Operations and integration"
+msgstr "Operaciones e integración"
+
+msgid "Platform"
+msgstr "Plataforma"
+
+msgid ""
+"Post public updates so residents can follow progress without submitting "
+"again."
+msgstr ""
+"Publique actualizaciones para que los residentes sigan el progreso sin "
+"volver a enviar."
+
+msgid "Pothole"
+msgstr "Bache"
+
+msgid "Pothole & Road"
+msgstr "Bache / Vía"
+
+msgid "Previous quote"
+msgstr "Cita anterior"
+
+msgid "Priority context"
+msgstr "Contexto de prioridad"
+
+msgid "Priority context for triage"
+msgstr "Contexto de prioridad para el triaje"
+
+msgid "Priority levels for emergency, high, normal, and low reports."
+msgstr ""
+"Niveles de prioridad para reportes de emergencia, altos, normales y bajos."
+
+msgid ""
+"Priority levels help teams triage emergency, high, normal, and low reports."
+msgstr ""
+"Los niveles de prioridad ayudan a los equipos a priorizar reportes de "
+"emergencia, altos, normales y bajos."
+
+msgid "Proven civic reporting model"
+msgstr "Modelo de reportes cívicos comprobado"
+
+msgid "Public adoption"
+msgstr "Adopción pública"
+
+msgid "Public report link and update history"
+msgstr "Enlace al reporte público e historial de actualizaciones"
+
+msgid ""
+"Public reports can be viewed on the map so residents and local teams can see"
+" what has already been reported."
+msgstr ""
+"Los reportes públicos pueden verse en el mapa para que los residentes y los "
+"equipos locales vean lo que ya se ha reportado."
+
+msgid "Public visibility into reported issues."
+msgstr "Visibilidad pública de los problemas reportados."
+
+msgid ""
+"Public visibility that can reduce duplicate reports and clarify status."
+msgstr ""
+"Visibilidad pública que puede reducir los reportes duplicados y aclarar el "
+"estado."
+
+msgid "Public-sector civic reporting deployments and integrations."
+msgstr ""
+"Implementaciones e integraciones de reportes cívicos del sector público."
+
+msgid "Public-sector proof points"
+msgstr "Pruebas del sector público"
+
+msgid "Quote slides"
+msgstr "Diapositivas de citas"
+
+msgid "Read the case study"
+msgstr "Lea el caso de estudio"
+
+msgid "Ready to report an issue?"
+msgstr "¿Listo para reportar un problema?"
+
+msgid "Receive"
+msgstr "Recibir"
+
+msgid ""
+"Receive reports directly into a shared inbox for teams that manage requests "
+"via email today."
+msgstr ""
+"Reciba reportes directamente en una bandeja de entrada compartida para los "
+"equipos que hoy gestionan solicitudes por correo electrónico."
+
+msgid "Recently Reported Problems"
+msgstr "Problemas Reportados Recientemente"
+
+msgid "Reduced duplicate reports."
+msgstr "Reducción de reportes duplicados."
+
+msgid "Report an Issue"
+msgstr "Reportar un Problema"
+
+msgid ""
+"Report infrastructure issues and get them fixed. Serving communities across "
+"all 51 US states."
+msgstr ""
+"Reporte problemas de infraestructura y consiga que se resuelvan. Al servicio"
+" de comunidades en las 51 jurisdicciones de EE. UU."
+
+msgid ""
+"Report potholes, broken streetlights, sidewalk damage, drainage issues, "
+"trash overflow, graffiti, abandoned vehicles, and other infrastructure "
+"problems."
+msgstr ""
+"Reporte baches, farolas averiadas, daños en aceras, problemas de drenaje, "
+"desbordamiento de basura, grafitis, vehículos abandonados y otros problemas "
+"de infraestructura."
+
+msgid "Report, route, and track in four simple steps"
+msgstr "Reporte, enrute y haga seguimiento en cuatro pasos simples"
+
+msgid ""
+"Reports are public, location-based, and easy to follow, helping residents "
+"and public teams work from the same information."
+msgstr ""
+"Los reportes son públicos, basados en ubicación y fáciles de seguir, lo que "
+"ayuda a los residentes y a los equipos públicos a trabajar con la misma "
+"información."
+
+msgid ""
+"Reports can be sent to responsible authorities by email or service "
+"integrations such as Open311 where configured."
+msgstr ""
+"Los reportes pueden enviarse a las autoridades responsables por correo "
+"electrónico o mediante integraciones de servicio como Open311 donde esté "
+"configurado."
+
+msgid "Resident contact details where required"
+msgstr "Datos de contacto del residente cuando se requieran"
+
+msgid "Resident experience"
+msgstr "Experiencia del residente"
+
+msgid ""
+"Residents can follow updates, subscribe to alerts, and check report progress"
+" over time."
+msgstr ""
+"Los residentes pueden seguir actualizaciones, suscribirse a alertas y "
+"consultar el progreso de los reportes con el tiempo."
+
+msgid "Respond"
+msgstr "Responder"
+
+msgid "Review"
+msgstr "Revisar"
+
+msgid "Review by category, priority, location, and available contact context."
+msgstr ""
+"Revise por categoría, prioridad, ubicación y contexto de contacto "
+"disponible."
+
+msgid ""
+"Review repeated categories, locations, and response patterns over time."
+msgstr ""
+"Revise categorías, ubicaciones y patrones de respuesta repetidos con el "
+"tiempo."
+
+msgid "Route"
+msgstr "Enrutar"
+
+msgid ""
+"Route reports to the right service area or department based on the resident-"
+"selected category."
+msgstr ""
+"Enrute los reportes al área de servicio o departamento correcto según la "
+"categoría seleccionada por el residente."
+
+msgid "Routed"
+msgstr "Enrutado"
+
+msgid "Routing and setup options"
+msgstr "Opciones de enrutamiento y configuración"
+
+msgid "SOC 2-ready"
+msgstr "Preparado para SOC 2"
+
+msgid "Scale"
+msgstr "Escala"
+
+msgid "See reports from other residents."
+msgstr "Vea los reportes de otros residentes."
+
+msgid "Selected category and report description"
+msgstr "Categoría seleccionada y descripción del reporte"
+
+msgid "Send issues to the right department, inbox, or integration channel."
+msgstr ""
+"Envíe los problemas al departamento, bandeja de entrada o canal de "
+"integración correcto."
+
+msgid "Service Coordinators & Intake Teams"
+msgstr "Coordinadores de Servicio y Equipos de Recepción"
+
+msgid "Setup"
+msgstr "Configuración"
+
+msgid "Setup options"
+msgstr "Opciones de configuración"
+
+msgid ""
+"Short excerpts and published outcomes from real SocietyWorks case studies."
+msgstr ""
+"Extractos breves y resultados publicados de casos de estudio reales de "
+"SocietyWorks."
+
+msgid ""
+"Short quote excerpts and published figures from publicly available "
+"SocietyWorks case studies, shown as reference points for the civic reporting"
+" model. These councils are not InfraSignal customers or endorsers."
+msgstr ""
+"Extractos breves de citas y cifras publicadas de casos de estudio "
+"disponibles públicamente de SocietyWorks, mostrados como puntos de "
+"referencia para el modelo de reportes cívicos. Estos municipios no son "
+"clientes ni promotores de InfraSignal."
+
+msgid "Sidewalk"
+msgstr "Acera"
+
+msgid "Smart routing"
+msgstr "Enrutamiento inteligente"
+
+msgid "Snap a photo and describe the issue. Our AI helps fill in the details."
+msgstr ""
+"Tome una foto y describa el problema. Nuestra IA ayuda a completar los "
+"detalles."
+
+msgid "SocietyWorks"
+msgstr "SocietyWorks"
+
+msgid "Staff admin"
+msgstr "Administración del personal"
+
+msgid ""
+"Staff and admin access for reviewing reports, posting updates, and managing "
+"routing rules."
+msgstr ""
+"Acceso para personal y administradores para revisar reportes, publicar "
+"actualizaciones y gestionar reglas de enrutamiento."
+
+msgid "Staff/admin tools for reviewing reports and updates."
+msgstr ""
+"Herramientas para personal/administradores para revisar reportes y "
+"actualizaciones."
+
+msgid "Standardized categories aligned with common public works operations."
+msgstr ""
+"Categorías estandarizadas alineadas con las operaciones comunes de obras "
+"públicas."
+
+msgid "Start Reporting"
+msgstr "Reportar"
+
+msgid ""
+"Start with an address, add the details, and let InfraSignal help your report"
+" reach the right place."
+msgstr ""
+"Comience con una dirección, agregue los detalles y deje que InfraSignal "
+"ayude a que su reporte llegue al lugar correcto."
+
+msgid "States + D.C."
+msgstr "Estados + D.C."
+
+msgid "Streetlight"
+msgstr "Alumbrado público"
+
+msgid ""
+"Structured intake, routing, priority context, and integration details are "
+"now grouped on one page for public teams."
+msgstr ""
+"La recepción estructurada, el enrutamiento, el contexto de prioridad y los "
+"detalles de integración ahora están agrupados en una sola página para los "
+"equipos públicos."
+
+msgid ""
+"Structured reports from residents with location, category, details, and "
+"photos."
+msgstr ""
+"Reportes estructurados de los residentes con ubicación, categoría, detalles "
+"y fotos."
+
+msgid "Structured reports with category, location, details, and photos."
+msgstr "Reportes estructurados con categoría, ubicación, detalles y fotos."
+
+msgid "Structured reports, cleaner intake"
+msgstr "Reportes estructurados, recepción más limpia"
+
+msgid ""
+"Structured, geolocated reports with photos and resident contact context."
+msgstr ""
+"Reportes estructurados y geolocalizados con fotos y contexto de contacto del"
+" residente."
+
+msgid "Subscribe to updates for reports near an address or area."
+msgstr ""
+"Suscríbase a actualizaciones de reportes cerca de una dirección o área."
+
+msgid "Sweden"
+msgstr "Suecia"
+
+msgid "Switzerland"
+msgstr "Suiza"
+
+msgid "Terms & Conditions"
+msgstr "Términos y Condiciones"
+
+msgid ""
+"The issue category helps determine which local department or service should "
+"receive the report."
+msgstr ""
+"La categoría del problema ayuda a determinar qué departamento o servicio "
+"local debe recibir el reporte."
+
+msgid ""
+"The public reporting experience stays simple for residents, while agencies "
+"receive cleaner information for triage, routing, and response."
+msgstr ""
+"La experiencia de reporte público sigue siendo simple para los residentes, "
+"mientras que las agencias reciben información más limpia para el triaje, el "
+"enrutamiento y la respuesta."
+
+msgid "The report becomes visible"
+msgstr "El reporte se hace visible"
+
+msgid "The report is sent"
+msgstr "El reporte se envía"
+
+msgid "The report is sent to the responsible local team or agency."
+msgstr "El reporte se envía al equipo o agencia local responsable."
+
+msgid ""
+"These examples are included as reference points for the wider civic "
+"reporting model, not as InfraSignal customers or endorsements."
+msgstr ""
+"Estos ejemplos se incluyen como puntos de referencia para el modelo más "
+"amplio de reportes cívicos, no como clientes ni respaldos de InfraSignal."
+
+msgid ""
+"This page is for public teams that receive, review, route, or respond to "
+"resident infrastructure reports."
+msgstr ""
+"Esta página es para los equipos públicos que reciben, revisan, enrutan o "
+"responden a los reportes de infraestructura de los residentes."
+
+msgid "Three simple steps to get infrastructure problems fixed."
+msgstr "Tres pasos simples para resolver problemas de infraestructura."
+
+msgid "Track"
+msgstr "Seguir"
+
+msgid "Track issues across your community"
+msgstr "Haga seguimiento de los problemas en toda su comunidad"
+
+msgid "Track your own reports from your account."
+msgstr "Haga seguimiento de sus propios reportes desde su cuenta."
+
+msgid "Traffic Signal"
+msgstr "Semáforo"
+
+msgid ""
+"Transport for London uses smart routing so residents do not need to know "
+"which body owns each street asset."
+msgstr ""
+"Transport for London usa enrutamiento inteligente para que los residentes no"
+" necesiten saber qué organismo posee cada elemento de la vía."
+
+msgid "Transportation, Streets, Parks & Facilities"
+msgstr "Transporte, Calles, Parques e Instalaciones"
+
+msgid "Tree Hazard"
+msgstr "Árbol Peligroso"
+
+msgid "Triage"
+msgstr "Triaje"
+
+msgid "United Kingdom"
+msgstr "Reino Unido"
+
+msgid "Up to 98.69% savings per report."
+msgstr "Hasta un 98,69% de ahorro por reporte."
+
+msgid "Updates keep people informed"
+msgstr "Las actualizaciones mantienen informadas a las personas"
+
+msgid "Uploaded photos where provided"
+msgstr "Fotos subidas cuando se proporcionen"
+
+msgid "Useful for local authorities and service teams"
+msgstr "Útil para autoridades locales y equipos de servicio"
+
+msgid "Vehicle / Parking"
+msgstr "Vehículo / Estacionamiento"
+
+msgid "View All Reports"
+msgstr "Ver Todos los Reportes"
+
+msgid "View Reports"
+msgstr "Ver Reportes"
+
+msgid "View all reports"
+msgstr "Ver todos los reportes"
+
+msgid "View public reports"
+msgstr "Ver reportes públicos"
+
+msgid ""
+"View your reports, manage notification preferences, and follow updates from "
+"one place."
+msgstr ""
+"Vea sus reportes, gestione las preferencias de notificación y siga las "
+"actualizaciones desde un solo lugar."
+
+msgid "Visit"
+msgstr "Visitar"
+
+msgid "WCAG 2.1 AA"
+msgstr "WCAG 2.1 AA"
+
+msgid "Water Leak"
+msgstr "Fuga de Agua"
+
+msgid "We detect your location and identify the exact address automatically."
+msgstr ""
+"Detectamos su ubicación e identificamos la dirección exacta automáticamente."
+
+msgid "What You Can Report"
+msgstr "Qué Puede Reportar"
+
+msgid "What each report includes"
+msgstr "Qué incluye cada reporte"
+
+msgid "What happens after you submit a report?"
+msgstr "¿Qué sucede después de enviar un reporte?"
+
+msgid "Who this is for"
+msgstr "Para quién es esto"
+
+msgid "Workflow"
+msgstr "Flujo de trabajo"
+
+msgid "Your Account"
+msgstr "Su Cuenta"
+
+msgid "Your report is sent directly to the responsible local government."
+msgstr "Su reporte se envía directamente al gobierno local responsable."
+
+msgid "1–2 business days"
+msgstr "1–2 días hábiles"
+
+msgid "Active"
+msgstr "Activo"
+
+msgid "Average fix time"
+msgstr "Tiempo promedio de resolución"
+
+msgid "Avg. Days to Fix"
+msgstr "Días prom. para resolver"
+
+msgid "Check our FAQ first"
+msgstr "Consulte primero nuestras Preguntas Frecuentes"
+
+msgid "Computed from fixed reports"
+msgstr "Calculado a partir de los reportes resueltos"
+
+msgid "Daily report volume this week"
+msgstr "Volumen diario de reportes esta semana"
+
+msgid "Don&rsquo;t report infrastructure problems here"
+msgstr "No reporte problemas de infraestructura aquí"
+
+msgid "Drag or browse a photo"
+msgstr "Arrastre o seleccione una foto"
+
+msgid "Email us directly at <a href=\"mailto:%s\">%s</a>"
+msgstr "Escríbanos directamente a <a href=\"mailto:%s\">%s</a>"
+
+msgid "Enter address or ZIP"
+msgstr "Ingrese dirección o código postal"
+
+msgid "Enter your address or zipcode"
+msgstr "Ingrese su dirección"
+
+msgid "Explore reports"
+msgstr "Explorar reportes"
+
+msgid ""
+"Fill out the form below and we&rsquo;ll get back to you within 1&ndash;2 "
+"business days."
+msgstr ""
+"Complete el formulario a continuación y le responderemos en un plazo de "
+"1&ndash;2 días hábiles."
+
+msgid "Government Inquiries"
+msgstr "Consultas Gubernamentales"
+
+msgid "Have a question or need help? We&rsquo;re here for you."
+msgstr "¿Tiene una pregunta o necesita ayuda? Estamos aquí para ayudarle."
+
+msgid "How can we help?"
+msgstr "¿Cómo podemos ayudar?"
+
+msgid "Jurisdiction"
+msgstr "Jurisdicción"
+
+msgid "Last 100"
+msgstr "Últimos 100"
+
+msgid "Last 100 reports"
+msgstr "Últimos 100 reportes"
+
+msgid ""
+"Many common questions are answered in our <a href=\"%s\">Frequently Asked "
+"Questions</a> page."
+msgstr ""
+"Muchas preguntas comunes se responden en nuestra página de <a "
+"href=\"%s\">Preguntas Frecuentes</a>."
+
+msgid "Monthly reports submitted vs. problems fixed"
+msgstr "Reportes mensuales enviados frente a problemas resueltos"
+
+msgid "Most common issue types in the last 7 days."
+msgstr "Tipos de problemas más comunes en los últimos 7 días."
+
+msgid "No activity"
+msgstr "Sin actividad"
+
+msgid "No activity in the last 7 days"
+msgstr "Sin actividad en los últimos 7 días"
+
+msgid "No categories have reports in the last 7 days."
+msgstr "Ninguna categoría tiene reportes en los últimos 7 días."
+
+msgid "No category activity"
+msgstr "Sin actividad por categoría"
+
+msgid "No reports recorded"
+msgstr "No se registraron reportes"
+
+msgid "No reports, updates, or fixes were recorded for this period."
+msgstr ""
+"No se registraron reportes, actualizaciones ni resoluciones para este "
+"período."
+
+msgid "Or search by address"
+msgstr "O busque por dirección"
+
+msgid "Overall regional average"
+msgstr "Promedio regional general"
+
+msgid "Performance over time"
+msgstr "Rendimiento a lo largo del tiempo"
+
+msgid ""
+"Pick your local authority or search an address to see community-specific "
+"reports."
+msgstr ""
+"Elija su autoridad local o busque una dirección para ver reportes "
+"específicos de la comunidad."
+
+msgid "Problems Fixed"
+msgstr "Problemas Resueltos"
+
+msgid ""
+"Real-time overview of infrastructure reports across all communities. See "
+"what is being reported, what is getting fixed, and how responsive local "
+"government is."
+msgstr ""
+"Visión en tiempo real de los reportes de infraestructura en todas las "
+"comunidades. Vea qué se reporta, qué se resuelve y qué tan receptivo es el "
+"gobierno local."
+
+msgid ""
+"Report infrastructure issues in your community. It only takes a minute."
+msgstr ""
+"Reporte problemas de infraestructura en su comunidad. Solo toma un minuto."
+
+msgid "Report issues. Improve your neighborhood with Infrasignal."
+msgstr "Reporte problemas. Mejore su vecindario con Infrasignal."
+
+msgid "Reported"
+msgstr "Reportado"
+
+msgid "Reports Dashboard"
+msgstr "Panel de Reportes"
+
+msgid "Reports This Week"
+msgstr "Reportes de Esta Semana"
+
+msgid "Reports in your area"
+msgstr "Reportes en su zona"
+
+msgid "Reports submitted vs. problems fixed by period"
+msgstr "Reportes enviados frente a problemas resueltos por período"
+
+msgid ""
+"Residents report problems. Local authorities fix them. Track everything."
+msgstr ""
+"Los residentes reportan problemas. Las autoridades locales los resuelven. "
+"Haga seguimiento de todo."
+
+msgid "Response Time"
+msgstr "Tiempo de Respuesta"
+
+msgid "See something that needs fixing?"
+msgstr "¿Ve algo que necesita arreglo?"
+
+msgid "Select a jurisdiction..."
+msgstr "Seleccione una jurisdicción..."
+
+msgid "Send Message"
+msgstr "Enviar Mensaje"
+
+msgid "Send Us a Message"
+msgstr "Envíenos un Mensaje"
+
+msgid "Start report from photo"
+msgstr "Iniciar reporte desde una foto"
+
+msgid "Tell us more about your inquiry..."
+msgstr "Cuéntenos más sobre su consulta..."
+
+msgid ""
+"Thanks for uploading your photo. We now need to locate your problem, so "
+"please enter a nearby street name or postcode in the box below."
+msgstr ""
+"Gracias por subir su foto. Ahora necesitamos ubicar su problema, así que "
+"ingrese el nombre de una calle cercana o un código postal en el cuadro de "
+"abajo."
+
+msgid ""
+"To report a pothole, streetlight, or other issue, use our <a "
+"href=\"/#postcodeForm\">Report Form</a> instead."
+msgstr ""
+"Para reportar un bache, una farola u otro problema, use nuestro <a "
+"href=\"/#postcodeForm\">Formulario de Reporte</a>."
+
+msgid "Today"
+msgstr "Hoy"
+
+msgid "Top 5 Most Reported Categories"
+msgstr "Las 5 Categorías Más Reportadas"
+
+msgid "Top 5 Responsive Authorities"
+msgstr "Las 5 Autoridades Más Receptivas"
+
+msgid "Total Reports"
+msgstr "Total de Reportes"
+
+msgid "View nearby"
+msgstr "Ver cercanos"
+
+msgid "Your full name"
+msgstr "Su nombre completo"
+
+msgid "Your uploaded photo"
+msgstr "Su foto subida"
+
+msgid "avg days"
+msgstr "días prom."
+
+msgid "d"
+msgstr "d"
+
+msgid "resolution rate"
+msgstr "tasa de resolución"
+
+msgid "your@email.com"
+msgstr "your@email.com"
+
+msgid "✓ 10,000+ reports filed"
+msgstr "✓ Más de 10.000 reportes presentados"
+
+msgid "✓ Free to use"
+msgstr "✓ Gratis"
+
+msgid "✓ Government trusted"
+msgstr "✓ Confiado por el gobierno"
+
+msgid "%sm apart"
+msgstr "a %s m de distancia"
+
+msgid "-- All cities --"
+msgstr "-- Todas las ciudades --"
+
+msgid "-- All cities in county --"
+msgstr "-- Todas las ciudades del condado --"
+
+msgid "-- All counties --"
+msgstr "-- Todos los condados --"
+
+msgid "-- Select a state --"
+msgstr "-- Seleccione un estado --"
+
+msgid "Access"
+msgstr "Acceso"
+
+msgid "Admin Console"
+msgstr "Consola de Administración"
+
+msgid "Admin navigation"
+msgstr "Navegación de administración"
+
+msgid "Admin sections"
+msgstr "Secciones de administración"
+
+msgid "All Categories"
+msgstr "Todas las categorías"
+
+msgid "All report issue types"
+msgstr "Todos los tipos de problemas de reportes"
+
+msgid "All report lifecycle distribution"
+msgstr "Distribución del ciclo de vida de los reportes"
+
+msgid "Available for your account"
+msgstr "Disponible para su cuenta"
+
+msgid "Awaiting send"
+msgstr "En espera de envío"
+
+msgid "Bodies with Site Messages"
+msgstr "Organismos con mensajes del sitio"
+
+msgid "By Category"
+msgstr "Por Categoría"
+
+msgid "By Status"
+msgstr "Por Estado"
+
+msgid "City / Town"
+msgstr "Ciudad / Pueblo"
+
+msgid "Created reports per day"
+msgstr "Reportes creados por día"
+
+msgid "Denied"
+msgstr "Denegado"
+
+msgid "Detection Radius"
+msgstr "Radio de detección"
+
+msgid "Dismiss"
+msgstr "Descartar"
+
+msgid "Duplicate Groups"
+msgstr "Grupos de duplicados"
+
+msgid "Duplicate Reports"
+msgstr "Reportes Duplicados"
+
+msgid "Edit Priority Zone"
+msgstr "Editar Zona de Prioridad"
+
+msgid "Find reports and users"
+msgstr "Buscar reportes y usuarios"
+
+msgid "Good morning"
+msgstr "Buenos días"
+
+msgid "Granted"
+msgstr "Concedido"
+
+msgid "Latest submissions"
+msgstr "Últimos envíos"
+
+msgid "Mark"
+msgstr "Marcar"
+
+msgid "Mark as duplicate:"
+msgstr "Marcar como duplicado:"
+
+msgid "Name or email address"
+msgstr "Nombre o dirección de correo"
+
+msgid "New report"
+msgstr "Nuevo reporte"
+
+msgid "No bodies found for %s."
+msgstr "No se encontraron organismos para %s."
+
+msgid "No duplicate reports detected"
+msgstr "No se detectaron reportes duplicados"
+
+msgid "No recent reports to show."
+msgstr "No hay reportes recientes para mostrar."
+
+msgid "No reports are currently waiting to be sent."
+msgstr "Actualmente no hay reportes en espera de envío."
+
+msgid ""
+"No reports found within the specified radius sharing the same category. Try "
+"increasing the radius."
+msgstr ""
+"No se encontraron reportes dentro del radio especificado con la misma "
+"categoría. Intente aumentar el radio."
+
+msgid "Open only"
+msgstr "Solo abiertos"
+
+msgid "Open reports manager"
+msgstr "Abrir gestor de reportes"
+
+msgid "Open reports pending delivery"
+msgstr "Reportes abiertos pendientes de entrega"
+
+msgid "Priority Zone Configuration"
+msgstr "Configuración de Zonas de Prioridad"
+
+msgid "Radius (metres)"
+msgstr "Radio (metros)"
+
+msgid "Recent reports"
+msgstr "Reportes recientes"
+
+msgid "Report ID, title, or email"
+msgstr "ID de reporte, título o correo"
+
+msgid "Report Pairs"
+msgstr "Pares de reportes"
+
+msgid "Report State"
+msgstr "Estado del reporte"
+
+msgid ""
+"Reports in the same category within a geographic radius that may be "
+"duplicates."
+msgstr ""
+"Reportes de la misma categoría dentro de un radio geográfico que pueden ser "
+"duplicados."
+
+msgid "Reports this week"
+msgstr "Reportes de esta semana"
+
+msgid ""
+"Scroll inside this table to review the full queue without stretching the "
+"page."
+msgstr ""
+"Desplácese dentro de esta tabla para revisar toda la cola sin estirar la "
+"página."
+
+msgid "View all"
+msgstr "Ver todos"
+
+msgid "View reports"
+msgstr "Ver reportes"
+
+msgid "admin sections available"
+msgstr "secciones de administración disponibles"
+
+msgid "is duplicate of"
+msgstr "es duplicado de"
+
+msgid "last 7 days"
+msgstr "últimos 7 días"
+
+msgid "reports"
+msgstr "reportes"
+
+msgid "reports waiting to be sent"
+msgstr "reportes en espera de envío"
+
+msgid "Priority Zones"
+msgstr "Zonas de Prioridad"
+
+msgid "%s bodies in %s"
+msgstr "%s organismos en %s"
+
+msgid "%s counties"
+msgstr "%s condados"
+
+msgid "%s cities/towns"
+msgstr "%s ciudades/pueblos"
+
+msgid "%s cities/towns in %s"
+msgstr "%s ciudades/pueblos en %s"
+
+msgid "county"
+msgstr "condado"
+
+msgid "Error loading bodies."
+msgstr "Error al cargar los organismos."
+
+msgid "Error loading cities"
+msgstr "Error al cargar las ciudades"
+
+msgid "Manage Priorities"
+msgstr "Gestionar prioridades"
+
+msgid "Edit Message"
+msgstr "Editar mensaje"
+
+msgid ""
+"Select a state to find a body, then click to manage its response priorities."
+msgstr ""
+"Seleccione un estado para encontrar un organismo, luego haga clic para "
+"gestionar sus prioridades de respuesta."
+
+msgid "Select a state to find a body, then click to manage its site message."
+msgstr ""
+"Seleccione un estado para encontrar un organismo, luego haga clic para "
+"gestionar su mensaje del sitio."
+
+msgid "A summary of this site's configuration, running version %s."
+msgstr ""
+"Un resumen de la configuración de este sitio, ejecutando la versión %s."
+
+msgid "unknown"
+msgstr "desconocido"
+
+msgid "View %s configuration"
+msgstr "Ver la configuración de %s"
+
+msgid "Variable"
+msgstr "Variable"
+
+msgid "general.yml value"
+msgstr "valor de general.yml"
+
+msgid "Cobrand module override"
+msgstr "Anulación del módulo de cobrand"
+
+msgid "URLs"
+msgstr "URLs"
+
+msgid "Display"
+msgstr "Visualización"
+
+msgid "Geocoder"
+msgstr "Geocodificador"
+
+msgid "MapIt"
+msgstr "MapIt"
+
+msgid "Database"
+msgstr "Base de datos"
+
+msgid "Development"
+msgstr "Desarrollo"
+
+msgid "Site title"
+msgstr "Título del sitio"
+
+msgid "Web templates"
+msgstr "Plantillas web"
+
+msgid "Language override"
+msgstr "Anulación de idioma"
+
+msgid "Database site configuration"
+msgstr "Configuración del sitio en la base de datos"
+
+msgid "Key"
+msgstr "Clave"
+
+msgid "Value"
+msgstr "Valor"
+
+msgid "JSON:"
+msgstr "JSON:"
+
+msgid "FixMyStreet name"
+msgstr "Nombre de FixMyStreet"
+
+msgid "FixMyStreet short name"
+msgstr "Nombre corto de FixMyStreet"
+
+msgid "Wasteworks name"
+msgstr "Nombre de WasteWorks"
+
+msgid "Wasteworks short name"
+msgstr "Nombre corto de WasteWorks"
+
+msgid "Theme colour"
+msgstr "Color del tema"
+
+msgid "Background colour"
+msgstr "Color de fondo"
+
+msgid "Add icon"
+msgstr "Añadir icono"
+
+msgid "Select a cobrand"
+msgstr "Seleccione un cobrand"
+
+msgid "Icon"
+msgstr "Icono"
+
+msgid "Size"
+msgstr "Tamaño"
+
+msgid "Delete?"
+msgstr "¿Eliminar?"
+
+msgid "Return to themes list"
+msgstr "Volver a la lista de temas"
+
+msgid "Account details and notification preferences"
+msgstr "Detalles de la cuenta y preferencias de notificación"
+
+msgid "Add phone"
+msgstr "Añadir teléfono"
+
+msgid "Changes are saved when you update preferences"
+msgstr "Los cambios se guardan cuando actualiza las preferencias"
+
+msgid "Civic impact"
+msgstr "Impacto cívico"
+
+msgid "Help improve municipal services"
+msgstr "Ayude a mejorar los servicios municipales"
+
+msgid "Needs verification"
+msgstr "Necesita verificación"
+
+msgid "New reports near your area"
+msgstr "Nuevos reportes cerca de su zona"
+
+msgid "Not provided"
+msgstr "No proporcionado"
+
+msgid "Notification preferences"
+msgstr "Preferencias de notificación"
+
+msgid "Profile details"
+msgstr "Detalles del perfil"
+
+msgid "Questionnaires"
+msgstr "Cuestionarios"
+
+msgid "Report a new issue"
+msgstr "Reportar un nuevo problema"
+
+msgid "Update notifications"
+msgstr "Notificaciones de actualización"
+
+msgid "Update preferences"
+msgstr "Actualizar preferencias"
+
+msgid "Verified account"
+msgstr "Cuenta verificada"
+
+msgid "When your reports change status"
+msgstr "Cuando cambia el estado de sus reportes"
+
+msgid "issue"
+msgstr "problema"
+
+msgid "issues"
+msgstr "problemas"
+
+msgid "reported through your account"
+msgstr "reportado a través de su cuenta"
+
+msgid ""
+"Empowering residents to improve their communities, one report at a time."
+msgstr ""
+"Ayudamos a los residentes a mejorar sus comunidades, un reporte a la vez."
+
+msgid "What We Do"
+msgstr "Qué hacemos"
+
+msgid ""
+"Across the United States, infrastructure problems like potholes, broken "
+"streetlights, damaged sidewalks, and illegal dumping go unreported because "
+"residents don&rsquo;t know who to contact. InfraSignal solves this with a "
+"single, easy-to-use platform."
+msgstr ""
+"En todo Estados Unidos, los problemas de infraestructura como baches, "
+"farolas rotas, aceras dañadas y vertidos ilegales no se reportan porque los "
+"residentes no saben a quién contactar. InfraSignal resuelve esto con una "
+"plataforma única y fácil de usar."
+
+msgid "Pin the problem on the map"
+msgstr "Marque el problema en el mapa"
+
+msgid "Auto-route to the right authority"
+msgstr "Enrutamiento automático a la autoridad correcta"
+
+msgid "Get email updates on status"
+msgstr "Reciba actualizaciones de estado por correo"
+
+msgid "Map"
+msgstr "Mapa"
+
+msgid "Public visibility for community"
+msgstr "Visibilidad pública para la comunidad"
+
+msgid "All 50 + D.C."
+msgstr "Los 50 estados + D.C."
+
+msgid "County governments"
+msgstr "Gobiernos de condado"
+
+msgid "Cities"
+msgstr "Ciudades"
+
+msgid "City &amp; town governments"
+msgstr "Gobiernos de ciudades y pueblos"
+
+msgid "Standardized types"
+msgstr "Tipos estandarizados"
+
+msgid ""
+"Reports move through a clear lifecycle: residents add a location and "
+"details, InfraSignal helps route the report, and everyone can follow public "
+"updates over time."
+msgstr ""
+"Los reportes siguen un ciclo de vida claro: los residentes agregan una "
+"ubicación y detalles, InfraSignal ayuda a enrutar el reporte y todos pueden "
+"seguir las actualizaciones públicas con el tiempo."
+
+msgid "See the full process"
+msgstr "Ver el proceso completo"
+
+msgid ""
+"InfraSignal gives public teams a standardized channel for receiving "
+"structured, location-based reports from residents. Operational, integration,"
+" and partnership details now live on the local government page."
+msgstr ""
+"InfraSignal ofrece a los equipos públicos un canal estandarizado para "
+"recibir reportes estructurados y basados en la ubicación de los residentes. "
+"Los detalles operativos, de integración y de asociación ahora están en la "
+"página de gobierno local."
+
+msgid "Contact Form"
+msgstr "Formulario de contacto"
+
+msgid "Get in Touch"
+msgstr "Póngase en contacto"
+
+msgid "Questions, suggestions, or partnership inquiries?"
+msgstr "¿Preguntas, sugerencias o consultas de asociación?"
+
+msgid "Find answers to common questions about InfraSignal."
+msgstr "Encuentre respuestas a las preguntas frecuentes sobre InfraSignal."
+
+msgid "General"
+msgstr "General"
+
+msgid "Is InfraSignal free?"
+msgstr "¿InfraSignal es gratis?"
+
+msgid ""
+"Yes. InfraSignal is free for all users. There is no charge to create an "
+"account, submit reports, receive status updates, or subscribe to local "
+"alerts."
+msgstr ""
+"Sí. InfraSignal es gratuito para todos los usuarios. No hay cargo por crear "
+"una cuenta, enviar reportes, recibir actualizaciones de estado o suscribirse"
+" a alertas locales."
+
+msgid "Reporting a Problem"
+msgstr "Reportar un problema"
+
+msgid "How do I report a problem?"
+msgstr "¿Cómo reporto un problema?"
+
+msgid ""
+"Start from the <a href=\"/\">home page</a>, enter the location, place the "
+"pin on the map, choose the best category, add details and photos, then "
+"submit the report for routing."
+msgstr ""
+"Comience desde la <a href=\"/\">página de inicio</a>, ingrese la ubicación, "
+"coloque el marcador en el mapa, elija la mejor categoría, agregue detalles y"
+" fotos, y luego envíe el reporte para su enrutamiento."
+
+msgid ""
+"For the full report journey, see <a href=\"/how-it-works\">How It Works</a>."
+msgstr ""
+"Para conocer el recorrido completo del reporte, consulte <a href=\"/how-it-"
+"works\">Cómo funciona</a>."
+
+msgid "What categories of problems can I report?"
+msgstr "¿Qué categorías de problemas puedo reportar?"
+
+msgid "InfraSignal supports 13 standard infrastructure categories:"
+msgstr "InfraSignal admite 13 categorías de infraestructura estándar:"
+
+msgid "What should I not report on InfraSignal?"
+msgstr "¿Qué no debo reportar en InfraSignal?"
+
+msgid ""
+"InfraSignal is designed for non-emergency infrastructure issues. <strong>Do "
+"not use InfraSignal for:</strong>"
+msgstr ""
+"InfraSignal está diseñado para problemas de infraestructura que no son "
+"emergencias. <strong>No use InfraSignal para:</strong>"
+
+msgid "Emergencies"
+msgstr "Emergencias"
+
+msgid "call <strong>911</strong> immediately for any threat to life or safety"
+msgstr ""
+"llame al <strong>911</strong> de inmediato ante cualquier amenaza a la vida "
+"o la seguridad"
+
+msgid "Crimes in progress or suspicious activity"
+msgstr "Delitos en curso o actividad sospechosa"
+
+msgid ""
+"Utility outages (gas, electric, water) &mdash; contact your utility provider"
+" directly"
+msgstr ""
+"Cortes de servicios públicos (gas, electricidad, agua) &mdash; contacte "
+"directamente a su proveedor de servicios"
+
+msgid "Noise complaints or neighbor disputes"
+msgstr "Quejas por ruido o disputas con vecinos"
+
+msgid "Missed trash or recycling pickup"
+msgstr "Recolección de basura o reciclaje no realizada"
+
+msgid "Building permits or code enforcement inquiries"
+msgstr "Consultas sobre permisos de construcción o cumplimiento de normas"
+
+msgid "Animal control"
+msgstr "Control de animales"
+
+msgid "Parking or traffic enforcement"
+msgstr "Control de estacionamiento o tráfico"
+
+msgid "Do I need an account?"
+msgstr "¿Necesito una cuenta?"
+
+msgid ""
+"You must provide a valid email address when submitting a report so that "
+"InfraSignal can send a confirmation link and deliver status updates. You may"
+" also create a full account to manage all your reports and subscriptions "
+"from one dashboard."
+msgstr ""
+"Debe proporcionar una dirección de correo electrónico válida al enviar un "
+"reporte para que InfraSignal pueda enviar un enlace de confirmación y "
+"entregar actualizaciones de estado. También puede crear una cuenta completa "
+"para gestionar todos sus reportes y suscripciones desde un solo panel."
+
+msgid "Can I upload photos?"
+msgstr "¿Puedo subir fotos?"
+
+msgid ""
+"Yes. You may attach up to 3 photos per report. Photos are automatically "
+"screened for inappropriate content before being published."
+msgstr ""
+"Sí. Puede adjuntar hasta 3 fotos por reporte. Las fotos se revisan "
+"automáticamente en busca de contenido inapropiado antes de publicarse."
+
+msgid "Can I report anonymously?"
+msgstr "¿Puedo reportar de forma anónima?"
+
+msgid ""
+"You may choose to hide your name from the public-facing report page. "
+"However, your name and email address are always shared with the responsible "
+"local authority so they can investigate and, if needed, contact you about "
+"the issue."
+msgstr ""
+"Puede optar por ocultar su nombre en la página pública del reporte. Sin "
+"embargo, su nombre y dirección de correo electrónico siempre se comparten "
+"con la autoridad local responsable para que pueda investigar y, si es "
+"necesario, contactarlo sobre el problema."
+
+msgid "After Submitting"
+msgstr "Después de enviar"
+
+msgid "How are reports delivered to local authorities?"
+msgstr "¿Cómo se entregan los reportes a las autoridades locales?"
+
+msgid ""
+"Reports are sent via email to the designated contact address for the "
+"responsible local authority. Each report includes the problem location "
+"(coordinates and address), the selected category, your description, any "
+"attached photos, and your contact information."
+msgstr ""
+"Los reportes se envían por correo electrónico a la dirección de contacto "
+"designada de la autoridad local responsable. Cada reporte incluye la "
+"ubicación del problema (coordenadas y dirección), la categoría seleccionada,"
+" su descripción, las fotos adjuntas y su información de contacto."
+
+msgid "How are reports prioritized?"
+msgstr "¿Cómo se priorizan los reportes?"
+
+msgid ""
+"InfraSignal assigns one of four priority levels to each report: "
+"<strong>Emergency</strong> (immediate safety hazard), <strong>High</strong> "
+"(needs attention within 24 hours), <strong>Normal</strong> (standard "
+"response time), and <strong>Low</strong> (non-urgent). Local authorities can"
+" adjust priority as part of their investigation."
+msgstr ""
+"InfraSignal asigna uno de cuatro niveles de prioridad a cada reporte: "
+"<strong>Emergencia</strong> (peligro de seguridad inmediato), "
+"<strong>Alta</strong> (requiere atención en 24 horas), "
+"<strong>Normal</strong> (tiempo de respuesta estándar) y "
+"<strong>Baja</strong> (no urgente). Las autoridades locales pueden ajustar "
+"la prioridad como parte de su investigación."
+
+msgid "How long will it take to fix my problem?"
+msgstr "¿Cuánto tiempo tomará resolver mi problema?"
+
+msgid ""
+"Response times depend on the category, severity, and the local "
+"authority&rsquo;s workload. InfraSignal does not control how quickly "
+"authorities respond; it enables you to track your report&rsquo;s status and "
+"receive email updates when action is taken."
+msgstr ""
+"Los tiempos de respuesta dependen de la categoría, la gravedad y la carga de"
+" trabajo de la autoridad local. InfraSignal no controla la rapidez con que "
+"responden las autoridades; le permite seguir el estado de su reporte y "
+"recibir actualizaciones por correo cuando se toman medidas."
+
+msgid "How do I check the status of my report?"
+msgstr "¿Cómo verifico el estado de mi reporte?"
+
+msgid ""
+"You will receive email notifications when the status changes. You can also "
+"log in to your account and view all your reports under <strong>Your "
+"account</strong>. Each report shows its current status: open, investigating,"
+" in progress, fixed, or closed."
+msgstr ""
+"Recibirá notificaciones por correo cuando cambie el estado. También puede "
+"iniciar sesión en su cuenta y ver todos sus reportes en <strong>Su "
+"cuenta</strong>. Cada reporte muestra su estado actual: abierto, "
+"investigando, en progreso, resuelto o cerrado."
+
+msgid "What if my problem has not been addressed?"
+msgstr "¿Qué pasa si mi problema no ha sido atendido?"
+
+msgid ""
+"You can post an update on your existing report at any time to provide "
+"additional photos, note that the problem persists, or add new details. The "
+"responsible authority is notified of each update."
+msgstr ""
+"Puede publicar una actualización en su reporte existente en cualquier "
+"momento para proporcionar fotos adicionales, indicar que el problema "
+"persiste o agregar nuevos detalles. Se notifica a la autoridad responsable "
+"de cada actualización."
+
+msgid "Can I see reports submitted by others?"
+msgstr "¿Puedo ver reportes enviados por otros?"
+
+msgid ""
+"Yes. The <a href=\"/reports\">All Reports</a> page displays all public "
+"reports with their status, location, and category. You can browse by area or"
+" search for specific locations."
+msgstr ""
+"Sí. La página <a href=\"/reports\">Todos los reportes</a> muestra todos los "
+"reportes públicos con su estado, ubicación y categoría. Puede explorar por "
+"área o buscar ubicaciones específicas."
+
+msgid "Can I get alerts about problems near me?"
+msgstr "¿Puedo recibir alertas sobre problemas cerca de mí?"
+
+msgid ""
+"Yes. Visit <a href=\"/alert\">Local Alerts</a> to subscribe to email "
+"notifications for new reports in your area. You can set alerts by geographic"
+" radius or by specific local authority."
+msgstr ""
+"Sí. Visite <a href=\"/alert\">Alertas locales</a> para suscribirse a "
+"notificaciones por correo de nuevos reportes en su área. Puede configurar "
+"alertas por radio geográfico o por autoridad local específica."
+
+msgid "Technical"
+msgstr "Técnico"
+
+msgid "What devices are supported?"
+msgstr "¿Qué dispositivos son compatibles?"
+
+msgid ""
+"InfraSignal is a responsive web application that works on smartphones, "
+"tablets, and desktop computers. No app installation is required &mdash; "
+"access through any modern web browser."
+msgstr ""
+"InfraSignal es una aplicación web responsiva que funciona en teléfonos "
+"inteligentes, tabletas y computadoras de escritorio. No se requiere "
+"instalación de aplicaciones &mdash; acceda a través de cualquier navegador "
+"web moderno."
+
+msgid "Still have questions?"
+msgstr "¿Aún tiene preguntas?"
+
+msgid ""
+"Can&rsquo;t find what you&rsquo;re looking for? We&rsquo;re happy to help."
+msgstr "¿No encuentra lo que busca? Estaremos encantados de ayudar."
+
+msgid "How we collect, use, and protect your information."
+msgstr "Cómo recopilamos, usamos y protegemos su información."
+
+msgid "Questions about your privacy?"
+msgstr "¿Preguntas sobre su privacidad?"
+
+msgid ""
+"If you have questions or concerns about this Privacy Policy, reach out to "
+"us."
+msgstr ""
+"Si tiene preguntas o inquietudes sobre esta Política de privacidad, "
+"comuníquese con nosotros."
+
+msgid "Please read these terms carefully before using InfraSignal."
+msgstr "Lea estos términos cuidadosamente antes de usar InfraSignal."
+
+msgid "Questions about these terms?"
+msgstr "¿Preguntas sobre estos términos?"
+
+msgid "If you have questions or concerns, reach out to us."
+msgstr "Si tiene preguntas o inquietudes, comuníquese con nosotros."
+
+msgid "About"
+msgstr "Acerca de"
+
+msgid "Terms"
+msgstr "Términos"
+
+msgid "Local RSS Feeds & Email Alerts – InfraSignal"
+msgstr "Feeds RSS locales y alertas por correo – InfraSignal"
+
+msgid "Local RSS Feeds & Email Alerts"
+msgstr "Feeds RSS locales y alertas por correo"
+
+msgid ""
+"Stay informed about infrastructure reports in your area with customizable "
+"alerts and RSS feeds."
+msgstr ""
+"Manténgase informado sobre los reportes de infraestructura en su área con "
+"alertas personalizables y feeds RSS."
+
+msgid "Find Local Alerts"
+msgstr "Buscar alertas locales"
+
+msgid ""
+"InfraSignal offers a variety of RSS feeds and email alerts for local "
+"problems, including alerts for all problems within a particular ward or "
+"local authority, or all problems within a certain distance of a particular "
+"location."
+msgstr ""
+"InfraSignal ofrece una variedad de feeds RSS y alertas por correo para "
+"problemas locales, incluidas alertas para todos los problemas dentro de un "
+"distrito o autoridad local en particular, o todos los problemas dentro de "
+"cierta distancia de una ubicación específica."
+
+msgid ""
+"To find out what local alerts we have for you, please enter your street name"
+" and area."
+msgstr ""
+"Para saber qué alertas locales tenemos para usted, ingrese el nombre de su "
+"calle y su área."
+
+msgid "Address or ZIP code"
+msgstr "Dirección o código postal"
+
+msgid "RSS Feeds"
+msgstr "Feeds RSS"
+
+msgid ""
+"Subscribe via your favorite RSS reader to get real-time updates on reports "
+"in your area."
+msgstr ""
+"Suscríbase a través de su lector RSS favorito para recibir actualizaciones "
+"en tiempo real sobre los reportes en su área."
+
+msgid "New reports within your chosen radius"
+msgstr "Nuevos reportes dentro del radio que elija"
+
+msgid "Status changes on watched reports"
+msgstr "Cambios de estado en los reportes seguidos"
+
+msgid "Weekly digest option available"
+msgstr "Opción de resumen semanal disponible"
+
+msgid "Want to browse first?"
+msgstr "¿Quiere explorar primero?"
+
+msgid ""
+"Use All Reports to browse public report activity. Return here when you are "
+"ready to subscribe to alerts for a specific place."
+msgstr ""
+"Use Todos los reportes para explorar la actividad pública de reportes. "
+"Vuelva aquí cuando esté listo para suscribirse a las alertas de un lugar "
+"específico."
+
+msgid "You can unsubscribe from email alerts at any time."
+msgstr ""
+"Puede cancelar la suscripción a las alertas por correo en cualquier momento."
+
+msgid "e.g. '%s' or '%s'"
+msgstr "p. ej. '%s' o '%s'"
+
+msgid "What you'll receive"
+msgstr "Lo que recibirá"
+
+msgid "Choose a location for Local Alerts"
+msgstr "Elija una ubicación para las alertas locales"
+
+msgid "Choose an alert area"
+msgstr "Elija un área de alerta"
+
+msgid "Which location did you mean?"
+msgstr "¿A qué ubicación se refería?"
+
+msgid "We found more than one match for \"%s\"."
+msgstr "Encontramos más de una coincidencia para \"%s\"."
+
+msgid "We found more than one matching location."
+msgstr "Encontramos más de una ubicación coincidente."
+
+msgid "Help & Info"
+msgstr "Ayuda e información"
+
+msgid "Try a more specific search"
+msgstr "Pruebe una búsqueda más específica"
+
+msgid "Add a street, ZIP code, or nearby landmark to narrow the results."
+msgstr ""
+"Agregue una calle, código postal o punto de referencia cercano para acotar "
+"los resultados."
+
+msgid "Select your location"
+msgstr "Seleccione su ubicación"
+
+msgid "Choose the area you want to use for Local Alerts."
+msgstr "Elija el área que desea usar para las alertas locales."
+
+msgid "Location match"
+msgstr "Coincidencia de ubicación"
+
+msgid "Local Alerts match"
+msgstr "Coincidencia de alertas locales"
+
+msgid "selected area"
+msgstr "área seleccionada"
+
+msgid "Trees"
+msgstr "Árboles"
+
+msgid "Fallen tree blocking road"
+msgstr "Árbol caído bloqueando la vía"
+
+msgid "School zone"
+msgstr "Zona escolar"
+
+msgid "Road damage near school"
+msgstr "Daño en la vía cerca de la escuela"
+
+msgid "Pothole at intersection"
+msgstr "Bache en la intersección"
+
+msgid "Deep pothole on Main St"
+msgstr "Bache profundo en Main St"
+
+msgid "Road"
+msgstr "Vía"
+
+msgid "Crumbling road surface"
+msgstr "Superficie de la vía deteriorada"
+
+msgid "RSS & email alerts for"
+msgstr "Alertas RSS y por correo para"
+
+msgid ""
+"Subscribe to a quiet, useful feed of new infrastructure reports near you by "
+"radius, county, or state."
+msgstr ""
+"Suscríbase a un feed discreto y útil de nuevos reportes de infraestructura "
+"cerca de usted por radio, condado o estado."
+
+msgid "Alert area"
+msgstr "Área de alerta"
+
+msgid "Recent nearby reports"
+msgstr "Reportes recientes cercanos"
+
+msgid "A preview of what your feed will look like."
+msgstr "Una vista previa de cómo se verá su feed."
+
+msgid "Local RSS feeds and email alerts for '%s'"
+msgstr "Feeds RSS locales y alertas por correo para '%s'"
+
+msgid "Pick the area you care about. You can change this any time."
+msgstr "Elija el área que le interesa. Puede cambiarla en cualquier momento."
+
+msgid ""
+"Reports near %s are sent to different local authorities, depending on the "
+"type of problem."
+msgstr ""
+"Los reportes cerca de %s se envían a diferentes autoridades locales, según "
+"el tipo de problema."
+
+msgid "Alert scope"
+msgstr "Alcance de la alerta"
+
+msgid "Covers roughly 200,000 people"
+msgstr "Cubre aproximadamente 200 000 personas"
+
+msgid "Or specify a different radius:"
+msgstr "O especifique un radio diferente:"
+
+msgid "Km"
+msgstr "Km"
+
+msgid ""
+"We will not use your email for anything beyond sending you alerts within "
+"this area. See our <a href=\"%s\">privacy policy</a>."
+msgstr ""
+"No usaremos su correo electrónico para nada más que enviarle alertas dentro "
+"de esta área. Consulte nuestra <a href=\"%s\">política de privacidad</a>."
+
+msgid "Plug your feed into any RSS reader."
+msgstr "Conecte su feed a cualquier lector RSS."
+
+msgid "Effective Date:"
+msgstr "Fecha de vigencia:"
+
+msgid "Last Revised:"
+msgstr "Última revisión:"
+
+msgid ""
+"InfraSignal (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;) takes"
+" the private nature of your personal information seriously. This Privacy "
+"Policy describes how we collect, use, retain, share, and protect the "
+"personal information of users (&ldquo;you&rdquo; or &ldquo;your&rdquo;) of "
+"the InfraSignal platform (the &ldquo;Service&rdquo;), accessible at %s."
+msgstr ""
+"InfraSignal (&ldquo;nosotros&rdquo;, &ldquo;nos&rdquo; o "
+"&ldquo;nuestro&rdquo;) toma en serio la naturaleza privada de su información"
+" personal. Esta Política de privacidad describe cómo recopilamos, usamos, "
+"conservamos, compartimos y protegemos la información personal de los "
+"usuarios (&ldquo;usted&rdquo; o &ldquo;su&rdquo;) de la plataforma "
+"InfraSignal (el &ldquo;Servicio&rdquo;), accesible en %s."
+
+msgid ""
+"By using the Service, you consent to the practices described in this Privacy"
+" Policy. If you do not agree with this Privacy Policy, please do not use the"
+" Service."
+msgstr ""
+"Al usar el Servicio, usted acepta las prácticas descritas en esta Política "
+"de privacidad. Si no está de acuerdo con esta Política de privacidad, por "
+"favor no use el Servicio."
+
+msgid "1. Information We Collect"
+msgstr "1. Información que recopilamos"
+
+msgid "1.1 Information You Provide Directly"
+msgstr "1.1 Información que usted proporciona directamente"
+
+msgid ""
+"<strong>Account &amp; Report Information:</strong> Name and email address "
+"when you create an account or submit a report."
+msgstr ""
+"<strong>Información de cuenta y reporte:</strong> Nombre y dirección de "
+"correo electrónico cuando crea una cuenta o envía un reporte."
+
+msgid ""
+"<strong>Report Content:</strong> Text descriptions of infrastructure "
+"problems, photographs you upload, and the geographic coordinates you select "
+"on the map."
+msgstr ""
+"<strong>Contenido del reporte:</strong> Descripciones de texto de los "
+"problemas de infraestructura, fotografías que sube y las coordenadas "
+"geográficas que selecciona en el mapa."
+
+msgid ""
+"<strong>Report Updates:</strong> Follow-up information you post to an "
+"existing report."
+msgstr ""
+"<strong>Actualizaciones del reporte:</strong> Información de seguimiento que"
+" publica en un reporte existente."
+
+msgid ""
+"<strong>Contact Form Submissions:</strong> Messages submitted through the "
+"platform&rsquo;s contact form."
+msgstr ""
+"<strong>Envíos del formulario de contacto:</strong> Mensajes enviados a "
+"través del formulario de contacto de la plataforma."
+
+msgid "1.2 Information Collected Automatically"
+msgstr "1.2 Información recopilada automáticamente"
+
+msgid ""
+"<strong>Device &amp; Browser Data:</strong> Browser type, operating system, "
+"screen resolution, and referring URL."
+msgstr ""
+"<strong>Datos del dispositivo y navegador:</strong> Tipo de navegador, "
+"sistema operativo, resolución de pantalla y URL de referencia."
+
+msgid ""
+"<strong>Session Data:</strong> A session cookie to maintain login state (see"
+" Section 6)."
+msgstr ""
+"<strong>Datos de sesión:</strong> Una cookie de sesión para mantener el "
+"estado de inicio de sesión (consulte la Sección 6)."
+
+msgid ""
+"<strong>Map Interaction Data:</strong> Geographic coordinates when you place"
+" a pin on the map. We do not track your real-time device location unless you"
+" explicitly use your browser&rsquo;s geolocation feature."
+msgstr ""
+"<strong>Datos de interacción con el mapa:</strong> Coordenadas geográficas "
+"cuando coloca un marcador en el mapa. No rastreamos la ubicación en tiempo "
+"real de su dispositivo a menos que use explícitamente la función de "
+"geolocalización de su navegador."
+
+msgid "1.3 Information from Third-Party Services"
+msgstr "1.3 Información de servicios de terceros"
+
+msgid ""
+"We use third-party services for mapping, geographic boundary lookups, "
+"automated image moderation, and email delivery. These providers process data"
+" only as necessary to perform their functions. Uploaded photos are "
+"transmitted to a third-party moderation service to detect inappropriate "
+"content; we do not receive or store personal information from that service "
+"beyond moderation results."
+msgstr ""
+"Utilizamos servicios de terceros para mapas, búsquedas de límites "
+"geográficos, moderación automática de imágenes y entrega de correo "
+"electrónico. Estos proveedores procesan los datos solo en la medida "
+"necesaria para realizar sus funciones. Las fotos subidas se transmiten a un "
+"servicio de moderación de terceros para detectar contenido inapropiado; no "
+"recibimos ni almacenamos información personal de ese servicio más allá de "
+"los resultados de la moderación."
+
+msgid "2. How We Use Your Information"
+msgstr "2. Cómo usamos su información"
+
+msgid "What do we use your information for?"
+msgstr "¿Para qué usamos su información?"
+
+msgid ""
+"We use the information we collect to provide, operate, and improve the "
+"Service, including:"
+msgstr ""
+"Usamos la información que recopilamos para proporcionar, operar y mejorar el"
+" Servicio, lo que incluye:"
+
+msgid ""
+"Delivering your infrastructure report to the responsible local authority"
+msgstr ""
+"Entregar su reporte de infraestructura a la autoridad local responsable"
+
+msgid ""
+"Sending confirmation emails, report status updates, and alert notifications"
+msgstr ""
+"Enviar correos de confirmación, actualizaciones de estado de los reportes y "
+"notificaciones de alerta"
+
+msgid "Enabling local authorities to contact you regarding your report"
+msgstr ""
+"Permitir que las autoridades locales se comuniquen con usted respecto a su "
+"reporte"
+
+msgid "Moderating uploaded photos and text for inappropriate content"
+msgstr ""
+"Moderar las fotos y el texto subidos en busca de contenido inapropiado"
+
+msgid "Maintaining, securing, and improving the Service"
+msgstr "Mantener, asegurar y mejorar el Servicio"
+
+msgid "Preventing abuse, spam, and fraudulent activity"
+msgstr "Prevenir el abuso, el spam y la actividad fraudulenta"
+
+msgid ""
+"Conducting research and analytics to improve public infrastructure outcomes"
+msgstr ""
+"Realizar investigaciones y análisis para mejorar los resultados de la "
+"infraestructura pública"
+
+msgid "Developing new products, features, and services"
+msgstr "Desarrollar nuevos productos, funciones y servicios"
+
+msgid "Personalizing your experience with the Service"
+msgstr "Personalizar su experiencia con el Servicio"
+
+msgid ""
+"Communicating about updates and information of interest (you may opt out)"
+msgstr ""
+"Comunicar actualizaciones e información de interés (puede optar por no "
+"recibirlas)"
+
+msgid "Aggregating and de-identifying data for public reporting and research"
+msgstr "Agregar y anonimizar datos para informes públicos e investigación"
+
+msgid "Complying with applicable legal obligations"
+msgstr "Cumplir con las obligaciones legales aplicables"
+
+msgid "3. How We Share Your Information"
+msgstr "3. Cómo compartimos su información"
+
+msgid "3.1 With Local Authorities"
+msgstr "3.1 Con las autoridades locales"
+
+msgid ""
+"When you submit a report, your name, email address, report description, "
+"photos, and the GPS coordinates of the problem are shared with the local "
+"government authority responsible for that location. This disclosure is "
+"necessary for the authority to investigate, respond to, and resolve the "
+"reported issue."
+msgstr ""
+"Cuando envía un reporte, su nombre, dirección de correo electrónico, "
+"descripción del reporte, fotos y las coordenadas GPS del problema se "
+"comparten con la autoridad del gobierno local responsable de esa ubicación. "
+"Esta divulgación es necesaria para que la autoridad investigue, responda y "
+"resuelva el problema reportado."
+
+msgid "3.2 Public Display"
+msgstr "3.2 Visualización pública"
+
+msgid ""
+"Your report description, category, photos, location, and approximate pin "
+"placement are published on the InfraSignal website so that other residents "
+"can view reported problems and their status. You may choose to hide your "
+"name from the public report page; however, your name and email are always "
+"shared with the responsible authority."
+msgstr ""
+"La descripción de su reporte, la categoría, las fotos, la ubicación y la "
+"colocación aproximada del marcador se publican en el sitio web de "
+"InfraSignal para que otros residentes puedan ver los problemas reportados y "
+"su estado. Puede optar por ocultar su nombre de la página pública del "
+"reporte; sin embargo, su nombre y correo electrónico siempre se comparten "
+"con la autoridad responsable."
+
+msgid "3.3 Service Providers and Partners"
+msgstr "3.3 Proveedores de servicios y socios"
+
+msgid ""
+"We work with third-party service providers, partners, and other entities to "
+"help us operate, provide, improve, understand, customize, support, and "
+"market our Service. When we share information with these entities, we "
+"require them to use your information in accordance with our instructions and"
+" terms."
+msgstr ""
+"Trabajamos con proveedores de servicios de terceros, socios y otras "
+"entidades para ayudarnos a operar, proporcionar, mejorar, comprender, "
+"personalizar, dar soporte y comercializar nuestro Servicio. Cuando "
+"compartimos información con estas entidades, les exigimos que usen su "
+"información de acuerdo con nuestras instrucciones y términos."
+
+msgid ""
+"These third parties may include: hosting and infrastructure providers, "
+"content moderation services, analytics providers, email delivery services, "
+"mapping and geolocation services, customer support tools, and professional "
+"advisors."
+msgstr ""
+"Estos terceros pueden incluir: proveedores de alojamiento e infraestructura,"
+" servicios de moderación de contenido, proveedores de análisis, servicios de"
+" entrega de correo electrónico, servicios de mapas y geolocalización, "
+"herramientas de atención al cliente y asesores profesionales."
+
+msgid "3.4 Aggregated and De-identified Data"
+msgstr "3.4 Datos agregados y anonimizados"
+
+msgid ""
+"We may share aggregated, anonymized, or de-identified data &mdash; which "
+"cannot reasonably be used to identify you &mdash; with third parties for "
+"research, analytics, urban planning, public policy analysis, trend "
+"reporting, or any other lawful purpose, including commercial use."
+msgstr ""
+"Podemos compartir datos agregados, anonimizados o desidentificados &mdash; "
+"que no pueden usarse razonablemente para identificarlo &mdash; con terceros "
+"para investigación, análisis, planificación urbana, análisis de políticas "
+"públicas, informes de tendencias o cualquier otro fin lícito, incluido el "
+"uso comercial."
+
+msgid "3.5 Legal Requirements"
+msgstr "3.5 Requisitos legales"
+
+msgid ""
+"We may disclose personal information if required by law, subpoena, court "
+"order, or other legal process, or if we reasonably believe that disclosure "
+"is necessary to:"
+msgstr ""
+"Podemos divulgar información personal si así lo exige la ley, una citación, "
+"una orden judicial u otro proceso legal, o si creemos razonablemente que la "
+"divulgación es necesaria para:"
+
+msgid "Comply with applicable law or legal process"
+msgstr "Cumplir con la ley aplicable o el proceso legal"
+
+msgid ""
+"Protect the rights, property, or safety of InfraSignal, our users, or the "
+"public"
+msgstr ""
+"Proteger los derechos, la propiedad o la seguridad de InfraSignal, nuestros "
+"usuarios o el público"
+
+msgid "Enforce our <a href=\"/about/terms\">Terms of Use</a>"
+msgstr "Hacer cumplir nuestros <a href=\"/about/terms\">Términos de uso</a>"
+
+msgid "Respond to law enforcement requests"
+msgstr "Responder a solicitudes de las fuerzas del orden"
+
+msgid "3.6 Business Transfers"
+msgstr "3.6 Transferencias comerciales"
+
+msgid ""
+"If InfraSignal is involved in a merger, acquisition, sale of assets, "
+"reorganization, dissolution, bankruptcy, or similar transaction, your "
+"information may be transferred as part of that transaction. We will notify "
+"you of any such change in ownership or control of your personal information."
+msgstr ""
+"Si InfraSignal participa en una fusión, adquisición, venta de activos, "
+"reorganización, disolución, quiebra o transacción similar, su información "
+"puede transferirse como parte de esa transacción. Le notificaremos cualquier"
+" cambio de este tipo en la propiedad o el control de su información "
+"personal."
+
+msgid "3.7 With Your Consent"
+msgstr "3.7 Con su consentimiento"
+
+msgid ""
+"We may share your information for purposes not described in this Privacy "
+"Policy when we have obtained your consent to do so."
+msgstr ""
+"Podemos compartir su información para fines no descritos en esta Política de"
+" privacidad cuando hayamos obtenido su consentimiento para hacerlo."
+
+msgid "4. Aggregated and Public Data"
+msgstr "4. Datos agregados y públicos"
+
+msgid "How is aggregated and public data handled?"
+msgstr "¿Cómo se manejan los datos agregados y públicos?"
+
+msgid ""
+"Infrastructure reports submitted through InfraSignal are intended to be made"
+" available to the public and to government authorities by design. Report "
+"descriptions, categories, photos, locations, and status updates are publicly"
+" visible on the platform."
+msgstr ""
+"Los reportes de infraestructura enviados a través de InfraSignal están "
+"destinados, por diseño, a ponerse a disposición del público y de las "
+"autoridades gubernamentales. Las descripciones de los reportes, las "
+"categorías, las fotos, las ubicaciones y las actualizaciones de estado son "
+"visibles públicamente en la plataforma."
+
+msgid ""
+"We may compile, aggregate, anonymize, or de-identify information collected "
+"through the Service for use in research, analytics, public policy studies, "
+"urban planning tools, trend reports, or any other lawful purpose. Aggregated"
+" and de-identified data is not subject to the restrictions in this Privacy "
+"Policy because it does not constitute personal information."
+msgstr ""
+"Podemos compilar, agregar, anonimizar o desidentificar la información "
+"recopilada a través del Servicio para usarla en investigación, análisis, "
+"estudios de políticas públicas, herramientas de planificación urbana, "
+"informes de tendencias o cualquier otro fin lícito. Los datos agregados y "
+"desidentificados no están sujetos a las restricciones de esta Política de "
+"privacidad porque no constituyen información personal."
+
+msgid "5. Data Retention"
+msgstr "5. Conservación de datos"
+
+msgid "How long do we keep your data?"
+msgstr "¿Durante cuánto tiempo conservamos sus datos?"
+
+msgid ""
+"We retain your account information and reports for as long as your account "
+"is active or as needed to provide the Service. Infrastructure reports and "
+"associated data (descriptions, photos, location, status) are retained "
+"indefinitely to maintain a public record of civic issues and their "
+"resolution, unless you request deletion."
+msgstr ""
+"Conservamos la información de su cuenta y los reportes mientras su cuenta "
+"esté activa o según sea necesario para proporcionar el Servicio. Los "
+"reportes de infraestructura y los datos asociados (descripciones, fotos, "
+"ubicación, estado) se conservan indefinidamente para mantener un registro "
+"público de los problemas cívicos y su resolución, a menos que solicite su "
+"eliminación."
+
+msgid "6. Cookies"
+msgstr "6. Cookies"
+
+msgid "What cookies does InfraSignal use?"
+msgstr "¿Qué cookies utiliza InfraSignal?"
+
+msgid "InfraSignal uses a single essential cookie for session management:"
+msgstr ""
+"InfraSignal utiliza una única cookie esencial para la gestión de la sesión:"
+
+msgid ""
+"<strong>infrasignal_session</strong> &mdash; Maintains your authenticated "
+"login session and stores preferences. Duration: session (cleared when "
+"browser closes), or 4 weeks if &ldquo;Keep me signed in&rdquo; is selected."
+msgstr ""
+"<strong>infrasignal_session</strong> &mdash; Mantiene su sesión de inicio "
+"autenticada y almacena las preferencias. Duración: sesión (se borra al "
+"cerrar el navegador), o 4 semanas si se selecciona &ldquo;Mantener sesión "
+"iniciada&rdquo;."
+
+msgid ""
+"We do not use advertising cookies, tracking pixels, social media widgets, or"
+" third-party analytics cookies."
+msgstr ""
+"No utilizamos cookies publicitarias, píxeles de seguimiento, widgets de "
+"redes sociales ni cookies de análisis de terceros."
+
+msgid "7. Data Security"
+msgstr "7. Seguridad de los datos"
+
+msgid "How do we protect your information?"
+msgstr "¿Cómo protegemos su información?"
+
+msgid ""
+"We implement reasonable administrative, technical, and physical safeguards "
+"to protect personal information against unauthorized access, alteration, "
+"disclosure, or destruction. These measures include encrypted data "
+"transmission, secure password storage, automated content moderation, and "
+"access controls limiting staff access to administrative functions."
+msgstr ""
+"Implementamos salvaguardas administrativas, técnicas y físicas razonables "
+"para proteger la información personal contra el acceso, la alteración, la "
+"divulgación o la destrucción no autorizados. Estas medidas incluyen la "
+"transmisión cifrada de datos, el almacenamiento seguro de contraseñas, la "
+"moderación automática de contenido y controles de acceso que limitan el "
+"acceso del personal a las funciones administrativas."
+
+msgid ""
+"No method of electronic transmission or storage is 100% secure. While we "
+"strive to protect your information, we cannot guarantee absolute security."
+msgstr ""
+"Ningún método de transmisión o almacenamiento electrónico es 100% seguro. "
+"Aunque nos esforzamos por proteger su información, no podemos garantizar una"
+" seguridad absoluta."
+
+msgid "8. Children&rsquo;s Privacy"
+msgstr "8. Privacidad de los menores"
+
+msgid "Do we collect data from children?"
+msgstr "¿Recopilamos datos de menores?"
+
+msgid ""
+"The Service is not directed at children under the age of 13. We do not "
+"knowingly collect personal information from children under 13, consistent "
+"with the Children&rsquo;s Online Privacy Protection Act (COPPA). If you "
+"believe a child under 13 has provided personal information through the "
+"Service, please <a href=\"/contact\">contact us</a> immediately and we will "
+"delete it."
+msgstr ""
+"El Servicio no está dirigido a menores de 13 años. No recopilamos a "
+"sabiendas información personal de menores de 13 años, de conformidad con la "
+"Ley de Protección de la Privacidad Infantil en Línea (COPPA). Si cree que un"
+" menor de 13 años ha proporcionado información personal a través del "
+"Servicio, <a href=\"/contact\">contáctenos</a> de inmediato y la "
+"eliminaremos."
+
+msgid "9. Your Rights"
+msgstr "9. Sus derechos"
+
+msgid "What are my privacy rights?"
+msgstr "¿Cuáles son mis derechos de privacidad?"
+
+msgid ""
+"Depending on your state of residence, you may have rights under applicable "
+"data privacy laws (CCPA, VCDPA, and similar). These rights may include:"
+msgstr ""
+"Según su estado de residencia, puede tener derechos en virtud de las leyes "
+"de privacidad de datos aplicables (CCPA, VCDPA y similares). Estos derechos "
+"pueden incluir:"
+
+msgid ""
+"<strong>Right to Know:</strong> Request disclosure of the personal "
+"information we have collected about you"
+msgstr ""
+"<strong>Derecho a saber:</strong> Solicitar la divulgación de la información"
+" personal que hemos recopilado sobre usted"
+
+msgid ""
+"<strong>Right to Delete:</strong> Request deletion of your personal "
+"information, subject to certain exceptions"
+msgstr ""
+"<strong>Derecho a eliminar:</strong> Solicitar la eliminación de su "
+"información personal, sujeto a ciertas excepciones"
+
+msgid ""
+"<strong>Right to Correct:</strong> Request correction of inaccurate personal"
+" information"
+msgstr ""
+"<strong>Derecho a corregir:</strong> Solicitar la corrección de información "
+"personal inexacta"
+
+msgid ""
+"<strong>Right to Non-Discrimination:</strong> Exercise your privacy rights "
+"without facing discriminatory treatment"
+msgstr ""
+"<strong>Derecho a la no discriminación:</strong> Ejercer sus derechos de "
+"privacidad sin sufrir un trato discriminatorio"
+
+msgid ""
+"To exercise any of these rights, please <a href=\"/contact\">contact us</a>."
+" We will verify your identity and respond within the timeframe required by "
+"applicable law (typically 45 days)."
+msgstr ""
+"Para ejercer cualquiera de estos derechos, <a "
+"href=\"/contact\">contáctenos</a>. Verificaremos su identidad y "
+"responderemos dentro del plazo requerido por la ley aplicable (normalmente "
+"45 días)."
+
+msgid "Does InfraSignal sell personal information?"
+msgstr "¿InfraSignal vende información personal?"
+
+msgid ""
+"InfraSignal does not sell personal information in exchange for monetary "
+"consideration. However, certain data-sharing arrangements &mdash; such as "
+"sharing with service providers, partners, or analytics providers &mdash; may"
+" be broadly interpreted as a &ldquo;sale&rdquo; or &ldquo;sharing&rdquo; "
+"under some state privacy laws. To the extent applicable law provides you "
+"with the right to opt out, you may exercise that right by <a "
+"href=\"/contact\">contacting us</a>."
+msgstr ""
+"InfraSignal no vende información personal a cambio de una contraprestación "
+"monetaria. Sin embargo, ciertos acuerdos de intercambio de datos &mdash; "
+"como compartir con proveedores de servicios, socios o proveedores de "
+"análisis &mdash; pueden interpretarse ampliamente como una "
+"&ldquo;venta&rdquo; o &ldquo;intercambio&rdquo; según algunas leyes "
+"estatales de privacidad. En la medida en que la ley aplicable le otorgue el "
+"derecho a no participar, puede ejercer ese derecho <a "
+"href=\"/contact\">contactándonos</a>."
+
+msgid "10. Changes to This Policy"
+msgstr "10. Cambios en esta Política"
+
+msgid "How will we notify you of changes?"
+msgstr "¿Cómo le notificaremos los cambios?"
+
+msgid ""
+"We may update this Privacy Policy from time to time. When we make material "
+"changes, we will revise the &ldquo;Last Revised&rdquo; date at the top of "
+"this page. Your continued use of the Service after changes are posted "
+"constitutes your acceptance of the updated policy."
+msgstr ""
+"Podemos actualizar esta Política de privacidad de vez en cuando. Cuando "
+"hagamos cambios importantes, revisaremos la fecha de &ldquo;Última "
+"revisión&rdquo; en la parte superior de esta página. Su uso continuado del "
+"Servicio después de que se publiquen los cambios constituye su aceptación de"
+" la política actualizada."
+
+msgid "Getting Started"
+msgstr "Primeros pasos"
+
+msgid "1. Description of Service"
+msgstr "1. Descripción del Servicio"
+
+msgid ""
+"InfraSignal is a civic infrastructure reporting platform that enables "
+"residents of the United States to report problems such as potholes, broken "
+"streetlights, drainage issues, and other infrastructure concerns to the "
+"responsible local government authority. Reports are delivered to cities, "
+"counties, boroughs, and state agencies across all 50 states and the District"
+" of Columbia."
+msgstr ""
+"InfraSignal es una plataforma de reporte de infraestructura cívica que "
+"permite a los residentes de los Estados Unidos reportar problemas como "
+"baches, farolas rotas, problemas de drenaje y otras preocupaciones de "
+"infraestructura a la autoridad del gobierno local responsable. Los reportes "
+"se entregan a ciudades, condados, municipios y agencias estatales en los 50 "
+"estados y el Distrito de Columbia."
+
+msgid "The Service allows you to:"
+msgstr "El Servicio le permite:"
+
+msgid ""
+"Submit geo-located reports of infrastructure problems with descriptions and "
+"photos"
+msgstr ""
+"Enviar reportes geolocalizados de problemas de infraestructura con "
+"descripciones y fotos"
+
+msgid "Track the status of your reports"
+msgstr "Seguir el estado de sus reportes"
+
+msgid "View reports submitted by other users in your area"
+msgstr "Ver reportes enviados por otros usuarios en su área"
+
+msgid "Subscribe to alerts about problems in a specific geographic area"
+msgstr ""
+"Suscribirse a alertas sobre problemas en un área geográfica específica"
+
+msgid "2. Eligibility"
+msgstr "2. Elegibilidad"
+
+msgid ""
+"You must be at least 13 years of age to use the Service. By using the "
+"Service, you represent that you are at least 13 years old and have the legal"
+" capacity to enter into these Terms. If you are under 18, you represent that"
+" your parent or legal guardian has reviewed and agrees to these Terms on "
+"your behalf."
+msgstr ""
+"Debe tener al menos 13 años para usar el Servicio. Al usar el Servicio, "
+"declara que tiene al menos 13 años y que tiene la capacidad legal para "
+"aceptar estos Términos. Si es menor de 18 años, declara que su padre, madre "
+"o tutor legal ha revisado y acepta estos Términos en su nombre."
+
+msgid "3. Account Registration"
+msgstr "3. Registro de cuenta"
+
+msgid ""
+"You may submit reports without creating an account by providing your name "
+"and email address with each submission. Optionally, you may create an "
+"account to manage your reports and preferences. If you create an account, "
+"you are responsible for:"
+msgstr ""
+"Puede enviar reportes sin crear una cuenta proporcionando su nombre y "
+"dirección de correo electrónico en cada envío. Opcionalmente, puede crear "
+"una cuenta para gestionar sus reportes y preferencias. Si crea una cuenta, "
+"usted es responsable de:"
+
+msgid "Providing accurate, current, and complete information"
+msgstr "Proporcionar información precisa, actual y completa"
+
+msgid "Maintaining the security and confidentiality of your login credentials"
+msgstr ""
+"Mantener la seguridad y confidencialidad de sus credenciales de inicio de "
+"sesión"
+
+msgid "All activity occurring under your account"
+msgstr "Toda la actividad que ocurra bajo su cuenta"
+
+msgid "Notifying us promptly of any unauthorized use of your account"
+msgstr ""
+"Notificarnos de inmediato sobre cualquier uso no autorizado de su cuenta"
+
+msgid "Usage Rules"
+msgstr "Reglas de uso"
+
+msgid "4. Acceptable Use"
+msgstr "4. Uso aceptable"
+
+msgid ""
+"You agree to use the Service only for its intended purpose&mdash;reporting "
+"legitimate infrastructure problems to local government authorities. You "
+"agree that you will <strong>not</strong>:"
+msgstr ""
+"Usted acepta usar el Servicio únicamente para su propósito "
+"previsto&mdash;reportar problemas legítimos de infraestructura a las "
+"autoridades del gobierno local. Acepta que <strong>no</strong>:"
+
+msgid "Submit false, misleading, or fraudulent reports"
+msgstr "Enviará reportes falsos, engañosos o fraudulentos"
+
+msgid ""
+"Upload photos or content that is obscene, pornographic, sexually explicit, "
+"violent, threatening, hateful, defamatory, or otherwise objectionable"
+msgstr ""
+"Subirá fotos o contenido que sea obsceno, pornográfico, sexualmente "
+"explícito, violento, amenazante, de odio, difamatorio o de otro modo "
+"objetable"
+
+msgid ""
+"Upload images depicting nudity, weapons, drugs, alcohol, self-harm, or "
+"graphic violence"
+msgstr ""
+"Subirá imágenes que muestren desnudez, armas, drogas, alcohol, autolesiones "
+"o violencia gráfica"
+
+msgid ""
+"Use the Service to harass, stalk, or intimidate any individual, including "
+"government employees"
+msgstr ""
+"Usará el Servicio para acosar, perseguir o intimidar a cualquier persona, "
+"incluidos los empleados del gobierno"
+
+msgid ""
+"Submit reports containing personal information about third parties without "
+"their consent"
+msgstr ""
+"Enviará reportes que contengan información personal sobre terceros sin su "
+"consentimiento"
+
+msgid ""
+"Submit spam, duplicate, or bulk reports for purposes unrelated to "
+"infrastructure issues"
+msgstr ""
+"Enviará spam, reportes duplicados o masivos con fines ajenos a los problemas"
+" de infraestructura"
+
+msgid ""
+"Attempt to gain unauthorized access to the Service, other accounts, servers,"
+" or databases"
+msgstr ""
+"Intentará obtener acceso no autorizado al Servicio, a otras cuentas, "
+"servidores o bases de datos"
+
+msgid ""
+"Use automated scripts, bots, or scraping tools without our prior written "
+"consent"
+msgstr ""
+"Usará scripts automatizados, bots o herramientas de extracción sin nuestro "
+"consentimiento previo por escrito"
+
+msgid "Interfere with or disrupt the operation of the Service"
+msgstr "Interferirá o interrumpirá el funcionamiento del Servicio"
+
+msgid ""
+"Reverse engineer, decompile, or disassemble the Service, except as permitted"
+" by the applicable open-source license"
+msgstr ""
+"Realizará ingeniería inversa, descompilará o desensamblará el Servicio, "
+"salvo lo permitido por la licencia de código abierto aplicable"
+
+msgid "Use the Service to violate any applicable local, state, or federal law"
+msgstr ""
+"Usará el Servicio para violar cualquier ley local, estatal o federal "
+"aplicable"
+
+msgid "5. Content Moderation"
+msgstr "5. Moderación de contenido"
+
+msgid ""
+"All photos uploaded to InfraSignal are subject to automated content "
+"moderation. Our moderation system analyzes images for prohibited content, "
+"including but not limited to nudity, weapons, violence, drugs, and other "
+"inappropriate material. Photos that violate our content guidelines may be "
+"automatically rejected."
+msgstr ""
+"Todas las fotos subidas a InfraSignal están sujetas a moderación automática "
+"de contenido. Nuestro sistema de moderación analiza las imágenes en busca de"
+" contenido prohibido, que incluye, entre otros, desnudez, armas, violencia, "
+"drogas y otro material inapropiado. Las fotos que infrinjan nuestras pautas "
+"de contenido pueden ser rechazadas automáticamente."
+
+msgid ""
+"We also reserve the right to review, edit, or remove any report content "
+"(including text and photos) at our sole discretion if it violates these "
+"Terms, is inappropriate, or is unrelated to legitimate infrastructure "
+"reporting."
+msgstr ""
+"También nos reservamos el derecho de revisar, editar o eliminar cualquier "
+"contenido de un reporte (incluidos texto y fotos) a nuestra entera "
+"discreción si infringe estos Términos, es inapropiado o no está relacionado "
+"con un reporte legítimo de infraestructura."
+
+msgid "Content &amp; Intellectual Property"
+msgstr "Contenido y propiedad intelectual"
+
+msgid "6. User-Generated Content"
+msgstr "6. Contenido generado por el usuario"
+
+msgid "6.1 Your Content"
+msgstr "6.1 Su contenido"
+
+msgid ""
+"You retain ownership of the text descriptions and photos you submit "
+"(&ldquo;User Content&rdquo;). By submitting User Content, you grant "
+"InfraSignal a non-exclusive, royalty-free, worldwide, perpetual, "
+"irrevocable, transferable, and sub-licensable license to use, host, store, "
+"display, reproduce, modify, create derivative works from, distribute, and "
+"transmit your User Content for any purpose, including but not limited to "
+"operating and improving the Service, sharing reports with local government "
+"authorities, displaying them publicly on the platform, conducting research "
+"and analytics, training models and algorithms, developing new products and "
+"features, and for promotional and commercial purposes."
+msgstr ""
+"Usted conserva la propiedad de las descripciones de texto y las fotos que "
+"envía (&ldquo;Contenido del usuario&rdquo;). Al enviar Contenido del "
+"usuario, otorga a InfraSignal una licencia no exclusiva, libre de regalías, "
+"mundial, perpetua, irrevocable, transferible y sublicenciable para usar, "
+"alojar, almacenar, mostrar, reproducir, modificar, crear obras derivadas, "
+"distribuir y transmitir su Contenido del usuario para cualquier fin, "
+"incluidos, entre otros, operar y mejorar el Servicio, compartir reportes con"
+" las autoridades del gobierno local, mostrarlos públicamente en la "
+"plataforma, realizar investigaciones y análisis, entrenar modelos y "
+"algoritmos, desarrollar nuevos productos y funciones, y con fines "
+"promocionales y comerciales."
+
+msgid ""
+"You understand that User Content may be used in an aggregated or de-"
+"identified form that does not personally identify you."
+msgstr ""
+"Usted comprende que el Contenido del usuario puede usarse de forma agregada "
+"o desidentificada que no lo identifique personalmente."
+
+msgid "6.2 Representations"
+msgstr "6.2 Declaraciones"
+
+msgid "By submitting User Content, you represent and warrant that:"
+msgstr "Al enviar Contenido del usuario, usted declara y garantiza que:"
+
+msgid "You own or have the necessary rights to submit the content"
+msgstr ""
+"Es propietario o tiene los derechos necesarios para enviar el contenido"
+
+msgid ""
+"The content does not infringe any third-party intellectual property, "
+"privacy, publicity, or other rights"
+msgstr ""
+"El contenido no infringe ningún derecho de propiedad intelectual, "
+"privacidad, imagen u otros derechos de terceros"
+
+msgid "The content is truthful and not misleading"
+msgstr "El contenido es veraz y no engañoso"
+
+msgid "The content complies with all applicable laws and these Terms"
+msgstr "El contenido cumple con todas las leyes aplicables y estos Términos"
+
+msgid "6.3 No Obligation"
+msgstr "6.3 Sin obligación"
+
+msgid ""
+"We are under no obligation to publish, forward, or retain any User Content. "
+"We may remove or decline to publish content that violates these Terms."
+msgstr ""
+"No tenemos obligación de publicar, reenviar ni conservar ningún Contenido "
+"del usuario. Podemos eliminar o negarnos a publicar contenido que infrinja "
+"estos Términos."
+
+msgid "7. Intellectual Property"
+msgstr "7. Propiedad intelectual"
+
+msgid ""
+"The InfraSignal name, logo, and brand elements are proprietary to "
+"InfraSignal and may not be used without our prior written consent. Certain "
+"components of the Service are licensed under the GNU Affero General Public "
+"License (AGPL v3)."
+msgstr ""
+"El nombre, el logotipo y los elementos de marca de InfraSignal son propiedad"
+" de InfraSignal y no pueden usarse sin nuestro consentimiento previo por "
+"escrito. Ciertos componentes del Servicio están licenciados bajo la Licencia"
+" Pública General Affero de GNU (AGPL v3)."
+
+msgid "8. Third-Party Services and Links"
+msgstr "8. Servicios y enlaces de terceros"
+
+msgid ""
+"The Service uses third-party services for mapping, geographic boundary "
+"lookups, image moderation, and email delivery. Your use of these third-party"
+" services is subject to their respective terms and privacy policies. We are "
+"not responsible for the practices of third-party providers."
+msgstr ""
+"El Servicio utiliza servicios de terceros para mapas, búsquedas de límites "
+"geográficos, moderación de imágenes y entrega de correo electrónico. Su uso "
+"de estos servicios de terceros está sujeto a sus respectivos términos y "
+"políticas de privacidad. No somos responsables de las prácticas de los "
+"proveedores externos."
+
+msgid ""
+"The Service may contain links to third-party websites. We do not endorse or "
+"assume responsibility for the content or practices of linked websites."
+msgstr ""
+"El Servicio puede contener enlaces a sitios web de terceros. No respaldamos "
+"ni asumimos responsabilidad por el contenido o las prácticas de los sitios "
+"web enlazados."
+
+msgid "9. Disclaimers"
+msgstr "9. Renuncias"
+
+msgid ""
+"THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; "
+"WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT"
+" LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE,"
+" NON-INFRINGEMENT, OR AVAILABILITY."
+msgstr ""
+"EL SERVICIO SE PROPORCIONA &ldquo;TAL CUAL&rdquo; Y &ldquo;SEGÚN "
+"DISPONIBILIDAD&rdquo; SIN GARANTÍAS DE NINGÚN TIPO, YA SEAN EXPRESAS O "
+"IMPLÍCITAS, INCLUIDAS, ENTRE OTRAS, LAS GARANTÍAS DE COMERCIABILIDAD, "
+"IDONEIDAD PARA UN FIN DETERMINADO, NO INFRACCIÓN O DISPONIBILIDAD."
+
+msgid ""
+"Without limiting the foregoing, we make no warranties or representations "
+"that:"
+msgstr ""
+"Sin limitar lo anterior, no ofrecemos garantías ni declaraciones de que:"
+
+msgid "The Service will be uninterrupted, timely, secure, or error-free"
+msgstr "El Servicio será ininterrumpido, oportuno, seguro o libre de errores"
+
+msgid ""
+"Reports submitted through the Service will be received, acknowledged, or "
+"acted upon by any local government authority"
+msgstr ""
+"Los reportes enviados a través del Servicio serán recibidos, reconocidos o "
+"atendidos por alguna autoridad del gobierno local"
+
+msgid ""
+"Any infrastructure problem reported through the Service will be resolved"
+msgstr ""
+"Cualquier problema de infraestructura reportado a través del Servicio será "
+"resuelto"
+
+msgid ""
+"The information, content, or categories available on the Service will be "
+"accurate or complete"
+msgstr ""
+"La información, el contenido o las categorías disponibles en el Servicio "
+"serán precisos o completos"
+
+msgid ""
+"InfraSignal is a communication platform. <strong>We are not a government "
+"agency and do not perform infrastructure repairs.</strong> Submission of a "
+"report through InfraSignal does not constitute an official government "
+"filing. For emergencies, always call 911 or your local emergency services."
+msgstr ""
+"InfraSignal es una plataforma de comunicación. <strong>No somos una agencia "
+"gubernamental y no realizamos reparaciones de infraestructura.</strong> El "
+"envío de un reporte a través de InfraSignal no constituye una presentación "
+"oficial ante el gobierno. Para emergencias, llame siempre al 911 o a sus "
+"servicios de emergencia locales."
+
+msgid "10. Limitation of Liability"
+msgstr "10. Limitación de responsabilidad"
+
+msgid ""
+"TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL "
+"INFRASIGNAL OR ITS DIRECTORS, OFFICERS, EMPLOYEES, AGENTS, OR AFFILIATES BE "
+"LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE "
+"DAMAGES, OR ANY LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE "
+"LOSSES, ARISING OUT OF OR IN CONNECTION WITH:"
+msgstr ""
+"EN LA MÁXIMA MEDIDA PERMITIDA POR LA LEY APLICABLE, EN NINGÚN CASO "
+"INFRASIGNAL NI SUS DIRECTORES, FUNCIONARIOS, EMPLEADOS, AGENTES O AFILIADOS "
+"SERÁN RESPONSABLES POR DAÑOS INDIRECTOS, INCIDENTALES, ESPECIALES, "
+"CONSECUENTES O PUNITIVOS, NI POR NINGUNA PÉRDIDA DE BENEFICIOS, DATOS, USO, "
+"BUENA VOLUNTAD U OTRAS PÉRDIDAS INTANGIBLES, QUE SURJAN DE O EN RELACIÓN "
+"CON:"
+
+msgid "Your use of or inability to use the Service"
+msgstr "Su uso o incapacidad de usar el Servicio"
+
+msgid ""
+"Any failure of a local government authority to respond to or resolve a "
+"reported problem"
+msgstr ""
+"Cualquier incumplimiento de una autoridad del gobierno local en responder o "
+"resolver un problema reportado"
+
+msgid "Unauthorized access to or alteration of your data"
+msgstr "El acceso no autorizado a sus datos o la alteración de los mismos"
+
+msgid "Any third-party conduct on the Service"
+msgstr "Cualquier conducta de terceros en el Servicio"
+
+msgid "Any other matter relating to the Service"
+msgstr "Cualquier otro asunto relacionado con el Servicio"
+
+msgid ""
+"OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS RELATED TO THE SERVICE SHALL "
+"NOT EXCEED ONE HUNDRED DOLLARS ($100.00)."
+msgstr ""
+"NUESTRA RESPONSABILIDAD AGREGADA TOTAL POR TODAS LAS RECLAMACIONES "
+"RELACIONADAS CON EL SERVICIO NO EXCEDERÁ LOS CIEN DÓLARES ($100.00)."
+
+msgid "11. Indemnification"
+msgstr "11. Indemnización"
+
+msgid ""
+"You agree to indemnify and hold harmless InfraSignal and its officers, "
+"directors, employees, agents, and affiliates from and against any claims, "
+"liabilities, damages, losses, costs, and expenses (including reasonable "
+"attorneys&rsquo; fees) arising from or related to your use of the Service, "
+"your User Content, or your violation of these Terms."
+msgstr ""
+"Usted acepta indemnizar y eximir de responsabilidad a InfraSignal y a sus "
+"funcionarios, directores, empleados, agentes y afiliados de cualquier "
+"reclamación, responsabilidad, daño, pérdida, costo y gasto (incluidos los "
+"honorarios razonables de abogados) que surjan de o estén relacionados con su"
+" uso del Servicio, su Contenido del usuario o su violación de estos "
+"Términos."
+
+msgid "12. Account Suspension and Termination"
+msgstr "12. Suspensión y terminación de la cuenta"
+
+msgid ""
+"We may suspend or terminate your access to the Service at any time, with or "
+"without notice, if we reasonably believe you have violated these Terms or "
+"engaged in conduct that is harmful to the Service, other users, or third "
+"parties. Upon termination, your right to use the Service ceases immediately."
+" Sections 6, 9, 10, 11, and 14 survive termination."
+msgstr ""
+"Podemos suspender o terminar su acceso al Servicio en cualquier momento, con"
+" o sin previo aviso, si creemos razonablemente que ha violado estos Términos"
+" o que ha incurrido en una conducta perjudicial para el Servicio, otros "
+"usuarios o terceros. Tras la terminación, su derecho a usar el Servicio cesa"
+" de inmediato. Las Secciones 6, 9, 10, 11 y 14 sobreviven a la terminación."
+
+msgid "13. Digital Millennium Copyright Act (DMCA)"
+msgstr "13. Ley de Derechos de Autor de la Era Digital (DMCA)"
+
+msgid ""
+"If you believe that content on the Service infringes your copyright, please "
+"send a notice to our designated agent at %s with the following information:"
+msgstr ""
+"Si cree que el contenido del Servicio infringe sus derechos de autor, envíe "
+"un aviso a nuestro agente designado a %s con la siguiente información:"
+
+msgid "Identification of the copyrighted work you claim has been infringed"
+msgstr ""
+"Identificación de la obra protegida por derechos de autor que alega que ha "
+"sido infringida"
+
+msgid ""
+"Identification of the material on the Service that you claim is infringing, "
+"with sufficient detail for us to locate it"
+msgstr ""
+"Identificación del material en el Servicio que alega que infringe, con "
+"suficiente detalle para que podamos localizarlo"
+
+msgid "Your contact information (name, address, telephone, email)"
+msgstr ""
+"Su información de contacto (nombre, dirección, teléfono, correo electrónico)"
+
+msgid ""
+"A statement that you have a good faith belief the use is not authorized by "
+"the copyright owner, its agent, or the law"
+msgstr ""
+"Una declaración de que cree de buena fe que el uso no está autorizado por el"
+" propietario de los derechos de autor, su agente o la ley"
+
+msgid ""
+"A statement, under penalty of perjury, that the information in the notice is"
+" accurate and you are authorized to act on behalf of the copyright owner"
+msgstr ""
+"Una declaración, bajo pena de perjurio, de que la información del aviso es "
+"precisa y de que está autorizado para actuar en nombre del propietario de "
+"los derechos de autor"
+
+msgid "Your physical or electronic signature"
+msgstr "Su firma física o electrónica"
+
+msgid "14. Governing Law and Dispute Resolution"
+msgstr "14. Ley aplicable y resolución de disputas"
+
+msgid ""
+"These Terms are governed by and construed in accordance with the laws of the"
+" United States and the State of Delaware, without regard to conflict of law "
+"principles. Any legal action or proceeding arising from these Terms shall be"
+" brought exclusively in the state or federal courts located in the State of "
+"Delaware, and you consent to the personal jurisdiction of such courts."
+msgstr ""
+"Estos Términos se rigen e interpretan de acuerdo con las leyes de los "
+"Estados Unidos y del Estado de Delaware, sin tener en cuenta los principios "
+"de conflicto de leyes. Cualquier acción o procedimiento legal que surja de "
+"estos Términos se presentará exclusivamente en los tribunales estatales o "
+"federales ubicados en el Estado de Delaware, y usted acepta la jurisdicción "
+"personal de dichos tribunales."
+
+msgid "General Provisions"
+msgstr "Disposiciones generales"
+
+msgid "15. Modifications to Terms"
+msgstr "15. Modificaciones de los Términos"
+
+msgid ""
+"We reserve the right to modify these Terms at any time. If we make material "
+"changes, we will update the &ldquo;Last Revised&rdquo; date at the top of "
+"this page. Your continued use of the Service after changes are posted "
+"constitutes your acceptance of the updated Terms."
+msgstr ""
+"Nos reservamos el derecho de modificar estos Términos en cualquier momento. "
+"Si hacemos cambios importantes, actualizaremos la fecha de &ldquo;Última "
+"revisión&rdquo; en la parte superior de esta página. Su uso continuado del "
+"Servicio después de que se publiquen los cambios constituye su aceptación de"
+" los Términos actualizados."
+
+msgid "16. Severability"
+msgstr "16. Divisibilidad"
+
+msgid ""
+"If any provision of these Terms is held to be invalid, illegal, or "
+"unenforceable, the remaining provisions shall continue in full force and "
+"effect."
+msgstr ""
+"Si alguna disposición de estos Términos se considera inválida, ilegal o "
+"inaplicable, las disposiciones restantes continuarán en pleno vigor y "
+"efecto."
+
+msgid "17. Entire Agreement"
+msgstr "17. Acuerdo completo"
+
+msgid ""
+"These Terms, together with the <a href=\"/about/privacy\">Privacy "
+"Policy</a>, constitute the entire agreement between you and InfraSignal "
+"regarding your use of the Service and supersede all prior agreements and "
+"understandings."
+msgstr ""
+"Estos Términos, junto con la <a href=\"/about/privacy\">Política de "
+"privacidad</a>, constituyen el acuerdo completo entre usted e InfraSignal "
+"con respecto a su uso del Servicio y reemplazan todos los acuerdos y "
+"entendimientos previos."
+
+#. InfraSignal custom UI string
+msgid "Something went wrong"
+msgstr "Algo salió mal"
+
+#. InfraSignal custom UI string
+msgid "Quick check"
+msgstr "Comprobación rápida"
+
+#. InfraSignal custom UI string
+msgid "CAPTCHA verification failed"
+msgstr "La verificación CAPTCHA falló"
+
+#. InfraSignal custom UI string
+msgid "The CAPTCHA check did not complete. Please try the form again."
+msgstr ""
+"La verificación CAPTCHA no se completó. Por favor, inténtelo de nuevo con el"
+" formulario."
+
+#. InfraSignal custom UI string
+msgid "Please complete the CAPTCHA verification"
+msgstr "Por favor, complete la verificación CAPTCHA"
+
+#. InfraSignal custom UI string
+msgid "Complete the CAPTCHA check to continue with your alert subscription."
+msgstr ""
+"Complete la verificación CAPTCHA para continuar con su suscripción de "
+"alertas."
+
+#. InfraSignal custom UI string
+msgid "Access blocked"
+msgstr "Acceso bloqueado"
+
+#. InfraSignal custom UI string
+msgid "You do not have permission to view this"
+msgstr "No tiene permiso para ver esto"
+
+#. InfraSignal custom UI string
+msgid "Page not found"
+msgstr "Página no encontrada"
+
+#. InfraSignal custom UI string
+msgid "We cannot find that page"
+msgstr "No podemos encontrar esa página"
+
+#. InfraSignal custom UI string
+msgid "Return home"
+msgstr "Volver al inicio"
+
+#. InfraSignal custom UI string
+msgid "Our server hit a snag"
+msgstr "Nuestro servidor tuvo un problema"
+
+#. InfraSignal custom UI string
+msgid "This is on our side, not yours. Please try again in a moment."
+msgstr ""
+"Esto es de nuestro lado, no del suyo. Por favor, inténtelo de nuevo en un "
+"momento."
+
+#. InfraSignal custom UI string
+msgid "Help and info"
+msgstr "Ayuda e información"
+
+#. InfraSignal custom UI string
+msgid "Contact us"
+msgstr "Contáctenos"
+
+#. InfraSignal custom UI string
+msgid "Still stuck?"
+msgstr "¿Sigue sin resolverse?"
+
+#. InfraSignal custom UI string
+msgid "Our team replies within one business day."
+msgstr "Nuestro equipo responde en un día hábil."
+
+#. InfraSignal custom UI string
+msgid "Verification required"
+msgstr "Verificación requerida"
+
+#. InfraSignal custom UI string
+msgid ""
+"Return to the alert form, complete the CAPTCHA check, and submit again."
+msgstr ""
+"Vuelva al formulario de alertas, complete la verificación CAPTCHA y envíelo "
+"de nuevo."
+
+#. InfraSignal custom UI string
+msgid "Go back"
+msgstr "Volver"
+
+#. InfraSignal custom UI string
+msgid "Read the FAQ"
+msgstr "Leer las preguntas frecuentes"
+
+#. InfraSignal custom UI string
+msgid "Contact support"
+msgstr "Contactar con soporte"
+
+#. InfraSignal custom UI string
+msgid "Reference code"
+msgstr "Código de referencia"
+
+#. InfraSignal custom UI string
+msgid "Copy"
+msgstr "Copiar"
+
+#. InfraSignal custom UI string
+msgid "Copied"
+msgstr "Copiado"
+
+#. InfraSignal custom UI string
+msgid "Copy reference code"
+msgstr "Copiar código de referencia"
+
+#. InfraSignal custom UI string
+msgid ""
+"As this is a staging site and %s is false, reports made on this site will be"
+" sent to the problem reporter, not the contact given for the report's "
+"category."
+msgstr ""
+"Como este es un sitio de pruebas (staging) y %s es falso, los reportes "
+"realizados en este sitio se enviarán a quien los reporta, no al contacto "
+"indicado para la categoría del reporte."
+
+#. InfraSignal custom UI string
+msgid "Signed out"
+msgstr "Sesión cerrada"
+
+#. InfraSignal custom UI string
+msgid "Session ended"
+msgstr "La sesión ha finalizado"
+
+#. InfraSignal custom UI string
+msgid "Please feel free to"
+msgstr "Si lo desea, puede"
+
+#. InfraSignal custom UI string
+msgid "sign in again"
+msgstr "iniciar sesión de nuevo"
+
+#. InfraSignal custom UI string
+msgid "or go back to the"
+msgstr "o volver a la"
+
+#. InfraSignal custom UI string
+msgid "front page"
+msgstr "página principal"
+
+#. InfraSignal custom UI string
+msgid "Sign in again"
+msgstr "Iniciar sesión de nuevo"
+
+#. InfraSignal custom UI string
+msgid "Back to home"
+msgstr "Volver al inicio"
+
+#. InfraSignal custom UI string
+msgid "Change name"
+msgstr "Cambiar nombre"
+
+#. InfraSignal custom UI string
+msgid "Add name"
+msgstr "Agregar nombre"
+
+#. InfraSignal custom UI string
+msgid "Back to account"
+msgstr "Volver a la cuenta"
+
+#. InfraSignal custom UI string
+msgid "Profile"
+msgstr "Perfil"
+
+#. InfraSignal custom UI string
+msgid "Choose the name shown on your account and reports."
+msgstr "Elija el nombre que se muestra en su cuenta y reportes."
+
+#. InfraSignal custom UI string
+msgid "Please enter a shorter name"
+msgstr "Por favor, introduzca un nombre más corto"
+
+#. InfraSignal custom UI string
+msgid "Welcome back"
+msgstr "Bienvenido de nuevo"
+
+#. InfraSignal custom UI string
+msgid "Save your reports, updates, and alert settings in one secure place."
+msgstr ""
+"Guarde sus reportes, actualizaciones y ajustes de alertas en un solo lugar "
+"seguro."
+
+#. InfraSignal custom UI string
+msgid "End-to-end encrypted reports"
+msgstr "Reportes cifrados de extremo a extremo"
+
+#. InfraSignal custom UI string
+msgid "Real-time municipal SLA tracking"
+msgstr "Seguimiento de SLA municipal en tiempo real"
+
+#. InfraSignal custom UI string
+msgid "Verified citizen-government channel"
+msgstr "Canal verificado entre ciudadanos y gobierno"
+
+#. InfraSignal custom UI string
+msgid "GovCloud-grade security"
+msgstr "Seguridad de nivel GovCloud"
+
+#. InfraSignal custom UI string
+msgid "SOC 2 aligned"
+msgstr "Alineado con SOC 2"
+
+#. InfraSignal custom UI string
+msgid "Account options"
+msgstr "Opciones de cuenta"
+
+#. InfraSignal custom UI string
+msgid "Create account"
+msgstr "Crear cuenta"
+
+#. InfraSignal custom UI string
+msgid "Back to sign in"
+msgstr "Volver a iniciar sesión"
+
+#. InfraSignal custom UI string
+msgid "Account recovery"
+msgstr "Recuperación de cuenta"
+
+#. InfraSignal custom UI string
+msgid "Password update"
+msgstr "Actualización de contraseña"
+
+#. InfraSignal custom UI string
+msgid "Get started"
+msgstr "Comenzar"
+
+#. InfraSignal custom UI string
+msgid ""
+"Enter your email and choose a new password. We will send you a secure sign-"
+"in link to confirm the change."
+msgstr ""
+"Introduzca su correo electrónico y elija una nueva contraseña. Le enviaremos"
+" un enlace de inicio de sesión seguro para confirmar el cambio."
+
+#. InfraSignal custom UI string
+msgid ""
+"Choose a new password, then confirm it with the secure link we email to you."
+msgstr ""
+"Elija una nueva contraseña y luego confírmela con el enlace seguro que le "
+"enviaremos por correo electrónico."
+
+#. InfraSignal custom UI string
+msgid "Already have an account?"
+msgstr "¿Ya tiene una cuenta?"
+
+#. InfraSignal custom UI string
+msgid "New password"
+msgstr "Nueva contraseña"
+
+#. InfraSignal custom UI string
+msgid "%d+ characters"
+msgstr "%d+ caracteres"
+
+#. InfraSignal custom UI string
+msgid "Show password"
+msgstr "Mostrar contraseña"
+
+#. InfraSignal custom UI string
+msgid "Hide password"
+msgstr "Ocultar contraseña"
+
+#. InfraSignal custom UI string
+msgid ""
+"Sign in to manage your reports, follow updates, and stay connected with your"
+" municipality."
+msgstr ""
+"Inicie sesión para gestionar sus reportes, seguir las actualizaciones y "
+"mantenerse conectado con su municipio."
+
+#. InfraSignal custom UI string
+msgid "Sign in to InfraSignal"
+msgstr "Iniciar sesión en InfraSignal"
+
+#. InfraSignal custom UI string
+msgid "New here?"
+msgstr "¿Es nuevo aquí?"
+
+#. InfraSignal custom UI string
+msgid "Continue with Facebook"
+msgstr "Continuar con Facebook"
+
+#. InfraSignal custom UI string
+msgid "Continue with %s"
+msgstr "Continuar con %s"
+
+#. InfraSignal custom UI string
+msgid "Continue with Twitter"
+msgstr "Continuar con Twitter"
+
+#. InfraSignal custom UI string
+msgid "or continue with email"
+msgstr "o continuar con correo electrónico"
+
+#. InfraSignal custom UI string
+msgid "New to InfraSignal?"
+msgstr "¿Nuevo en InfraSignal?"
+
+#. InfraSignal custom UI string
+msgid "Password"
+msgstr "Contraseña"
+
+#. InfraSignal custom UI string
+msgid "Forgot password?"
+msgstr "¿Olvidó su contraseña?"
+
+#. InfraSignal custom UI string
+msgid "Email me a magic sign-in link"
+msgstr "Envíenme un enlace mágico de inicio de sesión por correo"
+
+#. InfraSignal custom UI string
+msgid ""
+"Have you ever reported a problem to a local authority before, or is this "
+"your first time?"
+msgstr ""
+"¿Ha reportado alguna vez un problema a una autoridad local, o es la primera "
+"vez?"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you wish to leave a public update on the problem, please enter it here\n"
+"(please note it will not be sent to the local authority)."
+msgstr ""
+"Si desea dejar una actualización pública sobre el problema, introdúzcala aquí\n"
+"(tenga en cuenta que no se enviará a la autoridad local)."
+
+#. InfraSignal custom UI string
+msgid ""
+"Thanks, glad to hear it's been fixed! Could we just ask if you have ever "
+"reported a problem to a local authority before?"
+msgstr ""
+"¡Gracias, nos alegra saber que se ha resuelto! ¿Podríamos preguntarle si "
+"alguna vez ha reportado un problema a una autoridad local?"
+
+#. InfraSignal custom UI string
+msgid ""
+"Pick the closest match below to view its reports, or try a different search."
+msgstr ""
+"Elija la coincidencia más cercana a continuación para ver sus reportes, o "
+"pruebe con otra búsqueda."
+
+#. InfraSignal custom UI string
+msgid ""
+"e.g. '1600 Pennsylvania Ave, Washington DC' or 'Times Square, New York'"
+msgstr ""
+"p. ej. '1600 Pennsylvania Ave, Washington DC' o 'Times Square, New York'"
+
+#. InfraSignal custom UI string
+msgid "Ref:&nbsp;%s"
+msgstr "Ref.:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "InfraSignal ref:&nbsp;%s"
+msgstr "Ref. de InfraSignal:&nbsp;%s"
+
+#. InfraSignal custom UI string
+msgid "Responsible Authority:"
+msgstr "Autoridad responsable:"
+
+#. InfraSignal custom UI string
+msgid "(not sent to local authority)"
+msgstr "(no enviado a la autoridad local)"
+
+#. InfraSignal custom UI string
+msgid "Not reported to local authority"
+msgstr "No reportado a la autoridad local"
+
+#. InfraSignal custom UI string
+msgid "the local authority"
+msgstr "la autoridad local"
+
+#. InfraSignal custom UI string
+msgid ""
+"If you let us know your email address, we'll notify you when this problem is"
+" updated or fixed."
+msgstr ""
+"Si nos indica su dirección de correo electrónico, le avisaremos cuando este "
+"problema se actualice o se resuelva."
+
+#. InfraSignal custom UI string
+msgid "It's on its way to the local authority right now."
+msgstr "Ahora mismo va de camino a la autoridad local."
+
+#. InfraSignal custom UI string
+msgid "I just reported a problem on @InfraSignal"
+msgstr "Acabo de reportar un problema en @InfraSignal"
+
 #~ msgid "%s admin:"
 #~ msgstr "admin:"
 
@@ -8506,3 +12018,52 @@ msgstr "ciudades en"
 
 #~ msgid "Place pin on map"
 #~ msgstr "Coloque el marcador en el mapa"
+
+# InfraSignal accuracy & compliance corrections (2026-06)
+msgid "✓ Open source"
+msgstr "✓ Código abierto"
+
+msgid "✓ Available in 4 languages"
+msgstr "✓ Disponible en 4 idiomas"
+
+msgid "Open source"
+msgstr "Código abierto"
+
+msgid "Built to route across"
+msgstr "Diseñado para enrutar en"
+
+msgid "Report infrastructure issues and get them fixed. Built to serve communities across all 50 US states and D.C."
+msgstr "Reporte problemas de infraestructura y consiga que se resuelvan. Diseñado para servir a comunidades en los 50 estados de EE. UU. y D.C."
+
+msgid "Source code"
+msgstr "Código fuente"
+
+msgid "Created and engineered by"
+msgstr "Creado y desarrollado por"
+
+msgid "InfraSignal is built on <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, open-source software by <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, and is distributed under the <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+msgstr "InfraSignal está construido sobre <a href=\"https://fixmystreet.org\" target=\"_blank\" rel=\"noopener noreferrer\">FixMyStreet</a>, software de código abierto de <a href=\"https://www.mysociety.org\" target=\"_blank\" rel=\"noopener noreferrer\">mySociety</a>, y se distribuye bajo la <a href=\"https://www.gnu.org/licenses/agpl-3.0.html\" target=\"_blank\" rel=\"noopener noreferrer\">GNU AGPL v3</a>."
+
+msgid "An established civic-reporting model"
+msgstr "Un modelo consolidado de reportes cívicos"
+
+msgid "Similar civic-reporting services include FixMyStreet and SocietyWorks (United Kingdom), FixaMinGata (Sweden), and Z&uuml;ri wie neu (Switzerland). They are referenced only as background on the model &mdash; not as InfraSignal customers or endorsements."
+msgstr "Servicios similares de reportes cívicos incluyen FixMyStreet y SocietyWorks (Reino Unido), FixaMinGata (Suecia) y Z&uuml;ri wie neu (Suiza). Se mencionan únicamente como contexto sobre el modelo &mdash; no como clientes ni respaldos de InfraSignal."
+
+msgid "Accessibility-minded"
+msgstr "Enfocado en la accesibilidad"
+
+msgid "Privacy-conscious &middot; CCPA-aware"
+msgstr "Respetuoso con la privacidad &middot; conforme a la CCPA"
+
+msgid "Local Government"
+msgstr "Gobierno local"
+
+msgid "Secure, encrypted connection"
+msgstr "Conexión segura y cifrada"
+
+msgid "Reports routed to the responsible authority"
+msgstr "Reportes enrutados a la autoridad responsable"
+
+msgid "Privacy-conscious"
+msgstr "Respetuoso con la privacidad"

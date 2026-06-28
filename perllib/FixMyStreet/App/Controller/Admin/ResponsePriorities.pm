@@ -29,7 +29,7 @@ sub index : Path : Args(0) {
         $c->res->redirect($c->uri_for($self->action_for('create'), [ $body_id ]));
         $c->detach;
     }
-    if ($c->user->is_superuser) {
+    if ($c->user->is_superuser && $c->cobrand->moniker ne 'infrasignal') {
         $c->forward('/admin/fetch_all_bodies');
     }
     $c->stash(

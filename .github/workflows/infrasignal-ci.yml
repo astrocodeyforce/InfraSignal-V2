@@ -1,0 +1,182 @@
+# ============================================================
+# InfraSignal — CI Pipeline
+# ============================================================
+# Runs on every push and PR to main/dev/staging branches.
+# Steps: lint → test → build Docker image → push to registry
+# ============================================================
+
+name: InfraSignal CI
+
+on:
+  push:
+    branches: [main, dev, staging]
+  pull_request:
+    branches: [main, dev, staging]
+  # Allow CD pipeline to call this as a reusable workflow
+  workflow_call:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  # ---- Step 1: Quick lint / validation ----
+  lint:
+    name: Validate configs
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Validate YAML configs
+        run: |
+          python3 -c "
+          import yaml, sys, glob
+          errors = []
+          for f in glob.glob('conf/general.yml-*'):
+              try:
+                  yaml.safe_load(open(f))
+                  print(f'  ✓ {f}')
+              except Exception as e:
+                  errors.append(f'{f}: {e}')
+                  print(f'  ✗ {f}: {e}')
+          if errors:
+              sys.exit(1)
+          "
+
+      - name: Validate docker-compose files
+        run: |
+          for f in docker-compose.yml docker/docker-compose-*.yml; do
+            if [ -f "$f" ]; then
+              docker compose -f "$f" config --quiet 2>/dev/null && echo "  ✓ $f" || echo "  ⚠ $f (may need .env)"
+            fi
+          done
+
+      - name: Check no secrets in tracked files
+        run: |
+          # Fail if real API keys are found in tracked files
+          if git grep -lE 'sk-proj-[A-Za-z0-9_-]{20,}|SG\.[A-Za-z0-9_-]{22}\.' -- ':!docker/.env.example' ':!.github/'; then
+            echo "::error::Real API keys found in tracked files!"
+            exit 1
+          fi
+          echo "  ✓ No secrets in tracked files"
+
+  # ---- Step 2: Run Perl tests in Docker ----
+  test:
+    name: Run tests
+    runs-on: ubuntu-22.04
+    needs: lint
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_PASSWORD: test_password
+          POSTGRES_DB: infrasignal_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Setup cache (carton)
+        uses: actions/cache@v4
+        with:
+          path: local
+          key: carton-${{ hashFiles('cpanfile.snapshot') }}
+
+      - name: Setup cache (perl)
+        id: cache-perl
+        uses: actions/cache@v4
+        with:
+          path: ~/perl5
+          key: perl-5.34.0
+
+      - name: Install Perl
+        if: steps.cache-perl.outputs.cache-hit != 'true'
+        run: |
+          wget -qO - https://install.perlbrew.pl | bash
+          ~/perl5/perlbrew/bin/perlbrew install --notest 5.34.0
+          ~/perl5/perlbrew/bin/perlbrew clean
+
+      - name: Add packages
+        run: |
+          sudo apt update
+          sudo apt install -y gettext jhead language-pack-en libimage-magick-perl
+          ~/perl5/perlbrew/bin/perlbrew exec vendor/bin/carton install --deployment
+          commonlib/bin/gettext-makemo FixMyStreet
+
+      - name: Setup test database
+        env:
+          PGHOST: localhost
+          PGPORT: 5432
+          PGPASSWORD: test_password
+        run: |
+          psql -U postgres -c "CREATE USER fms WITH PASSWORD 'test_password' SUPERUSER;"
+          psql -U postgres -c "CREATE DATABASE infrasignal_test OWNER fms;"
+
+      - name: Run tests
+        env:
+          FMS_DB_HOST: localhost
+          FMS_DB_PORT: 5432
+          FMS_DB_NAME: infrasignal_test
+          FMS_DB_USER: fms
+          FMS_DB_PASS: test_password
+        run: |
+          cp conf/general.yml-test conf/general.yml
+          ~/perl5/perlbrew/bin/perlbrew exec script/test --jobs 3 t
+
+  # ---- Step 3: Build and push Docker image ----
+  build:
+    name: Build Docker image
+    runs-on: ubuntu-22.04
+    needs: test
+    if: github.event_name == 'push'
+    outputs:
+      image_tag: ${{ steps.meta.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          tags: |
+            type=ref,event=branch
+            type=sha,prefix=
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: docker/Dockerfile-development
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

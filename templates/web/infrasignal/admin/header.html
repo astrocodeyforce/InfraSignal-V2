@@ -1,0 +1,15 @@
+[%
+    SET admin = 1;
+    SET sidebar = bodyclass.match('mappage') ? '' : 'admin/navigation.html';
+    INCLUDE 'header.html' bodyclass = bodyclass _ ' admin';
+%]
+<style type="text/css">
+dt { clear: left; float: left; font-weight: bold; }
+dd { margin-left: 8em !important; }
+.adminhidden { color: #666666; }
+.error { color: red; }
+select { width: auto; max-width: 100%; }
+.sm { font-size: smaller; }
+</style>
+
+[% IF sidebar AND !suppress_title %]<h1>[% title %]</h1>[% END %]

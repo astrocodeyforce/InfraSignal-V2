@@ -1,281 +1,286 @@
 [% INCLUDE 'header.html',
     title = loc('Privacy Policy'),
-    sidebar = 'about/_sidebar.html'
+    bodyclass = 'infopage'
 %]
 
-<h1>Política de Privacidad</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'Política de Privacidad'
+    public_page_subtitle = 'Cómo recopilamos, usamos y protegemos su información.'
+%]
 
-<p><strong>Fecha de Vigencia: 15 de febrero de 2026</strong><br>
-<strong>Última Actualización: 28 de febrero de 2026</strong></p>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<p>InfraSignal (&ldquo;nosotros,&rdquo;
-&ldquo;nos&rdquo; o &ldquo;nuestro&rdquo;) toma en serio la privacidad
-de su información personal. Esta Política de Privacidad explica cómo
-recopilamos, usamos, almacenamos, compartimos y protegemos la información
-personal de los usuarios (&ldquo;usted&rdquo; o &ldquo;su&rdquo;) de la
-plataforma InfraSignal (el &ldquo;Servicio&rdquo;), accesible en
-<a href="[% c.uri_for('/') %]">[% c.uri_for('/') %]</a>.</p>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'privacy'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<p>Al utilizar el Servicio, usted acepta las prácticas descritas en esta
-Política de Privacidad. Si no acepta esta Política de Privacidad, por
-favor no utilice el Servicio.</p>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<h2>1. Información que Recopilamos</h2>
+        [%# Effective date intro %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <p style="margin-bottom: 0.5rem"><strong>Fecha de vigencia: 15 de febrero de 2026</strong><br>
+          <strong>Última revisión: 28 de febrero de 2026</strong></p>
+          <p>InfraSignal (&ldquo;nosotros&rdquo; o &ldquo;nuestro&rdquo;) se toma en serio la naturaleza privada de su información personal. Esta Política de Privacidad describe cómo recopilamos, usamos, conservamos, compartimos y protegemos la información personal de los usuarios (&ldquo;usted&rdquo; o &ldquo;su&rdquo;) de la plataforma InfraSignal (el &ldquo;Servicio&rdquo;), accesible en <a href="[% c.uri_for('/') %]">[% c.uri_for('/') %]</a>.</p>
+          <p style="margin-bottom: 0">Al usar el Servicio, usted acepta las prácticas descritas en esta Política de Privacidad. Si no está de acuerdo con esta Política de Privacidad, por favor no use el Servicio.</p>
+        </div>
 
-<h3>1.1 Información que Usted Proporciona Directamente</h3>
-<ul>
-    <li><strong>Información de Cuenta y Reporte:</strong> Nombre y
-    dirección de correo electrónico cuando crea una cuenta o envía un
-    reporte.</li>
-    <li><strong>Contenido del Reporte:</strong> Descripciones de texto de
-    problemas de infraestructura, fotos que sube y coordenadas
-    geográficas que selecciona en el mapa.</li>
-    <li><strong>Actualizaciones de Reportes:</strong> Información de
-    seguimiento que envía sobre un reporte existente.</li>
-    <li><strong>Envíos del Formulario de Contacto:</strong> Mensajes
-    enviados a través del formulario de contacto de la plataforma.</li>
-</ul>
+        [%# Accordion sections %]
+        <div class="faq-sections">
 
-<h3>1.2 Información Recopilada Automáticamente</h3>
-<ul>
-    <li><strong>Datos del Dispositivo y Navegador:</strong> Tipo de
-    navegador, sistema operativo, resolución de pantalla y URL de
-    referencia.</li>
-    <li><strong>Datos de Sesión:</strong> Una cookie de sesión para
-    mantener el estado de inicio de sesión (ver Sección 5).</li>
-    <li><strong>Datos de Interacción con el Mapa:</strong> Coordenadas
-    geográficas cuando coloca un marcador en el mapa. No rastreamos la
-    ubicación de su dispositivo en tiempo real a menos que utilice
-    explícitamente la función de geolocalización de su navegador.</li>
-</ul>
+          <div>
+            <h2 class="faq-section__title">1. Información que Recopilamos</h2>
+            <div class="faq-accordion">
 
-<h3>1.3 Información de Servicios de Terceros</h3>
-<p>Utilizamos servicios de terceros para mapas, consultas de límites
-geográficos, moderación automática de imágenes y entrega de correo
-electrónico. Estos proveedores procesan datos solo en la medida
-necesaria para realizar sus funciones. Las fotos subidas se envían a
-un servicio de moderación de terceros para detectar contenido
-inapropiado; no recibimos ni almacenamos información personal de
-este servicio más allá de los resultados de moderación.</p>
+              <details class="faq-item" open>
+                <summary class="faq-item__question">1.1 Información que Proporciona Directamente</summary>
+                <div class="faq-item__answer">
+                  <ul>
+                    <li><strong>Información de cuenta y reporte:</strong> Nombre y dirección de correo electrónico al crear una cuenta o enviar un reporte.</li>
+                    <li><strong>Contenido del reporte:</strong> Descripciones de texto de problemas de infraestructura, fotografías que sube y las coordenadas geográficas que selecciona en el mapa.</li>
+                    <li><strong>Actualizaciones del reporte:</strong> Información de seguimiento que publica en un reporte existente.</li>
+                    <li><strong>Envíos del formulario de contacto:</strong> Mensajes enviados a través del formulario de contacto de la plataforma.</li>
+                  </ul>
+                </div>
+              </details>
 
-<h2>2. Cómo Usamos Su Información</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">1.2 Información Recopilada Automáticamente</summary>
+                <div class="faq-item__answer">
+                  <ul>
+                    <li><strong>Datos de dispositivo y navegador:</strong> Tipo de navegador, sistema operativo, resolución de pantalla y URL de referencia.</li>
+                    <li><strong>Datos de sesión:</strong> Una cookie de sesión para mantener el estado de inicio de sesión (vea la Sección 6).</li>
+                    <li><strong>Datos de interacción con el mapa:</strong> Coordenadas geográficas cuando coloca un marcador en el mapa. No rastreamos la ubicación en tiempo real de su dispositivo a menos que use explícitamente la función de geolocalización de su navegador.</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>Usamos la información que recopilamos para proporcionar, operar y
-mejorar el Servicio, incluyendo los siguientes propósitos:</p>
-<ul>
-    <li>Enviar su reporte de infraestructura al gobierno local responsable
-    (gobierno municipal, del condado o estatal)</li>
-    <li>Enviar correos de confirmación, actualizaciones de estado de
-    reportes y notificaciones de alertas a las que se haya
-    suscrito</li>
-    <li>Permitir que los gobiernos locales se comuniquen con usted sobre
-    su reporte</li>
-    <li>Moderar las fotos y los textos subidos para detectar contenido
-    inapropiado o prohibido</li>
-    <li>Mantener, asegurar y mejorar el Servicio</li>
-    <li>Prevenir abuso, spam y actividades fraudulentas</li>
-    <li>Realizar investigaciones, análisis y estudios estadísticos para
-    comprender patrones de uso y mejorar los resultados de
-    infraestructura pública</li>
-    <li>Desarrollar nuevos productos, funciones y servicios</li>
-    <li>Personalizar y adaptar su experiencia con el Servicio</li>
-    <li>Comunicarnos con usted sobre actualizaciones, promociones e
-    información que pueda ser de su interés (puede optar por no
-    recibirlas en cualquier momento)</li>
-    <li>Agregar y desidentificar datos para informes públicos,
-    investigación y propósitos comerciales</li>
-    <li>Cumplir con las obligaciones legales aplicables</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">1.3 Información de Servicios de Terceros</summary>
+                <div class="faq-item__answer">
+                  <p>Usamos servicios de terceros para mapeo, consultas de límites geográficos, moderación automática de imágenes y entrega de correo electrónico. Estos proveedores procesan los datos solo según sea necesario para realizar sus funciones. Las fotos subidas se transmiten a un servicio de moderación de terceros para detectar contenido inapropiado; no recibimos ni almacenamos información personal de ese servicio más allá de los resultados de moderación.</p>
+                </div>
+              </details>
 
-<h2>3. Cómo Compartimos Su Información</h2>
+            </div>
+          </div>
 
-<h3>3.1 Con Gobiernos Locales</h3>
-<p>Cuando envía un reporte, su nombre, dirección de correo electrónico,
-descripción del reporte, fotos y coordenadas GPS del problema se
-comparten con la unidad del gobierno local responsable de esa ubicación.
-Este intercambio es necesario para que el gobierno investigue, responda
-y resuelva el problema reportado.</p>
+          <div>
+            <h2 class="faq-section__title">2. Cómo Usamos su Información</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Para qué usamos su información?</summary>
+                <div class="faq-item__answer">
+                  <p>Usamos la información que recopilamos para proporcionar, operar y mejorar el Servicio, incluyendo:</p>
+                  <ul>
+                    <li>Entregar su reporte de infraestructura a la autoridad local responsable</li>
+                    <li>Enviar correos de confirmación, actualizaciones de estado del reporte y notificaciones de alertas</li>
+                    <li>Permitir que las autoridades locales lo contacten respecto a su reporte</li>
+                    <li>Moderar fotos y texto subidos en busca de contenido inapropiado</li>
+                    <li>Mantener, asegurar y mejorar el Servicio</li>
+                    <li>Prevenir abusos, spam y actividad fraudulenta</li>
+                    <li>Realizar investigación y análisis para mejorar los resultados de la infraestructura pública</li>
+                    <li>Comunicar actualizaciones e información de interés (puede darse de baja)</li>
+                    <li>Agregar y anonimizar datos para reportes públicos e investigación</li>
+                    <li>Cumplir con las obligaciones legales aplicables</li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<h3>3.2 Exhibición Pública</h3>
-<p>La descripción de su reporte, categoría, fotos, ubicación y posición
-aproximada del marcador se publican en el sitio web de InfraSignal para
-que otros residentes puedan ver los problemas reportados y sus estados.
-Puede optar por ocultar su nombre de la página pública del reporte; sin
-embargo, su nombre y correo electrónico siempre se comparten con el
-gobierno responsable.</p>
+          <div>
+            <h2 class="faq-section__title">3. Cómo Compartimos su Información</h2>
+            <div class="faq-accordion">
 
-<h3>3.3 Proveedores de Servicios y Socios</h3>
-<p>Trabajamos con proveedores de servicios de terceros, socios y otras
-entidades para ayudarnos a operar, proporcionar, mejorar, comprender,
-personalizar, respaldar y comercializar nuestro Servicio. Cuando
-compartimos información con estas entidades, les exigimos que usen su
-información de acuerdo con nuestras instrucciones y términos, y que
-tomen medidas apropiadas para proteger su información.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.1 Con Autoridades Locales</summary>
+                <div class="faq-item__answer">
+                  <p>Cuando envía un reporte, su nombre, dirección de correo electrónico, descripción del reporte, fotos y las coordenadas GPS del problema se comparten con la autoridad de gobierno local responsable de esa ubicación. Esta divulgación es necesaria para que la autoridad investigue, responda y resuelva el problema reportado.</p>
+                </div>
+              </details>
 
-<p>Estos terceros pueden incluir, pero no se limitan a: proveedores de
-alojamiento e infraestructura, servicios de moderación de contenido,
-proveedores de análisis, servicios de entrega de correo electrónico,
-servicios de mapas y geolocalización, herramientas de soporte al
-cliente y asesores profesionales.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.2 Visualización Pública</summary>
+                <div class="faq-item__answer">
+                  <p>La descripción de su reporte, categoría, fotos, ubicación y la colocación aproximada del marcador se publican en el sitio web de InfraSignal para que otros residentes puedan ver los problemas reportados y su estado. Puede optar por ocultar su nombre de la página pública del reporte; sin embargo, su nombre y correo electrónico siempre se comparten con la autoridad responsable.</p>
+                </div>
+              </details>
 
-<h3>3.4 Datos Agregados y Desidentificados</h3>
-<p>Podemos compartir datos agregados, anonimizados o desidentificados
-&mdash; que no pueden usarse razonablemente para identificarle &mdash;
-con terceros para investigación, análisis, planificación urbana,
-análisis de políticas públicas, informes de tendencias o cualquier
-otro propósito lícito, incluido el uso comercial. Estos datos pueden
-incluir volúmenes agregados de reportes, distribución geográfica de
-problemas de infraestructura, estadísticas de tiempos de respuesta y
-métricas similares.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.3 Proveedores de Servicios y Socios</summary>
+                <div class="faq-item__answer">
+                  <p>Trabajamos con proveedores de servicios de terceros que nos ayudan a operar, proporcionar, asegurar y dar soporte al Servicio. Cuando compartimos información con estos proveedores, les exigimos que usen su información únicamente de acuerdo con nuestras instrucciones y términos.</p>
+                  <p>Estos terceros pueden incluir: proveedores de alojamiento e infraestructura, servicios de moderación de contenido, proveedores de análisis, servicios de entrega de correo electrónico, servicios de mapeo y geolocalización, herramientas de atención al cliente y asesores profesionales.</p>
+                </div>
+              </details>
 
-<h3>3.5 Requisitos Legales</h3>
-<p>Podemos divulgar información personal cuando lo requiera la ley,
-citación, orden judicial u otro proceso legal, o cuando creamos
-razonablemente que la divulgación es necesaria para:</p>
-<ul>
-    <li>Cumplir con la ley aplicable o proceso legal</li>
-    <li>Proteger los derechos, propiedad o seguridad de InfraSignal,
-    nuestros usuarios o el público</li>
-    <li>Hacer cumplir nuestros
-    <a href="/about/terms">Términos de Uso</a></li>
-    <li>Responder a solicitudes de las fuerzas del orden</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.4 Datos Agregados y Anonimizados</summary>
+                <div class="faq-item__answer">
+                  <p>Podemos compartir datos agregados, anonimizados o sin identificación &mdash; que no puedan usarse razonablemente para identificarlo &mdash; con terceros para investigación, análisis, planificación urbana, análisis de políticas públicas y reportes de tendencias.</p>
+                </div>
+              </details>
 
-<h3>3.6 Transferencias Comerciales</h3>
-<p>Si InfraSignal está involucrado en una fusión, adquisición, venta de
-activos, reorganización, disolución, quiebra o transacción similar, su
-información puede ser transferida como parte de esa transacción. Le
-notificaremos de cualquier cambio en la propiedad o control de su
-información personal.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.5 Requisitos Legales</summary>
+                <div class="faq-item__answer">
+                  <p>Podemos divulgar información personal si lo exige la ley, una citación, una orden judicial u otro proceso legal, o si creemos razonablemente que la divulgación es necesaria para:</p>
+                  <ul>
+                    <li>Cumplir con la ley aplicable o un proceso legal</li>
+                    <li>Proteger los derechos, la propiedad o la seguridad de InfraSignal, nuestros usuarios o el público</li>
+                    <li>Hacer cumplir nuestros <a href="/about/terms">Términos de Uso</a></li>
+                    <li>Responder a solicitudes de las fuerzas del orden</li>
+                  </ul>
+                </div>
+              </details>
 
-<h3>3.7 Con Su Consentimiento</h3>
-<p>Podemos compartir su información para propósitos no descritos en
-esta Política de Privacidad cuando hayamos obtenido su consentimiento
-para hacerlo.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.6 Transferencias de Negocio</summary>
+                <div class="faq-item__answer">
+                  <p>Si InfraSignal participa en una fusión, adquisición, venta de activos, reorganización, disolución, quiebra o transacción similar, su información puede transferirse como parte de esa transacción. Le notificaremos cualquier cambio de propiedad o control de su información personal.</p>
+                </div>
+              </details>
 
-<h2>4. Datos Agregados y Públicos</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">3.7 Con su Consentimiento</summary>
+                <div class="faq-item__answer">
+                  <p>Podemos compartir su información para fines no descritos en esta Política de Privacidad cuando hayamos obtenido su consentimiento para hacerlo.</p>
+                </div>
+              </details>
 
-<p>Los reportes de infraestructura enviados a través de InfraSignal están
-diseñados para ser puestos a disposición del público y de las autoridades
-gubernamentales. Las descripciones de los reportes, categorías, fotos,
-ubicaciones y actualizaciones de estado son públicamente visibles en la
-plataforma.</p>
+            </div>
+          </div>
 
-<p>Podemos compilar, agregar, anonimizar o desidentificar la información
-recopilada a través del Servicio para su uso en investigación,
-análisis, estudios de políticas públicas, herramientas de planificación
-urbana, informes de tendencias o cualquier otro propósito lícito,
-incluyendo la distribución a terceros y aplicaciones comerciales. Los
-datos agregados y desidentificados no están sujetos a las restricciones
-de esta Política de Privacidad ya que no constituyen información
-personal.</p>
+          <div>
+            <h2 class="faq-section__title">4. Datos Agregados y Públicos</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo se manejan los datos agregados y públicos?</summary>
+                <div class="faq-item__answer">
+                  <p>Los reportes de infraestructura enviados a través de InfraSignal están destinados, por diseño, a estar disponibles para el público y las autoridades gubernamentales. Las descripciones de los reportes, categorías, fotos, ubicaciones y actualizaciones de estado son visibles públicamente en la plataforma.</p>
+                  <p>Podemos compilar, agregar, anonimizar o quitar la identificación de la información recopilada a través del Servicio para usarla en investigación, análisis, estudios de políticas públicas, herramientas de planificación urbana y reportes de tendencias. Los datos agregados y sin identificación no están sujetos a las restricciones de esta Política de Privacidad porque no constituyen información personal.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<h2>5. Retención de Datos</h2>
+          <div>
+            <h2 class="faq-section__title">5. Conservación de Datos</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cuánto tiempo conservamos sus datos?</summary>
+                <div class="faq-item__answer">
+                  <p>Conservamos la información de su cuenta y sus reportes mientras su cuenta esté activa o según sea necesario para proporcionar el Servicio. Los reportes de infraestructura y los datos asociados (descripciones, fotos, ubicación, estado) se conservan indefinidamente para mantener un registro público de los problemas cívicos y su resolución, a menos que solicite su eliminación.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<p>Retenemos la información de su cuenta y reportes mientras su cuenta
-esté activa o según sea necesario para proporcionar el Servicio. Los
-reportes de infraestructura y datos relacionados (descripciones, fotos,
-ubicación, estado) se retienen indefinidamente para mantener el registro
-público de problemas cívicos y sus resoluciones, a menos que solicite
-su eliminación.</p>
+          <div>
+            <h2 class="faq-section__title">6. Cookies</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Qué cookies usa InfraSignal?</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal usa una única cookie esencial para la gestión de sesiones:</p>
+                  <ul>
+                    <li><strong>infrasignal_session</strong> &mdash; Mantiene su sesión autenticada y almacena preferencias. Duración: sesión (se borra al cerrar el navegador) o 4 semanas si se selecciona &ldquo;Mantener sesión iniciada&rdquo;.</li>
+                  </ul>
+                  <p>No usamos cookies publicitarias, píxeles de seguimiento, widgets de redes sociales ni cookies de análisis de terceros.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<h2>6. Cookies</h2>
+          <div>
+            <h2 class="faq-section__title">7. Seguridad de los Datos</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo protegemos su información?</summary>
+                <div class="faq-item__answer">
+                  <p>Implementamos salvaguardas administrativas, técnicas y físicas razonables para proteger la información personal contra el acceso, alteración, divulgación o destrucción no autorizados. Estas medidas incluyen transmisión de datos cifrada, almacenamiento seguro de contraseñas, moderación automática de contenido y controles de acceso que limitan el acceso del personal a las funciones administrativas.</p>
+                  <p>Ningún método de transmisión o almacenamiento electrónico es 100% seguro. Si bien nos esforzamos por proteger su información, no podemos garantizar una seguridad absoluta.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<p>InfraSignal utiliza una sola cookie esencial para la gestión de
-sesiones:</p>
+          <div>
+            <h2 class="faq-section__title">8. Privacidad de los Menores</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Recopilamos datos de menores?</summary>
+                <div class="faq-item__answer">
+                  <p>El Servicio no está dirigido a menores de 13 años. No recopilamos a sabiendas información personal de menores de 13 años, de conformidad con la Ley de Protección de la Privacidad Infantil en Línea (COPPA). Si cree que un menor de 13 años ha proporcionado información personal a través del Servicio, <a href="/contact">contáctenos</a> de inmediato y la eliminaremos.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<table class="nicetable">
-    <tr>
-        <th scope="col">Nombre de la Cookie</th>
-        <th scope="col">Propósito</th>
-        <th scope="col">Duración</th>
-    </tr>
-    <tr>
-        <td>infrasignal_session</td>
-        <td>Mantiene su estado de sesión autenticado y almacena sus
-        preferencias</td>
-        <td>Sesión (se borra al cerrar el navegador), o 4 semanas si
-        selecciona &ldquo;Mantener sesión iniciada&rdquo;</td>
-    </tr>
-</table>
+          <div>
+            <h2 class="faq-section__title">9. Sus Derechos</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cuáles son mis derechos de privacidad?</summary>
+                <div class="faq-item__answer">
+                  <p>Según su estado de residencia, puede tener derechos en virtud de las leyes de privacidad de datos aplicables (CCPA, VCDPA y similares). Estos derechos pueden incluir:</p>
+                  <ul>
+                    <li><strong>Derecho a saber:</strong> Solicitar la divulgación de la información personal que hemos recopilado sobre usted</li>
+                    <li><strong>Derecho a eliminar:</strong> Solicitar la eliminación de su información personal, sujeto a ciertas excepciones</li>
+                    <li><strong>Derecho a corregir:</strong> Solicitar la corrección de información personal inexacta</li>
+                    <li><strong>Derecho a la no discriminación:</strong> Ejercer sus derechos de privacidad sin sufrir un trato discriminatorio</li>
+                  </ul>
+                  <p>Para ejercer cualquiera de estos derechos, <a href="/contact">contáctenos</a>. Verificaremos su identidad y responderemos dentro del plazo requerido por la ley aplicable (normalmente 45 días).</p>
+                </div>
+              </details>
 
-<p>No utilizamos cookies de publicidad, píxeles de seguimiento,
-complementos de redes sociales ni cookies de análisis de terceros.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">¿InfraSignal vende información personal?</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal no vende información personal a cambio de una contraprestación monetaria. Sin embargo, ciertos acuerdos de intercambio de datos &mdash; como compartir con proveedores de servicios, socios o proveedores de análisis &mdash; pueden interpretarse ampliamente como una &ldquo;venta&rdquo; o &ldquo;intercambio&rdquo; según algunas leyes estatales de privacidad. En la medida en que la ley aplicable le otorgue el derecho a optar por no participar, puede ejercer ese derecho <a href="/contact">contactándonos</a>.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<h2>7. Seguridad de los Datos</h2>
+          <div>
+            <h2 class="faq-section__title">10. Cambios en esta Política</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">¿Cómo le notificaremos los cambios?</summary>
+                <div class="faq-item__answer">
+                  <p>Podemos actualizar esta Política de Privacidad de vez en cuando. Cuando realicemos cambios sustanciales, revisaremos la fecha de &ldquo;Última revisión&rdquo; en la parte superior de esta página. Su uso continuado del Servicio después de que se publiquen los cambios constituye su aceptación de la política actualizada.</p>
+                </div>
+              </details>
+            </div>
+          </div>
 
-<p>Implementamos medidas de seguridad administrativas, técnicas y
-físicas razonables para proteger la información personal contra el
-acceso no autorizado, alteración, divulgación o destrucción. Estas
-medidas incluyen transmisión de datos cifrada, almacenamiento seguro de
-contraseñas, moderación automática de contenido y controles de acceso
-que restringen el acceso a funciones administrativas.</p>
+        </div>[%# .faq-sections %]
 
-<p>Ningún método de transmisión electrónica o almacenamiento es 100%
-seguro. Aunque nos esforzamos por proteger su información, no podemos
-garantizar seguridad absoluta.</p>
+        [%# Contact CTA %]
+        <div class="faq-cta">
+          <h3>¿Preguntas sobre su privacidad?</h3>
+          <p>Si tiene preguntas o inquietudes sobre esta Política de Privacidad, comuníquese con nosotros.</p>
+          <a href="/contact" class="faq-cta__btn">Contáctenos →</a>
+        </div>
 
-<h2>8. Privacidad de los Niños</h2>
-
-<p>El Servicio no está dirigido a niños menores de 13 años. De conformidad
-con la Ley de Protección de la Privacidad Infantil en Línea (COPPA), no
-recopilamos intencionalmente información personal de niños menores de
-13 años. Si cree que un niño menor de 13 años ha proporcionado
-información personal a través del Servicio, por favor
-<a href="/contact">contáctenos</a> de inmediato y eliminaremos la
-información.</p>
-
-<h2>9. Sus Derechos</h2>
-
-<p>Dependiendo del estado donde resida, puede tener derechos bajo las
-leyes de privacidad de datos aplicables, incluyendo pero no limitándose
-a la Ley de Privacidad del Consumidor de California (CCPA), la Ley de
-Protección de Datos del Consumidor de Virginia (VCDPA) y leyes
-estatales similares. Estos derechos pueden incluir:</p>
-<ul>
-    <li><strong>Derecho a Saber:</strong> Solicitar la divulgación de la
-    información personal que hemos recopilado sobre usted</li>
-    <li><strong>Derecho a Eliminar:</strong> Solicitar la eliminación de
-    su información personal, sujeto a ciertas excepciones legales</li>
-    <li><strong>Derecho a Corregir:</strong> Solicitar la corrección de
-    información personal inexacta</li>
-    <li><strong>Derecho a la No Discriminación:</strong> Ejercer sus
-    derechos de privacidad sin ser sometido a trato
-    discriminatorio</li>
-</ul>
-
-<p>Para ejercer cualquiera de estos derechos, por favor
-<a href="/contact">contáctenos</a>. Verificaremos su identidad y
-responderemos dentro del plazo requerido por la ley aplicable
-(generalmente 45 días).</p>
-
-<p>InfraSignal no vende información personal a cambio de contraprestación
-monetaria. Sin embargo, ciertos acuerdos de intercambio de datos
-descritos en esta Política de Privacidad &mdash; como el intercambio
-con proveedores de servicios, socios o proveedores de análisis &mdash;
-pueden interpretarse ampliamente como una &ldquo;venta&rdquo; o
-&ldquo;intercambio&rdquo; bajo algunas leyes estatales de privacidad.
-En la medida en que la ley aplicable le otorgue el derecho de
-excluirse de dicho intercambio, puede ejercer ese derecho
-<a href="/contact">contactándonos</a>.</p>
-
-<h2>10. Cambios a Esta Política</h2>
-
-<p>Podemos actualizar esta Política de Privacidad de vez en cuando.
-Cuando realicemos cambios significativos, revisaremos la fecha de
-&ldquo;Última Actualización&rdquo; en la parte superior de esta página.
-El uso continuado del Servicio después de la publicación de los cambios
-constituye la aceptación de la política actualizada. Le recomendamos
-revisar esta página periódicamente.</p>
-
-<h2>11. Contáctenos</h2>
-
-<p>Si tiene preguntas o inquietudes sobre esta Política de Privacidad,
-su información personal o nuestras prácticas de datos, por favor
-contáctenos:</p>
-<ul>
-    <li>Correo electrónico: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
-    <li>Web: <a href="/contact">Formulario de Contacto</a></li>
-</ul>
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

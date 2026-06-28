@@ -22,6 +22,7 @@ sub about_redirect : Private {
 }
 
 sub faq : Global : Args(0) { $_[1]->forward('/about/page', ['faq']) }
+sub how_it_works : Path('/how-it-works') : Args(0) { $_[1]->forward('/about/page', ['how-it-works']) }
 sub privacy : Global : Args(0) { $_[1]->detach('about_redirect') }
 sub fun : Global : Args(0) { $_[1]->detach('about_redirect') }
 sub posters : Global : Args(0) { $_[1]->detach('about_redirect') }

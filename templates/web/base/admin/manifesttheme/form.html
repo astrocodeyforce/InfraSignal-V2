@@ -40,9 +40,9 @@
     <table>
       <thead>
         <tr>
-          <th>Icon</th>
-          <th>Size</th>
-          <th>Delete?</th>
+          <th>[% loc('Icon') %]</th>
+          <th>[% loc('Size') %]</th>
+          <th>[% loc('Delete?') %]</th>
         </tr>
       </thead>
       <tbody>
@@ -75,7 +75,7 @@
 </form>
 
 [% IF show_all %]
-  <p><a href="[% c.uri_for(c.controller.action_for('list')) %]">Return to themes list</a></p>
+  <p><a href="[% c.uri_for(c.controller.action_for('list')) %]">[% loc('Return to themes list') %]</a></p>
 [% END %]
 
 [% INCLUDE 'admin/footer.html' %]

@@ -1,145 +1,180 @@
-[% INCLUDE 'header.html', title = loc('Frequently Asked Questions'), sidebar='about/_sidebar.html' %]
+[% INCLUDE 'header.html',
+    title = loc('Frequently Asked Questions'),
+    bodyclass = 'infopage'
+%]
 
-<h1>[% loc('Frequently Asked Questions') %]</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'Sıkça Sorulan Sorular'
+    public_page_subtitle = 'InfraSignal hakkında sık sorulan soruların yanıtlarını bulun.'
+%]
 
-<h2>Genel</h2>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<dl>
-    <dt>InfraSignal ücretsiz mi?</dt>
-    <dd>Evet. InfraSignal tüm kullanıcılar için ücretsizdir. Hesap
-    oluşturma, rapor gönderme, durum güncellemeleri alma veya yerel
-    uyarılara abone olma işlemleri için herhangi bir ücret alınmaz.</dd>
-</dl>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'faq'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<h2>Sorun Bildirme</h2>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<dl>
-    <dt>Nasıl sorun bildiririm?</dt>
-    <dd>
-    <ol>
-        <li><a href="/">Ana sayfada</a> sokak adresini, şehir adını veya
-        posta kodunu girin</li>
-        <li>Sorunun bulunduğu konumda haritaya tıklayın</li>
-        <li>Sorunu en iyi tanımlayan kategoriyi seçin</li>
-        <li>Bir açıklama yazın ve isteğe bağlı olarak 3 adete kadar
-        fotoğraf yükleyin</li>
-        <li>Adınızı ve e-posta adresinizi girin</li>
-        <li>Gönderin &mdash; InfraSignal raporunuzu sorumlu yerel
-        yönetime iletir</li>
-    </ol>
-    </dd>
+        <div class="faq-sections">
 
-    <dt>Hangi kategorilerde sorun bildirebilirim?</dt>
-    <dd>InfraSignal 13 standart altyapı kategorisini destekler:
-    <ul>
-        <li>Terk Edilmiş Araç</li>
-        <li>Köprü / Korkuluk Hasarı</li>
-        <li>Drenaj / Su Baskını</li>
-        <li>Devrik Ağaç / Bitki Örtüsü</li>
-        <li>Grafiti / Vandalizm</li>
-        <li>Yasadışı Atık</li>
-        <li>Park / Kamusal Alan Sorunu</li>
-        <li>Çukur / Yol Hasarı</li>
-        <li>Kaldırım Hasarı</li>
-        <li>Sokak Lambası Arızası</li>
-        <li>Trafik Sinyali / Tabela Sorunu</li>
-        <li>Su / Kanalizasyon Sorunu</li>
-        <li>Diğer</li>
-    </ul>
-    </dd>
+          <div>
+            <h2 class="faq-section__title">Genel</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">InfraSignal ücretsiz mi?</summary>
+                <p class="faq-item__answer">Evet. InfraSignal tüm kullanıcılar için ücretsizdir. Hesap oluşturmak, bildirim göndermek, durum güncellemeleri almak ve yerel uyarılara abone olmak ücretsizdir.</p>
+              </details>
+            </div>
+          </div>
 
-    <dt>InfraSignal'da neleri bildirme<em>meliyim</em>?</dt>
-    <dd>InfraSignal, acil olmayan altyapı sorunları için tasarlanmıştır.
-    <strong>InfraSignal'ı şu durumlar için kullanmayın:</strong>
-    <ul>
-        <li><strong>Acil durumlar</strong> &mdash; can ve mal güvenliğini
-        tehdit eden durumlarda derhal <strong>911</strong>'i arayın</li>
-        <li>Devam eden suçlar veya şüpheli faaliyetler</li>
-        <li>Altyapı dışı kesintiler (gaz, elektrik) &mdash; doğrudan
-        hizmet sağlayıcınıza başvurun</li>
-        <li>Gürültü şikayetleri veya komşu anlaşmazlıkları</li>
-        <li>Çöp toplama aksaklıkları</li>
-        <li>İnşaat izinleri veya imar soruşturmaları</li>
-        <li>Hayvan kontrolü</li>
-        <li>Park veya trafik ihlalleri</li>
-    </ul>
-    </dd>
+          <div>
+            <h2 class="faq-section__title">Sorun Bildirme</h2>
+            <div class="faq-accordion">
 
-    <dt>Hesap açmam gerekiyor mu?</dt>
-    <dd>Rapor gönderirken geçerli bir e-posta adresi sağlamanız
-    gerekmektedir; böylece InfraSignal size onay bağlantısı ve durum
-    güncellemeleri gönderebilir. Tüm raporlarınızı ve aboneliklerinizi
-    tek bir panelden yönetmek için tam hesap da oluşturabilirsiniz.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">Nasıl sorun bildiririm?</summary>
+                <div class="faq-item__answer">
+                  <p><a href="/">Ana sayfadan</a> başlayın, konumu girin, haritaya iğneyi yerleştirin, en uygun kategoriyi seçin, ayrıntıları ve fotoğrafları ekleyin, ardından bildirimi yönlendirme için gönderin.</p>
+                  <p>Bildirimin tüm yolculuğu için <a href="/how-it-works">Nasıl Çalışır</a> bölümüne bakın.</p>
+                </div>
+              </details>
 
-    <dt>Fotoğraf yükleyebilir miyim?</dt>
-    <dd>Evet. Her rapor için en fazla 3 fotoğraf ekleyebilirsiniz.
-    Fotoğraflar yayınlanmadan önce uygunsuz içerik açısından otomatik
-    olarak taranır.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">Hangi sorun kategorilerini bildirebilirim?</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal 13 standart altyapı kategorisini destekler:</p>
+                  <ul>
+                    <li>Terk Edilmiş Araç</li>
+                    <li>Köprü / Korkuluk Hasarı</li>
+                    <li>Drenaj / Su Baskını</li>
+                    <li>Devrilmiş Ağaç / Bitki Örtüsü</li>
+                    <li>Grafiti / Vandalizm</li>
+                    <li>Yasadışı Atık</li>
+                    <li>Park / Kamusal Alan Sorunu</li>
+                    <li>Çukur / Yol Hasarı</li>
+                    <li>Kaldırım Hasarı</li>
+                    <li>Sokak Lambası Arızası</li>
+                    <li>Trafik Işığı / İşaret Sorunu</li>
+                    <li>Su / Kanalizasyon Sorunu</li>
+                    <li>Diğer</li>
+                  </ul>
+                </div>
+              </details>
 
-    <dt>Anonim olarak rapor gönderebilir miyim?</dt>
-    <dd>Adınızı herkese açık rapor sayfasından gizlemeyi seçebilirsiniz.
-    Ancak adınız ve e-posta adresiniz, sorunu araştırabilmeleri ve
-    gerekirse sizinle iletişime geçebilmeleri için her zaman sorumlu
-    yerel yönetimle paylaşılır.</dd>
-</dl>
+              <details class="faq-item">
+                <summary class="faq-item__question">InfraSignal'de neyi bildirmemeliyim?</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal acil olmayan altyapı sorunları için tasarlanmıştır. <strong>InfraSignal'i şunlar için kullanmayın:</strong></p>
+                  <ul>
+                    <li><strong>Acil durumlar</strong> &mdash; yaşam veya güvenliğe yönelik herhangi bir tehdit için hemen <strong>911</strong>'i arayın</li>
+                    <li>Devam eden suçlar veya şüpheli faaliyetler</li>
+                    <li>Altyapı kesintileri (gaz, elektrik, su) &mdash; doğrudan hizmet sağlayıcınıza başvurun</li>
+                    <li>Gürültü şikayetleri veya komşu anlaşmazlıkları</li>
+                    <li>Kaçırılan çöp veya geri dönüşüm toplama</li>
+                    <li>İnşaat ruhsatları veya imar denetimi soruları</li>
+                    <li>Hayvan kontrolü</li>
+                    <li>Park veya trafik denetimi</li>
+                  </ul>
+                </div>
+              </details>
 
-<h2>Gönderdikten Sonra</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">Hesaba ihtiyacım var mı?</summary>
+                <p class="faq-item__answer">Bir bildirim gönderirken, InfraSignal'in bir onay bağlantısı gönderebilmesi ve durum güncellemelerini iletebilmesi için geçerli bir e-posta adresi sağlamanız gerekir. Ayrıca tüm bildirimlerinizi ve aboneliklerinizi tek bir panodan yönetmek için tam bir hesap oluşturabilirsiniz.</p>
+              </details>
 
-<dl>
-    <dt>Raporlar yerel yönetimlere nasıl iletilir?</dt>
-    <dd>Raporlar, sorumlu yerel yönetimin belirlenmiş iletişim adresine
-    e-posta ile gönderilir. Her rapor; sorunun konumunu (koordinatlar ve
-    adres), seçilen kategoriyi, açıklamanızı, eklenen fotoğrafları ve
-    iletişim bilgilerinizi içerir.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">Fotoğraf yükleyebilir miyim?</summary>
+                <p class="faq-item__answer">Evet. Her bildirime en fazla 3 fotoğraf ekleyebilirsiniz. Fotoğraflar yayınlanmadan önce uygunsuz içerik açısından otomatik olarak taranır.</p>
+              </details>
 
-    <dt>Raporlar nasıl önceliklendirilir?</dt>
-    <dd>InfraSignal her rapora dört öncelik seviyesinden birini atar:
-    <strong>Acil</strong> (anında güvenlik tehlikesi),
-    <strong>Yüksek</strong> (24 saat içinde müdahale gerektirir),
-    <strong>Normal</strong> (standart yanıt süresi) ve
-    <strong>Düşük</strong> (acil olmayan). Yerel yönetimler inceleme
-    sürecinde önceliği değiştirebilir.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">Anonim olarak bildirebilir miyim?</summary>
+                <p class="faq-item__answer">Adınızı herkese açık bildirim sayfasından gizlemeyi seçebilirsiniz. Ancak adınız ve e-posta adresiniz, sorunu araştırabilmeleri ve gerekirse sizinle iletişime geçebilmeleri için her zaman sorumlu yerel yönetimle paylaşılır.</p>
+              </details>
 
-    <dt>Sorunum ne kadar sürede çözülür?</dt>
-    <dd>Yanıt süreleri kategoriye, ciddiyete ve yerel yönetimin iş
-    yoğunluğuna bağlıdır. InfraSignal, yetkililerin ne kadar hızlı
-    yanıt vereceğini kontrol etmez; raporunuzun durumunu takip etmenizi
-    ve işlem yapıldığında e-posta güncellemeleri almanızı sağlar.</dd>
+            </div>
+          </div>
 
-    <dt>Raporumun durumunu nasıl kontrol ederim?</dt>
-    <dd>Durum değiştiğinde e-posta bildirimleri alırsınız. Ayrıca
-    hesabınıza giriş yaparak <strong>Hesabınız</strong> bölümünden
-    tüm raporlarınızı görebilirsiniz. Her rapor mevcut durumunu
-    gösterir: açık, araştırılıyor, devam ediyor, çözüldü veya
-    kapatıldı.</dd>
+          <div>
+            <h2 class="faq-section__title">Gönderdikten Sonra</h2>
+            <div class="faq-accordion">
 
-    <dt>Sorunum çözülmediyse ne yapmalıyım?</dt>
-    <dd>Mevcut raporunuza istediğiniz zaman güncelleme ekleyerek ek
-    fotoğraflar sağlayabilir, sorunun devam ettiğini belirtebilir veya
-    yeni ayrıntılar ekleyebilirsiniz. Sorumlu kurum her güncellemeden
-    haberdar edilir.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">Bildirimler yerel yönetimlere nasıl iletilir?</summary>
+                <p class="faq-item__answer">Bildirimler, sorumlu yerel yönetimin belirlenen iletişim adresine e-posta yoluyla gönderilir. Her bildirim, sorunun konumunu (koordinatlar ve adres), seçilen kategoriyi, açıklamanızı, ekli fotoğrafları ve iletişim bilgilerinizi içerir.</p>
+              </details>
 
-    <dt>Başkalarının gönderdiği raporları görebilir miyim?</dt>
-    <dd>Evet. <a href="/reports">Tüm Raporlar</a> sayfası, durumları,
-    konumları ve kategorileriyle birlikte tüm herkese açık raporları
-    görüntüler. Bölgeye göre göz atabilir veya belirli konumları
-    arayabilirsiniz.</dd>
+              <details class="faq-item">
+                <summary class="faq-item__question">Bildirimler nasıl önceliklendirilir?</summary>
+                <p class="faq-item__answer">InfraSignal her bildirime dört öncelik düzeyinden birini atar: <strong>Acil</strong> (anında güvenlik tehlikesi), <strong>Yüksek</strong> (24 saat içinde ilgilenilmeli), <strong>Normal</strong> (standart yanıt süresi) ve <strong>Düşük</strong> (acil değil). Yerel yönetimler araştırma kapsamında önceliği ayarlayabilir.</p>
+              </details>
 
-    <dt>Yakınımdaki sorunlar hakkında uyarı alabilir miyim?</dt>
-    <dd>Evet. Bölgenizdeki yeni raporlar için e-posta bildirimlerine
-    abone olmak üzere <a href="/alert">Yerel Uyarılar</a> sayfasını
-    ziyaret edin. Coğrafi yarıçapa veya belirli bir yerel yönetime
-    göre uyarı ayarlayabilirsiniz.</dd>
-</dl>
+              <details class="faq-item">
+                <summary class="faq-item__question">Sorunumun çözülmesi ne kadar sürer?</summary>
+                <p class="faq-item__answer">Yanıt süreleri kategoriye, ciddiyete ve yerel yönetimin iş yüküne bağlıdır. InfraSignal yetkililerin ne kadar hızlı yanıt vereceğini kontrol etmez; bildiriminizin durumunu takip etmenizi ve işlem yapıldığında e-posta güncellemeleri almanızı sağlar.</p>
+              </details>
 
-<h2>Teknik</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">Bildirimimin durumunu nasıl kontrol ederim?</summary>
+                <p class="faq-item__answer">Durum değiştiğinde e-posta bildirimleri alırsınız. Ayrıca hesabınıza giriş yapıp tüm bildirimlerinizi <strong>Hesabınız</strong> altında görüntüleyebilirsiniz. Her bildirim mevcut durumunu gösterir: açık, araştırılıyor, devam ediyor, düzeltildi veya kapatıldı.</p>
+              </details>
 
-<dl>
-    <dt>Hangi cihazlar destekleniyor?</dt>
-    <dd>InfraSignal, akıllı telefonlarda, tabletlerde ve masaüstü
-    bilgisayarlarda çalışan duyarlı bir web uygulamasıdır. Uygulama
-    kurulumu gerekmez &mdash; herhangi bir modern web tarayıcısı
-    üzerinden erişilebilir.</dd>
-</dl>
+              <details class="faq-item">
+                <summary class="faq-item__question">Sorunum ele alınmadıysa ne olur?</summary>
+                <p class="faq-item__answer">Ek fotoğraflar sağlamak, sorunun devam ettiğini belirtmek veya yeni ayrıntılar eklemek için mevcut bildiriminize istediğiniz zaman bir güncelleme gönderebilirsiniz. Sorumlu yönetim her güncellemeden haberdar edilir.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">Başkalarının gönderdiği bildirimleri görebilir miyim?</summary>
+                <p class="faq-item__answer">Evet. <a href="/reports">Tüm Bildirimler</a> sayfası, tüm herkese açık bildirimleri durumları, konumları ve kategorileriyle gösterir. Bölgeye göre göz atabilir veya belirli konumları arayabilirsiniz.</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">Yakınımdaki sorunlar hakkında uyarı alabilir miyim?</summary>
+                <p class="faq-item__answer">Evet. Bölgenizdeki yeni bildirimler için e-posta bildirimlerine abone olmak üzere <a href="/alert">Yerel Uyarılar</a> sayfasını ziyaret edin. Uyarıları coğrafi yarıçapa veya belirli bir yerel yönetime göre ayarlayabilirsiniz.</p>
+              </details>
+
+            </div>
+          </div>
+
+          <div>
+            <h2 class="faq-section__title">Teknik</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">Hangi cihazlar destekleniyor?</summary>
+                <p class="faq-item__answer">InfraSignal; akıllı telefonlarda, tabletlerde ve masaüstü bilgisayarlarda çalışan duyarlı bir web uygulamasıdır. Uygulama kurulumu gerekmez &mdash; herhangi bir modern web tarayıcısından erişin.</p>
+              </details>
+            </div>
+          </div>
+
+        </div>[%# .faq-sections %]
+
+        [%# Still Have Questions? CTA %]
+        <div class="faq-cta">
+          <h3>Hâlâ sorularınız mı var?</h3>
+          <p>Aradığınızı bulamadınız mı? Yardımcı olmaktan memnuniyet duyarız.</p>
+          <a href="/contact" class="faq-cta__btn">Bize Ulaşın →</a>
+        </div>
+
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

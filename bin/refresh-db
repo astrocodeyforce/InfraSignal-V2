@@ -1,0 +1,290 @@
+#!/usr/bin/env bash
+# refresh-db — copy prod DB into dev or staging, with PII scrubbed.
+#
+# Usage:
+#   bin/refresh-db dev                 # refresh dev DB from prod
+#   bin/refresh-db staging             # refresh staging DB from prod
+#   bin/refresh-db dev --dry-run       # show plan, do nothing
+#
+# Safety:
+#  - Refuses to target prod.
+#  - Backs up the target DB to /tmp before wiping.
+#  - Always scrubs PII before declaring success.
+#  - Flushes the target memcached so the app sees the new data.
+#
+# What gets scrubbed:
+#  - users.email      → user-<id>@example.invalid
+#  - users.name       → "Dev User <id>"
+#  - users.phone      → NULL (phone_verified → false)
+#  - users.password   → '' (no one can log in by password; register new
+#                      accounts in dev for testing)
+#  - users.email_verified → true (so dev doesn't need email confirmation)
+#  - users.twitter_id / facebook_id / oidc_ids / extra → cleared
+#  - problem.name / cobrand_data / extra (jsonb keys email/phone/name) → cleared
+#  - comment.name / website / cobrand_data / extra / private_email_text → cleared
+#  - abuse, admin_log, sessions, token, partial_user,
+#    moderation_original_data, textmystreet, alert_sent → TRUNCATEd
+#
+# What stays as-is:
+#  - All bodies (orgs), categories, contacts (already public data).
+#  - problem.title / problem.detail and comment.text — report content.
+#    These COULD contain user-typed PII (addresses, names) in the body.
+#    Acceptable risk for a non-public dev env. Not exposed publicly.
+#  - Photo files (web/photo/) are NOT copied. Reports will reference
+#    photos by hash but the file won't exist locally → broken images.
+#    Add --with-photos to also rsync; default OFF.
+
+set -euo pipefail
+
+# ---- config ---------------------------------------------------------
+
+PROD_DB_CONTAINER="docker-db-1"
+PROD_DB_USER="postgres"
+PROD_DB_NAME="infrasignal"
+PROD_PHOTO_DIR="/opt/infrasignal-v2/web/photo"
+
+declare -A TARGETS=(
+    [dev:db_container]="infrasignal-dev-dev-db-1"
+    [dev:memcached_container]="infrasignal-dev-dev-memcached-1"
+    [dev:app_container]="infrasignal-dev-dev-fixmystreet-1"
+    [dev:photo_dir]="/opt/infrasignal-dev/web/photo"
+
+    [staging:db_container]="staging-db-1"
+    [staging:memcached_container]="staging-memcached-1"
+    [staging:app_container]="staging-fixmystreet-1"
+    [staging:photo_dir]="/opt/infrasignal-v2/staging-web-photo"
+)
+
+# ---- args -----------------------------------------------------------
+
+TARGET="${1:-}"
+DRY_RUN=0
+WITH_PHOTOS=0
+shift || true
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        --dry-run) DRY_RUN=1 ;;
+        --with-photos) WITH_PHOTOS=1 ;;
+        *) echo "Unknown flag: $1" >&2 ; exit 2 ;;
+    esac
+    shift
+done
+
+if [[ "$TARGET" != "dev" && "$TARGET" != "staging" ]]; then
+    cat <<EOF >&2
+Usage: $0 <dev|staging> [--dry-run] [--with-photos]
+
+Refusing to target prod (read source of truth only).
+EOF
+    exit 2
+fi
+
+TARGET_DB_CONTAINER="${TARGETS[$TARGET:db_container]}"
+TARGET_MC_CONTAINER="${TARGETS[$TARGET:memcached_container]}"
+TARGET_APP_CONTAINER="${TARGETS[$TARGET:app_container]}"
+TARGET_PHOTO_DIR="${TARGETS[$TARGET:photo_dir]}"
+
+TS=$(date -u +"%Y%m%dT%H%M%SZ")
+DUMP_FILE="/tmp/prod-dump-${TS}.sql"
+BACKUP_FILE="/tmp/${TARGET}-backup-${TS}.sql.gz"
+
+log() { printf '[%s] %s\n' "$(date -u +'%H:%M:%S')" "$*" ; }
+
+# ---- preflight ------------------------------------------------------
+
+log "Target:                ${TARGET}"
+log "  DB container:        ${TARGET_DB_CONTAINER}"
+log "  Memcached container: ${TARGET_MC_CONTAINER}"
+log "  App container:       ${TARGET_APP_CONTAINER}"
+log "  with-photos:         ${WITH_PHOTOS}"
+log "  dry-run:             ${DRY_RUN}"
+
+for c in "$PROD_DB_CONTAINER" "$TARGET_DB_CONTAINER" "$TARGET_APP_CONTAINER"; do
+    if ! sudo docker inspect "$c" >/dev/null 2>&1; then
+        log "✗ Container '$c' not found. Aborting."
+        exit 1
+    fi
+done
+
+if [[ "$DRY_RUN" == "1" ]]; then
+    log "Dry-run mode — printing plan and exiting."
+    cat <<EOF
+
+Plan:
+  1. pg_dump  ${PROD_DB_CONTAINER}:${PROD_DB_NAME} → ${DUMP_FILE}
+  2. pg_dump  ${TARGET_DB_CONTAINER}:${PROD_DB_NAME} → ${BACKUP_FILE} (backup)
+  3. Terminate connections to ${TARGET}.${PROD_DB_NAME}
+  4. DROP DATABASE ${PROD_DB_NAME}; CREATE DATABASE ${PROD_DB_NAME}
+  5. psql restore ${DUMP_FILE} → ${TARGET_DB_CONTAINER}
+  6. Run scrub SQL (anonymize users/problem/comment, truncate sessions etc.)
+  7. memcached flush_all on ${TARGET_MC_CONTAINER}
+  8. Verify (count rows, sample scrubbed email)
+EOF
+    if [[ "$WITH_PHOTOS" == "1" ]]; then
+        echo "  9. rsync ${PROD_PHOTO_DIR}/ → ${TARGET_PHOTO_DIR}/ (read-only copy)"
+    fi
+    exit 0
+fi
+
+# ---- step 1: dump prod ---------------------------------------------
+
+log "Dumping prod DB → ${DUMP_FILE}"
+sudo docker exec "$PROD_DB_CONTAINER" \
+    pg_dump -U "$PROD_DB_USER" -d "$PROD_DB_NAME" --clean --if-exists --no-owner \
+    > "$DUMP_FILE"
+dump_size=$(stat -c%s "$DUMP_FILE")
+log "  dump size: ${dump_size} bytes"
+if [[ "$dump_size" -lt 1000 ]]; then
+    log "✗ Dump suspiciously small. Aborting (left at $DUMP_FILE for inspection)."
+    exit 1
+fi
+
+# ---- step 2: backup target -----------------------------------------
+
+log "Backing up current ${TARGET} DB → ${BACKUP_FILE}"
+sudo docker exec "$TARGET_DB_CONTAINER" \
+    pg_dump -U "$PROD_DB_USER" -d "$PROD_DB_NAME" --clean --if-exists --no-owner 2>/dev/null \
+    | gzip > "$BACKUP_FILE" || log "  (backup pg_dump failed — target may have been empty/broken; continuing)"
+log "  backup size: $(stat -c%s "$BACKUP_FILE" 2>/dev/null || echo 0) bytes"
+
+# ---- step 3+4: terminate + drop+create -----------------------------
+
+log "Terminating active connections to ${TARGET}.${PROD_DB_NAME}"
+sudo docker exec "$TARGET_DB_CONTAINER" psql -U "$PROD_DB_USER" -d postgres -c \
+    "REVOKE CONNECT ON DATABASE ${PROD_DB_NAME} FROM PUBLIC;
+     SELECT pg_terminate_backend(pid) FROM pg_stat_activity
+       WHERE datname = '${PROD_DB_NAME}' AND pid <> pg_backend_pid();" \
+    >/dev/null
+
+log "Dropping + recreating ${TARGET}.${PROD_DB_NAME}"
+# DROP DATABASE cannot run inside a transaction block — must be separate -c calls.
+sudo docker exec "$TARGET_DB_CONTAINER" psql -U "$PROD_DB_USER" -d postgres \
+    -c "DROP DATABASE IF EXISTS ${PROD_DB_NAME};" >/dev/null
+sudo docker exec "$TARGET_DB_CONTAINER" psql -U "$PROD_DB_USER" -d postgres \
+    -c "CREATE DATABASE ${PROD_DB_NAME};" >/dev/null
+sudo docker exec "$TARGET_DB_CONTAINER" psql -U "$PROD_DB_USER" -d postgres \
+    -c "GRANT CONNECT ON DATABASE ${PROD_DB_NAME} TO PUBLIC;" >/dev/null
+
+# ---- step 5: restore ------------------------------------------------
+
+log "Restoring dump into ${TARGET}.${PROD_DB_NAME}"
+sudo docker exec -i "$TARGET_DB_CONTAINER" \
+    psql -U "$PROD_DB_USER" -d "$PROD_DB_NAME" --quiet \
+    < "$DUMP_FILE" \
+    > /tmp/restore-${TARGET}-${TS}.log 2>&1 || {
+        log "✗ Restore reported errors. See /tmp/restore-${TARGET}-${TS}.log"
+        log "  (Postgres often prints harmless errors on --clean restore; checking)"
+    }
+err_count=$(grep -cE 'ERROR:' /tmp/restore-${TARGET}-${TS}.log 2>/dev/null || echo 0)
+log "  restore ERROR lines: ${err_count} (some 'role/extension already exists' lines are expected)"
+
+# ---- step 6: scrub --------------------------------------------------
+
+log "Scrubbing PII"
+sudo docker exec -i "$TARGET_DB_CONTAINER" \
+    psql -U "$PROD_DB_USER" -d "$PROD_DB_NAME" --quiet -v ON_ERROR_STOP=1 <<'SQL'
+BEGIN;
+
+-- Anonymize users
+UPDATE users SET
+    email          = 'user-' || id || '@example.invalid',
+    name           = 'Dev User ' || id,
+    phone          = NULL,
+    phone_verified = false,
+    email_verified = true,
+    password       = '',
+    twitter_id     = NULL,
+    facebook_id    = NULL,
+    oidc_ids       = NULL,
+    extra          = '{}'::jsonb;
+
+-- Anonymize problem reporter info
+UPDATE problem SET
+    name         = 'Dev Reporter ' || COALESCE(user_id::text, 'anon'),
+    cobrand_data = '',
+    extra        = COALESCE(extra, '{}'::jsonb)
+                     - 'email' - 'phone' - 'name' - 'contact'
+                     - 'first_name' - 'last_name' - 'reporter_email';
+
+-- Anonymize comment author info
+UPDATE comment SET
+    name               = 'Dev Commenter ' || COALESCE(user_id::text, 'anon'),
+    website            = NULL,
+    cobrand_data       = '',
+    extra              = COALESCE(extra, '{}'::jsonb)
+                            - 'email' - 'phone' - 'name'
+                            - 'first_name' - 'last_name',
+    private_email_text = NULL;
+
+-- Wipe support tables that hold PII or session state
+TRUNCATE TABLE
+    abuse,
+    admin_log,
+    sessions,
+    token,
+    partial_user,
+    moderation_original_data,
+    textmystreet,
+    alert_sent
+CASCADE;
+
+-- Ensure a known-good superuser exists for dev testing
+INSERT INTO users (email, name, password, is_superuser, email_verified, created, last_active)
+VALUES ('dev-admin@example.invalid', 'Dev Admin', '', true, true, NOW(), NOW())
+ON CONFLICT DO NOTHING;
+
+COMMIT;
+SQL
+
+# ---- step 7: flush memcached ---------------------------------------
+
+if sudo docker inspect "$TARGET_MC_CONTAINER" >/dev/null 2>&1; then
+    log "Restarting memcached (${TARGET_MC_CONTAINER}) to flush cache"
+    # `docker restart` is the most portable way to flush — the memcached
+    # image is busybox and doesn't have bash/nc, so the network trick
+    # doesn't work. Restart is instant and the app reconnects on demand.
+    sudo docker restart "$TARGET_MC_CONTAINER" >/dev/null \
+        || log "  (memcached restart failed — non-fatal; app caches will expire)"
+else
+    log "Memcached container ${TARGET_MC_CONTAINER} not found (skipping flush)"
+fi
+
+# ---- step 8: verify -------------------------------------------------
+
+log "Verifying"
+sudo docker exec "$TARGET_DB_CONTAINER" \
+    psql -U "$PROD_DB_USER" -d "$PROD_DB_NAME" -A -t -c "
+        SELECT 'problems', COUNT(*) FROM problem
+        UNION ALL SELECT 'users', COUNT(*) FROM users
+        UNION ALL SELECT 'comments', COUNT(*) FROM comment
+        UNION ALL SELECT 'bodies', COUNT(*) FROM body
+        UNION ALL SELECT 'alerts (kept)', COUNT(*) FROM alert
+        UNION ALL SELECT 'sessions (wiped)', COUNT(*) FROM sessions
+        UNION ALL SELECT 'tokens (wiped)', COUNT(*) FROM token;
+    " | sed 's/^/  /'
+
+log "Sample scrubbed users (should all be @example.invalid):"
+sudo docker exec "$TARGET_DB_CONTAINER" \
+    psql -U "$PROD_DB_USER" -d "$PROD_DB_NAME" -A -c \
+    "SELECT id, email, name FROM users ORDER BY id LIMIT 5;" \
+    | sed 's/^/  /'
+
+# ---- step 9: photos (optional) -------------------------------------
+
+if [[ "$WITH_PHOTOS" == "1" ]]; then
+    log "Syncing photos (read-only) ${PROD_PHOTO_DIR} → ${TARGET_PHOTO_DIR}"
+    sudo mkdir -p "$TARGET_PHOTO_DIR"
+    sudo rsync -a --delete "${PROD_PHOTO_DIR}/" "${TARGET_PHOTO_DIR}/"
+    log "  photos synced ($(sudo du -sh "$TARGET_PHOTO_DIR" 2>/dev/null | cut -f1))"
+fi
+
+# ---- done -----------------------------------------------------------
+
+log "✓ Done."
+log "  Backup of pre-refresh ${TARGET} DB: ${BACKUP_FILE}"
+log "  Prod dump used:                      ${DUMP_FILE}"
+log "  Restore log:                         /tmp/restore-${TARGET}-${TS}.log"
+log ""
+log "Login: passwords are empty. Use 'forgot password' flow or register a new"
+log "       account. The stable admin account is dev-admin@example.invalid"
+log "       (also password-less; set one via the password-reset flow)."

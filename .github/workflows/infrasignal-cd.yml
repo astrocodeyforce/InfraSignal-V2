@@ -1,0 +1,183 @@
+# ============================================================
+# InfraSignal — CD Pipeline (Deploy)
+# ============================================================
+# Auto-deploys to staging when code is pushed to `staging` branch.
+# Deploys to production when a release is published.
+# Can also be triggered manually via workflow_dispatch.
+# ============================================================
+
+name: InfraSignal CD
+
+on:
+  # Auto-deploy to staging on push to staging branch
+  push:
+    branches: [staging]
+
+  # Deploy to production on release publish
+  release:
+    types: [published]
+
+  # Manual deploy with environment selection
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        type: choice
+        options:
+          - staging
+          - production
+      skip_tests:
+        description: 'Skip tests (emergency deploy)'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+  packages: read
+
+jobs:
+  # ---- Determine target environment ----
+  setup:
+    name: Determine target
+    runs-on: ubuntu-22.04
+    outputs:
+      environment: ${{ steps.env.outputs.target }}
+      branch: ${{ steps.env.outputs.branch }}
+    steps:
+      - name: Determine environment
+        id: env
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "target=${{ inputs.environment }}" >> $GITHUB_OUTPUT
+            echo "branch=${{ inputs.environment == 'production' && 'main' || 'staging' }}" >> $GITHUB_OUTPUT
+          elif [ "${{ github.event_name }}" = "release" ]; then
+            echo "target=production" >> $GITHUB_OUTPUT
+            echo "branch=main" >> $GITHUB_OUTPUT
+          else
+            echo "target=staging" >> $GITHUB_OUTPUT
+            echo "branch=staging" >> $GITHUB_OUTPUT
+          fi
+
+  # ---- Run tests first (unless skipped) ----
+  test:
+    name: Pre-deploy tests
+    needs: setup
+    if: ${{ github.event_name != 'workflow_dispatch' || !inputs.skip_tests }}
+    uses: ./.github/workflows/infrasignal-ci.yml
+
+  # ---- Deploy ----
+  deploy:
+    name: Deploy to ${{ needs.setup.outputs.environment }}
+    runs-on: ubuntu-22.04
+    needs: [setup, test]
+    if: always() && (needs.test.result == 'success' || needs.test.result == 'skipped')
+    environment:
+      name: ${{ needs.setup.outputs.environment }}
+      url: ${{ needs.setup.outputs.environment == 'production' && 'https://infrasignal.org' || 'https://staging.infrasignal.org' }}
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_PORT || 22 }}
+          script_stop: true
+          script: |
+            set -euo pipefail
+            cd /opt/infrasignal-v2
+
+            echo "=== Deploying ${{ needs.setup.outputs.environment }} ==="
+            echo "Branch: ${{ needs.setup.outputs.branch }}"
+            echo "Commit: ${{ github.sha }}"
+            echo "Triggered by: ${{ github.actor }}"
+
+            # Select compose file based on environment
+            ENV="${{ needs.setup.outputs.environment }}"
+            BRANCH="${{ needs.setup.outputs.branch }}"
+
+            if [ "$ENV" = "production" ]; then
+              COMPOSE_FILE="docker/docker-compose-prod.yml"
+            else
+              COMPOSE_FILE="docker/docker-compose-staging.yml"
+            fi
+
+            # Backup database before deploy
+            BACKUP_DIR="/opt/backups/infrasignal"
+            mkdir -p "$BACKUP_DIR"
+            TIMESTAMP=$(date +%Y%m%d_%H%M%S)
+            # Find the DB service name (postgres or db depending on compose)
+            DB_SVC=$(docker compose -f "$COMPOSE_FILE" ps --services | grep -E '^(db|postgres)$' | head -1)
+            if [ -n "$DB_SVC" ]; then
+              docker compose -f "$COMPOSE_FILE" exec -T "$DB_SVC" \
+                pg_dump -U postgres infrasignal 2>/dev/null | gzip > "${BACKUP_DIR}/${ENV}_${TIMESTAMP}.sql.gz" || true
+            fi
+
+            # Pull latest code
+            git fetch origin
+            git checkout "$BRANCH"
+            git pull origin "$BRANCH"
+
+            # Copy environment-specific config and inject secrets
+            cp "conf/general.yml-${ENV}" conf/general.yml
+            if [ -f docker/.env ]; then
+              # Inject real secrets from .env into the config
+              while IFS='=' read -r key value; do
+                [ -z "$key" ] || [ "${key:0:1}" = "#" ] && continue
+                value="${value#\"}"; value="${value%\"}"
+                value="${value#\'}"; value="${value%\'}"
+                export "$key=$value"
+              done < docker/.env
+              sed -i \
+                -e "s|FMS_DB_PASS: 'CHANGE_ME'|FMS_DB_PASS: '${FMS_DB_PASS:-CHANGE_ME}'|" \
+                -e "s|SMTP_SMARTHOST: 'localhost'|SMTP_SMARTHOST: '${SMTP_SMARTHOST:-localhost}'|" \
+                -e "s|SMTP_TYPE: ''|SMTP_TYPE: '${SMTP_TYPE:-}'|" \
+                -e "s|SMTP_PORT: ''|SMTP_PORT: '${SMTP_PORT:-}'|" \
+                -e "s|SMTP_USERNAME: ''|SMTP_USERNAME: '${SMTP_USERNAME:-}'|" \
+                -e "s|SMTP_PASSWORD: ''|SMTP_PASSWORD: '${SMTP_PASSWORD:-}'|" \
+                -e "s|SIGHTENGINE_API_USER: ''|SIGHTENGINE_API_USER: '${SIGHTENGINE_API_USER:-}'|" \
+                -e "s|SIGHTENGINE_API_SECRET: ''|SIGHTENGINE_API_SECRET: '${SIGHTENGINE_API_SECRET:-}'|" \
+                conf/general.yml
+              echo "✓ Secrets injected"
+            fi
+
+            # Build CSS
+            docker compose -f "$COMPOSE_FILE" exec -T fixmystreet bin/make_css 2>/dev/null || true
+
+            # Rebuild and restart
+            docker compose -f "$COMPOSE_FILE" build --quiet
+            docker compose -f "$COMPOSE_FILE" down
+            docker compose -f "$COMPOSE_FILE" --env-file docker/.env up -d
+
+            # Health check
+            sleep 10
+            RETRIES=10
+            for i in $(seq 1 $RETRIES); do
+              CODE=$(docker compose -f "$COMPOSE_FILE" exec -T fixmystreet \
+                wget -q -S -O /dev/null http://localhost:3000/ 2>&1 | head -1 | grep -oE '[0-9]{3}' || echo "000")
+              if [ "$CODE" = "200" ]; then
+                echo "✓ Health check passed (HTTP $CODE)"
+                break
+              fi
+              echo "  Attempt $i/$RETRIES — HTTP $CODE"
+              sleep 5
+            done
+
+            if [ "$CODE" != "200" ]; then
+              echo "✗ Health check FAILED"
+              docker compose -f "$COMPOSE_FILE" ps
+              docker compose -f "$COMPOSE_FILE" logs --tail 20 fixmystreet
+              exit 1
+            fi
+
+            echo "=== Deploy complete ==="
+            docker compose -f "$COMPOSE_FILE" ps
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "::error::Deploy to ${{ needs.setup.outputs.environment }} failed!"
+          echo "Check the SSH output above for details."
+          echo "To rollback: ssh to server and run ./bin/deploy --rollback"

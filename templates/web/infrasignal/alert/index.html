@@ -1,0 +1,141 @@
+[%~
+  #--------------------------------------------------------------
+  # alerts/index.html – InfraSignal Local Alerts Page
+  # Cobrand override: templates/web/infrasignal/alert/index.html
+  #--------------------------------------------------------------
+
+  SET bodyclass = 'alertpage';
+
+  DEFAULT search_placeholder = "Enter address or ZIP code";
+
+~%]
+
+[% INCLUDE 'header.html', title = loc('Local RSS Feeds & Email Alerts – InfraSignal') %]
+
+<!-- Hero -->
+<section class="alerts-hero">
+  [% INCLUDE 'front/hero-pulse.html' %]
+  <div class="infra-container" data-hero-exclude>
+    <div>
+      <svg class="alerts-hero__icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+      <h1 class="alerts-hero__title">[% loc('Local RSS Feeds & Email Alerts') %]</h1>
+    </div>
+    <p class="alerts-hero__subtitle">
+      [% loc('Stay informed about infrastructure reports in your area with customizable alerts and RSS feeds.') %]
+    </p>
+  </div>
+</section>
+
+<!-- Two-column layout -->
+<section class="alerts-body">
+  <div class="infra-container">
+    <div class="alerts-layout">
+
+      <!-- Sidebar -->
+      <aside class="alerts-sidebar">
+        <nav class="alerts-sidebar__nav">
+          [% INCLUDE 'about/_public-sidebar-links.html'
+              public_sidebar_active = 'alerts'
+              public_sidebar_link_class = 'alerts-sidebar__link'
+              public_sidebar_active_class = 'is-active'
+          %]
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <div class="alerts-main">
+
+        <!-- Intro -->
+        <div class="alerts-intro">
+          <h2 class="alerts-intro__title">[% loc('Find Local Alerts') %]</h2>
+          <p class="alerts-intro__text">
+            [% loc('InfraSignal offers a variety of RSS feeds and email alerts for local problems, including alerts for all problems within a particular ward or local authority, or all problems within a certain distance of a particular location.') %]
+          </p>
+          <p class="alerts-intro__text">
+            [% loc('To find out what local alerts we have for you, please enter your street name and area.') %]
+          </p>
+        </div>
+
+        <!-- Search card -->
+        <div class="alerts-search">
+          <label class="alerts-search__label" for="pc">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            [% loc('Address or ZIP code') %]
+          </label>
+          <p class="alerts-search__hint" id="pc-hint">
+            [% tprintf(loc("e.g. '%s' or '%s'"), c.cobrand.example_places) %]
+          </p>
+          [% IF location_error %]
+            <p id="email-error" class="form-error">[% location_error | safe %]</p>
+          [% ELSE %]
+            [% INCLUDE 'errors.html' %]
+          [% END %]
+          <form action="/alert/list" method="GET" class="alerts-search__row js-geolocate">
+            <div class="alerts-search__input-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <input type="text" id="pc" name="pc" class="alerts-search__input"
+                     placeholder="[% search_placeholder | html %]"
+                     value="[% pc | html %]"
+                     aria-describedby="pc-hint [% IF location_error %]email-error[% END %]"
+                     required />
+              <button type="submit" class="alerts-search__btn">
+                [% loc('Go') %]
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Info cards -->
+        <div class="alerts-info-grid">
+          <div class="alerts-info-card">
+            <div class="alerts-info-card__icon alerts-info-card__icon--rss">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+            </div>
+            <div>
+              <h4 class="alerts-info-card__title">[% loc('RSS Feeds') %]</h4>
+              <p class="alerts-info-card__text">
+                [% loc('Subscribe via your favorite RSS reader to get real-time updates on reports in your area.') %]
+              </p>
+            </div>
+          </div>
+          <div class="alerts-info-card">
+            <div class="alerts-info-card__icon alerts-info-card__icon--bell">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            </div>
+            <div>
+              <h4 class="alerts-info-card__title">[% loc("What you'll receive") %]</h4>
+              <ul class="alerts-info-card__list">
+                <li>[% loc('New reports within your chosen radius') %]</li>
+                <li>[% loc('Status changes on watched reports') %]</li>
+                <li>[% loc('Weekly digest option available') %]</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="alerts-info-grid">
+          <div class="alerts-info-card">
+            <div class="alerts-info-card__icon alerts-info-card__icon--bell">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>
+            </div>
+            <div>
+              <h4 class="alerts-info-card__title">[% loc('Want to browse first?') %]</h4>
+              <p class="alerts-info-card__text">
+                [% loc('Use All Reports to browse public report activity. Return here when you are ready to subscribe to alerts for a specific place.') %]
+              </p>
+              <p class="alerts-info-card__text"><a href="/reports">[% loc('View all reports') %]</a></p>
+            </div>
+          </div>
+        </div>
+
+        <p class="alerts-footer-note">
+          [% loc('You can unsubscribe from email alerts at any time.') %]
+        </p>
+
+      </div><!-- /alerts-main -->
+    </div><!-- /alerts-layout -->
+  </div><!-- /infra-container -->
+</section>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

@@ -1,0 +1,184 @@
+[% INCLUDE 'header.html',
+    title = loc('Frequently Asked Questions'),
+    bodyclass = 'infopage'
+%]
+
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = loc('Frequently Asked Questions')
+    public_page_subtitle = loc('Find answers to common questions about InfraSignal.')
+%]
+
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
+
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'faq'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
+
+      [%# Main Content %]
+      <div class="contact-main">
+
+        [%# General Section %]
+        <div class="faq-sections">
+
+          <div>
+            <h2 class="faq-section__title">[% loc('General') %]</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('Is InfraSignal free?') %]</summary>
+                <p class="faq-item__answer">[% loc('Yes. InfraSignal is free for all users. There is no charge to create an account, submit reports, receive status updates, or subscribe to local alerts.') %]</p>
+              </details>
+            </div>
+          </div>
+
+          [%# Reporting a Problem %]
+          <div>
+            <h2 class="faq-section__title">[% loc('Reporting a Problem') %]</h2>
+            <div class="faq-accordion">
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('How do I report a problem?') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('Start from the <a href="/">home page</a>, enter the location, place the pin on the map, choose the best category, add details and photos, then submit the report for routing.') %]</p>
+                  <p>[% loc('For the full report journey, see <a href="/how-it-works">How It Works</a>.') %]</p>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('What categories of problems can I report?') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('InfraSignal supports 13 standard infrastructure categories:') %]</p>
+                  <ul>
+                    <li>Abandoned Vehicle</li>
+                    <li>Bridge / Guardrail Damage</li>
+                    <li>Drainage / Flooding</li>
+                    <li>Fallen Tree / Vegetation</li>
+                    <li>Graffiti / Vandalism</li>
+                    <li>Illegal Dumping</li>
+                    <li>Park / Public Space Issue</li>
+                    <li>Pothole / Road Damage</li>
+                    <li>Sidewalk Damage</li>
+                    <li>Streetlight Outage</li>
+                    <li>Traffic Signal / Sign Issue</li>
+                    <li>Water / Sewer Issue</li>
+                    <li>Other</li>
+                  </ul>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('What should I not report on InfraSignal?') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('InfraSignal is designed for non-emergency infrastructure issues. <strong>Do not use InfraSignal for:</strong>') %]</p>
+                  <ul>
+                    <li><strong>[% loc('Emergencies') %]</strong> &mdash; [% loc('call <strong>911</strong> immediately for any threat to life or safety') %]</li>
+                    <li>[% loc('Crimes in progress or suspicious activity') %]</li>
+                    <li>[% loc('Utility outages (gas, electric, water) &mdash; contact your utility provider directly') %]</li>
+                    <li>[% loc('Noise complaints or neighbor disputes') %]</li>
+                    <li>[% loc('Missed trash or recycling pickup') %]</li>
+                    <li>[% loc('Building permits or code enforcement inquiries') %]</li>
+                    <li>[% loc('Animal control') %]</li>
+                    <li>[% loc('Parking or traffic enforcement') %]</li>
+                  </ul>
+                </div>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('Do I need an account?') %]</summary>
+                <p class="faq-item__answer">[% loc('You must provide a valid email address when submitting a report so that InfraSignal can send a confirmation link and deliver status updates. You may also create a full account to manage all your reports and subscriptions from one dashboard.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('Can I upload photos?') %]</summary>
+                <p class="faq-item__answer">[% loc('Yes. You may attach up to 3 photos per report. Photos are automatically screened for inappropriate content before being published.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('Can I report anonymously?') %]</summary>
+                <p class="faq-item__answer">[% loc('You may choose to hide your name from the public-facing report page. However, your name and email address are always shared with the responsible local authority so they can investigate and, if needed, contact you about the issue.') %]</p>
+              </details>
+
+            </div>
+          </div>
+
+          [%# After Submitting %]
+          <div>
+            <h2 class="faq-section__title">[% loc('After Submitting') %]</h2>
+            <div class="faq-accordion">
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('How are reports delivered to local authorities?') %]</summary>
+                <p class="faq-item__answer">[% loc('Reports are sent via email to the designated contact address for the responsible local authority. Each report includes the problem location (coordinates and address), the selected category, your description, any attached photos, and your contact information.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('How are reports prioritized?') %]</summary>
+                <p class="faq-item__answer">[% loc('InfraSignal assigns one of four priority levels to each report: <strong>Emergency</strong> (immediate safety hazard), <strong>High</strong> (needs attention within 24 hours), <strong>Normal</strong> (standard response time), and <strong>Low</strong> (non-urgent). Local authorities can adjust priority as part of their investigation.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('How long will it take to fix my problem?') %]</summary>
+                <p class="faq-item__answer">[% loc('Response times depend on the category, severity, and the local authority&rsquo;s workload. InfraSignal does not control how quickly authorities respond; it enables you to track your report&rsquo;s status and receive email updates when action is taken.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('How do I check the status of my report?') %]</summary>
+                <p class="faq-item__answer">[% loc('You will receive email notifications when the status changes. You can also log in to your account and view all your reports under <strong>Your account</strong>. Each report shows its current status: open, investigating, in progress, fixed, or closed.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('What if my problem has not been addressed?') %]</summary>
+                <p class="faq-item__answer">[% loc('You can post an update on your existing report at any time to provide additional photos, note that the problem persists, or add new details. The responsible authority is notified of each update.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('Can I see reports submitted by others?') %]</summary>
+                <p class="faq-item__answer">[% loc('Yes. The <a href="/reports">All Reports</a> page displays all public reports with their status, location, and category. You can browse by area or search for specific locations.') %]</p>
+              </details>
+
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('Can I get alerts about problems near me?') %]</summary>
+                <p class="faq-item__answer">[% loc('Yes. Visit <a href="/alert">Local Alerts</a> to subscribe to email notifications for new reports in your area. You can set alerts by geographic radius or by specific local authority.') %]</p>
+              </details>
+
+            </div>
+          </div>
+
+          [%# Technical %]
+          <div>
+            <h2 class="faq-section__title">[% loc('Technical') %]</h2>
+            <div class="faq-accordion">
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('What devices are supported?') %]</summary>
+                <p class="faq-item__answer">[% loc('InfraSignal is a responsive web application that works on smartphones, tablets, and desktop computers. No app installation is required &mdash; access through any modern web browser.') %]</p>
+              </details>
+            </div>
+          </div>
+
+        </div>[%# .faq-sections %]
+
+        [%# Still Have Questions? CTA %]
+        <div class="faq-cta">
+          <h3>[% loc('Still have questions?') %]</h3>
+          <p>[% loc('Can&rsquo;t find what you&rsquo;re looking for? We&rsquo;re happy to help.') %]</p>
+          <a href="/contact" class="faq-cta__btn">[% loc('Contact Us') %] →</a>
+        </div>
+
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

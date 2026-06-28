@@ -129,12 +129,16 @@ SIGHTENGINE_IMAGE_LIST_ID: ''
 #   MAPIT_URL: 'http://global.mapit.mysociety.org/'
 # And then specify whichever type code have the boundaries you want:
 #   MAPIT_TYPES: [ 'O06' ]
-MAPIT_URL: 'http://localhost:9000/fakemapit/'
-MAPIT_TYPES: [ 'ZZZ' ]
+# US setup: use the global MapIt (OSM admin boundaries) so points resolve to
+# the real state/county/township/city areas our bodies are attached to. Do NOT
+# revert to fakemapit (that returns a single "Everywhere" area 161 and breaks
+# location/body detection).
+MAPIT_URL: 'https://global.mapit.mysociety.org/'
+MAPIT_TYPES: [ 'O04', 'O06', 'O07', 'O08' ]
 
 # If the MapIt you're using in MAPIT_URL requires an API key
 # (as https://mapit.mysociety.org/ does, for example), specify it here.
-# MAPIT_API_KEY: ''
+MAPIT_API_KEY: ''
 
 # If you are using global MapIt, you might want to restrict FixMyStreet usage
 # to only one or more areas, rather than all O04, for example. Provide MapIt
@@ -143,7 +147,7 @@ MAPIT_TYPES: [ 'ZZZ' ]
 #   MAPIT_ID_WHITELIST: [ 240838, 246176, 246733 ]
 #   MAPIT_GENERATION: 2
 MAPIT_ID_WHITELIST: []
-MAPIT_GENERATION: 0
+MAPIT_GENERATION: 10
 
 # If your MapIt has the concept of council wards (subareas of councils, where
 # people can sign up for alerts, but not report things), then you can give the
@@ -178,7 +182,11 @@ BING_MAPS_API_KEY: ''
 #     google_country: <.ccTLD to restrict results to>
 #     lang: <language for results>
 #
-GEOCODING_DISAMBIGUATION: ''
+# Restrict address search to the United States so we never surface UK/other
+# countries (e.g. "Manchester, England"). bounds = continental US.
+GEOCODING_DISAMBIGUATION:
+  country: 'us'
+  bounds: [ 24.396308, -125.0, 49.384358, -66.93457 ]
 
 # The type of map you want to use. If left blank, the default is OpenStreetMap.
 # Other options are currently pretty UK specific, including "FMS" for UK

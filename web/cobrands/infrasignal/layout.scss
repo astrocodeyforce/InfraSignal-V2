@@ -1,2 +1,131 @@
 @import "_colours";
 @import "../sass/layout";
+
+body.mappage #site-header {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+}
+
+/* ======================================================
+   A12: Desktop Layout Polish (≥48em / 768px)
+   Updated for community-connect design system.
+   ====================================================== */
+
+// Content area — default max-width for inner pages
+.content {
+    max-width: 960px;
+}
+
+// Frontpage content must be full-width so sections go edge-to-edge
+.frontpage .content {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    float: none !important;
+}
+
+// Frontpage container also full-width
+.frontpage .container {
+    max-width: none !important;
+    padding: 0 !important;
+}
+
+// Override platform's table layout for tablewrapper on frontpage
+.frontpage .tablewrapper {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    table-layout: auto !important;
+
+    > div {
+        display: block !important;
+        width: 100% !important;
+    }
+}
+
+// Hero section desktop enhancement
+.frontpage #front-main {
+    padding: 48px 0;
+
+    h1 {
+        font-size: 2.5rem;
+    }
+
+    // Override platform layout.css rules that break search bar centering:
+    // Platform sets .report-forms-wrapper{display:flex;flex-direction:row}
+    // Platform sets .postcode-form-box{max-width:55%}
+    // Platform sets .postcode-form-box div{width:20em}
+    .report-forms-wrapper {
+        display: block !important;
+    }
+
+    .postcode-form-box {
+        max-width: none !important;
+        overflow: visible !important;
+        background: transparent !important;
+
+        div {
+            width: auto !important;
+            max-width: 440px;
+            margin: 0 auto;
+        }
+    }
+}
+
+// Dashboard — full-width (same as frontpage)
+body.dashboard .content {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    float: none !important;
+}
+
+body.dashboard .container {
+    max-width: none !important;
+    padding: 0 !important;
+}
+
+body.dashboard .content footer {
+    margin: 0 !important;
+}
+
+// Contact & Info pages — full-width
+body.contactpage .content,
+body.infopage .content {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: transparent !important;
+    color: inherit !important;
+    float: none !important;
+}
+
+body.contactpage .container,
+body.contactpage .container--sidebar,
+body.infopage .container,
+body.infopage .container--sidebar {
+    max-width: none !important;
+    width: 100% !important;
+    padding: 0 !important;
+    display: block !important;
+}
+
+body.contactpage .content footer,
+body.infopage .content footer {
+    margin: 0 !important;
+}
+
+// Report list — cards with spacing
+.item-list--reports {
+    .item-list__item {
+        margin-bottom: 16px;
+    }
+}

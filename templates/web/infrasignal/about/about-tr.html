@@ -1,109 +1,131 @@
 [% INCLUDE 'header.html',
     title = loc('About InfraSignal'),
-    sidebar = 'about/_sidebar.html'
+    bodyclass = 'infopage'
 %]
 
-<h1>InfraSignal Hakkında</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'InfraSignal Hakkında'
+    public_page_subtitle = 'Sakinlerin topluluklarını iyileştirmesine yardımcı oluyoruz — her seferinde bir bildirimle.'
+%]
 
-<p>InfraSignal, sakinlerin yerel altyapı sorunlarını bildirmesini ve takip
-etmesini &mdash; yerel yönetimlerin ise bu sorunları almasını,
-önceliklendirmesini ve çözmesini kolaylaştıran bir sivil altyapı bildirim
-platformudur.</p>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<h2>Ne Yapıyoruz</h2>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'about'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<p>Amerika Birleşik Devletleri genelinde, çukurlar, bozuk sokak lambaları,
-hasarlı kaldırımlar ve yasadışı atık gibi altyapı sorunları, sakinlerin
-kime başvuracaklarını veya nasıl ulaşacaklarını bilmemeleri nedeniyle
-bildirilmeden kalır. InfraSignal, sorunun coğrafi konumuna göre raporları
-otomatik olarak doğru şehir, ilçe veya eyalet yönetimine yönlendiren
-tek, kullanımı kolay bir platform sunarak bu sorunu çözer.</p>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<p>Bir sakin rapor gönderdiğinde, InfraSignal:</p>
-<ol>
-    <li>Resmi coğrafi sınır verilerini kullanarak sorumlu yerel yönetimi
-    belirler</li>
-    <li>Konum, kategori, açıklama, fotoğraflar ve öncelik seviyesi dahil
-    eksiksiz raporu doğrudan ilgili yönetime iletir</li>
-    <li>Durum değiştikçe bildirimi yapan kişiyi e-posta bildirimleriyle
-    güncel tutar</li>
-    <li>Raporu, topluluğun yerel sorunları ve çözüm süreçlerini görebilmesi
-    için kamuya açık bir haritada yayınlar</li>
-</ol>
+        [%# What We Do — Feature Cards %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">Ne Yapıyoruz</h2>
+          <p>Amerika Birleşik Devletleri genelinde çukurlar, bozuk sokak lambaları, hasarlı kaldırımlar ve yasadışı atık gibi altyapı sorunları, sakinler kime başvuracaklarını bilmedikleri için bildirilmeden kalır. InfraSignal bunu tek ve kullanımı kolay bir platformla çözer.</p>
 
-<h2>Kapsam</h2>
+          <div class="about-what-we-do">
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📍</div>
+              <h3>Konumu Belirleyin</h3>
+              <p>Sorunu haritada işaretleyin</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📨</div>
+              <h3>Yönlendirme</h3>
+              <p>Doğru yönetime otomatik yönlendirme</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🔔</div>
+              <h3>Takip</h3>
+              <p>Durum güncellemelerini e-postayla alın</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🗺️</div>
+              <h3>Harita</h3>
+              <p>Topluluk için herkese açık görünürlük</p>
+            </div>
+          </div>
+        </div>
 
-<p>InfraSignal şu anda Amerika Birleşik Devletleri&rsquo;nin tamamına
-hizmet vermektedir; altyapı raporları şu birimlere yönlendirilir:</p>
-<ul>
-    <li><strong>51 eyalet düzeyinde yönetim</strong> (50 eyaletin tamamı ve
-    Columbia Bölgesi)</li>
-    <li><strong>3.000&rsquo;den fazla ilçe yönetimi</strong></li>
-    <li><strong>25.000&rsquo;den fazla şehir ve kasaba yönetimi</strong></li>
-</ul>
+        [%# Coverage Stats Grid %]
+        <h3 style="text-align: center; margin: 0 0 0.75rem">Şuralara yönlendirmek için tasarlandı</h3>
+        <div class="about-stats" style="margin-bottom: 1.5rem">
+          <div class="about-stats__item">
+            <span class="about-stats__number">50</span>
+            <span class="about-stats__label">Eyalet</span>
+            <span class="about-stats__detail">+ D.C.</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">3.000+</span>
+            <span class="about-stats__label">İlçe</span>
+            <span class="about-stats__detail">İlçe yönetimleri</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">25.000+</span>
+            <span class="about-stats__label">Şehir</span>
+            <span class="about-stats__detail">Şehir ve kasaba yönetimleri</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">13</span>
+            <span class="about-stats__label">Kategori</span>
+            <span class="about-stats__detail">Standartlaştırılmış türler</span>
+          </div>
+        </div>
 
-<p>Tüm yetki birimleri; çukur/yol hasarı, sokak lambası arızası,
-drenaj/su baskını, grafiti/vandalizm, kaldırım hasarı, köprü/korkuluk
-hasarı, trafik sinyali/tabela sorunları ve daha fazlasını içeren 13
-standartlaştırılmış altyapı kategorisinde raporlar alır.</p>
+        [%# How It Works — Teaser %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">Nasıl Çalışır</h2>
+          <p>Bildirimler net bir yaşam döngüsünden geçer: sakin konum ve ayrıntıları ekler, InfraSignal bildirimi yönlendirmeye yardımcı olur ve herkes zaman içinde herkese açık güncellemeleri takip edebilir.</p>
+          <div class="about-contact">
+            <a href="/how-it-works" class="about-contact__link--primary">
+              Tüm süreci görün &rarr;
+            </a>
+          </div>
+        </div>
 
-<h2>Nasıl Çalışır</h2>
+        [%# For Local Authorities — Summary Card %]
+        <div class="about-benefits-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0; font-size: 1.125rem; font-weight: 600">Yerel Yönetimler İçin</h2>
+          <p style="font-size: 0.875rem; color: #6b7280">InfraSignal, kamu ekiplerine sakinlerden yapılandırılmış, konuma dayalı bildirimler almak için standart bir kanal sunar. Operasyon, entegrasyon ve ortaklık ayrıntıları artık yerel yönetim sayfasında yer alıyor.</p>
+          <div class="about-contact">
+            <a href="/about/for-local-government" class="about-contact__link--outline">
+              Yerel Yönetim İçin
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              İletişim Formu &rarr;
+            </a>
+          </div>
+        </div>
 
-<table class="nicetable">
-    <tr>
-        <th scope="col">Adım</th>
-        <th scope="col">Ne Olur</th>
-    </tr>
-    <tr>
-        <td><strong>1. Konum Belirle</strong></td>
-        <td>Bir sokak adresi, şehir veya posta kodu girin. Haritada sorunun
-        bulunduğu noktaya bir işaretçi yerleştirin.</td>
-    </tr>
-    <tr>
-        <td><strong>2. Tanımla</strong></td>
-        <td>Bir kategori seçin, açıklama yazın ve en fazla 3 fotoğraf
-        yükleyin. Fotoğraflar uygunsuz içerik açısından otomatik olarak
-        kontrol edilir.</td>
-    </tr>
-    <tr>
-        <td><strong>3. Yönlendir</strong></td>
-        <td>InfraSignal, coğrafi sınır verilerini kullanarak sorumlu
-        yönetimi belirler ve raporunuzu tam ayrıntılar ve öncelik
-        sınıflandırmasıyla birlikte gönderir.</td>
-    </tr>
-    <tr>
-        <td><strong>4. Takip Et</strong></td>
-        <td>Yönetim inceleme yaparken e-posta güncellemeleri alın.
-        Tüm raporları kamuya açık haritada görüntüleyin. İstediğiniz
-        zaman takip güncellemeleri gönderin.</td>
-    </tr>
-</table>
+        [%# Contact CTA %]
+        <div class="info-page-card" style="text-align: center">
+          <h2 style="margin-top: 0">İletişim</h2>
+          <p>Sorular, öneriler veya ortaklık talepleri mi var?</p>
+          <div class="about-contact">
+            <a href="mailto:[% c.cobrand.contact_email %]" class="about-contact__link--outline">
+              ✉ [% c.cobrand.contact_email %]
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              İletişim Formu →
+            </a>
+          </div>
+        </div>
 
-<h2>Yerel Yönetimler İçin</h2>
-
-<p>InfraSignal, kamu kurumlarına vatandaşlardan altyapı raporları almak
-için standartlaştırılmış bir kanal sunar. Avantajlar:</p>
-<ul>
-    <li>Fotoğraflar ve öncelik seviyeleriyle yapılandırılmış, coğrafi
-    konumlu raporlar</li>
-    <li>Yaygın bayındırlık operasyonlarına uygun 13 standartlaştırılmış
-    kategori</li>
-    <li>Her yetki birimi için otomatik olarak oluşturulan dört kademeli
-    öncelik sistemi (Acil, Yüksek, Normal, Düşük)</li>
-    <li>CRM ve iş emri sistemleriyle gelecekte otomatik entegrasyon için
-    Open311 GeoReport v2 standardıyla uyumluluk</li>
-</ul>
-
-<p>Yetki biriminizin iletişim bilgilerini güncellemek veya entegrasyonu
-görüşmek için <a href="/contact">iletişim sayfamızı</a> ziyaret edin.</p>
-
-<h2>İletişim</h2>
-
-<p>Sorularınız, önerileriniz veya iş birliği talepleriniz mi var?
-Bize ulaşın:</p>
-<ul>
-    <li>E-posta: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
-    <li>Web: <a href="/contact">İletişim Formu</a></li>
-</ul>
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

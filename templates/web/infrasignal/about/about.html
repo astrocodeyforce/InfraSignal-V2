@@ -1,0 +1,131 @@
+[% INCLUDE 'header.html',
+    title = loc('About InfraSignal'),
+    bodyclass = 'infopage'
+%]
+
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = loc('About InfraSignal')
+    public_page_subtitle = loc('Empowering residents to improve their communities, one report at a time.')
+%]
+
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
+
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'about'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
+
+      [%# Main Content %]
+      <div class="contact-main">
+
+        [%# What We Do — Feature Cards %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">[% loc('What We Do') %]</h2>
+          <p>[% loc('Across the United States, infrastructure problems like potholes, broken streetlights, damaged sidewalks, and illegal dumping go unreported because residents don&rsquo;t know who to contact. InfraSignal solves this with a single, easy-to-use platform.') %]</p>
+
+          <div class="about-what-we-do">
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📍</div>
+              <h3>[% loc('Locate') %]</h3>
+              <p>[% loc('Pin the problem on the map') %]</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📨</div>
+              <h3>[% loc('Route') %]</h3>
+              <p>[% loc('Auto-route to the right authority') %]</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🔔</div>
+              <h3>[% loc('Track') %]</h3>
+              <p>[% loc('Get email updates on status') %]</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🗺️</div>
+              <h3>[% loc('Map') %]</h3>
+              <p>[% loc('Public visibility for community') %]</p>
+            </div>
+          </div>
+        </div>
+
+        [%# Coverage Stats Grid %]
+        <h3 style="text-align: center; margin: 0 0 0.75rem">[% loc('Built to route across') %]</h3>
+        <div class="about-stats" style="margin-bottom: 1.5rem">
+          <div class="about-stats__item">
+            <span class="about-stats__number">50</span>
+            <span class="about-stats__label">[% loc('States') %]</span>
+            <span class="about-stats__detail">[% loc('+ D.C.') %]</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">3,000+</span>
+            <span class="about-stats__label">[% loc('Counties') %]</span>
+            <span class="about-stats__detail">[% loc('County governments') %]</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">25,000+</span>
+            <span class="about-stats__label">[% loc('Cities') %]</span>
+            <span class="about-stats__detail">[% loc('City &amp; town governments') %]</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">13</span>
+            <span class="about-stats__label">[% loc('Categories') %]</span>
+            <span class="about-stats__detail">[% loc('Standardized types') %]</span>
+          </div>
+        </div>
+
+        [%# How It Works — Teaser %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">[% loc('How It Works') %]</h2>
+          <p>[% loc('Reports move through a clear lifecycle: residents add a location and details, InfraSignal helps route the report, and everyone can follow public updates over time.') %]</p>
+          <div class="about-contact">
+            <a href="/how-it-works" class="about-contact__link--primary">
+              [% loc('See the full process') %] &rarr;
+            </a>
+          </div>
+        </div>
+
+        [%# For Local Authorities — Summary Card %]
+        <div class="about-benefits-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0; font-size: 1.125rem; font-weight: 600">[% loc('For Local Authorities') %]</h2>
+          <p style="font-size: 0.875rem; color: #6b7280">[% loc('InfraSignal gives public teams a standardized channel for receiving structured, location-based reports from residents. Operational, integration, and partnership details now live on the local government page.') %]</p>
+          <div class="about-contact">
+            <a href="/about/for-local-government" class="about-contact__link--outline">
+              [% loc('For Local Government') %]
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              [% loc('Contact Form') %] &rarr;
+            </a>
+          </div>
+        </div>
+
+        [%# Contact CTA %]
+        <div class="info-page-card" style="text-align: center">
+          <h2 style="margin-top: 0">[% loc('Get in Touch') %]</h2>
+          <p>[% loc('Questions, suggestions, or partnership inquiries?') %]</p>
+          <div class="about-contact">
+            <a href="mailto:[% c.cobrand.contact_email %]" class="about-contact__link--outline">
+              ✉ [% c.cobrand.contact_email %]
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              [% loc('Contact Form') %] →
+            </a>
+          </div>
+        </div>
+
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

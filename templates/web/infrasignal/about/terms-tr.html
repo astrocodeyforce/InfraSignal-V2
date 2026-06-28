@@ -1,281 +1,274 @@
 [% INCLUDE 'header.html',
     title = loc('Terms of Use'),
-    sidebar = 'about/_sidebar.html'
+    bodyclass = 'infopage'
 %]
 
-<h1>Kullanım Koşulları</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'Kullanım Koşulları'
+    public_page_subtitle = 'InfraSignal\'i kullanmadan önce lütfen bu koşulları dikkatlice okuyun.'
+%]
 
-<p><strong>Yürürlük Tarihi: 15 Şubat 2026</strong><br>
-<strong>Son Güncelleme: 28 Şubat 2026</strong></p>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<h2>1. Hizmet Açıklaması</h2>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'terms'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<p>InfraSignal, Amerika Birleşik Devletleri sakinlerinin çukurlar, bozuk
-sokak lambaları, drenaj sorunları ve diğer altyapı endişelerini sorumlu
-yerel yönetim birimine bildirmelerini sağlayan bir sivil altyapı bildirim
-platformudur. Raporlar, 50 eyaletin tamamı ve Columbia Bölgesi genelindeki
-şehirlere, ilçelere, ilçe belediyelerine ve eyalet kurumlarına
-iletilmektedir.</p>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<p>Hizmet şunları yapmanıza olanak tanır:</p>
-<ul>
-    <li>Açıklamalar ve fotoğraflarla coğrafi konumlu altyapı sorun
-    raporları gönderme</li>
-    <li>Raporlarınızın durumunu takip etme</li>
-    <li>Bölgenizdeki diğer kullanıcılar tarafından gönderilen raporları
-    görüntüleme</li>
-    <li>Belirli bir coğrafi bölgedeki sorunlar hakkında uyarılara abone
-    olma</li>
-</ul>
+        [%# Effective date intro %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <p style="margin-bottom: 0.5rem"><strong>Yürürlük Tarihi: 15 Şubat 2026</strong><br>
+          <strong>Son Güncelleme: 28 Şubat 2026</strong></p>
+        </div>
 
-<h2>2. Uygunluk</h2>
+        [%# Accordion sections %]
+        <div class="faq-sections">
 
-<p>Hizmeti kullanabilmek için en az 13 yaşında olmanız gerekir. Hizmeti
-kullanarak, en az 13 yaşında olduğunuzu ve bu Koşullara girme yasal
-kapasitesine sahip olduğunuzu beyan etmiş olursunuz. 18 yaşından
-küçükseniz, ebeveyn veya yasal vasinizin bunları incelediğini ve sizin
-adınıza kabul ettiğini beyan etmiş olursunuz.</p>
+          <div>
+            <h2 class="faq-section__title">Başlangıç</h2>
+            <div class="faq-accordion">
 
-<h2>3. Hesap Kaydı</h2>
+              <details class="faq-item" open>
+                <summary class="faq-item__question">1. Hizmetin Tanımı</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal, Amerika Birleşik Devletleri sakinlerinin çukurlar, bozuk sokak lambaları, drenaj sorunları ve diğer altyapı endişeleri gibi sorunları sorumlu yerel yönetime bildirmesini sağlayan bir sivil altyapı bildirim platformudur. Bildirimler, 50 eyaletin tamamında ve Columbia Bölgesi'nde şehirlere, ilçelere, beldelere ve eyalet kurumlarına iletilir.</p>
+                  <p>Hizmet şunları yapmanıza olanak tanır:</p>
+                  <ul>
+                    <li>Açıklamalar ve fotoğraflarla altyapı sorunlarının konum etiketli bildirimlerini göndermek</li>
+                    <li>Bildirimlerinizin durumunu takip etmek</li>
+                    <li>Bölgenizdeki diğer kullanıcılar tarafından gönderilen bildirimleri görüntülemek</li>
+                    <li>Belirli bir coğrafi alandaki sorunlarla ilgili uyarılara abone olmak</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>Her gönderimde adınızı ve e-posta adresinizi belirterek hesap
-oluşturmadan rapor gönderebilirsiniz. İsteğe bağlı olarak, raporlarınızı
-ve tercihlerinizi yönetmek için bir hesap oluşturabilirsiniz. Bir hesap
-oluşturursanız, şunlardan sorumlusunuz:</p>
-<ul>
-    <li>Doğru, güncel ve eksiksiz bilgi sağlama</li>
-    <li>Oturum açma kimlik bilgilerinizin güvenliğini ve gizliliğini
-    koruma</li>
-    <li>Hesabınız altında gerçekleşen tüm faaliyetler</li>
-    <li>Hesabınızın yetkisiz kullanımını derhal bize bildirme</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">2. Uygunluk</summary>
+                <div class="faq-item__answer">
+                  <p>Hizmeti kullanmak için en az 13 yaşında olmalısınız. Hizmeti kullanarak, en az 13 yaşında olduğunuzu ve bu Koşulları kabul etmek için yasal ehliyete sahip olduğunuzu beyan edersiniz. 18 yaşından küçükseniz, ebeveyninizin veya yasal vasinizin bu Koşulları sizin adınıza incelediğini ve kabul ettiğini beyan edersiniz.</p>
+                </div>
+              </details>
 
-<h2>4. Kabul Edilebilir Kullanım</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">3. Hesap Kaydı</summary>
+                <div class="faq-item__answer">
+                  <p>Her gönderimde adınızı ve e-posta adresinizi sağlayarak hesap oluşturmadan bildirim gönderebilirsiniz. İsteğe bağlı olarak, bildirimlerinizi ve tercihlerinizi yönetmek için bir hesap oluşturabilirsiniz. Bir hesap oluşturursanız, şunlardan sorumlu olursunuz:</p>
+                  <ul>
+                    <li>Doğru, güncel ve eksiksiz bilgi sağlamak</li>
+                    <li>Giriş kimlik bilgilerinizin güvenliğini ve gizliliğini korumak</li>
+                    <li>Hesabınız altında gerçekleşen tüm etkinlikler</li>
+                    <li>Hesabınızın yetkisiz kullanımını derhal bize bildirmek</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>Hizmeti yalnızca amacına uygun olarak &mdash; yerel yönetim birimlerine
-meşru altyapı sorunlarını bildirmek için &mdash; kullanmayı kabul
-edersiniz. Şunları <strong>yapmayacağınızı</strong> kabul edersiniz:</p>
+            </div>
+          </div>
 
-<ul>
-    <li>Yanlış, yanıltıcı veya sahte raporlar gönderme</li>
-    <li>Müstehcen, pornografik, cinsel içerikli, şiddet içeren, tehdit
-    edici, nefret dolu, iftira niteliğinde veya başka şekilde
-    sakıncalı fotoğraf veya içerik yükleme</li>
-    <li>Çıplaklık, silah, uyuşturucu, alkol, kendine zarar verme veya
-    grafik şiddet tasvir eden görseller yükleme</li>
-    <li>Hizmeti, devlet çalışanları dahil herhangi bir kişiyi taciz etmek,
-    takip etmek veya gözdağı vermek için kullanma</li>
-    <li>Üçüncü taraflar hakkında kişisel bilgiler (plaka numaraları,
-    yüzler veya ev adresleri gibi) içeren raporları onayları olmadan
-    gönderme</li>
-    <li>Altyapı sorunlarıyla ilgisiz amaçlarla spam, mükerrer veya toplu
-    raporlar gönderme</li>
-    <li>Hizmete, diğer hesaplara, sunuculara veya veritabanlarına yetkisiz
-    erişim girişiminde bulunma</li>
-    <li>Önceden yazılı iznimiz olmadan Hizmete erişmek için otomatik
-    komut dosyaları, botlar veya kazıma araçları kullanma</li>
-    <li>Hizmetin çalışmasına müdahale etme veya aksatma</li>
-    <li>Geçerli açık kaynak lisansının izin verdiği durumlar dışında
-    Hizmeti tersine mühendislik yapma, kaynak koduna dönüştürme veya
-    parçalara ayırma</li>
-    <li>Hizmeti herhangi bir geçerli yerel, eyalet veya federal yasayı
-    ihlal etmek için kullanma</li>
-</ul>
+          <div>
+            <h2 class="faq-section__title">Kullanım Kuralları</h2>
+            <div class="faq-accordion">
 
-<h2>5. İçerik Denetimi</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">4. Kabul Edilebilir Kullanım</summary>
+                <div class="faq-item__answer">
+                  <p>Hizmeti yalnızca amaçlanan amacı için &mdash; meşru altyapı sorunlarını yerel yönetimlere bildirmek &mdash; kullanmayı kabul edersiniz. Şunları <strong>yapmayacağınızı</strong> kabul edersiniz:</p>
+                  <ul>
+                    <li>Yanlış, yanıltıcı veya hileli bildirimler göndermek</li>
+                    <li>Müstehcen, pornografik, cinsel açıdan açık, şiddet içeren, tehditkâr, nefret dolu, iftira niteliğinde veya başka şekilde sakıncalı fotoğraflar veya içerik yüklemek</li>
+                    <li>Çıplaklık, silah, uyuşturucu, alkol, kendine zarar verme veya çarpıcı şiddet içeren görüntüler yüklemek</li>
+                    <li>Devlet çalışanları dahil herhangi bir kişiyi taciz etmek, takip etmek veya korkutmak için Hizmeti kullanmak</li>
+                    <li>Üçüncü tarafların kişisel bilgilerini onayları olmadan içeren bildirimler göndermek</li>
+                    <li>Altyapı sorunlarıyla ilgisi olmayan amaçlarla istenmeyen, yinelenen veya toplu bildirimler göndermek</li>
+                    <li>Hizmete, diğer hesaplara, sunuculara veya veritabanlarına yetkisiz erişim sağlamaya çalışmak</li>
+                    <li>Önceden yazılı iznimiz olmadan otomatik komut dosyaları, botlar veya veri toplama araçları kullanmak</li>
+                    <li>Hizmetin işleyişine müdahale etmek veya onu bozmak</li>
+                    <li>Geçerli açık kaynak lisansının izin verdiği durumlar dışında Hizmeti tersine mühendislik yapmak, kaynak koda dönüştürmek veya parçalarına ayırmak</li>
+                    <li>Geçerli herhangi bir yerel, eyalet veya federal yasayı ihlal etmek için Hizmeti kullanmak</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>InfraSignal&rsquo;a yüklenen tüm fotoğraflar otomatik içerik
-denetimine tabidir. Denetleme sistemimiz, çıplaklık, silah, şiddet,
-uyuşturucu ve diğer uygunsuz materyaller dahil ancak bunlarla sınırlı
-olmamak üzere yasaklanmış içerik açısından görselleri analiz eder.
-İçerik kurallarımızı ihlal eden fotoğraflar otomatik olarak
-reddedilebilir.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">5. İçerik Denetimi</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal'e yüklenen tüm fotoğraflar otomatik içerik denetimine tabidir. Denetim sistemimiz görüntüleri, çıplaklık, silah, şiddet, uyuşturucu ve diğer uygunsuz materyaller dahil ancak bunlarla sınırlı olmamak üzere yasak içerik açısından analiz eder. İçerik kurallarımızı ihlal eden fotoğraflar otomatik olarak reddedilebilir.</p>
+                  <p>Ayrıca, bu Koşulları ihlal etmesi, uygunsuz olması veya meşru altyapı bildirimiyle ilgisiz olması durumunda, herhangi bir bildirim içeriğini (metin ve fotoğraflar dahil) kendi takdirimize bağlı olarak inceleme, düzenleme veya kaldırma hakkını saklı tutarız.</p>
+                </div>
+              </details>
 
-<p>Ayrıca, bu Koşulları ihlal eden, uygunsuz olan veya meşru altyapı
-bildirimi ile ilgisiz olan herhangi bir rapor içeriğini (metin ve
-fotoğraflar dahil) tamamen kendi takdirimize bağlı olarak inceleme,
-düzenleme veya kaldırma hakkını saklı tutarız.</p>
+            </div>
+          </div>
 
-<h2>6. Kullanıcı Tarafından Oluşturulan İçerik</h2>
+          <div>
+            <h2 class="faq-section__title">İçerik ve Fikri Mülkiyet</h2>
+            <div class="faq-accordion">
 
-<h3>6.1 İçeriğiniz</h3>
-<p>Gönderdiğiniz metin açıklamaların ve fotoğrafların
-(&ldquo;Kullanıcı İçeriği&rdquo;) mülkiyeti size aittir. Kullanıcı
-İçeriği göndererek, InfraSignal&rsquo;a Kullanıcı İçeriğinizi herhangi
-bir amaçla &mdash; Hizmeti işletme ve iyileştirme, raporları yerel yönetim
-birimleriyle paylaşma, platformda kamuya açık olarak görüntüleme,
-araştırma ve analitik yürütme, model ve algoritma eğitimi, yeni ürün ve
-özellik geliştirme, tanıtım ve ticari amaçlar dahil ancak bunlarla
-sınırlı olmamak üzere &mdash; kullanmak, barındırmak, saklamak,
-görüntülemek, çoğaltmak, değiştirmek, türetilmiş eserler oluşturmak,
-dağıtmak ve iletmek için münhasır olmayan, telifsiz, dünya çapında,
-süresiz, geri alınamaz, devredilebilir ve alt lisanslanabilir bir lisans
-vermiş olursunuz.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">6. Kullanıcı Tarafından Oluşturulan İçerik</summary>
+                <div class="faq-item__answer">
+                  <p><strong>6.1 İçeriğiniz</strong><br>
+                  Gönderdiğiniz metin açıklamalarının ve fotoğrafların mülkiyetini elinizde tutarsınız (&ldquo;Kullanıcı İçeriği&rdquo;). Kullanıcı İçeriği göndererek, InfraSignal'e Kullanıcı İçeriğinizi Hizmeti işletmek için gerektiği ölçüde barındırmak, saklamak, herkese açık olarak görüntülemek, çoğaltmak ve iletmek &mdash; bildiriminizi sorumlu yerel yönetime iletmek, platformda herkese açık olarak görüntülemek ve toplu veya kimliksizleştirilmiş sivil istatistikler üretmek dahil &mdash; için münhasır olmayan, telifsiz, dünya çapında bir lisans verirsiniz.</p>
+                  <p>Kullanıcı İçeriğinin, sizi kişisel olarak tanımlamayan toplu veya kimliksizleştirilmiş bir biçimde kullanılabileceğini anlıyorsunuz.</p>
+                  <p><strong>6.2 Beyanlar</strong><br>
+                  Kullanıcı İçeriği göndererek aşağıdakileri beyan ve garanti edersiniz:</p>
+                  <ul>
+                    <li>İçeriğe sahip olduğunuzu veya göndermek için gerekli haklara sahip olduğunuzu</li>
+                    <li>İçeriğin herhangi bir üçüncü tarafın fikri mülkiyet, gizlilik, kişilik veya diğer haklarını ihlal etmediğini</li>
+                    <li>İçeriğin doğru ve yanıltıcı olmadığını</li>
+                    <li>İçeriğin tüm geçerli yasalara ve bu Koşullara uygun olduğunu</li>
+                  </ul>
+                  <p><strong>6.3 Yükümlülük Yok</strong><br>
+                  Herhangi bir Kullanıcı İçeriğini yayınlamak, iletmek veya saklamak zorunda değiliz. Bu Koşulları ihlal eden içeriği kaldırabilir veya yayınlamayı reddedebiliriz.</p>
+                </div>
+              </details>
 
-<p>Kullanıcı İçeriği&rsquo;nin sizi kişisel olarak tanımlamayan
-toplulaştırılmış veya kimliksizleştirilmiş bir biçimde
-kullanılabileceğini anlıyorsunuz.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">7. Fikri Mülkiyet</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal adı, logosu ve marka unsurları InfraSignal'e özeldir ve önceden yazılı iznimiz olmadan kullanılamaz. InfraSignal, mySociety tarafından geliştirilen açık kaynaklı yazılım FixMyStreet'in değiştirilmiş bir sürümüdür ve GNU Affero Genel Kamu Lisansı, sürüm 3 (AGPL v3) kapsamında dağıtılır.</p>
+                </div>
+              </details>
 
-<h3>6.2 Beyanlar</h3>
-<p>Kullanıcı İçeriği göndererek şunları beyan ve garanti edersiniz:</p>
-<ul>
-    <li>İçeriği gönderme hakkına sahipsiniz veya gerekli haklara
-    sahipsiniz</li>
-    <li>İçerik, herhangi bir üçüncü tarafın fikri mülkiyet, gizlilik,
-    tanıtım veya diğer haklarını ihlal etmez</li>
-    <li>İçerik doğrudur ve yanıltıcı değildir</li>
-    <li>İçerik, tüm geçerli yasalara ve bu Koşullara uygundur</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">8. Üçüncü Taraf Hizmetleri ve Bağlantılar</summary>
+                <div class="faq-item__answer">
+                  <p>Hizmet, haritalama, coğrafi sınır sorgulamaları, görüntü denetimi ve e-posta teslimi için üçüncü taraf hizmetleri kullanır. Bu üçüncü taraf hizmetleri kullanmanız, kendi ilgili koşullarına ve gizlilik politikalarına tabidir. Üçüncü taraf sağlayıcıların uygulamalarından sorumlu değiliz.</p>
+                  <p>Hizmet, üçüncü taraf web sitelerine bağlantılar içerebilir. Bağlantılı web sitelerinin içeriğini veya uygulamalarını onaylamıyor veya bunlardan sorumluluk kabul etmiyoruz.</p>
+                </div>
+              </details>
 
-<h3>6.3 Yükümlülük Yokluğu</h3>
-<p>Herhangi bir Kullanıcı İçeriğini yayınlama, iletme veya saklama
-yükümlülüğümüz yoktur. Bu Koşulları ihlal eden içeriği kaldırabilir
-veya yayınlamayı reddedebiliriz.</p>
+            </div>
+          </div>
 
-<h2>7. Fikri Mülkiyet</h2>
+          <div>
+            <h2 class="faq-section__title">Hukuki</h2>
+            <div class="faq-accordion">
 
-<p>InfraSignal adı, logosu ve marka öğeleri InfraSignal&rsquo;a aittir
-ve önceden yazılı iznimiz olmadan kullanılamaz.
-Hizmetin belirli bileşenleri GNU Affero Genel Kamu Lisansı
-(AGPL v3) kapsamında lisanslanmıştır.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">9. Sorumluluk Reddi</summary>
+                <div class="faq-item__answer">
+                  <p>HİZMET, TİCARİ ELVERİŞLİLİK, BELİRLİ BİR AMACA UYGUNLUK, İHLAL ETMEME VEYA KULLANILABİLİRLİK GARANTİLERİ DAHİL ANCAK BUNLARLA SINIRLI OLMAMAK ÜZERE, AÇIK VEYA ZIMNİ HERHANGİ BİR GARANTİ OLMAKSIZIN &ldquo;OLDUĞU GİBİ&rdquo; VE &ldquo;MEVCUT OLDUĞU ŞEKİLDE&rdquo; SAĞLANIR.</p>
+                  <p>Yukarıdakileri sınırlamaksızın, aşağıdakilere ilişkin hiçbir garanti veya beyanda bulunmuyoruz:</p>
+                  <ul>
+                    <li>Hizmetin kesintisiz, zamanında, güvenli veya hatasız olacağı</li>
+                    <li>Hizmet aracılığıyla gönderilen bildirimlerin herhangi bir yerel yönetim tarafından alınacağı, kabul edileceği veya işleme konacağı</li>
+                    <li>Hizmet aracılığıyla bildirilen herhangi bir altyapı sorununun çözüleceği</li>
+                    <li>Hizmette mevcut bilgilerin, içeriğin veya kategorilerin doğru veya eksiksiz olacağı</li>
+                  </ul>
+                  <p>InfraSignal bir iletişim platformudur. <strong>Biz bir devlet kurumu değiliz ve altyapı onarımları yapmıyoruz.</strong> InfraSignal aracılığıyla bir bildirim göndermek resmi bir devlet başvurusu teşkil etmez. Acil durumlarda her zaman 911'i veya yerel acil servislerinizi arayın.</p>
+                </div>
+              </details>
 
-<h2>8. Üçüncü Taraf Hizmetleri ve Bağlantılar</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">10. Sorumluluğun Sınırlandırılması</summary>
+                <div class="faq-item__answer">
+                  <p>GEÇERLİ YASALARIN İZİN VERDİĞİ AZAMİ ÖLÇÜDE, HİÇBİR DURUMDA INFRASIGNAL, İŞLETMECİSİ, KATKIDA BULUNANLAR VEYA BAĞLI KURULUŞLARI, AŞAĞIDAKİLERDEN KAYNAKLANAN VEYA BUNLARLA BAĞLANTILI HERHANGİ BİR DOLAYLI, ARIZİ, ÖZEL, SONUÇSAL VEYA CEZAİ ZARARDAN VEYA HERHANGİ BİR KÂR, VERİ, KULLANIM, İTİBAR VEYA DİĞER MADDİ OLMAYAN KAYIP KAYBINDAN SORUMLU OLMAYACAKTIR:</p>
+                  <ul>
+                    <li>Hizmeti kullanmanız veya kullanamamanız</li>
+                    <li>Bir yerel yönetimin bildirilen bir soruna yanıt vermemesi veya çözmemesi</li>
+                    <li>Verilerinize yetkisiz erişim veya bunların değiştirilmesi</li>
+                    <li>Hizmette herhangi bir üçüncü taraf davranışı</li>
+                    <li>Hizmetle ilgili herhangi başka bir konu</li>
+                  </ul>
+                  <p>HİZMETLE İLGİLİ TÜM TALEPLER İÇİN TOPLAM SORUMLULUĞUMUZ YÜZ DOLARI ($100.00) AŞMAYACAKTIR.</p>
+                </div>
+              </details>
 
-<p>Hizmet, haritalama, coğrafi sınır sorguları, görüntü denetleme ve
-e-posta teslimi için üçüncü taraf hizmetleri kullanır. Bu üçüncü taraf
-hizmetlerini kullanımınız, ilgili koşullarına ve gizlilik politikalarına
-tabidir. Üçüncü taraf sağlayıcıların uygulamalarından sorumlu
-değiliz.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">11. Tazminat</summary>
+                <div class="faq-item__answer">
+                  <p>Hizmeti kullanmanızdan, Kullanıcı İçeriğinizden veya bu Koşulları ihlal etmenizden kaynaklanan veya bunlarla ilgili her türlü talep, yükümlülük, zarar, kayıp, maliyet ve masrafa (makul avukatlık ücretleri dahil) karşı InfraSignal'i, işletmecisini, katkıda bulunanları ve bağlı kuruluşlarını tazmin etmeyi ve zarar görmemesini sağlamayı kabul edersiniz.</p>
+                </div>
+              </details>
 
-<p>Hizmet, üçüncü taraf web sitelerine bağlantılar içerebilir. Bağlantı
-verilen web sitelerinin içeriğini veya uygulamalarını onaylamıyoruz ve
-bunlar hakkında sorumluluk üstlenmiyoruz.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">12. Hesabın Askıya Alınması ve Feshi</summary>
+                <div class="faq-item__answer">
+                  <p>Bu Koşulları ihlal ettiğinize veya Hizmete, diğer kullanıcılara ya da üçüncü taraflara zararlı davranışlarda bulunduğunuza makul ölçüde inanırsak, Hizmete erişiminizi bildirimli veya bildirimsiz olarak istediğimiz zaman askıya alabilir veya sonlandırabiliriz. Fesih üzerine, Hizmeti kullanma hakkınız derhal sona erer. 6, 9, 10, 11 ve 14. bölümler fesihten sonra da geçerliliğini korur.</p>
+                </div>
+              </details>
 
-<h2>9. Sorumluluk Reddi</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">13. Dijital Binyıl Telif Hakkı Yasası (DMCA)</summary>
+                <div class="faq-item__answer">
+                  <p>Hizmetteki içeriğin telif hakkınızı ihlal ettiğine inanıyorsanız, lütfen aşağıdaki bilgilerle belirlenen temsilcimize <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a> adresinden bir bildirim gönderin:</p>
+                  <ol>
+                    <li>İhlal edildiğini iddia ettiğiniz telif hakkıyla korunan eserin tanımlanması</li>
+                    <li>Hizmette ihlal ettiğini iddia ettiğiniz materyalin, bulmamıza yetecek ayrıntıyla tanımlanması</li>
+                    <li>İletişim bilgileriniz (ad, adres, telefon, e-posta)</li>
+                    <li>Kullanımın telif hakkı sahibi, temsilcisi veya yasa tarafından yetkilendirilmediğine iyi niyetle inandığınıza dair bir beyan</li>
+                    <li>Bildirimdeki bilgilerin doğru olduğuna ve telif hakkı sahibi adına hareket etmeye yetkili olduğunuza dair, yalan beyan cezası altında bir beyan</li>
+                    <li>Fiziksel veya elektronik imzanız</li>
+                  </ol>
+                </div>
+              </details>
 
-<p>HİZMET, TİCARİ ELVERİŞLİLİK, BELİRLİ BİR AMACA UYGUNLUK, İHLAL
-ETMEME VEYA KULLANILABİLİRLİK GARANTİLERİ DAHİL ANCAK BUNLARLA SINIRLI
-OLMAMAK ÜZERE, AÇIK VEYA ZIMNİ HERHANGİ BİR GARANTİ VERİLMEKSİZİN
-&ldquo;OLDUĞU GİBİ&rdquo; VE &ldquo;MEVCUT OLDUĞU ŞEKİLDE&rdquo;
-SUNULMAKTADIR.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">14. Geçerli Hukuk ve Uyuşmazlık Çözümü</summary>
+                <div class="faq-item__answer">
+                  <p>InfraSignal, kayıtlı bir şirket değil, yaratıcısı tarafından işletilen bağımsız, açık kaynaklı bir sivil projedir. Bu Koşullar, kanunlar ihtilafı ilkeleri dikkate alınmaksızın, Amerika Birleşik Devletleri ve işletmecinin ikamet ettiği eyaletin yasalarına göre yönetilir ve yorumlanır. Bu Koşullardan kaynaklanan herhangi bir yasal işlem veya dava, söz konusu eyaletin eyalet veya federal mahkemelerinde açılacaktır ve bu mahkemelerin kişisel yargı yetkisini kabul edersiniz.</p>
+                </div>
+              </details>
 
-<p>Yukarıdakilerle sınırlı olmaksızın, şunlar konusunda garanti veya
-beyan vermiyoruz:</p>
-<ul>
-    <li>Hizmetin kesintisiz, zamanında, güvenli veya hatasız olacağı</li>
-    <li>Hizmet aracılığıyla gönderilen raporların herhangi bir yerel
-    yönetim birimi tarafından alınacağı, onaylanacağı veya
-    işleme konulacağı</li>
-    <li>Hizmet aracılığıyla bildirilen herhangi bir altyapı sorununun
-    çözüleceği</li>
-    <li>Hizmette mevcut bilgi, içerik veya kategorilerin doğru veya
-    eksiksiz olacağı</li>
-</ul>
+            </div>
+          </div>
 
-<p>InfraSignal bir iletişim platformudur. <strong>Bir devlet kurumu
-değiliz ve altyapı onarımları yapmıyoruz.</strong> InfraSignal
-aracılığıyla rapor gönderilmesi resmi bir devlet başvurusu teşkil etmez.
-Acil durumlar için her zaman 911&rsquo;i veya yerel acil servislerinizi
-arayın.</p>
+          <div>
+            <h2 class="faq-section__title">Genel Hükümler</h2>
+            <div class="faq-accordion">
 
-<h2>10. Sorumluluk Sınırlaması</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">15. Koşullarda Değişiklikler</summary>
+                <div class="faq-item__answer">
+                  <p>Bu Koşulları istediğimiz zaman değiştirme hakkını saklı tutarız. Önemli değişiklikler yaptığımızda, bu sayfanın üst kısmındaki &ldquo;Son Güncelleme&rdquo; tarihini güncelleyeceğiz. Değişiklikler yayınlandıktan sonra Hizmeti kullanmaya devam etmeniz, güncellenmiş Koşulları kabul ettiğiniz anlamına gelir.</p>
+                </div>
+              </details>
 
-<p>GEÇERLİ YASANIN İZİN VERDİĞİ AZAMİ ÖLÇÜDE, HİÇBİR DURUMDA
-INFRASIGNAL VEYA YÖNETİCİLERİ, GÖREVLİLERİ, ÇALIŞANLARI,
-TEMSİLCİLERİ VEYA BAĞLI KURULUŞLARI, AŞAĞIDAKILERDEN KAYNAKLANAN VEYA
-BUNLARLA BAĞLANTILI DOLAYLI, ARIZİ, ÖZEL, SONUÇSAL VEYA CEZAİ ZARARLARDAN
-VEYA HERHANGİ BİR KÂR, VERİ, KULLANIM, İTİBAR VEYA DİĞER MADDİ
-OLMAYAN KAYIPLARDAN SORUMLU TUTULAMAZ:</p>
-<ul>
-    <li>Hizmeti kullanmanız veya kullanamamanız</li>
-    <li>Bir yerel yönetim biriminin bildirilen bir soruna yanıt vermemesi
-    veya çözmemesi</li>
-    <li>Verilerinize yetkisiz erişim veya değişiklik</li>
-    <li>Hizmetteki herhangi bir üçüncü taraf davranışı</li>
-    <li>Hizmetle ilgili diğer herhangi bir konu</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">16. Bölünebilirlik</summary>
+                <div class="faq-item__answer">
+                  <p>Bu Koşulların herhangi bir hükmünün geçersiz, yasadışı veya uygulanamaz olduğuna karar verilirse, kalan hükümler tam olarak yürürlükte kalmaya devam eder.</p>
+                </div>
+              </details>
 
-<p>HİZMETLE İLGİLİ TÜM TALEPLERİN TOPLAM SORUMLULUĞUMUZ YÜZ DOLARI
-($100,00) AŞMAYACAKTIR.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">17. Tüm Sözleşme</summary>
+                <div class="faq-item__answer">
+                  <p>Bu Koşullar, <a href="/about/privacy">Gizlilik Politikası</a> ile birlikte, Hizmeti kullanımınıza ilişkin sizinle InfraSignal arasındaki tüm sözleşmeyi oluşturur ve önceki tüm sözleşme ve mutabakatların yerine geçer.</p>
+                </div>
+              </details>
 
-<h2>11. Tazminat</h2>
+            </div>
+          </div>
 
-<p>InfraSignal ve bunların görevlilerini, yöneticilerini,
-çalışanlarını, temsilcilerini ve bağlı kuruluşlarını, Hizmeti
-kullanmanızdan, Kullanıcı İçeriğinizden veya bu Koşulları ihlal
-etmenizden kaynaklanan veya bunlarla ilgili tüm taleplere, yükümlülüklere,
-zararlara, kayıplara, maliyetlere ve giderlere (makul avukat ücretleri
-dahil) karşı tazmin edip zararsız tutmayı kabul edersiniz.</p>
+        </div>[%# .faq-sections %]
 
-<h2>12. Hesap Askıya Alma ve Fesih</h2>
+        [%# Contact CTA %]
+        <div class="faq-cta">
+          <h3>Bu koşullarla ilgili sorularınız mı var?</h3>
+          <p>Soru veya endişeleriniz varsa bizimle iletişime geçin.</p>
+          <a href="/contact" class="faq-cta__btn">Bize Ulaşın →</a>
+        </div>
 
-<p>Bu Koşulları ihlal ettiğinize veya Hizmete, diğer kullanıcılara veya
-üçüncü taraflara zararlı davranışlarda bulunduğunuza makul olarak
-inanırsak, herhangi bir zamanda, bildirimli veya bildirimsiz olarak
-Hizmete erişiminizi askıya alabilir veya feshedebiliriz. Fesih
-üzerine, Hizmeti kullanma hakkınız derhal sona erer. 6, 9, 10, 11
-ve 14. Bölümler fesihten sonra da geçerli olmaya devam eder.</p>
-
-<h2>13. Dijital Binyıl Telif Hakkı Yasası (DMCA)</h2>
-
-<p>Hizmetteki içeriğin telif hakkınızı ihlal ettiğine inanıyorsanız,
-lütfen
-<a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a>
-adresindeki belirlenen temsilcimize aşağıdaki bilgilerle birlikte bir
-bildirim gönderin:</p>
-<ol>
-    <li>İhlal edildiğini iddia ettiğiniz telif hakkıyla korunan eserin
-    tanımlanması</li>
-    <li>İhlal eden olduğunu iddia ettiğiniz Hizmetteki materyalin,
-    onu bulmamız için yeterli ayrıntıyla tanımlanması</li>
-    <li>İletişim bilgileriniz (ad, adres, telefon, e-posta)</li>
-    <li>Kullanımın telif hakkı sahibi, temsilcisi veya yasa tarafından
-    yetkilendirilmediğine dair iyi niyetli bir inancınız olduğuna
-    dair beyan</li>
-    <li>Bildirimdeki bilgilerin doğru olduğuna ve telif hakkı sahibi
-    adına hareket etmeye yetkili olduğunuza dair yalan yere yemin
-    cezası altında beyan</li>
-    <li>Fiziksel veya elektronik imzanız</li>
-</ol>
-
-<h2>14. Geçerli Hukuk ve Uyuşmazlık Çözümü</h2>
-
-<p>Bu Koşullar, hukuki ihtilaf ilkeleri dikkate alınmaksızın, Amerika
-Birleşik Devletleri ve Delaware Eyaleti yasalarına göre yönetilir ve
-yorumlanır. Bu Koşullardan kaynaklanan herhangi bir yasal işlem veya
-dava, münhasıran Delaware Eyaleti&rsquo;nde bulunan eyalet veya
-federal mahkemelerde açılacaktır ve bu mahkemelerin kişisel yetki
-alanına onay vermiş olursunuz.</p>
-
-<h2>15. Koşullarda Değişiklikler</h2>
-
-<p>Bu Koşulları herhangi bir zamanda değiştirme hakkını saklı tutarız.
-Önemli değişiklikler yaptığımızda, bu sayfanın üst kısmındaki
-&ldquo;Son Güncelleme&rdquo; tarihini güncelleyeceğiz. Değişiklikler
-yayınlandıktan sonra Hizmeti kullanmaya devam etmeniz, güncellenen
-Koşulları kabul ettiğiniz anlamına gelir. Bu sayfayı düzenli olarak
-incelemenizi öneririz.</p>
-
-<h2>16. Bölünebilirlik</h2>
-
-<p>Bu Koşulların herhangi bir hükmünün geçersiz, yasadışı veya
-uygulanamaz olduğuna karar verilirse, kalan hükümler tam olarak
-yürürlükte kalmaya devam eder.</p>
-
-<h2>17. Sözleşmenin Bütünlüğü</h2>
-
-<p>Bu Koşullar, <a href="/about/privacy">Gizlilik Politikası</a> ile
-birlikte, Hizmeti kullanımınıza ilişkin sizinle InfraSignal arasındaki
-sözleşmenin tamamını oluşturur ve önceki tüm anlaşma ve mutabakatların
-yerine geçer.</p>
-
-<h2>18. Bize Ulaşın</h2>
-
-<p>Bu Koşullar hakkında sorularınız varsa, lütfen bizimle iletişime
-geçin:</p>
-<ul>
-    <li>E-posta: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
-    <li>Web: <a href="/contact">İletişim Formu</a></li>
-</ul>
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

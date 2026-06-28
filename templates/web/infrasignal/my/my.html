@@ -1,0 +1,281 @@
+[%
+    PROCESS "report/photo-js.html";
+    account_name = c.user.name;
+    IF NOT account_name;
+      account_name = c.user.email;
+    END;
+    IF NOT account_name;
+      account_name = loc('Your account');
+    END;
+    account_initials = account_name.substr(0, 2).upper;
+    report_count = problems.size;
+    report_count = problems_pager.total_entries IF problems_pager;
+    updates_count = updates.size;
+    INCLUDE 'header.html',
+        title = loc('Your account'),
+        bodyclass = 'accountpage'
+%]
+
+<section class="account-shell">
+  <div class="infra-container">
+
+    [% IF flash_message %]
+      <p class="form-success account-flash">[% flash_message %]</p>
+    [% END %]
+
+    [% IF c.user.get_extra_metadata('closure_requested_at') %]
+      <div class="account-closure-notice" role="alert">
+        <div class="account-closure-notice__text">
+          <strong>[% loc('Your account is scheduled to be closed.') %]</strong>
+          <span>[% loc('Your personal information will be permanently removed after the 30-day grace period. If this was a mistake, you can stop it now.') %]</span>
+        </div>
+        <form method="post" action="[% c.uri_for_action('/auth/profile/cancel_close_account') %]">
+          <input type="hidden" name="token" value="[% csrf_token %]">
+          <input type="submit" class="btn" value="[% loc('Keep my account') %]">
+        </form>
+      </div>
+    [% END %]
+
+    <header class="account-hero">
+      <div class="account-hero__identity">
+        <div class="account-avatar" aria-hidden="true">[% account_initials | html %]</div>
+        <div>
+          <p class="account-eyebrow">[% loc('Your account') %]</p>
+          <h1>[% account_name | html %]</h1>
+          <p class="account-hero__meta">
+            [% IF c.user.email_verified %]
+              <span class="account-check" aria-hidden="true">&#10003;</span> [% loc('Verified account') %]
+            [% ELSE %]
+              [% loc('Account details and notification preferences') %]
+            [% END %]
+          </p>
+        </div>
+      </div>
+
+      <div class="account-hero__actions">
+        [% IF c.session.oauth.change_password_uri %]
+          <a class="account-action" href="[% c.session.oauth.change_password_uri | html %]">[% INCLUDE 'icons/password.html' width='1em' height='1em' %][% loc('Change password') %]</a>
+        [% ELSE %]
+          <a class="account-action" href="/auth/change_password">
+            [% INCLUDE 'icons/password.html' width='1em' height='1em' %]
+            [% IF c.user.password %][% loc('Change password') %][% ELSE %][% loc('Set password') %][% END %]
+          </a>
+        [% END %]
+        [% IF c.user AND (c.user.from_body OR c.user.is_superuser) %]
+          <a class="account-action" href="/auth/generate_token">[% INCLUDE 'icons/security.html' width='1em' height='1em' %][% loc('Security') %]</a>
+        [% END %]
+        <a class="account-action account-action--danger" href="/auth/sign_out">[% INCLUDE 'icons/sign-out.html' width='1em' height='1em' %][% loc('Sign out') %]</a>
+      </div>
+    </header>
+
+    <div class="account-grid">
+      <div class="account-main">
+        <section class="account-card account-profile-card">
+          <div class="account-card__head">
+            <div class="account-card__title-row">
+              <span class="account-card__icon" aria-hidden="true">&#128100;</span>
+              <h2>[% loc('Profile details') %]</h2>
+            </div>
+            <span class="account-status-pill">[% IF c.user.email_verified %][% loc('Active') %][% ELSE %][% loc('Needs verification') %][% END %]</span>
+          </div>
+
+          <div class="account-detail-list">
+            <div class="account-detail-row">
+              <span class="account-detail-row__icon" aria-hidden="true">&#128100;</span>
+              <div class="account-detail-row__body">
+                <span class="account-detail-row__label">[% loc('Name') %]</span>
+                <strong>[% (c.user.name OR loc('Not provided')) | html %]</strong>
+              </div>
+              <div class="account-detail-row__actions">
+                <a class="account-mini-btn" href="/auth/change_name">[% loc('Edit') %]</a>
+              </div>
+            </div>
+
+            <div class="account-detail-row">
+              <span class="account-detail-row__icon" aria-hidden="true">&#9993;</span>
+              <div class="account-detail-row__body">
+                <span class="account-detail-row__label">[% loc('Email') %]</span>
+                <strong>[% (c.user.email OR loc('Not provided')) | html %]</strong>
+              </div>
+              <div class="account-detail-row__actions">
+                [% IF NOT c.user.email %]
+                  <a class="account-mini-btn" href="/auth/change_email">[% loc('Add') %]</a>
+                [% ELSIF c.user.email_verified %]
+                  <a class="account-mini-btn" href="/auth/change_email">[% loc('Change') %]</a>
+                [% ELSE %]
+                  <a class="account-mini-btn" href="/auth/verify/email">[% loc('Verify') %]</a>
+                  <a class="account-mini-btn" href="/auth/change_email">[% loc('Change') %]</a>
+                [% END %]
+              </div>
+            </div>
+
+            <div class="account-detail-row">
+              <span class="account-detail-row__icon" aria-hidden="true">&#9742;</span>
+              <div class="account-detail-row__body">
+                <span class="account-detail-row__label">[% loc('Phone') %]</span>
+                <strong>[% (c.user.phone_display OR loc('Not provided')) | html %]</strong>
+              </div>
+              <div class="account-detail-row__actions">
+                [% IF NOT c.user.phone %]
+                  <a class="account-mini-btn account-mini-btn--outline" href="/auth/change_phone">[% loc('Add phone') %]</a>
+                [% ELSIF c.user.phone_verified %]
+                  <a class="account-mini-btn" href="/auth/change_phone">[% loc('Change') %]</a>
+                [% ELSE %]
+                  [% IF c.cobrand.sms_authentication %]
+                    <a class="account-mini-btn" href="/auth/verify/phone">[% loc('Verify') %]</a>
+                  [% END %]
+                  <a class="account-mini-btn" href="/auth/change_phone">[% loc('Change') %]</a>
+                [% END %]
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <form class="account-card account-preferences-card" method="post" action="[% c.uri_for_action('/my/notify_preference') %]">
+          <input type="hidden" name="token" value="[% csrf_token %]">
+          <div class="account-card__head">
+            <div class="account-card__title-row">
+              <span class="account-card__icon" aria-hidden="true">&#128276;</span>
+              <h2>[% loc('Notification preferences') %]</h2>
+            </div>
+          </div>
+
+          <div class="account-preference-list">
+            [% current_pref = c.user.get_extra_metadata('update_notify') %]
+            <fieldset class="account-preference-row">
+              <div class="account-preference-row__head">
+                <legend>[% loc('Update notifications') %]</legend>
+                <span>[% loc('When your reports change status') %]</span>
+              </div>
+              <p class="segmented-control segmented-control--radio account-segmented">
+                [% IF c.user.email_verified %]
+                  <input type="radio" name="update_notify" id="update_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
+                  <label class="btn" for="update_notify_email">[% loc('Email') %]</label>
+                [% END %]
+                [% IF c.user.phone_verified AND c.cobrand.sms_authentication %]
+                  <input type="radio" name="update_notify" id="update_notify_phone" value="phone"[% ' checked' IF current_pref == 'phone' %]>
+                  <label class="btn" for="update_notify_phone">[% loc('Phone') %]</label>
+                [% END %]
+                <input type="radio" name="update_notify" id="update_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
+                <label class="btn" for="update_notify_none">[% loc('None') %]</label>
+              </p>
+            </fieldset>
+
+            [% current_pref = c.user.get_extra_metadata('alert_notify') %]
+            <fieldset class="account-preference-row">
+              <div class="account-preference-row__head">
+                <legend>[% loc('Local alerts') %]</legend>
+                <span>[% loc('New reports near your area') %]</span>
+              </div>
+              <p class="segmented-control segmented-control--radio account-segmented">
+                [% IF c.user.email_verified %]
+                  <input type="radio" name="alert_notify" id="alert_notify_email" value="email"[% ' checked' IF current_pref == 'email' OR NOT current_pref %]>
+                  <label class="btn" for="alert_notify_email">[% loc('Email') %]</label>
+                [% END %]
+                <input type="radio" name="alert_notify" id="alert_notify_none" value="none"[% ' checked' IF current_pref == 'none' %]>
+                <label class="btn" for="alert_notify_none">[% loc('None') %]</label>
+              </p>
+            </fieldset>
+
+            [% IF c.cobrand.send_questionnaires %]
+              [% current_pref = c.user.questionnaire_notify %]
+              <fieldset class="account-preference-row">
+                <div class="account-preference-row__head">
+                  <legend>[% loc('Questionnaires') %]</legend>
+                  <span>[% loc('Help improve municipal services') %]</span>
+                </div>
+                <p class="segmented-control segmented-control--radio account-segmented">
+                  <input type="radio" name="questionnaire_notify" id="questionnaire_notify_yes" value="1"[% ' checked' IF current_pref %]>
+                  <label class="btn" for="questionnaire_notify_yes">[% loc('Yes') %]</label>
+
+                  <input type="radio" name="questionnaire_notify" id="questionnaire_notify_no" value="0"[% ' checked' IF !current_pref %]>
+                  <label class="btn" for="questionnaire_notify_no">[% loc('No') %]</label>
+                </p>
+              </fieldset>
+            [% END %]
+          </div>
+
+          <div class="account-preferences-card__footer">
+            <p class="account-save-hint"><span aria-hidden="true">&#10003;</span> [% loc('Changes are saved when you update preferences') %]</p>
+            <input class="account-primary-btn" type="submit" value="[% loc('Update preferences') %]">
+          </div>
+        </form>
+
+        [% UNLESS c.user.get_extra_metadata('closure_requested_at') %]
+        <p class="account-danger-zone">
+          <a href="/auth/close_account">[% loc('Close account') %]</a>
+          <span>[% loc('Permanently remove your personal information from InfraSignal.') %]</span>
+        </p>
+        [% END %]
+      </div>
+
+      <aside class="account-side">
+        <section class="account-card account-reports-card">
+          <div class="account-card__head">
+            <div class="account-card__title-row">
+              <span class="account-card__icon" aria-hidden="true">&#128203;</span>
+              <h2>[% loc('Your reports') %]</h2>
+            </div>
+            <span class="account-count-pill">[% report_count | html %]</span>
+          </div>
+
+          <div class="account-report-filters">
+            [% INCLUDE "reports/_list-filters.html", use_form_wrapper = 1 %]
+          </div>
+
+          <div class="js-pagination account-pagination">
+            [% INCLUDE 'pagination.html', pager = problems_pager, param = 'p' %]
+          </div>
+          <div id="js-reports-list" class="account-report-list">
+            [% INCLUDE 'my/_problem-list.html' %]
+          </div>
+
+          <a class="account-report-cta" href="/#postcodeForm">[% loc('Report a new issue') %] <span aria-hidden="true">&#8594;</span></a>
+        </section>
+
+        <section class="account-impact-card">
+          <p>[% loc('Civic impact') %]</p>
+          <strong>[% report_count | html %] [% IF report_count == 1 %][% loc('issue') %][% ELSE %][% loc('issues') %][% END %]</strong>
+          <span>[% loc('reported through your account') %]</span>
+          <div>[% loc('Updates') %]: [% updates_count | html %]</div>
+        </section>
+      </aside>
+    </div>
+
+    [% FOREACH u IN updates %]
+      [% IF loop.first %]
+        <section class="account-card account-updates-card">
+          <div class="account-card__head">
+            <div class="account-card__title-row">
+              <span class="account-card__icon" aria-hidden="true">&#8635;</span>
+              <h2>[% loc('Your updates') %]</h2>
+            </div>
+          </div>
+          [% INCLUDE 'pagination.html', pager = updates_pager, param = 'u' %]
+          <ul class="item-list item-list--updates">
+      [% END %]
+
+      <li class="item-list__item item-list__item--updates">
+        <div class="item-list__update-wrap">
+          [% INCLUDE 'report/photo.html' object=u %]
+          <div class="item-list__update-text">
+            [% u.text | staff_html_markup(u.extra) %]
+            <p class="meta-2">
+              [% tprintf( loc("Added %s"), prettify_dt( u.confirmed, 'date' ) ) %]
+              &ndash;
+              <a href="[% u.url %]">[% u.problem.title | html %]</a>
+            </p>
+          </div>
+        </div>
+      </li>
+
+      [% IF loop.last %]
+          </ul>
+        </section>
+      [% END %]
+    [% END %]
+
+  </div>
+</section>
+
+[% INCLUDE 'footer.html' %]

@@ -6,47 +6,69 @@
   .filter-row select { padding:6px 10px; border:1px solid #ccc; border-radius:4px; min-width:250px; }
   .filter-row .info { color:#666; font-size:13px; }
   .filter-row .loading { color:#999; font-size:13px; }
-  .section-header td { background:#5a5a5a; color:#fff; font-weight:bold; padding:8px 10px; font-size:14px; }
-  .type-cell { color:#888; font-size:12px; }
+  .section-header td { background:#5a5a5a !important; color:#fff !important; font-weight:bold; padding:8px 10px; font-size:14px; }
+  .type-cell { color:#475569 !important; font-size:12px; }
   #admin_bodies { width:100%; border-collapse:collapse; }
-  #admin_bodies th { background:#666; color:#fff; padding:8px 10px; text-align:left; }
-  #admin_bodies td { padding:6px 10px; border-bottom:1px solid #ddd; }
+  #admin_bodies th { background:#666 !important; color:#fff !important; padding:8px 10px; text-align:left; }
+  #admin_bodies td { padding:6px 10px; border-bottom:1px solid #ddd; color:#374151; }
   #admin_bodies tr:hover td { background:#fef9e7; }
+  #admin_bodies .section-header:hover td { background:#5a5a5a !important; color:#fff !important; }
 </style>
 
-<p style="color:#555;">Select a state to find a body, then click to manage its response priorities.</p>
+[% IF c.user.is_superuser %]
+
+<p style="color:#555;">[% loc('Select a state to find a body, then click to manage its response priorities.') %]</p>
 
 <div class="filter-row">
-  <label for="state_filter">State:</label>
-  <select id="state_filter"><option value="">-- Select a state --</option></select>
+  <label for="state_filter">[% loc('State') %]:</label>
+  <select id="state_filter"><option value="">[% loc('-- Select a state --') %]</option></select>
   <span id="state_info" class="info"></span>
-  <span id="state_loading" class="loading" style="display:none;">Loading...</span>
+  <span id="state_loading" class="loading" style="display:none;">[% loc('Loading...') %]</span>
 </div>
 
 <div class="filter-row" id="county_row" style="display:none;">
-  <label for="county_filter">County:</label>
-  <select id="county_filter"><option value="">-- All counties --</option></select>
+  <label for="county_filter">[% loc('County') %]:</label>
+  <select id="county_filter"><option value="">[% loc('-- All counties --') %]</option></select>
   <span id="county_info" class="info"></span>
-  <span id="county_loading" class="loading" style="display:none;">Loading cities...</span>
+  <span id="county_loading" class="loading" style="display:none;">[% loc('Loading cities...') %]</span>
 </div>
 
 <div class="filter-row" id="city_row" style="display:none;">
-  <label for="city_filter">City / Town:</label>
-  <select id="city_filter"><option value="">-- All cities --</option></select>
+  <label for="city_filter">[% loc('City / Town') %]:</label>
+  <select id="city_filter"><option value="">[% loc('-- All cities --') %]</option></select>
   <span id="city_info" class="info"></span>
 </div>
 
 <table id="admin_bodies" style="display:none;">
   <thead>
-    <tr><th>Name</th><th>Type</th><th></th></tr>
+    <tr><th>[% loc('Name') %]</th><th>[% loc('Type') %]</th><th></th></tr>
   </thead>
   <tbody id="bodies_tbody"></tbody>
 </table>
 
-<p id="bodies_placeholder" style="color:#666;">Select a state above to view its bodies.</p>
+<p id="bodies_placeholder" style="color:#666;">[% loc('Select a state above to view its bodies.') %]</p>
 
 <script nonce="[% csp_nonce %]">
 (function() {
+  var T = {
+    selectAbove: "[% loc('Select a state above to view its bodies.') | replace('"', '\\"') %]",
+    noBodies:    "[% loc('No bodies found.') | replace('"', '\\"') %]",
+    noBodiesFor: "[% loc('No bodies found for %s.') | replace('"', '\\"') %]",
+    allCounties: "[% loc('-- All counties --') | replace('"', '\\"') %]",
+    allCities:   "[% loc('-- All cities --') | replace('"', '\\"') %]",
+    allCitiesInCounty: "[% loc('-- All cities in county --') | replace('"', '\\"') %]",
+    state:       "[% loc('State') | replace('"', '\\"') %]",
+    counties:    "[% loc('Counties') | replace('"', '\\"') %]",
+    citiesTowns: "[% loc('Cities / Towns') | replace('"', '\\"') %]",
+    manageBtn:   "[% loc('Manage Priorities') | replace('"', '\\"') %]",
+    bodiesIn:    "[% loc('%s bodies in %s') | replace('"', '\\"') %]",
+    countiesCount: "[% loc('%s counties') | replace('"', '\\"') %]",
+    citiesCount: "[% loc('%s cities/towns') | replace('"', '\\"') %]",
+    citiesInCounty: "[% loc('%s cities/towns in %s') | replace('"', '\\"') %]",
+    countyFallback: "[% loc('county') | replace('"', '\\"') %]",
+    errBodies:   "[% loc('Error loading bodies.') | replace('"', '\\"') %]",
+    errCities:   "[% loc('Error loading cities') | replace('"', '\\"') %]"
+  };
   var US_STATES = [
     {code:"AL",name:"Alabama"},{code:"AK",name:"Alaska"},{code:"AZ",name:"Arizona"},
     {code:"AR",name:"Arkansas"},{code:"CA",name:"California"},{code:"CO",name:"Colorado"},
@@ -125,7 +147,7 @@
     var btn = document.createElement('a');
     btn.href = '/admin/responsepriorities/' + b.id + '/create';
     btn.className = 'btn';
-    btn.textContent = 'Manage Priorities';
+    btn.textContent = T.manageBtn;
     td3.appendChild(btn);
     tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
     tbody.appendChild(tr);
@@ -133,9 +155,9 @@
 
   function renderTable(stateBody, counties, cities) {
     tbody.innerHTML = '';
-    if (stateBody.length) { addSection('State', stateBody.length); stateBody.forEach(function(b){ addRow(b,'State'); }); }
-    if (counties.length)  { addSection('Counties', counties.length); counties.forEach(function(b){ addRow(b,'County'); }); }
-    if (cities.length)    { addSection('Cities / Towns', cities.length); cities.forEach(function(b){ addRow(b,'City/Town'); }); }
+    if (stateBody.length) { addSection(T.state, stateBody.length); stateBody.forEach(function(b){ addRow(b,T.state); }); }
+    if (counties.length)  { addSection(T.counties, counties.length); counties.forEach(function(b){ addRow(b,T.counties); }); }
+    if (cities.length)    { addSection(T.citiesTowns, cities.length); cities.forEach(function(b){ addRow(b,T.citiesTowns); }); }
     var total = stateBody.length + counties.length + cities.length;
     if (total > 0) {
       table.style.display = '';
@@ -143,7 +165,7 @@
     } else {
       table.style.display = 'none';
       placeholder.style.display = '';
-      placeholder.textContent = 'No bodies found.';
+      placeholder.textContent = T.noBodies;
     }
   }
 
@@ -152,8 +174,8 @@
     var state = this.value;
     countyRow.style.display = 'none';
     cityRow.style.display = 'none';
-    resetDropdown(countySel, '-- All counties --');
-    resetDropdown(citySel, '-- All cities --');
+    resetDropdown(countySel, T.allCounties);
+    resetDropdown(citySel, T.allCities);
     document.getElementById('state_info').textContent = '';
     document.getElementById('county_info').textContent = '';
     document.getElementById('city_info').textContent = '';
@@ -162,7 +184,7 @@
     if (!state) {
       table.style.display = 'none';
       placeholder.style.display = '';
-      placeholder.textContent = 'Select a state above to view its bodies.';
+      placeholder.textContent = T.selectAbove;
       return;
     }
 
@@ -175,7 +197,7 @@
         document.getElementById('state_loading').style.display = 'none';
         if (!data.bodies || !data.bodies.length) {
           placeholder.style.display = '';
-          placeholder.textContent = 'No bodies found for ' + state + '.';
+          placeholder.textContent = T.noBodiesFor.replace('%s', state);
           return;
         }
 
@@ -189,7 +211,7 @@
           else stateData.allCities.push(b);
         });
 
-        document.getElementById('state_info').textContent = data.count + ' bodies in ' + state;
+        document.getElementById('state_info').textContent = T.bodiesIn.replace('%s', data.count).replace('%s', state);
 
         // Populate county dropdown
         if (stateData.counties.length) {
@@ -200,7 +222,7 @@
             o.textContent = b.name;
             countySel.appendChild(o);
           });
-          document.getElementById('county_info').textContent = stateData.counties.length + ' counties';
+          document.getElementById('county_info').textContent = T.countiesCount.replace('%s', stateData.counties.length);
         }
 
         // Populate city dropdown with all cities
@@ -212,7 +234,7 @@
             o.textContent = b.name;
             citySel.appendChild(o);
           });
-          document.getElementById('city_info').textContent = stateData.allCities.length + ' cities/towns';
+          document.getElementById('city_info').textContent = T.citiesCount.replace('%s', stateData.allCities.length);
         }
 
         // Render full table
@@ -221,14 +243,14 @@
       .catch(function() {
         document.getElementById('state_loading').style.display = 'none';
         placeholder.style.display = '';
-        placeholder.textContent = 'Error loading bodies.';
+        placeholder.textContent = T.errBodies;
       });
   });
 
   // COUNTY CHANGE — filter cities to those within the selected county
   countySel.addEventListener('change', function() {
     var countyId = this.value;
-    resetDropdown(citySel, '-- All cities --');
+        resetDropdown(citySel, T.allCities);
     document.getElementById('city_info').textContent = '';
 
     if (!countyId) {
@@ -241,7 +263,7 @@
           o.textContent = b.name;
           citySel.appendChild(o);
         });
-        document.getElementById('city_info').textContent = stateData.allCities.length + ' cities/towns';
+        document.getElementById('city_info').textContent = T.citiesCount.replace('%s', stateData.allCities.length);
       }
       // Show all in table
       renderTable(stateData.stateBody, stateData.counties, stateData.allCities);
@@ -256,7 +278,7 @@
       .then(function(r) { return r.json(); })
       .then(function(data) {
         document.getElementById('county_loading').style.display = 'none';
-        resetDropdown(citySel, '-- All cities in county --');
+        resetDropdown(citySel, T.allCitiesInCounty);
         var filteredCities = (data.cities && data.cities.length) ? data.cities : [];
 
         filteredCities.forEach(function(b) {
@@ -266,7 +288,7 @@
           citySel.appendChild(o);
         });
 
-        document.getElementById('city_info').textContent = filteredCities.length + ' cities/towns in ' + (data.county_name || 'county');
+        document.getElementById('city_info').textContent = T.citiesInCounty.replace('%s', filteredCities.length).replace('%s', (data.county_name || T.countyFallback));
 
         // Find the selected county object
         var selectedCounty = stateData.counties.filter(function(c) { return c.id == countyId; });
@@ -274,7 +296,7 @@
       })
       .catch(function() {
         document.getElementById('county_loading').style.display = 'none';
-        document.getElementById('city_info').textContent = 'Error loading cities';
+        document.getElementById('city_info').textContent = T.errCities;
       });
   });
 
@@ -291,5 +313,48 @@
   });
 })();
 </script>
+
+[% ELSE %]
+[%# Body staff: only their own body's response priorities — no state/body picker %]
+
+<p style="color:#555;">[% tprintf(loc('Response priorities for %s.'), c.user.from_body.name) %]</p>
+
+<table>
+    <thead>
+    <tr>
+        <th>[% loc('Name') %]</th>
+        <th>[% loc('Description') %]</th>
+        <th>[% loc('Categories') %]</th>
+        <th>[% loc('Default') %]</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+      [% FOR p IN response_priorities %]
+        <tr [% 'class="is-deleted"' IF p.deleted %]>
+            <td>[% p.name | html %]</td>
+            <td>[% p.description | html %]</td>
+            <td>
+              [% UNLESS p.contacts.size %]
+                <em>[% loc('All categories') %]</em>
+              [% ELSE %]
+                [% FOR contact IN p.contacts %]
+                  [% contact.category_display %][% ',' UNLESS loop.last %]
+                [% END %]
+              [% END %]
+            </td>
+            <td>[% IF p.is_default %]X[% END %]</td>
+            <td><a href="[% c.uri_for(c.controller.action_for('edit'), [p.body_id, p.id]) %]" class="btn">[% loc('Edit') %]</a></td>
+        </tr>
+      [% END %]
+      [% UNLESS response_priorities.size %]
+        <tr><td colspan="5"><em>[% loc('None') %]</em></td></tr>
+      [% END %]
+    </tbody>
+</table>
+
+<p><a href="[% c.uri_for(c.controller.action_for('create'), [c.user.from_body.id]) %]" class="btn">[% loc('New priority') %]</a></p>
+
+[% END %]
 
 [% INCLUDE 'admin/footer.html' %]

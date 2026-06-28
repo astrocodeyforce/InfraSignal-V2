@@ -1,0 +1,115 @@
+#!/usr/bin/env bash
+# ============================================================
+# staging-deploy — bring the staging stack up / down / init
+# ============================================================
+# Staging runs on http://127.0.0.1:8080 (SSH-tunnel to view).
+# Lives in compose project "staging" and is fully isolated from
+# prod: its own postgres, memcached, network, nginx.
+#
+# Usage:
+#   sudo bin/staging-deploy --up        # generate runtime config + up -d
+#   sudo bin/staging-deploy --init-db   # create fms user, infrasignal db, run update-schema
+#   sudo bin/staging-deploy --down      # docker compose down (volumes preserved)
+#   sudo bin/staging-deploy --status    # ps + health
+#   sudo bin/staging-deploy --regen     # regenerate general.yml-staging.runtime only
+#
+# The runtime config (conf/general.yml-staging.runtime) is generated
+# from conf/general.yml-staging (template, gitignored secrets get
+# substituted from docker/.env). It is NOT checked into git.
+# ============================================================
+
+set -euo pipefail
+
+PROD_DIR="/opt/infrasignal-v2"
+COMPOSE_FILE="docker/docker-compose-staging.yml"
+ENV_FILE="docker/.env"
+TEMPLATE="conf/general.yml-staging"
+RUNTIME="conf/general.yml-staging.runtime"
+
+cd "$PROD_DIR"
+
+log() { echo "[$(date '+%H:%M:%S')] $*"; }
+
+require_env() {
+    if [[ ! -f "$ENV_FILE" ]]; then
+        log "✗ Missing $ENV_FILE — need POSTGRES_PASSWORD inside it"; exit 1
+    fi
+    # shellcheck disable=SC1090
+    set -a; . "$ENV_FILE"; set +a
+    if [[ -z "${POSTGRES_PASSWORD:-}" ]]; then
+        log "✗ POSTGRES_PASSWORD not set in $ENV_FILE"; exit 1
+    fi
+}
+
+regen_runtime() {
+    if [[ ! -f "$TEMPLATE" ]]; then
+        log "✗ Missing template $TEMPLATE"; exit 1
+    fi
+    require_env
+    # Replace FMS_DB_PASS value with the real password from .env.
+    # The template uses the literal placeholder password of prod for
+    # readability; we substitute when generating the runtime copy.
+    sed -E "s|^(FMS_DB_PASS:).*|\1 '${POSTGRES_PASSWORD}'|" "$TEMPLATE" > "$RUNTIME"
+    chmod 0600 "$RUNTIME"
+    log "✓ Generated $RUNTIME (gitignored)"
+}
+
+up_stack() {
+    regen_runtime
+    log "Bringing staging up ..."
+    docker compose -p staging -f "$COMPOSE_FILE" --env-file "$ENV_FILE" up -d
+    log "Wait for services to settle ..."
+    sleep 5
+    status
+}
+
+down_stack() {
+    log "Bringing staging down (volumes preserved) ..."
+    docker compose -p staging -f "$COMPOSE_FILE" --env-file "$ENV_FILE" down
+}
+
+init_db() {
+    # Create fms user and infrasignal db inside staging-db, then load schema.
+    # Using `run --rm` so this works even if staging-fixmystreet is unhealthy
+    # because the DB hasn't been bootstrapped yet.
+    require_env
+    log "[1/3] Ensure staging-db is up ..."
+    docker compose -p staging -f "$COMPOSE_FILE" --env-file "$ENV_FILE" up -d db
+    sleep 5
+    log "[2/3] Create fms role + infrasignal database (idempotent) ..."
+    docker exec staging-db-1 psql -U postgres -tAc \
+        "SELECT 1 FROM pg_roles WHERE rolname='fms'" | grep -q 1 || \
+        docker exec staging-db-1 psql -U postgres -c \
+            "CREATE ROLE fms LOGIN PASSWORD '${POSTGRES_PASSWORD}';"
+    docker exec staging-db-1 psql -U postgres -tAc \
+        "SELECT 1 FROM pg_database WHERE datname='infrasignal'" | grep -q 1 || \
+        docker exec staging-db-1 psql -U postgres -c \
+            "CREATE DATABASE infrasignal OWNER fms;"
+    log "[3/3] Run bin/update-schema --commit via throwaway container ..."
+    docker compose -p staging -f "$COMPOSE_FILE" --env-file "$ENV_FILE" \
+        run --rm fixmystreet bin/update-schema --commit
+    log "✓ DB initialised. NOTE: if schema_0094 (osm_zone_* columns) is missing,"
+    log "  apply it manually:"
+    log "    docker exec -i staging-db-1 psql -U fms -d infrasignal < db/schema_0094-priority-zones.sql"
+}
+
+status() {
+    log "Staging stack status:"
+    docker compose -p staging -f "$COMPOSE_FILE" --env-file "$ENV_FILE" ps
+    echo
+    log "Smoke test:"
+    code=$(curl -sk -o /dev/null -w "%{http_code}" http://127.0.0.1:8080/ -H "Host: staging.infrasignal.org" 2>/dev/null || echo "000")
+    log "  HTTP $code on http://127.0.0.1:8080/"
+}
+
+case "${1:---status}" in
+    --up)       up_stack ;;
+    --down)     down_stack ;;
+    --init-db)  init_db ;;
+    --regen)    regen_runtime ;;
+    --status)   status ;;
+    *)
+        echo "Usage: $0 [--up|--down|--init-db|--regen|--status]"
+        exit 1
+        ;;
+esac

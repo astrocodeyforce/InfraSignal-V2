@@ -1,0 +1,13 @@
+[%~
+  DEFAULT public_page_title = '';
+  DEFAULT public_page_subtitle = '';
+-%]
+<section class="contact-hero">
+  [% INCLUDE 'front/hero-pulse.html' %]
+  <div class="infra-container" data-hero-exclude>
+    <h1 class="contact-hero__title">[% public_page_title %]</h1>
+    [% IF public_page_subtitle %]
+      <p class="contact-hero__subtitle">[% public_page_subtitle %]</p>
+    [% END %]
+  </div>
+</section>

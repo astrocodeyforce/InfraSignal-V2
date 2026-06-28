@@ -7,84 +7,137 @@ ELSE;
     title = loc('Create an account');
 END;
 
-INCLUDE 'header.html', bodyclass='authpage' %]
+INCLUDE 'header.html', bodyclass='authpage', title=title %]
 
-[% TRY %][% INCLUDE 'auth/_create_title.html' %][% CATCH file %]
-<h1>
-    [% title %]
-  [% IF NOT expired_password %]
-    <small>
-        [% tprintf(loc('or <a href="%s">sign in</a>'), '/auth') %]
-    </small>
-  [% END %]
-</h1>
-[% END %]
-
-[% IF forgotten %]
-<p>
-  [% IF c.cobrand.sms_authentication %]
-    [% loc('Sign in by email or text, providing a new password. When you click the link in your email or enter the SMS authentication code, your password will be updated.') %]</p>
-  [% ELSE %]
-    [% loc('Sign in by email instead, providing a new password. When you click the link in your email, your password will be updated.') %]
-  [% END %]
-</p>
-[% ELSIF expired_password %]
-<p>
-    <a href="/auth/sign_out">[% loc('Sign out') %]</a>
-</p>
-<p>
-    [% loc('Your password has expired, please create a new one below. When you click the link in your email, your password will be updated.') %]
-</p>
+[% IF c.cobrand.sms_authentication %]
+  [% SET username_label = loc('Your email or mobile') %]
+  [% SET username_type = 'text' %]
 [% ELSE %]
-<p>
-    [% tprintf(loc('We collect only the minimum amount of personal data to allow you to mange your reports. Please see our <a href="%s">privacy policy</a> for more information.'), c.cobrand.privacy_policy_url) %]
-</p>
+  [% SET username_label = loc('Your email') %]
+  [% SET username_type = 'email' %]
 [% END %]
 
-<form action="/auth/[% expired_password ? 'expired' : forgotten ? 'forgot' : 'create' %]" method="post" name="general_auth" class="validate">
+[% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
 
-    <input type="hidden" name="r" value="[% c.req.params.r | html %]">
+<section class="auth-lovable auth-lovable--create">
+  <div class="auth-lovable__shell">
+    <aside class="auth-lovable__brand">
+      <a href="/" class="auth-lovable__brand-logo" aria-label="[% site_name | html %]">
+        <img src="[% version('/cobrands/infrasignal/images/logo_web.png') %]" alt="[% site_name | html %]">
+      </a>
+      <div class="auth-lovable__brand-copy">
+        <h2>[% loc('Welcome back') %]</h2>
+        <p>[% loc('Save your reports, updates, and alert settings in one secure place.') %]</p>
+      </div>
+      <div class="auth-lovable__checklist">
+        <p><span aria-hidden="true">&#10003;</span> [% loc('Secure, encrypted connection') %]</p>
+        <p><span aria-hidden="true">&#10003;</span> [% loc('Track the status of your reports') %]</p>
+        <p><span aria-hidden="true">&#10003;</span> [% loc('Reports routed to the responsible authority') %]</p>
+      </div>
+      <p class="auth-lovable__security">[% loc('Privacy-conscious') %] &#183; [% loc('Open source') %]</p>
+    </aside>
 
-  [% IF NOT expired_password %]
+    <section class="auth-card" aria-labelledby="auth-title">
+      <div class="auth-card__mobile-logo">
+        <a href="/" aria-label="[% site_name | html %]"><img src="[% version('/cobrands/infrasignal/images/logo_web.png') %]" alt="[% site_name | html %]"></a>
+      </div>
 
-    [% loc_username_error = INCLUDE 'auth/_username_error.html' default='email' %]
+      [% IF NOT forgotten AND NOT expired_password %]
+      <nav class="auth-tabs" aria-label="[% loc('Account options') %]">
+        <a href="/auth" class="auth-tabs__item">[% loc('Sign in') %]</a>
+        <a href="/auth/create" class="auth-tabs__item auth-tabs__item--active">[% loc('Create account') %]</a>
+      </nav>
+      [% ELSE %]
+      <a href="/auth" class="auth-back">&larr; [% loc('Back to sign in') %]</a>
+      [% END %]
 
-    [% IF c.cobrand.sms_authentication %]
-        [% SET username_label = loc('Your email or mobile') %]
-        [% SET username_type = 'text' %]
-    [% ELSE %]
-        [% SET username_label = loc('Your email') %]
-        [% SET username_type = 'email' %]
-    [% END %]
+      <div class="auth-card__header">
+        <p class="auth-card__kicker">
+          [% IF forgotten %]
+            [% loc('Account recovery') %]
+          [% ELSIF expired_password %]
+            [% loc('Password update') %]
+          [% ELSE %]
+            [% loc('Get started') %]
+          [% END %]
+        </p>
+        <h1 id="auth-title">[% title %]</h1>
+        <p>
+          [% IF forgotten %]
+            [% loc('Enter your email and choose a new password. We will send you a secure sign-in link to confirm the change.') %]
+          [% ELSIF expired_password %]
+            [% loc('Choose a new password, then confirm it with the secure link we email to you.') %]
+          [% ELSE %]
+            [% loc('Already have an account?') %] <a href="/auth">[% loc('Sign in') %]</a>
+          [% END %]
+        </p>
+      </div>
 
-    <label class="n" for="username">[% username_label %]</label>
-  [% IF loc_username_error %]
-    <div class="form-error">[% loc_username_error %]</div>
-  [% END %]
-    <input type="[% username_type %]" class="form-control required" id="username" name="username" value="[% username | html %]" autofocus autocomplete="username">
+      <div class="auth-copy">
+        [% IF expired_password %]
+          <p><a class="auth-link" href="/auth/sign_out">[% loc('Sign out') %]</a></p>
+        [% ELSIF NOT forgotten %]
+          <p>[% tprintf(loc('We collect only the minimum amount of personal data to allow you to mange your reports. Please see our <a href="%s">privacy policy</a> for more information.'), c.cobrand.privacy_policy_url) %]</p>
+        [% END %]
+      </div>
 
-  [% END %]
+      <form action="/auth/[% expired_password ? 'expired' : forgotten ? 'forgot' : 'create' %]" method="post" name="general_auth" class="validate auth-form">
+        <input type="hidden" name="r" value="[% c.req.params.r | html %]">
 
-  [% IF field_errors.password_register %]
-    <p class='form-error'>[% field_errors.password_register %]</p>
-  [% END %]
-    <label for="password_register">[% forgotten ? loc('New password:') : loc('Choose your password') %]</label>
+        [% IF NOT expired_password %]
+          <div class="auth-field">
+            <label for="username">[% username_label %]</label>
+            [% IF loc_username_error %]
+              <div class="auth-alert auth-alert--error form-error">[% loc_username_error %]</div>
+            [% END %]
+            <div class="auth-input-wrap">
+              <span class="auth-input-wrap__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </span>
+              <input type="[% username_type %]" class="auth-input form-control required" id="username" name="username" value="[% username | html %]" autofocus autocomplete="username" placeholder="you@city.gov">
+            </div>
+          </div>
+        [% END %]
 
-    <div class="general-notes">
-        <p>[% tprintf(loc('Your password should include %d or more characters.'), c.cobrand.password_minimum_length) %]</p>
-    </div>
+        <div class="auth-field">
+          <div class="auth-field__row">
+            <label for="password_register">[% forgotten ? loc('New password') : loc('Choose your password') %]</label>
+            <span>[% tprintf(loc('%d+ characters'), c.cobrand.password_minimum_length) %]</span>
+          </div>
+          [% IF field_errors.password_register %]
+            <p class="auth-alert auth-alert--error form-error">[% field_errors.password_register %]</p>
+          [% END %]
+          <div class="auth-input-wrap">
+            <span class="auth-input-wrap__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <input class="auth-input required form-control js-password-validate" type="password" name="password_register" id="password_register" value="" autocomplete="new-password" placeholder="********">
+            <button type="button" class="auth-input-wrap__trail auth-password-toggle" data-password-toggle="password_register" data-label-show="[% loc('Show password') %]" data-label-hide="[% loc('Hide password') %]" aria-label="[% loc('Show password') %]" aria-pressed="false">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+          </div>
+        </div>
 
-    <div class="form-txt-submit-box">
-        <input class="required form-control js-password-validate" type="password" name="password_register" id="password_register" value="" autocomplete="new-password">
-        <input class="btn btn--primary" type="submit" name="sign_in_by_code" value="[% expired_password ? loc('Reset') : forgotten ? loc('Sign in') : loc('Create your account') %]">
-    </div>
+        [% IF c.config.TURNSTILE AND NOT c.user_exists %]
+          [% IF captcha_error %]
+            <div class="auth-alert auth-alert--error form-error">[% loc('Please complete the CAPTCHA verification') %]</div>
+          [% END %]
+          <div class="auth-turnstile">
+            <div class="cf-turnstile" data-sitekey="[% c.config.TURNSTILE.site_key %]" data-theme="light" data-language="[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]"></div>
+          </div>
+          <script nonce="[% csp_nonce %]" src="https://challenges.cloudflare.com/turnstile/v0/api.js?hl=[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]" async defer></script>
+        [% END %]
 
-    [%# Cloudflare Turnstile CAPTCHA widget %]
-    [% IF c.config.TURNSTILE AND NOT c.user_exists %]
-    <div class="cf-turnstile" data-sitekey="[% c.config.TURNSTILE.site_key %]" data-theme="light" data-language="[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]"></div>
-    <script nonce="[% csp_nonce %]" src="https://challenges.cloudflare.com/turnstile/v0/api.js?hl=[% IF lang_code == 'en-gb' %]en[% ELSE %][% lang_code %][% END %]" async defer></script>
-    [% END %]
+        <input class="auth-button auth-button--primary btn btn--primary" type="submit" name="sign_in_by_code" value="[% expired_password ? loc('Reset') : forgotten ? loc('Sign in') : loc('Create your account') %]">
+      </form>
 
-</form>
+      [% IF NOT expired_password %]
+      <p class="auth-card__fineprint">
+        [% loc('Already have an account?') %] <a href="/auth">[% loc('Sign in') %]</a>
+      </p>
+      [% END %]
+    </section>
+  </div>
+</section>
 
 [% INCLUDE 'footer.html' %]

@@ -29,7 +29,15 @@ sub index :Path : Args(0) {
 
     if ($c->req->method eq 'POST') {
         my @uids = $c->get_param_list('uid');
-        my $user_rs = FixMyStreet::DB->resultset("User")->search({ id => \@uids });
+        # Scope the affected users to those this admin is actually allowed to
+        # manage. For body staff that's their own body's users only (via the
+        # cobrand restriction); superusers are unaffected. Crucially this stops
+        # a body staff member passing arbitrary user ids (another body's staff,
+        # or a superuser) to the bulk role/remove-staff actions.
+        my $user_rs = $c->cobrand->users->search({ 'me.id' => \@uids });
+        unless ($c->user->is_superuser || $c->cobrand->moniker eq 'zurich') {
+            $user_rs = $user_rs->search({ 'me.is_superuser' => 0 });
+        }
         if ( $c->get_param('remove-staff') ) {
             foreach my $user ($user_rs->all) {
                 $user->remove_staff;
@@ -40,6 +48,14 @@ sub index :Path : Args(0) {
             }
         } else {
             my @role_ids = $c->get_param_list('roles');
+            # Body staff may only assign roles that belong to their own body —
+            # never another body's role, and never a global/superuser role.
+            unless ($c->user->is_superuser || $c->cobrand->moniker eq 'zurich') {
+                my %own_roles = $c->user->from_body
+                    ? map { $_->id => 1 } $c->user->from_body->roles->all
+                    : ();
+                @role_ids = grep { $own_roles{$_} } @role_ids;
+            }
             foreach my $user ($user_rs->all) {
                 $user->admin_user_body_permissions->delete;
                 $user->user_roles->search({
@@ -76,7 +92,7 @@ sub index :Path : Args(0) {
         }
     } else {
         $c->forward('/auth/get_csrf_token');
-        $c->forward('/admin/fetch_all_bodies');
+        $c->forward('/admin/fetch_all_bodies') unless $c->cobrand->moniker eq 'infrasignal';
         $c->cobrand->call_hook('admin_user_edit_extra_data');
 
         # Admin users by default
@@ -115,7 +131,7 @@ sub add : Local : Args(0) {
 
     $c->stash->{template} = 'admin/users/edit.html';
     $c->forward('/auth/get_csrf_token');
-    $c->forward('/admin/fetch_all_bodies');
+    $c->forward('/admin/fetch_all_bodies') unless $c->cobrand->moniker eq 'infrasignal';
     $c->cobrand->call_hook('admin_user_edit_extra_data');
 
     return unless $c->get_param('submit');
@@ -155,6 +171,13 @@ sub add : Local : Args(0) {
     # will be visible to admin on /admin/users. (If the user already has a
     # body, we simply return an existence error.)
     my $from_body = $c->get_param('body') || undef;
+
+    # Non-superuser staff can only ever create users for their own body —
+    # the form locks the field, but enforce it server-side too (mirrors the
+    # own-body check in the edit flow's user_assign_body handling).
+    if (!$c->user->is_superuser && $c->cobrand->moniker ne 'zurich' && $c->user->from_body) {
+        $from_body = $c->user->from_body->id;
+    }
 
     my $user_from_email = $email_v && $c->model('DB::User')->find( { email => $email } );
     my $user_from_phone = $phone_v && $c->model('DB::User')->find( { phone => $phone } );
@@ -223,6 +246,14 @@ sub user : Chained('/') PathPart('admin/users') : CaptureArgs(1) {
 
     my $user = $c->cobrand->users->find( { id => $id } );
     $c->detach( '/page_error_404_not_found', [] ) unless $user;
+
+    # Only superusers may view or manage a superuser account. Body staff must
+    # not be able to open one — even a superuser that happens to share their
+    # body — because the edit form would otherwise let them demote or alter it.
+    if ( $user->is_superuser && !$c->user->is_superuser && $c->cobrand->moniker ne 'zurich' ) {
+        $c->detach( '/page_error_404_not_found', [] );
+    }
+
     $c->stash->{user} = $user;
 
     unless ( $c->user->has_body_permission_to('user_edit') || $c->cobrand->moniker eq 'zurich' ) {
@@ -242,7 +273,7 @@ sub edit : Chained('user') : PathPart('') : Args(0) {
         $c->stash->{available_permissions} = $c->cobrand->available_permissions;
     }
 
-    $c->forward('/admin/fetch_all_bodies');
+    $c->forward('/admin/fetch_all_bodies') unless $c->cobrand->moniker eq 'infrasignal';
     $c->forward('/admin/fetch_body_areas', [ $user->from_body ]) if $user->from_body;
     $c->forward('fetch_body_roles', [ $user->from_body ]) if $user->from_body;
     $c->cobrand->call_hook('admin_user_edit_extra_data');

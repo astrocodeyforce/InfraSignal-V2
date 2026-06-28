@@ -1,116 +1,131 @@
 [% INCLUDE 'header.html',
     title = loc('About InfraSignal'),
-    sidebar = 'about/_sidebar.html'
+    bodyclass = 'infopage'
 %]
 
-<h1>Acerca de InfraSignal</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = 'Acerca de InfraSignal'
+    public_page_subtitle = 'Ayudamos a los residentes a mejorar sus comunidades, un reporte a la vez.'
+%]
 
-<p>InfraSignal es una plataforma de reporte de infraestructura cívica que
-facilita a los residentes reportar y dar seguimiento a problemas de
-infraestructura local &mdash; y a los gobiernos locales recibir,
-priorizar y resolver estos problemas.</p>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<h2>Lo Que Hacemos</h2>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'about'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<p>En todo Estados Unidos, problemas de infraestructura como baches,
-alumbrado público dañado, aceras deterioradas y vertidos ilegales no se
-reportan porque los residentes no saben a quién contactar o cómo
-comunicarse. InfraSignal resuelve esto proporcionando una plataforma
-única y fácil de usar que dirige automáticamente los reportes al
-gobierno municipal, del condado o estatal correcto según la ubicación
-geográfica del problema.</p>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<p>Cuando un residente envía un reporte, InfraSignal:</p>
-<ol>
-    <li>Identifica el gobierno local responsable utilizando datos oficiales
-    de límites geográficos</li>
-    <li>Envía el reporte completo directamente al gobierno correspondiente,
-    incluyendo ubicación, categoría, descripción, fotos y nivel de
-    prioridad</li>
-    <li>Mantiene informado al reportero mediante notificaciones por correo
-    electrónico a medida que cambia el estado</li>
-    <li>Publica el reporte en un mapa público para que la comunidad pueda
-    ver los problemas locales y el progreso de su resolución</li>
-</ol>
+        [%# What We Do — Feature Cards %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">Qué Hacemos</h2>
+          <p>En todo Estados Unidos, los problemas de infraestructura —baches, farolas averiadas, aceras dañadas y vertederos ilegales— quedan sin reportar porque los residentes no saben a quién acudir. InfraSignal lo resuelve con una plataforma única y fácil de usar.</p>
 
-<h2>Cobertura</h2>
+          <div class="about-what-we-do">
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📍</div>
+              <h3>Ubicar</h3>
+              <p>Marque el problema en el mapa</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">📨</div>
+              <h3>Enrutar</h3>
+              <p>Envío automático a la autoridad correcta</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🔔</div>
+              <h3>Seguir</h3>
+              <p>Reciba actualizaciones de estado por correo</p>
+            </div>
+            <div class="about-what-we-do__card">
+              <div class="about-what-we-do__icon">🗺️</div>
+              <h3>Mapa</h3>
+              <p>Visibilidad pública para la comunidad</p>
+            </div>
+          </div>
+        </div>
 
-<p>InfraSignal actualmente da servicio a todo Estados Unidos, dirigiendo
-reportes de infraestructura a:</p>
-<ul>
-    <li><strong>51 gobiernos estatales</strong> (los 50 estados y el
-    Distrito de Columbia)</li>
-    <li><strong>Más de 3.000 gobiernos de condado</strong></li>
-    <li><strong>Más de 25.000 gobiernos de ciudades y pueblos</strong></li>
-</ul>
+        [%# Coverage Stats Grid %]
+        <h3 style="text-align: center; margin: 0 0 0.75rem">Preparado para enrutar en</h3>
+        <div class="about-stats" style="margin-bottom: 1.5rem">
+          <div class="about-stats__item">
+            <span class="about-stats__number">50</span>
+            <span class="about-stats__label">Estados</span>
+            <span class="about-stats__detail">+ D.C.</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">3.000+</span>
+            <span class="about-stats__label">Condados</span>
+            <span class="about-stats__detail">Gobiernos de condado</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">25.000+</span>
+            <span class="about-stats__label">Ciudades</span>
+            <span class="about-stats__detail">Gobiernos municipales</span>
+          </div>
+          <div class="about-stats__item">
+            <span class="about-stats__number">13</span>
+            <span class="about-stats__label">Categorías</span>
+            <span class="about-stats__detail">Tipos estandarizados</span>
+          </div>
+        </div>
 
-<p>Todas las jurisdicciones reciben reportes en 13 categorías
-estandarizadas de infraestructura, incluyendo baches/daño en carreteras,
-averías de alumbrado público, drenaje/inundación, grafiti/vandalismo,
-daño en aceras, daño en puentes/barandas, problemas de semáforos/
-señalización y más.</p>
+        [%# How It Works — Teaser %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0">Cómo Funciona</h2>
+          <p>Los reportes siguen un ciclo de vida claro: el residente agrega una ubicación y detalles, InfraSignal ayuda a enrutar el reporte y todos pueden seguir las actualizaciones públicas con el tiempo.</p>
+          <div class="about-contact">
+            <a href="/how-it-works" class="about-contact__link--primary">
+              Ver el proceso completo &rarr;
+            </a>
+          </div>
+        </div>
 
-<h2>Cómo Funciona</h2>
+        [%# For Local Authorities — Summary Card %]
+        <div class="about-benefits-card" style="margin-bottom: 1.5rem">
+          <h2 style="margin-top: 0; font-size: 1.125rem; font-weight: 600">Para Autoridades Locales</h2>
+          <p style="font-size: 0.875rem; color: #6b7280">InfraSignal ofrece a los equipos públicos un canal estandarizado para recibir reportes estructurados y basados en ubicación de los residentes. Los detalles operativos, de integración y de colaboración ahora están en la página de gobierno local.</p>
+          <div class="about-contact">
+            <a href="/about/for-local-government" class="about-contact__link--outline">
+              Para Gobierno Local
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              Formulario de Contacto &rarr;
+            </a>
+          </div>
+        </div>
 
-<table class="nicetable">
-    <tr>
-        <th scope="col">Paso</th>
-        <th scope="col">Qué Sucede</th>
-    </tr>
-    <tr>
-        <td><strong>1. Localizar</strong></td>
-        <td>Ingrese una dirección, ciudad o código postal. Coloque un
-        marcador en el mapa en el punto exacto del problema.</td>
-    </tr>
-    <tr>
-        <td><strong>2. Describir</strong></td>
-        <td>Seleccione una categoría, escriba una descripción y suba
-        hasta 3 fotos. Las fotos se verifican automáticamente para
-        detectar contenido inapropiado.</td>
-    </tr>
-    <tr>
-        <td><strong>3. Dirigir</strong></td>
-        <td>InfraSignal identifica el gobierno responsable usando datos
-        de límites geográficos y envía su reporte con todos los detalles
-        y clasificación de prioridad.</td>
-    </tr>
-    <tr>
-        <td><strong>4. Dar Seguimiento</strong></td>
-        <td>Reciba actualizaciones por correo electrónico mientras el
-        gobierno revisa el caso. Vea todos los reportes en el mapa
-        público. Envíe actualizaciones de seguimiento en cualquier
-        momento.</td>
-    </tr>
-</table>
+        [%# Contact CTA %]
+        <div class="info-page-card" style="text-align: center">
+          <h2 style="margin-top: 0">Contacto</h2>
+          <p>¿Preguntas, sugerencias o consultas de colaboración?</p>
+          <div class="about-contact">
+            <a href="mailto:[% c.cobrand.contact_email %]" class="about-contact__link--outline">
+              ✉ [% c.cobrand.contact_email %]
+            </a>
+            <a href="/contact" class="about-contact__link--primary">
+              Formulario de Contacto →
+            </a>
+          </div>
+        </div>
 
-<h2>Para Gobiernos Locales</h2>
-
-<p>InfraSignal ofrece a las agencias públicas un canal
-estandarizado para recibir reportes de infraestructura de los ciudadanos.
-Beneficios:</p>
-<ul>
-    <li>Reportes estructurados y geolocalizados con fotos y niveles de
-    prioridad</li>
-    <li>13 categorías estandarizadas alineadas con operaciones comunes de
-    obras públicas</li>
-    <li>Sistema de prioridad de cuatro niveles generado automáticamente
-    para cada jurisdicción (Urgente, Alta, Normal, Baja)</li>
-    <li>Compatibilidad con el estándar Open311 GeoReport v2 para futura
-    integración automatizada con sistemas CRM y de órdenes de
-    trabajo</li>
-</ul>
-
-<p>Para actualizar la información de contacto de su jurisdicción o
-discutir la integración, visite nuestra
-<a href="/contact">página de contacto</a>.</p>
-
-<h2>Contacto</h2>
-
-<p>¿Tiene preguntas, sugerencias o solicitudes de colaboración?
-Contáctenos:</p>
-<ul>
-    <li>Correo electrónico: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
-    <li>Web: <a href="/contact">Formulario de Contacto</a></li>
-</ul>
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

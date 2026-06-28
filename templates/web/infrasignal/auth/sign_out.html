@@ -1,0 +1,29 @@
+[% INCLUDE 'header.html', bodyclass='authpage signedoutpage', title=loc('Signed out') %]
+
+<section class="signed-out" aria-labelledby="signed-out-title">
+  <div class="signed-out__card">
+    <div class="signed-out__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6 9 17l-5-5" />
+      </svg>
+    </div>
+
+    <div class="signed-out__body">
+      <p class="signed-out__eyebrow">[% loc('Session ended') %]</p>
+      <h1 id="signed-out-title" class="signed-out__title">[% loc('You have been signed out') %]</h1>
+      <p class="signed-out__lede">
+        [% loc('Please feel free to') %]
+        <a href="[% c.uri_for('/auth') | html %]" class="signed-out__link">[% loc('sign in again') %]</a>,
+        [% loc('or go back to the') %]
+        <a href="[% c.uri_for('/') | html %]" class="signed-out__link">[% loc('front page') %]</a>.
+      </p>
+
+      <div class="signed-out__actions">
+        <a href="[% c.uri_for('/auth') | html %]" class="signed-out__button signed-out__button--primary">[% loc('Sign in again') %]</a>
+        <a href="[% c.uri_for('/') | html %]" class="signed-out__button signed-out__button--ghost">[% loc('Back to home') %]</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+[% INCLUDE 'footer.html' %]

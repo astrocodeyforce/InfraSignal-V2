@@ -1,0 +1,162 @@
+[%# ============================================================
+    InfraSignal — Contact Page
+    Template Toolkit / Perl production template
+    ============================================================ %]
+[% WRAPPER layouts/main.tt title="Contact Us — InfraSignal" %]
+
+<!-- Hero -->
+<section class="contact-hero">
+  <div class="infra-container">
+    <h1 class="contact-hero__title">Contact Us</h1>
+    <p class="contact-hero__subtitle">Have a question or need help? We're here for you.</p>
+  </div>
+</section>
+
+<!-- Two-column layout -->
+<section class="infra-section">
+  <div class="infra-container">
+    <div class="contact-layout">
+
+      <!-- Sidebar Navigation -->
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            <li><a href="/about" class="contact-sidebar__link">About</a></li>
+            <li><a href="/faq" class="contact-sidebar__link">FAQ</a></li>
+            <li><a href="/privacy" class="contact-sidebar__link">Privacy</a></li>
+            <li><a href="/terms" class="contact-sidebar__link">Terms</a></li>
+            <li><a href="/contact" class="contact-sidebar__link contact-sidebar__link--active">Contact Us</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="contact-main">
+
+        <!-- Notice: Check FAQ first -->
+        <div class="contact-notice contact-notice--info">
+          <svg class="contact-notice__icon contact-notice__icon--info" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div>
+            <p class="contact-notice__title">Check our FAQ first</p>
+            <p class="contact-notice__text">Many common questions are answered in our <a href="/faq">Frequently Asked Questions</a> page.</p>
+          </div>
+        </div>
+
+        <!-- Notice: Don't report issues here -->
+        <div class="contact-notice contact-notice--warning">
+          <svg class="contact-notice__icon contact-notice__icon--warn" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <div>
+            <p class="contact-notice__title">Don't report infrastructure problems here</p>
+            <p class="contact-notice__text">To report a pothole, streetlight, or other issue, use our <a href="/report">Report Form</a> instead.</p>
+          </div>
+        </div>
+
+        <!-- Form Card -->
+        <div class="contact-form-card">
+          <h2 class="contact-form-card__title">Send Us a Message</h2>
+          <p class="contact-form-card__subtitle">Fill out the form below and we'll get back to you within 1–2 business days.</p>
+
+          <form class="contact-form" method="POST" action="[% c.uri_for('/contact/send') %]">
+            [% IF c.req.param('csrf_token') %]
+              <input type="hidden" name="csrf_token" value="[% csrf_token %]" />
+            [% END %]
+
+            <div class="contact-form__row">
+              <div>
+                <label class="contact-form__label">Name <span class="required">*</span></label>
+                <input type="text" name="name" required placeholder="Your full name" class="contact-form__input" value="[% form.name | html %]" />
+              </div>
+              <div>
+                <label class="contact-form__label">Email <span class="required">*</span></label>
+                <input type="email" name="email" required placeholder="your@email.com" class="contact-form__input" value="[% form.email | html %]" />
+              </div>
+            </div>
+
+            <div class="contact-form__row">
+              <div>
+                <label class="contact-form__label">Phone <span class="optional">(optional)</span></label>
+                <input type="tel" name="phone" placeholder="(555) 123-4567" class="contact-form__input" value="[% form.phone | html %]" />
+              </div>
+              <div>
+                <label class="contact-form__label">Subject <span class="required">*</span></label>
+                <input type="text" name="subject" required placeholder="How can we help?" class="contact-form__input" value="[% form.subject | html %]" />
+              </div>
+            </div>
+
+            <div class="contact-form__group">
+              <label class="contact-form__label">Message <span class="required">*</span></label>
+              <textarea name="message" required placeholder="Tell us more about your inquiry..." class="contact-form__textarea" rows="5">[% form.message | html %]</textarea>
+            </div>
+
+            <!-- Cloudflare Turnstile placeholder -->
+            <div class="contact-form__captcha">
+              <div class="contact-form__captcha-box"></div>
+              <span class="contact-form__captcha-label">I'm not a robot</span>
+            </div>
+
+            [% IF error_message %]
+              <div class="contact-notice contact-notice--warning" style="margin-bottom: 1.25rem;">
+                <div>
+                  <p class="contact-notice__text">[% error_message | html %]</p>
+                </div>
+              </div>
+            [% END %]
+
+            [% IF success_message %]
+              <div class="contact-notice contact-notice--info" style="margin-bottom: 1.25rem;">
+                <div>
+                  <p class="contact-notice__text">[% success_message | html %]</p>
+                </div>
+              </div>
+            [% END %]
+
+            <button type="submit" class="contact-form__submit">
+              Send Message
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+          </form>
+        </div>
+
+        <!-- Don't like forms? -->
+        <div class="contact-alt">
+          <p class="contact-alt__title">Don't like forms?</p>
+          <p class="contact-alt__text">Email us directly at <a href="mailto:hello@infrasignal.org">hello@infrasignal.org</a></p>
+        </div>
+
+        <!-- Contact info cards -->
+        <div class="contact-info-cards">
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </div>
+            <div>
+              <p class="contact-info-card__label">Email</p>
+              <p class="contact-info-card__value">hello@infrasignal.org</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <p class="contact-info-card__label">Coverage</p>
+              <p class="contact-info-card__value">All 50 states + D.C.</p>
+            </div>
+          </div>
+          <div class="contact-info-card">
+            <div class="contact-info-card__icon-wrap">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <div>
+              <p class="contact-info-card__label">Response Time</p>
+              <p class="contact-info-card__value">1–2 business days</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+[% END %]

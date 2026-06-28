@@ -4,8 +4,9 @@
 # Rate limiting: 10 req/s per IP, burst 20. Connection limit: 50 per IP.
 
 server {
-    listen 80 default_server;
-    listen 443 ssl default_server;
+    listen 80;
+    listen 443 ssl;
+    server_name infrasignal.org www.infrasignal.org;
 
     ssl_certificate     /etc/nginx/ssl/infrasignal.org.pem;
     ssl_certificate_key /etc/nginx/ssl/infrasignal.org.key;
@@ -111,4 +112,20 @@ server {
         # Starman listens on port 3000 inside the fixmystreet container
         proxy_pass http://fixmystreet.svc:3000;
     }
+}
+
+# Catch-all for any hostname other than infrasignal.org / www.infrasignal.org.
+# Completes the TLS handshake (cert is reused) and then closes the connection
+# with no response. Prevents the InfraSignal site from being served on bare-IP
+# probes or stray DNS aliases pointing at this host.
+server {
+    listen 80 default_server;
+    listen 443 ssl default_server;
+    server_name _;
+
+    ssl_certificate     /etc/nginx/ssl/infrasignal.org.pem;
+    ssl_certificate_key /etc/nginx/ssl/infrasignal.org.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+
+    return 444;
 }

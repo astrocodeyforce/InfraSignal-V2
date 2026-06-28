@@ -18,6 +18,34 @@ proximity + same category.  Groups are ordered by distance (closest first).
 
 =cut
 
+sub auto : Private {
+    my ($self, $c) = @_;
+    # Superusers see duplicates across all bodies. Body staff with
+    # report_inspect only see (and can only act on) their own body's reports;
+    # every query and action below is filtered by dup_body when set.
+    my $user = $c->user;
+    unless ($user && ($user->is_superuser || $user->has_body_permission_to('report_inspect'))) {
+        $c->detach('/page_error_404_not_found');
+    }
+    $c->stash->{dup_body} = (!$user->is_superuser && $user->from_body) ? $user->from_body : undef;
+    return 1;
+}
+
+# SQL fragment matching a body id inside the comma-separated bodies_str.
+sub _body_match_sql {
+    my ($alias, $body_id) = @_;
+    return ("$alias.bodies_str ~ ?", '(^|,)' . int($body_id) . '(,|$)');
+}
+
+# Is this report one the current staff user is allowed to act on?
+sub _report_in_scope {
+    my ($c, $report) = @_;
+    my $body = $c->stash->{dup_body};
+    return 1 unless $body;
+    my %ids = map { $_ => 1 } @{ $report->bodies_str_ids || [] };
+    return $ids{$body->id};
+}
+
 sub index : Path : Args(0) {
     my ( $self, $c ) = @_;
 
@@ -81,6 +109,15 @@ sub index : Path : Args(0) {
     };
 
     my @params = ($radius);
+
+    # Body staff only see duplicate pairs within their own body's reports
+    if (my $body = $c->stash->{dup_body}) {
+        for my $alias (qw(a b)) {
+            my ($frag, $param) = _body_match_sql($alias, $body->id);
+            $sql .= " AND $frag";
+            push @params, $param;
+        }
+    }
 
     if ($category_filter) {
         $sql .= " AND a.category = ?";
@@ -216,7 +253,10 @@ sub mark_duplicate : Path('mark') : Args(0) {
 
     if ($report_id && $duplicate_of && $report_id != $duplicate_of) {
         my $report = $c->model('DB::Problem')->find($report_id);
-        if ($report) {
+        my $target = $c->model('DB::Problem')->find($duplicate_of);
+        # Staff may only act on reports belonging to their own body
+        if ($report && $target
+            && _report_in_scope($c, $report) && _report_in_scope($c, $target)) {
             $report->set_duplicate_of($duplicate_of);
             $report->state('duplicate');
             $report->update;
@@ -245,7 +285,8 @@ sub dismiss : Path('dismiss') : Args(0) {
     my @ids = $c->get_param('report_ids') ? split(/,/, $c->get_param('report_ids')) : ();
     for my $id (@ids) {
         my $report = $c->model('DB::Problem')->find($id);
-        if ($report) {
+        # Staff may only act on reports belonging to their own body
+        if ($report && _report_in_scope($c, $report)) {
             $report->set_extra_metadata(duplicate_dismissed => 1);
             $report->update;
         }

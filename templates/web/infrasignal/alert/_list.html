@@ -1,112 +1,133 @@
-  [% SET name_of_location = pretty_pc || loc('this location') %]
+[%
+  SET name_of_location = alert_location_label || c.get_param('pc') || pc || pretty_pc;
+  IF !name_of_location AND all_areas;
+    SET name_of_location_type = '';
+    FOREACH area IN all_areas.values;
+      IF !name_of_location OR (name_of_location_type == 'O04' AND area.type != 'O04');
+        name_of_location = area.name;
+        name_of_location_type = area.type;
+      END;
+    END;
+  END;
+  SET name_of_location = name_of_location || loc('selected area');
+  SET name_of_location = c.cobrand.compact_us_location_label(name_of_location) || name_of_location;
+%]
 
-  <input type="hidden" name="token" value="[% csrf_token %]">
-  <input type="hidden" name="type" value="local">
-  <input type="hidden" name="pc" value="[% pc | html %]">
-  <input type="hidden" name="latitude" value="[% latitude | html %]">
-  <input type="hidden" name="longitude" value="[% longitude | html %]">
+<input type="hidden" name="token" value="[% csrf_token %]">
+<input type="hidden" name="type" value="local">
+<input type="hidden" name="pc" value="[% pc | html %]">
+<input type="hidden" name="latitude" value="[% latitude | html %]">
+<input type="hidden" name="longitude" value="[% longitude | html %]">
 
-  <div class="govuk-form-group">
-    <fieldset>
-    <legend>
-      <h2 class="govuk-fieldset__legend govuk-fieldset__legend--m">[% loc('Which problems do you want alerts about?') %]</h2>
-    </legend>
+<section class="alerts-scope" aria-labelledby="alerts-scope-title">
+  <header class="alerts-scope__head">
+    <h2 id="alerts-scope-title" class="alerts-scope__title">[% loc('Which problems do you want alerts about?') %]</h2>
+    <p class="alerts-scope__sub">[% loc('Pick the area you care about. You can change this any time.') %]</p>
+  </header>
 
-      [% INCLUDE 'errors.html' %]
+  [% INCLUDE 'errors.html' %]
 
-    <div class="govuk-radios" data-module="govuk-radios">
+  [% IF reported_to_options %]
+    <div class="alerts-scope__note">
+      <p>[% tprintf(loc('Reports near %s are sent to different local authorities, depending on the type of problem.'), name_of_location) %]</p>
+      <p>[% loc('You can choose to subscribe to all problems reported in an area, or reports based on their destination.') %]</p>
+    </div>
+    <h3 class="alerts-scope__group-title">[% loc('Problems in an area') %]</h3>
+  [% END %]
 
-      [% IF reported_to_options %]
-        <p>
-            [% tprintf(loc('Reports near %s are sent to different local authorities, depending on the type of problem.'), name_of_location) %]
-        </p>
-        <p>
-            [% loc('You can choose to subscribe to all problems reported in an area, or reports based on their destination.') %]
-        </p>
+  <div class="alerts-scope__form" role="radiogroup" aria-label="[% loc('Alert scope') %]">
+    <div class="alerts-scope__row">
+      <div class="alerts-scope__card[% IF rss_feed_id == selected_feed || selected_feed == '' %] is-selected[% END %]" data-scope="radius">
+        <label class="alerts-scope__option" for="[% rss_feed_id %]">
+          <input class="alerts-scope__input" type="radio" name="feed" id="[% rss_feed_id %]" value="[% rss_feed_id %]"[% IF rss_feed_id == selected_feed || selected_feed == '' %] checked="checked"[% END %]>
+          <span class="alerts-scope__radio" aria-hidden="true"><span class="alerts-scope__dot"></span></span>
+          <span class="alerts-scope__body">
+            <span class="alerts-scope__label">[% tprintf( loc('Problems within %.1fkm of %s'), population_radius, name_of_location ) %]</span>
+            <span class="alerts-scope__hint">[% loc('Covers roughly 200,000 people') %]</span>
+          </span>
+        </label>
+        <a href="[% rss_feed_uri %]" class="alerts-scope__rss js-alert-local" id="rss-[% rss_feed_id %]" aria-label="[% loc('RSS feed of nearby problems') %]">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+        </a>
+        <div class="alerts-scope__radius" id="rss_local_alt">
+          <label class="alerts-scope__radius-label" for="distance">[% loc('Or specify a different radius:') %]</label>
+          <div class="alerts-scope__radius-input">
+            <input name="distance" id="distance" type="text" inputmode="numeric" pattern="[0-9]*([,.][0-9]+)?" aria-label="[% loc('Specify a radius in kilometres') %]">
+            <span class="alerts-scope__radius-unit" aria-hidden="true">[% loc('Km') %]</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-        <h3>[% loc('Problems in an area') %]</h3>
+    [% FOREACH option IN options %]
+      [% IF option.title AND reported_to_options %]
+        <h3 class="alerts-scope__group-title">[% option.title %]</h3>
       [% END %]
 
-      
-      <div class="alert-option-wrapper">
-        <div class="govuk-radios__item" id="rss_local">
-          <input class="govuk-radios__input" type="radio" name="feed" id="[% rss_feed_id %]" value="[% rss_feed_id %]"[% IF rss_feed_id == selected_feed || selected_feed == '' %] checked[% END %]>
-          <label class="govuk-label govuk-radios__label" for="[% rss_feed_id %]">
-            [% tprintf( loc('Problems within %.1fkm of %s'), population_radius, name_of_location ) %]
-            [% loc('(covers roughly 200,000 people)') %]
-          </label>
-        </div>
-        <a href="[% rss_feed_uri %]" class="alerts-rss-link js-alert-local" id="rss-[% rss_feed_id %]">
-          <img src="/i/feed.png" width="16" height="16" alt="[% loc('RSS feed of nearby problems') %]">
+      <div class="alerts-scope__card[% IF option.id == selected_feed %] is-selected[% END %]">
+        <label class="alerts-scope__option" for="[% option.id %]">
+          <input class="alerts-scope__input" type="radio" name="feed" id="[% option.id %]" value="[% option.id %]"[% IF option.id == selected_feed %] checked="checked"[% END %]>
+          <span class="alerts-scope__radio" aria-hidden="true"><span class="alerts-scope__dot"></span></span>
+          <span class="alerts-scope__body">
+            <span class="alerts-scope__label">[% option.text %]</span>
+          </span>
+        </label>
+        <a href="[% option.uri %]" class="alerts-scope__rss" id="rss-[% option.id %]" aria-label="[% option.rss_text | html %]">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
         </a>
       </div>
 
-        <div class="alert-option-wrapper govuk-!-margin-bottom-4">
-          <div id="rss_local_alt" class="govuk-form-group">
-            <label class="govuk-label govuk-!-margin-bottom-2" for="distance">[% loc('Or specify a different radius distance:') %]</label>
-            <div class="govuk-input__wrapper">
-              <input class="govuk-input" name="distance" id="distance" type="text" inputmode="numeric" pattern="[0-9]*([,.][0-9]+)?" aria-label="[% loc('Specify a radius in kilometres') %]">
-              <div class="govuk-input__suffix" aria-hidden="true">Km</div>
-            </div>
-          </div>
-
-        </div>
-
-      [% FOREACH option IN options %]
-
-        [% IF option.title AND reported_to_options %]
-            <h3>[% option.title %]</h3>
-        [% END %]
-
-        <div class="alert-option-wrapper govuk-!-margin-bottom-4">
-          <div class="govuk-radios__item">
-            <input class="govuk-radios__input" type="radio" name="feed" id="[% option.id %]" value="[% option.id %]"[% IF option.id == selected_feed %] checked[% END %]>
-            <label class="govuk-label govuk-radios__label" for="[% option.id %]">
-              [% option.text %]
-            </label>
-          </div>
-          <a href="[% option.uri %]" class="alerts-rss-link" id="rss-[% option.id %]">
-            <img src="/i/feed.png" width="16" height="16" alt="[% option.rss_text %]">
+      [% SET reported_option = reported_to_options.${loop.index} %]
+      [% IF reported_option AND reported_option.text %]
+        <div class="alerts-scope__card[% IF reported_option.id == selected_feed %] is-selected[% END %]">
+          <label class="alerts-scope__option" for="[% reported_option.id %]">
+            <input class="alerts-scope__input" type="radio" name="feed" id="[% reported_option.id %]" value="[% reported_option.id %]"[% IF reported_option.id == selected_feed %] checked="checked"[% END %]>
+            <span class="alerts-scope__radio" aria-hidden="true"><span class="alerts-scope__dot"></span></span>
+            <span class="alerts-scope__body">
+              <span class="alerts-scope__label">[% reported_option.text %]</span>
+            </span>
+          </label>
+          <a href="[% reported_option.uri %]" class="alerts-scope__rss" id="rss-[% reported_option.id %]" aria-label="[% reported_option.rss_text | html %]">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
           </a>
         </div>
-
-        [% option = reported_to_options.${loop.index} %]
-        [% IF option AND option.text %]
-          <div class="alert-option-wrapper govuk-!-margin-bottom-4">
-            <div class="govuk-radios__item">
-              <input class="govuk-radios__input" type="radio" name="feed" id="[% option.id %]" value="[% option.id %]"[% IF option.id == selected_feed %] checked[% END %]>
-              <label class="govuk-label govuk-radios__label" for="[% option.id %]">
-                [% option.text %]
-              </label>
-            </div>
-            <a href="[% option.uri %]" class="alerts-rss-link" id="rss-[% option.id %]">
-              <img src="/i/feed.png" width="16" height="16" alt="[% option.rss_text %]">
-            </a>
-          </div>
-        [% END %]
-
       [% END %]
-      </div>
-    </fieldset>
-  </div>
-
-  [% PROCESS 'auth/form_extra.html' %]
-
-  <div class="alerts__cta-box">
-    <h3>[% loc('Subscribe by email') %]</h3>
-    [% UNLESS c.user_exists AND c.user.email_verified %]
-      <div class="govuk-form-group">
-        <label class="govuk-label" for="rznvy">[% loc('Email address') %]</label>
-        <div class="cta-box__input-wrapper">
-          <input class="govuk-input" type="email" id="rznvy" name="rznvy" value="[% rznvy %]" spellcheck="false" autocomplete="email">
-          <input id="alert_email_button" class="btn btn--primary" type="submit" name="alert" value="[% loc('Subscribe') %]">
-        </div>
-      </div>
-      <p>[% tprintf(loc('We won’t use your email for anything beyond sending you alerts within this area. You can find more information in our <a href="%s">privacy policy</a>.'), c.cobrand.privacy_policy_url) %]</p>
-    [% ELSE %]
-      <input id="alert_email_button" class="btn btn--primary" type="submit" name="alert" value="[% loc('Subscribe') %]">
     [% END %]
   </div>
+</section>
 
-  <h3>[% loc('Or subscribe by RSS') %]</h3>
-  <input id="alert_rss_button" class="btn" type="submit" name="rss" value="[% loc('Give me an RSS feed') %]">
+<section class="alerts-row">
+  <div class="alerts-email">
+    <div class="alerts-email__head">
+      <span class="alerts-email__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></span>
+      <h2 class="alerts-email__title">[% loc('Subscribe by email') %]</h2>
+    </div>
+    [% UNLESS c.user_exists AND c.user.email_verified %]
+      <label class="alerts-email__label" for="rznvy">[% loc('Email address') %]</label>
+      <div class="alerts-email__row">
+        <input class="alerts-email__input" type="email" id="rznvy" name="rznvy" value="[% rznvy | html %]" spellcheck="false" autocomplete="email" placeholder="you@example.com">
+        <button id="alert_email_button" class="btn btn--primary alerts-email__submit" type="submit" name="alert" value="1">[% loc('Subscribe') %] <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+      <p class="alerts-email__privacy">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></svg>
+        <span>[% tprintf(loc('We will not use your email for anything beyond sending you alerts within this area. See our <a href="%s">privacy policy</a>.'), c.cobrand.privacy_policy_url) %]</span>
+      </p>
+    [% ELSE %]
+      <button id="alert_email_button" class="btn btn--primary alerts-email__submit" type="submit" name="alert" value="1">[% loc('Subscribe') %] <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg></button>
+    [% END %]
+    <div class="alerts-email__verification">
+      [% PROCESS 'auth/form_extra.html' %]
+    </div>
+  </div>
+
+  <div class="alerts-rss">
+    <span class="alerts-rss__glow" aria-hidden="true"></span>
+    <span class="alerts-rss__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg></span>
+    <h2 class="alerts-rss__title">[% loc('Or subscribe by RSS') %]</h2>
+    <p class="alerts-rss__lead">[% loc('Plug your feed into any RSS reader.') %]</p>
+    <button id="alert_rss_button" class="btn alerts-rss__btn" type="submit" name="rss" value="1">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+      <span>[% loc('Give me an RSS feed') %]</span>
+    </button>
+  </div>
+</section>

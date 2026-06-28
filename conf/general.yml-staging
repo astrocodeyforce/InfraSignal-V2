@@ -1,0 +1,96 @@
+# ============================================================
+# InfraSignal — Staging Environment Config
+# ============================================================
+# Used by: docker/docker-compose-staging.yml
+# Purpose: Pre-production verification, demo to stakeholders
+# ============================================================
+
+FMS_DB_HOST: 'postgres.svc'
+FMS_DB_PORT: '5432'
+FMS_DB_NAME: 'infrasignal'
+FMS_DB_USER: 'fms'
+FMS_DB_PASS: 'CHANGE_ME'
+
+BASE_URL: 'https://staging.infrasignal.org'
+SECURE_PROXY_SSL_HEADER: [ 'X-Forwarded-Proto', 'https' ]
+CONTENT_SECURITY_POLICY: ''
+using_frontend_proxy: 1
+
+EMAIL_DOMAIN: 'staging.infrasignal.org'
+CONTACT_EMAIL: 'help@staging.infrasignal.org'
+CONTACT_NAME: 'InfraSignal (Staging)'
+DO_NOT_REPLY_EMAIL: 'noreply@staging.infrasignal.org'
+
+# Staging site — shows banner, doesn't send reports to real bodies
+STAGING_SITE: 1
+STAGING_FLAGS:
+  send_reports: 0
+  skip_checks: 0
+  hide_staging_banner: 0
+
+EXAMPLE_PLACES: [ 'High Street', 'Main Street' ]
+
+LANGUAGES:
+  - 'en-gb,English,en_GB'
+  - 'tr,Türkçe,tr_TR'
+  - 'es,Español,es_ES'
+  - 'ru,Русский,ru_RU'
+
+DB_FULL_TEXT_SEARCH_CONFIG: 'english'
+TIME_ZONE: ""
+GEO_CACHE: '../cache/'
+PHOTO_STORAGE_BACKEND: 'FileSystem'
+PHOTO_STORAGE_OPTIONS:
+  UPLOAD_DIR: '../upload/'
+
+SIGHTENGINE_ENABLED: 0
+SIGHTENGINE_API_USER: ''
+SIGHTENGINE_API_SECRET: ''
+
+# US setup: use the global MapIt (OSM admin boundaries) so points resolve to
+# the real state/county/township/city areas our bodies are attached to. Do NOT
+# revert to fakemapit (that returns a single "Everywhere" area 161 and breaks
+# location/body detection).
+MAPIT_URL: 'https://global.mapit.mysociety.org/'
+MAPIT_TYPES: [ 'O04', 'O06', 'O07', 'O08' ]
+MAPIT_API_KEY: ''
+MAPIT_ID_WHITELIST: []
+MAPIT_GENERATION: 10
+MAPIT_TYPES_CHILDREN: ''
+
+GEOCODER: ''
+GOOGLE_MAPS_API_KEY: ''
+BING_MAPS_API_KEY: ''
+# Restrict address search to the United States so we never surface UK/other
+# countries (e.g. "Manchester, England"). bounds = continental US.
+GEOCODING_DISAMBIGUATION:
+  country: 'us'
+  bounds: [ 24.396308, -125.0, 49.384358, -66.93457 ]
+MAP_TYPE: 'OSM'
+
+ALLOWED_COBRANDS:
+  - infrasignal
+
+ADMIN_BASE_URL: ''
+RSS_LIMIT: '20'
+OPEN311_LIMIT: 1000
+ALL_REPORTS_PER_PAGE: 100
+
+FACEBOOK_APP_ID: ''
+FACEBOOK_APP_SECRET: ''
+TWITTER_KEY: ''
+TWITTER_SECRET: ''
+
+SMTP_SMARTHOST: 'localhost'
+SMTP_TYPE: ''
+SMTP_PORT: ''
+SMTP_USERNAME: ''
+SMTP_PASSWORD: ''
+
+CHECK_HAVEIBEENPWNED: 0
+GAZE_URL: 'https://gaze.mysociety.org/gaze'
+MEMCACHED_HOST: 'memcached.svc'
+CACHE_TIMEOUT: 1800
+AREA_LINKS_FROM_PROBLEMS: '0'
+LOGIN_REQUIRED: 0
+SIGNUPS_DISABLED: 0

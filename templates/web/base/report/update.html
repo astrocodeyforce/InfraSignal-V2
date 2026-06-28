@@ -6,7 +6,9 @@
 [% END %]
         <li class="item-list__item item-list__item--updates
             [%~ ' show-moderation' IF update.id AND show_moderation == update.id ~%]
-            ">
+            "
+            data-update-epoch="[% update.confirmed.epoch IF update.confirmed %]"
+            data-update-state="[% update.problem_state_processed || update.problem_state | html %]">
             <a name="update_[% update.id %]" class="internal-link-fixed-header"></a>
           [% IF can_moderate; original = update.moderation_original_data OR update %]
             <form method="post" action="/moderate/report/[% problem.id %]/update/[% update.id %]">

@@ -1,6 +1,7 @@
 [% SET can_display_external_id = problem.can_display_external_id %]
 [% SET duration_clause = problem.duration_string %]
-<p class="council_sent_info">
+<p class="council_sent_info"
+   data-ref-number="[% can_display_external_id ? problem.external_id : problem.id | html %]">
     [% duration_clause %][% IF duration_clause %]. [% END %]
     <strong>
     [%- IF can_display_external_id %]

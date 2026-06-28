@@ -1,6 +1,1711 @@
 ## Releases
 
 * Unreleased
+    - InfraSignal — Jun 22, 2026 (Self-service "Close my account" — dev only):
+        - New requirement: let users delete their own account (the privacy
+          policy already promises a "Right to Delete", but there was no
+          in-product way to do it — only an admin could anonymize via
+          Admin → Users, or the inactive-accounts script).
+        - Added a self-service closure flow in `Auth/Profile.pm`:
+            * `GET /auth/close_account` — warning screen explaining the action
+              is permanent and that reports stay as an anonymous public record.
+            * `POST` requires a typed confirmation phrase ("DELETE") AND the
+              current password (when the account has one); then emails a
+              one-time confirmation link. Nothing changes until that link is
+              followed (token scoped `close_account`, 1-day lifetime).
+            * `GET /auth/close_account/confirm/<token>` — validates the token,
+              runs the existing core `User->anonymize_account` (scrubs email,
+              name, phone, password, social IDs; anonymizes the user's
+              reports/updates; disables alerts; removes staff), burns the
+              token, signs the user out, shows a done page.
+        - Reuses vetted core logic (anonymize, not hard-delete) so the civic
+          record of reports is preserved per the privacy policy. Superusers
+          are blocked from self-closing (must be handled by another admin) to
+          avoid locking the platform out of admin access.
+        - The emailed confirm link works even if the login session has since
+          expired (authenticates via the token, not the session).
+        - New templates: `auth/close_account.html` (warning form + "check your
+          email" state), `auth/close_account_done.html` (success / invalid-link),
+          `email/default/close_account.txt`. Added a discreet "Close account"
+          danger link on the `/my` account page, plus `.btn--danger` /
+          `.account-danger-zone` styles; recompiled base.css.
+        - Verified end-to-end on dev: wrong phrase and wrong password are
+          rejected; correct submission emails a token; confirming anonymizes
+          the account (email → removed-<id>@…, name/password cleared,
+          unverified) and the link is single-use. NOT yet on staging/prod.
+    - InfraSignal — Jun 21, 2026 (PRODUCTION DEPLOY: dev→prod catch-up + parity check):
+        - First prod deploy in ~7 weeks. Production advanced from its frozen
+          commit `39b493aed` (May 3) to `origin/dev` HEAD `45c6cae05`,
+          bringing 153 commits of staging-validated work live — headlined by
+          the session security timeouts and the "Report as" select fix below.
+        - Prod was found with a *dirty* working tree (77 uncommitted stale
+          files) and 153 commits behind, so `bin/deploy` (require_clean_tree)
+          could not run. Safe path: full backup (DB dump + uncommitted patch +
+          untracked tarball + rollback commit, all under
+          `/opt/backups/infrasignal/` ts `20260622_004725`), then
+          `git reset --hard origin/dev`. Prod-critical config
+          (`nginx.conf-prod`, `docker-compose-prod.yml`) already matched dev
+          and `conf/general.yml` (secrets/Turnstile/OIDC/MapIt) is gitignored,
+          so neither changed.
+        - Applied `schema_0095` (per-body priority zones / `body_id`) to the
+          prod DB transactionally. No `cpanfile` change → no image rebuild;
+          recompiled CSS + es/ru/tr translations, restarted the app container
+          (~15s downtime) + flushed memcached + refreshed reports cache.
+        - Verified: healthcheck 9/9, key endpoints 200, "Report as" fix live
+          in `base.css?48f2d9c52e89`, session-timeout code present. Rollback
+          path documented (reset to `39b493aed` + restore dump, or
+          `bin/deploy --rollback`).
+        - Created a TEMPORARY Buffalo Grove test admin on prod for live
+          testing — `bg-admin-test@infrasignal.org` (user id 17, body 10588,
+          role "Auth", non-superuser). MUST be deleted after testing.
+        - Parity check (reports list + /report/new): confirmed dev = staging =
+          prod for code/templates/CSS (`45c6cae05`, `base.css?48f2d9c52e89`).
+          Remaining visual differences are data (demo reports), env flags
+          (staging notice, dev debug toolbar), prod-only config (Turnstile +
+          Google/OIDC), and login state (staff vs public) — not deploy gaps.
+        - Full details: `notes/2026-06-21-prod-deploy-and-parity.md`.
+    - InfraSignal — Jun 21, 2026 (Fix clipped "Report as" select on /report/new — dev only):
+        - Symptom: on /report/new the staff "Report as" dropdown (#form_as)
+          showed its selected value (e.g. the body name "Buffalo Grove, IL")
+          vertically clipped at the top.
+        - Cause: same as the inspect-sidebar selects — core sets
+          `select.form-control { height: 2.2em }`, too short for InfraSignal's
+          larger padding + 16px text.
+        - Fix: extended the existing clipping-fix rule to also match
+          `select#form_as.form-control` (height:auto; min-height:44px;
+          line-height:1.4). Scoped to that one select only; nothing else touched.
+          Recompiled base.css and flushed dev memcached.
+    - InfraSignal — Jun 21, 2026 (Session security: idle + absolute auth timeouts — dev only):
+        - Problem: the Catalyst session store keeps a login alive for 4 weeks
+          with a *rolling* expiry (the timer resets on every request), so a
+          logged-in staff/admin was effectively never signed out automatically —
+          e.g. still logged in a day (or weeks) later. No idle timeout, no
+          absolute cap, no stricter rule for privileged accounts.
+        - Fix: added `Root::check_session_timeout` (called from `Root::auto`)
+          enforcing two limits for authenticated, cookie-session users only:
+            * idle timeout = 60 minutes of inactivity (sliding window), and
+            * absolute timeout = 8 hours since login (regardless of activity).
+          On expiry the user is logged out (`$c->logout` + `delete_session`) and
+          redirected to `/auth?expired=1`.
+        - Login time is now stamped at real authentication time via the
+          `RotateSession` plugin (`auth_login_time` / `auth_last_active`), so the
+          absolute cap measures from the actual login, not session restore.
+        - Scope/safety: anonymous sessions (in-progress reports, language
+          overrides) and stateless token/API auth are NOT affected; the check
+          skips the Auth controller and the JS translation-strings endpoint to
+          avoid logout/login loops and broken XHR. Sessions created before this
+          shipped start tracking from first request rather than being killed
+          mid-request. Limits are tunable constants in `Root.pm`
+          (SESSION_IDLE_TIMEOUT / SESSION_ABSOLUTE_TIMEOUT). Applies to ALL
+          logged-in users (incl. residents), not only admins — can be narrowed
+          to staff-only on request. Verified: files compile, dev app boots
+          clean, anonymous homepage/auth still return 200.
+    - InfraSignal — Jun 21, 2026 (Add subtle Sign in / My account link to header — dev only):
+        - Added a secondary header account link so logged-out users can reach
+          `/auth` directly from the home page without competing with the primary
+          orange Start Reporting CTA. Logged-in users see `My account` instead;
+          staff users still also see the separate Admin link.
+        - Added the same Sign in / My account behavior to the mobile menu.
+          Styled it as a low-emphasis outline/text link using the existing
+          header palette, recompiled base.css and flushed dev memcached.
+        - Follow-up: staff account pages also show `My account`, `Start
+          Reporting`, and `Admin`, which made the normal 1200px header container
+          too tight and caused the language selector / My account link to
+          overlap. Account pages now use the same wider header container as
+          admin pages, and the account link was compacted slightly. Recompiled
+          base.css and flushed dev memcached.
+        - Follow-up: simplified the logged-in admin/staff header globally:
+          admin-capable users now see `Admin` only (not both `My account` and
+          `Admin`) because the admin dashboard already includes a `Your account`
+          path. Normal logged-in users still see `My account`; logged-out users
+          still see `Sign in`. Applied to desktop and mobile header templates and
+          flushed dev memcached, preventing the overlap on the homepage and all
+          other non-admin pages.
+        - Follow-up: added a `Sign out` action to the admin dashboard header next
+          to `Your account` / report actions, styled as a low-emphasis red outline
+          button so admin/staff users can log out directly from admin after the
+          global header was simplified. Recompiled base.css and flushed dev
+          memcached.
+        - Follow-up: added a subtle divider + extra left margin/padding between the
+          desktop nav group and the language/action group to relieve crowding.
+          This BACKFIRED: the homepage `.header-container` is a fixed centred
+          `max-width: 1200px` (it matches the `.infra-container` content width), so
+          the added ~35px had nowhere to go and pushed the last nav item
+          (`For Government`) into the language flag — it overlapped/clipped.
+        - Fix: reverted the divider/extra padding and instead freed real space
+          inside the fixed 1200px row — trimmed the desktop logo from 275px → 250px
+          and reverted the language button to its compact padding — then used a
+          small `margin-left` on `.header-actions` for clean nav→actions
+          separation. Net result fits comfortably with the longest English labels,
+          no overlap, no divider line. Recompiled base.css and flushed dev
+          memcached. (Header stays width-aligned with the page content below.)
+    - InfraSignal — Jun 21, 2026 (Fix header looking broken/missing on map pages — dev only):
+        - Symptom: on map pages (/around, /report/new, /report/<id>) the top
+          header looked different from the rest of the site — the logo appeared
+          shoved toward the middle/right with a big empty dark gap on the left,
+          and on the narrow report sidebar the header looked like it had
+          collapsed/disappeared.
+        - Cause: the header markup and CSS classes are identical on every page,
+          but `#site-header .header-container` is `max-width: 1200px; margin: 0
+          auto` (centred). On normal pages the body content is also centred so
+          the logo lines up. On map pages the sidebar is flush to the far LEFT of
+          the window, so the centred header indented the logo ~hundreds of px
+          from the left edge, leaving an empty dark band above the sidebar — it
+          read as "the header disappeared." Core FixMyStreet also pulls
+          #site-header out of flow on body.mappage (it expects the legacy
+          #main-nav bar to be the map header, which InfraSignal doesn't use), and
+          both the platform rule and our previous layout.scss sticky override
+          were gated to >=48em, leaving narrow widths unstyled.
+        - Fix (web/cobrands/infrasignal/base.scss, applies at all widths):
+          `body.mappage #site-header` re-asserted as sticky / full-width / 64px /
+          z-index 60; `body.mappage #site-header .header-container { max-width:
+          none }` so the header is full-bleed and the logo sits flush-left,
+          aligned with the sidebar; and `body.mappage #main-nav { display:none }`
+          to drop the empty legacy placeholder. Recompiled base.css, flushed dev
+          memcached. dev only — not yet pushed to staging/production.
+    - InfraSignal — Jun 21, 2026 (Restrict address search to the US + stop config drift recurring):
+        - Symptom: searching e.g. "manchester" returned UK results ("Manchester,
+          Greater Manchester, England", etc.) instead of only US places.
+        - Cause: the geocoder (default OSM/Nominatim) had no country/bounds
+          restriction. Production's live config sets
+          `GEOCODING_DISAMBIGUATION: { country: 'us', bounds: [24.396308, -125.0,
+          49.384358, -66.93457] }`, but dev and staging had
+          `GEOCODING_DISAMBIGUATION: ''`, so Nominatim returned worldwide hits.
+        - Why it kept coming back: the live `conf/general.yml` is gitignored, so
+          the correct US values only ever lived in the (hand-edited) production
+          file. Every git-tracked template still shipped the wrong defaults —
+          `general.yml-docker` and `general.yml-staging` used fakemapit + empty
+          disambiguation, and `general.yml-production` even had the UK
+          mapit.mysociety.org defaults. Any environment regenerated from a
+          template reverted to non-US behaviour.
+        - Fix (durable):
+          1. Set US geocoding restriction in the live dev config
+             (`/opt/infrasignal-dev/conf/general.yml`) and the live staging
+             config (`/opt/infrasignal-staging/conf/general.yml-staging.runtime`)
+             — both also got the MapIt fix below.
+          2. Updated ALL tracked templates — `conf/general.yml-docker`,
+             `conf/general.yml-staging`, `conf/general.yml-production` — to the
+             correct US MapIt (global.mapit, types O04/O06/O07/O08, generation
+             10) and US `GEOCODING_DISAMBIGUATION`, each with a comment warning
+             not to revert to fakemapit/UK. So a rebuild from any template now
+             produces US-correct config.
+          Restarted dev + staging apps, flushed both memcacheds. Verified
+          "manchester" returns US-only on dev and staging (England count 0).
+          Production already had US geocoding live; its template now matches.
+    - InfraSignal — Jun 21, 2026 (Fix "no agency covers this location" on report/new — dev config):
+        - Symptom: starting a report (e.g. /report/new?longitude=-87.95...&
+          latitude=42.13...) showed "We do not yet have details for the agency
+          that covers this location ... will not be reported to the local
+          authority." Location/body detection had stopped working on dev.
+        - Cause: dev (and staging) `conf/general.yml` pointed MAPIT_URL at the
+          built-in FakeMapIt (`http://localhost:3000/fakemapit/`,
+          MAPIT_TYPES ['ZZZ'], generation 0). FakeMapIt returns a single area
+          161 "Everywhere" for *every* point, and no body is tied to area 161,
+          so nothing ever matched. Production, by contrast, uses the real global
+          MapIt (`https://global.mapit.mysociety.org/`, types O04/O06/O07/O08,
+          generation 10) which returns the real nested OSM areas (state /
+          county / township / city) that our bodies are attached to — that is
+          how the existing Buffalo Grove reports got
+          `areas=,1259340,958719,959228,974962,`.
+        - Fix: set dev `conf/general.yml` MapIt block to match production:
+          `MAPIT_URL: 'https://global.mapit.mysociety.org/'`,
+          `MAPIT_TYPES: [ 'O04', 'O06', 'O07', 'O08' ]`, `MAPIT_API_KEY: ''`,
+          `MAPIT_GENERATION: 10`. Verified the dev container can reach the
+          service (200), restarted the dev app and flushed memcached. The clicked
+          point now resolves to Wheeling / Wheeling Township / Cook County /
+          Illinois and the page shows "sent to Wheeling Township, IL, Wheeling,
+          IL" with the category form (warning gone).
+        - Staging had the same FakeMapIt misconfiguration; it has now been fixed
+          too (live runtime config + tracked template) — see the US-geocoding
+          entry above. Production was already on the real global MapIt.
+    - InfraSignal — Jun 21, 2026 (Fix stray blue "1" badge on report list rows — dev only):
+        - Symptom: when a staff member / superuser viewed a report list (e.g.
+          the /around map sidebar), every row had a small blue "1" badge on the
+          left, overlapping the report title. Regular users never saw it.
+        - Cause: that badge is the staff-only "Add to shortlist" control, which
+          the platform renders as `<input type="submit" value="1">` styled into
+          an icon-only star button (`overflow:hidden; height:0; background-image:
+          star`, see core `%list-item-action-button` /
+          `.item-list__item__shortlist-*`). It is permission-gated by
+          `planned_reports`. InfraSignal's global button rule
+          (`input[type="submit"] { background:$primary-700 !important;
+          background-image:none !important; color:#fff !important; padding... }`)
+          overrode that with `!important`, killing the star icon and the
+          text-hiding, so the raw value "1" showed as a solid blue button.
+        - Fix (web/cobrands/infrasignal/base.scss):
+          1. Excluded the shortlist/sort controls from the global submit styling
+             (`input[type="submit"]:not([class*="shortlist"])`) so the platform's
+             star icon and hidden text render correctly on the full admin reports
+             list and report-detail pages.
+          2. In the redesigned compact map sidebar list there is no room for the
+             control, so hid it there (`body.mappage .item-list--reports
+             .item-list__item [class*="shortlist"] { display:none }`) and dropped
+             the now-unneeded indent on `--indented` rows.
+          Recompiled base.css and flushed dev memcached so the cachebuster
+          updates. dev only — not yet pushed to staging/production.
+    - InfraSignal — Jun 21, 2026 (Fix "browse photos" dropzone button contrast — dev only):
+        - Symptom: the blue "browse photos" pill in the photo-upload area
+          (report inspect / public update) had barely-readable text, and on
+          hover it went dark-on-dark.
+        - Cause: core sass styles `.dz-message u` with
+          `color: $dropzone-button-text` which falls back to `$primary_text`
+          (= $gray-700, dark gray) on a `$primary` (dark blue #1E40AF) fill —
+          low contrast. The core hover then inverts to background
+          $primary_text / color $primary (dark gray bg + dark blue text).
+        - Fix: set `$dropzone-button-text: #fff`
+          (web/cobrands/infrasignal/_colours.scss) so the label is white on
+          the blue fill, and add a brand hover
+          (web/cobrands/infrasignal/base.scss) — `.dz-clickable .dz-message u`
+          hover/focus uses $primary-500 (lighter blue) with white text,
+          instead of inverting to a white fill. The report-new page keeps its
+          own orange pill (ID-scoped, higher specificity). Recompiled CSS,
+          flushed dev memcached.
+    - InfraSignal — Jun 21, 2026 (Fix clipped dropdown text on the report inspect sidebar — dev only):
+        - Symptom: on /report/<id> the inspect sidebar selects (Category,
+          State, Assign to, Priority) showed vertically clipped text — the
+          top and bottom of the option labels were cut off.
+        - Cause: core sass sets `select.form-control { height: 2.2em }`
+          (~35px), but InfraSignal's global select styling adds 10px
+          top/bottom padding and 16px text, which needs ~44px. The fixed
+          height squeezed the content box and clipped the glyphs.
+        - Fix (web/cobrands/infrasignal/base.scss): scoped override
+          `#report_inspect_form select.form-control, #side-inspect
+          select.form-control { height: auto; min-height: 44px;
+          line-height: 1.4 }` so padding drives the height (same pattern
+          already used for admin form selects). The ID selector outspecifies
+          the core rule. Recompiled base.css and flushed dev memcached so the
+          cachebuster updates.
+    - InfraSignal — Jun 11, 2026 (Second test body + two-profile isolation test — dev only):
+        - Added a second government to test alongside Buffalo Grove: Raleigh,
+          NC (body 24482, 31 real reports). Mirrored all five Buffalo Grove
+          roles (Auth, Body Manager, Inspector, Customer Service, Account
+          Admin — same permissions, including the category_edit /
+          emergency_message_edit grants) onto Raleigh, and created two scoped
+          demo accounts (dev DB data, no code change):
+            - staff-demo@raleigh.test  / RALstaff-demo-2026!  (Body Manager)
+            - acct-admin@raleigh.test  / RALacct-admin-2026!  (Account Admin)
+          (Buffalo Grove equivalents: staff-demo@buffalogrove.test /
+          BGstaff-demo-2026!, acct-admin@buffalogrove.test / BGacct-admin-2026!)
+        - Hard isolation suite across BOTH profiles (32 checks, all pass),
+          including cross-body attacks in both directions (Raleigh staff vs
+          Buffalo Grove and vice versa):
+            - Each manager: 10 admin sections; Summary count equals their own
+              body's unsent queue (BG 128, Raleigh 10); Reports search returns
+              zero foreign reports; cannot open a foreign report's edit page
+              (404); Users list shows no foreign-body staff; cannot open a
+              foreign staff edit page (404); cannot edit the other body's
+              categories or site message (403); /admin/bodies redirects to
+              their OWN body; Priorities has no state picker; Stats blocked.
+            - Active attacks blocked both ways: add-user into the other body
+              with is_superuser=1 was forced to own body + non-superuser; bulk
+              remove-staff against the other body's manager left them
+              untouched.
+            - Superuser unchanged: searches across bodies, Stats works, can
+              open either body's staff.
+    - InfraSignal — Jun 11, 2026 (Body Manager fully self-sufficient for local government — dev only):
+        - Goal: a government's Body Manager should run their territory end to
+          end — including initial setup — without needing the platform
+          superuser, while still never touching another body or the platform.
+        - Change (data only, no code): added category_edit and
+          emergency_message_edit to the Buffalo Grove "Body Manager" role.
+          This unlocks two setup capabilities that were previously
+          superuser-only:
+            - Categories & contacts: manage their own body's service
+              categories and the email routing for each, plus report extra
+              fields (category_edit).
+            - Site / emergency messages: post their own banner (emergency_message_edit).
+        - Both are inherently body-scoped by the existing controllers:
+          /admin/bodies redirects a non-superuser straight to their own
+          body's edit page and every category action checks
+          has_permission_to('category_edit', body_id); SiteMessage forces a
+          non-superuser to edit only their own from_body and keeps the
+          arbitrary-body edit and the all-bodies list superuser-only.
+        - Body Manager now has 10 admin sections. Verified on dev: Categories
+          and Site message pages appear; editing own body works (saved and
+          cleared a test banner); /admin/body/<other> and
+          /admin/sitemessage/edit/<other> and the all-bodies list all return
+          403; nothing changed for superusers.
+        - Still intentionally superuser-only: global Config, States, Manifest
+          Theme, Flagged, bulk user import, the platform Bodies list,
+          whole-system Stats, creating superusers, and any cross-body action.
+    - InfraSignal — Jun 11, 2026 (Lock down staff user-management against privilege escalation — dev only):
+        - Audited every way a body-staff user with user management could gain
+          superuser power or reach across bodies. Found and fixed four gaps;
+          the add/edit "is_superuser" and "move to another body" paths were
+          already safe and were re-confirmed.
+        - Gap 1 — Users list leaked every body's staff. The default
+          users_staff_admin returns all staff platform-wide; body staff saw
+          other cities' staff in /admin/users. Added an Infrasignal
+          users_staff_admin override that scopes the list to the staff user's
+          own from_body (superusers still see everyone).
+        - Gap 2 — bulk /admin/users POST was unscoped. The role-assign and
+          remove-staff bulk actions looked up users with the raw User
+          resultset by id, with no body check and no role validation — a body
+          staff member could POST any user id (another body's staff, or a
+          superuser) and any role id. Now the affected users are taken from
+          $c->cobrand->users (own-body only for staff), superusers are
+          excluded for non-superuser admins, and assignable roles are
+          filtered to the staff user's own body's roles.
+        - Gap 3 — body staff could open a superuser's edit page if that
+          superuser happened to share their body (cobrand->users includes
+          own-body users). The edit form would then let them demote/alter it.
+          The user chained action now 404s when a non-superuser tries to open
+          any is_superuser account (Zurich exempt, unchanged).
+        - Gap 4 (defence in depth) — confirmed the add flow already forces
+          from_body to the staff user's own body and ignores is_superuser,
+          and the edit flow ignores is_superuser and can't move a user to
+          another body.
+        - Files: perllib/FixMyStreet/Cobrand/Infrasignal.pm (users_staff_admin),
+          perllib/FixMyStreet/App/Controller/Admin/Users.pm (index bulk POST
+          scoping + role validation; user chained action superuser guard).
+        - Verification: 19-point automated suite as Body Manager, plus a
+          second "other city" body/role/user fixture. All 19 pass: every
+          escalation/cross-body attempt blocked, superuser experience
+          unchanged (can open superusers, sees all bodies), and legitimate
+          own-body management (assign own roles, grant own-body permissions)
+          still works. Test fixtures removed afterwards.
+    - InfraSignal — Jun 11, 2026 (Body Manager can manage own-body staff accounts — dev only):
+        - Why the manager couldn't see it: the admin "Users" section only
+          appears for users holding the user_edit permission. That permission
+          lived only on the separate Account Admin role, so the Body Manager
+          demo account had no Users/Roles pages in its sidebar.
+        - Change (data only, no code): added user_edit, user_assign_body and
+          user_manage_permissions to the Buffalo Grove "Body Manager" role.
+          Body Managers now see Users and Roles (8 admin sections) and can
+          create/edit staff accounts for their own body. The Account Admin
+          role is unchanged and remains available as a narrower
+          accounts-only profile.
+        - All existing body-scoping guards apply to the manager exactly as
+          to the Account Admin: user list restricted to own-body users,
+          created users forced to from_body = own body, superuser flag in
+          staff POSTs ignored, Roles page already limited to own-body roles
+          (body field forced server-side).
+        - Verified on dev as staff-demo (Body Manager): Users + Roles
+          visible; user list shows only Buffalo-Grove-related accounts;
+          created a staff user (forced to body 10588); a crafted POST asking
+          for body=24482 + is_superuser=1 was created as body 10588,
+          non-superuser. Test accounts removed afterwards.
+    - InfraSignal — Jun 10, 2026 (Strict own-body-only admin UI for staff — dev only):
+        - Goal: body staff must never see cross-body information anywhere in
+          the admin — no other states/bodies in dropdowns, no platform-wide
+          report queues, statistics or charts. Whole-system statistics are
+          superuser-only. Superuser views unchanged.
+        - Admin Summary dashboard (Controller/Admin.pm):
+            - New `_scope_to_staff_body` helper restricts any Problem/Comment
+              resultset to the logged-in staff user's own body via the same
+              word-match regex used elsewhere ((^|,)ID(,|$)). No effect for
+              superusers or Zurich.
+            - Applied to the "Reports waiting to be sent" queue, the "Recent
+              reports" list and all dashboard chart data (reports-per-day,
+              By Category, By Status). Verified: staff header shows 128
+              (Buffalo Grove only) vs superuser 154 (platform-wide).
+        - Admin Reports search (Controller/Admin/Reports.pm):
+            - Problem and update searches are now scoped to the staff user's
+              body (updates filtered via join to problem.bodies_str, using
+              search_rs to avoid list-context execution). Verified: staff
+              search "pothole" returns only body-10588 reports; superuser
+              search unchanged (50/page platform-wide). Report edit was
+              already protected by per-body report_edit permission.
+        - Stats and Timeline pages (Cobrand/Infrasignal.pm admin_pages):
+            - Removed from the admin for non-superusers — both nav links are
+              gone and direct URLs return 404 for staff. Staff keep their
+              own-body numbers on the Summary page and the public /dashboard.
+        - Response Priorities (templates/web/infrasignal/admin/responsepriorities/index.html):
+            - The state → county → city body picker (which listed all 50
+              states and every body) is now rendered only for superusers.
+            - Staff instead get a plain list of their own body's response
+              priorities with Edit links and a "New priority" button — the
+              controller was already body-scoped server-side; this removes
+              the leaky superuser UI that was shown to everyone.
+        - Verification: 14-point automated check (staff demo, account admin,
+          superuser) — all green; cross-checked returned report IDs against
+          the database (0 results outside body 10588).
+    - InfraSignal — Jun 10, 2026 (Body-scoped Duplicate Reports, Priority Zones,
+      and self-service staff management — dev only):
+        - Goal: let each government body run its own territory independently —
+          duplicates, priority zones, and staff accounts — with zero access to
+          any other body, while the superuser experience stays exactly as it was.
+        - Duplicate Reports (Admin/DuplicateReports.pm):
+            - Access widened from superuser-only to superuser OR staff with
+              report_inspect. For staff, every query is filtered to reports
+              whose bodies_str matches their own body (regex word match, not
+              LIKE, so id 123 can't match 1234).
+            - mark/dismiss verify each affected report belongs to the staff
+              user's body before acting; cross-body POSTs are silently no-ops.
+            - Verified: staff page showed 12 reports (all body 10588);
+              superuser page 38 reports across 5 bodies. Cross-body mark
+              attempt left victim reports untouched; in-scope mark worked
+              (then reverted).
+        - Priority Zones — per-body overrides:
+            - New nullable body_id column on priority_zone_config
+              (db/schema_0095-priority-zones-per-body.sql): NULL = global
+              default, set = that body's override of the same osm_key/osm_value
+              zone. Partial unique indexes per scope.
+            - PriorityZones controller: staff with report_inspect see the
+              effective config for their body (override beats global).
+              Editing/toggling a global zone as staff copy-on-writes an
+              override row for their body; global rows are never modified by
+              staff. Reclassify for staff is restricted to their own body's
+              reports. Superusers manage global rows exactly as before and
+              additionally see a read-only "Per-body overrides" table.
+            - PriorityClassifier: classify() accepts body_ids and merges
+              configs (body override wins per tag; a disabled override
+              suppresses that zone for the body). classify_and_save passes the
+              report's bodies. reclassify_all body filter switched from
+              LIKE '%id%' to exact word-match regex.
+            - Bonus fix: the index/edit pages never stashed a CSRF token, so
+              the Reclassify/Toggle buttons were broken (silent 400) even for
+              superusers — both actions now forward to /auth/get_csrf_token.
+            - Verified: staff edit of "Hospital" (250m→400m) created override
+              row body_id=10588; global row unchanged; staff toggle of
+              "School" created a disabled override; superuser still sees
+              global 250m + the overrides table; staff GET of another body's
+              override returns 404.
+        - Self-service staff management (Account Admin profile):
+            - New role on dev body 10588: Account Admin = user_edit +
+              user_assign_body + user_manage_permissions. One trusted person
+              per government can onboard/manage their own staff.
+            - users_restriction added to the Infrasignal cobrand: staff only
+              see users connected to their own body (its staff + people who
+              reported/updated there). Superusers see everyone. Same pattern
+              as UKCouncils upstream.
+            - Server-side hardening in Admin/Users.pm add flow: non-superuser
+              staff creations force from_body to the creator's own body, even
+              if the POST claims another body (mirrors the edit flow's
+              user_assign_body check). Superuser-creation remains hard-gated
+              to superusers (verified: is_superuser=1 in a staff POST is
+              ignored).
+            - Verified: acct-admin sees only own-body users in search
+              (user-10/user-11; out-of-scope users hidden); direct
+              /admin/users/9 (out of scope) 404; cross-body create forced to
+              own body; superuser-escalation attempt produced a normal staff
+              user.
+        - Pre-existing bug fixed (Admin.pm fetch_body_areas): opening ANY
+          staff user's edit page 500ed ("Can't use string (\"Everywhere\") as
+          a HASH ref") because the fake MapIt returns a single area hash
+          instead of id-keyed areas. Now treated defensively as "no areas".
+          This had made /admin/users/<id> unusable even for superusers.
+        - Roles on dev body 10588 now: Auth (legacy), Body Manager, Inspector,
+          Customer Service, Account Admin. New demo user:
+          acct-admin@buffalogrove.test (Account Admin).
+        - Full regression on dev: superuser all admin pages 200 (incl.
+          duplicate_reports + priority_zones unchanged); Body Manager staff
+          sees Stats/Templates/Priorities/Duplicate Reports/Priority Zones,
+          404 on users/config/bodies; citizen /admin 403; public pages and
+          es/tr/ru all 200.
+        - Rollout: dev only. Staging/production promotion needs: code overlay,
+          schema_0095 migration, the five roles per customer body, and demo
+          users if wanted.
+    - InfraSignal — Jun 10, 2026 (Scoped admin access for government body staff — dev only):
+        - Why: previously /admin was superuser-only (the Infrasignal cobrand
+          inherited the default admin_allow_user). The only way to give a
+          government customer any admin capability was full superuser — which
+          exposes all 28k bodies, platform config, and every user. We now use
+          the platform's built-in staff tier instead.
+        - Code changes (all in dev, not yet promoted):
+            1. perllib/FixMyStreet/Cobrand/Infrasignal.pm — new
+               admin_allow_user override: superusers OR from_body staff may
+               enter /admin. Same pattern as the upstream Zurich and
+               NottinghamshirePolice cobrands. For staff, the admin
+               auto-scopes: visible pages depend on role permissions,
+               /admin/bodies redirects to their own body, body-record edits
+               (update_body) and user-privilege changes remain superuser-only.
+            2. Infrasignal.pm admin_pages — Duplicate Reports and Priority
+               Zones tabs are now superuser-only (previously also shown for
+               report_edit staff). Both tools query reports across ALL
+               bodies, so body staff must not reach them.
+            3. Admin/PriorityZones.pm — auto check tightened from
+               "superuser or report_edit" to superuser-only.
+            4. Admin/DuplicateReports.pm — added an auto check
+               (superuser-only); previously the controller had no auth check
+               of its own beyond the sidebar page gating.
+        - Roles created on dev for body 10588 (Buffalo Grove, IL):
+            - Body Manager (10 perms): report_inspect, moderate,
+              report_mark_private, contribute_as_body, default_to_body,
+              view_body_contribute_details, assign_report_to_user,
+              planned_reports, template_edit, responsepriority_edit
+            - Inspector (3): report_inspect, planned_reports,
+              report_mark_private
+            - Customer Service (3): contribute_as_another_user,
+              contribute_as_body, view_body_contribute_details
+            - (Analyst profile = from_body with no role: gets /dashboard only)
+        - Test users created on dev: staff-demo@buffalogrove.test (Body
+          Manager), su-test@example.invalid (superuser),
+          citizen-test@example.invalid (citizen).
+        - Verification on dev (all PASS):
+            - Staff: /admin 200; sidebar shows only Stats/Templates/
+              Priorities; templates redirect to own body /admin/templates/10588;
+              config/states/flagged/manifesttheme/users/reports/
+              duplicate_reports/priority_zones all 404; cross-body
+              /admin/body/52 404; /dashboard 200 scoped to Buffalo Grove.
+            - Superuser: unchanged — full sidebar, custom pages 200.
+            - Citizen: /admin 403.
+            - Public site + all four languages unaffected (200s).
+        - Rollout: dev only for now. Promote to staging + production after
+          user acceptance; staging/prod will also need the three roles
+          created per customer body (SQL or admin Roles page).
+    - InfraSignal — Jun 4, 2026 (Hero search pill: placeholder clipping, round 2):
+        - Symptom (follow-up): after widening the pill to 720px and rewording
+          the placeholders to "Ingrese dirección o código postal",
+          "Adres veya posta kodu girin", "Введите адрес или индекс", the
+          placeholders were still being clipped on common viewport widths
+          (user screenshots showed only ~24 visible chars in Latin, ~20 in
+          Cyrillic for es/ru — Spanish ended at "Ingrese dirección o códig"
+          and Russian at "Введите адрес или ин").
+        - Root cause: the pill is `width:100%` capped by `max-width`, and
+          on common laptop viewports the *available* width (after the hero
+          padding) was ~530px, not 720. Spanish "Reportar un Problema"
+          (~200px) and Russian "Сообщить о проблеме" eat most of that,
+          leaving only ~260-280px for the placeholder text.
+        - Fix (both axes):
+            1. Widened the pill again: `max-width: 720px -> 820px` on
+               `.frontpage .postcode-form-box div` (helps on wider screens).
+            2. Shortened placeholders so they fit even on narrower screens.
+               Kept the imperative verb (matching English "Enter…") and
+               followed the natural "Enter your address" pattern; dropped
+               the "or zipcode" hint since the same input also accepts zips:
+                 - es: "Ingrese dirección o código postal"
+                     → "Ingrese su dirección"     (20 chars)
+                 - tr: "Adres veya posta kodu girin"
+                     → "Adresinizi girin"          (16 chars)
+                 - ru: "Введите адрес или индекс"
+                     → "Введите ваш адрес"         (17 chars)
+            English msgid (and en-gb default) unchanged.
+        - Rollout: edited dev (.scss + 3 .po), compiled .mo via
+          `bin/make_msg`, rebuilt CSS via
+          `docker exec … bin/make_css web/cobrands/infrasignal`; synced the
+          four files to /opt/infrasignal-staging and /opt/infrasignal-v2,
+          compiled .mo and rebuilt CSS in both, restarted memcached then
+          fixmystreet on all three envs.
+        - Verification: cachebuster `ff6e0540a12f` and `max-width:820px`
+          inside `.frontpage .postcode-form-box div{…}` identical on dev,
+          staging, and production; new placeholders render correctly in
+          all four languages.
+    - InfraSignal — Jun 4, 2026 (Hero search pill: placeholder clipping in es/tr/ru):
+        - Symptom: on the homepage hero, the input placeholder was being cut
+          off before reaching the orange "Report" button in Spanish ("Ingrese
+          su dirección o có…"), Turkish ("Adresinizi veya posta kodunuzu
+          girir…"), and Russian ("Введите ваш адрес ил…"). English fit fine.
+        - Root cause: two compounding factors. (1) The pill container was
+          capped at `max-width: 640px` in `.frontpage .postcode-form-box div`,
+          and (2) translated placeholders were full imperative sentences while
+          the submit button label in non-English locales is also longer
+          ("Reportar un Problema", "Сообщить о проблеме"). The submit button
+          is `flex:none` and gets its full label first, so the input gets
+          whatever is left — clipped by the container's `overflow:hidden`.
+        - Fix (two-part, applied together so layout stays balanced):
+            1. Widened the pill: `max-width: 640px` → `720px` in
+               `web/cobrands/infrasignal/base.scss` under `.frontpage
+               .postcode-form-box div` (with a comment explaining why).
+            2. Shortened placeholders in the three .po catalogs for msgid
+               "Enter your address or zipcode". Kept the imperative verb so
+               the call-to-action tone matches the English "Enter…":
+                 - es: "Ingrese su dirección o código postal"
+                     → "Ingrese dirección o código postal" (drops "su")
+                 - tr: "Adresinizi veya posta kodunuzu girin"
+                     → "Adres veya posta kodu girin" (drops possessives,
+                        keeps "girin" = "enter")
+                 - ru: "Введите ваш адрес или индекс"
+                     → "Введите адрес или индекс" (drops "ваш" = "your")
+            English msgid (and the en-gb default) unchanged. Initial pass
+            briefly used pure noun phrases ("Dirección o código postal",
+            etc.); reverted to imperative form on user feedback that the
+            action verb is part of the prompt's UX.
+        - Rollout (dev → staging → production):
+            - Edited base.scss and the three .po files in /opt/infrasignal-dev.
+            - Compiled .mo via `bin/make_msg` (es/ru/tr), rebuilt CSS with
+              `docker exec … bin/make_css web/cobrands/infrasignal`, restarted
+              `infrasignal-dev-dev-fixmystreet-1`. Verified at
+              http://REDACTED-IP:3001/?lang={en-gb,es,tr,ru}.
+            - Synced base.scss + the three .po files from dev to
+              /opt/infrasignal-staging and /opt/infrasignal-v2. Copied
+              `bin/make_msg` to staging where it was missing.
+            - Compiled .mo in both, rebuilt CSS in both, restarted
+              memcached (to drop stale template version stamps) and the
+              fixmystreet containers (`staging-fixmystreet-1`,
+              `docker-fixmystreet-1`).
+        - Verification: same cachebuster `bfd9af3540f9` on dev, staging,
+          and production; rendered HTML now shows the new placeholders and
+          CSS contains `max-width:720px` inside `.frontpage
+          .postcode-form-box div{…}` on all three.
+        - Prevention: `bin/make_msg` (already added to `bin/deploy` for
+          full/migrate/rollback) keeps .mo in sync on future deploys, so
+          translation-only fixes like this only need an edit + redeploy.
+    - InfraSignal — Jun 2, 2026 (Three-environment parity audit and sync):
+        - Goal: confirm dev, staging, and production run identical application code
+          (templates, JS, CSS, translations) so the only difference between them is
+          the report data (clean prod vs. populated dev/staging).
+        - Audit covered every file under `templates/`, `web/cobrands/infrasignal/`,
+          and `locale/{es,ru_RU,tr_TR}.UTF-8/LC_MESSAGES/`, comparing dev, staging,
+          and prod working trees by md5 and size.
+        - Result: byte-for-byte identical across all three for:
+            - `web/cobrands/infrasignal/base.css` md5 `853324c31cc0…`
+            - `web/cobrands/infrasignal/filter-pills.js` md5 `3d1045e7…`
+            - `web/cobrands/infrasignal/header-nav.js` md5 `cb6fab49…`
+            - `templates/web/base/report/_main.html` md5 `6867bcd0…`
+            - `templates/web/base/report/update.html` md5 `96320b51…`
+            - `templates/web/infrasignal/around/postcode_form.html` md5 `99a0ae23…`
+            - `templates/web/infrasignal/report/_council_sent_info.html` md5 `7cd0bf12…`
+            - `locale/es.UTF-8/.../FixMyStreet.mo` 273874 B (May 31 build)
+            - `locale/ru_RU.UTF-8/.../FixMyStreet.mo` 359311 B (May 31 build)
+            - `locale/tr_TR.UTF-8/.../FixMyStreet.mo` 269053 B (May 31 build)
+        - Intentional, expected differences kept per-environment: `conf/general.yml`
+          (DB creds, `BASE_URL`, `STAGING_SITE` flag, SMTP keys), `conf/ssl/` (prod
+          TLS only), `docker/.env`, `web/theme/` (prod manifest theme uploads), and
+          per-DB report/user/comment counts. `body` table identical at 28,090 across
+          all three.
+    - InfraSignal — Jun 2, 2026 (Production deployment of staging-verified changes):
+        - Pushed verified changes from `/opt/infrasignal-dev` (commit `a350c3753`,
+          "Harden staging acceptance and multilingual report UI.") to `origin/dev` on
+          GitHub, then promoted to production.
+        - Pre-deploy: ran `bin/staging-acceptance.py` against staging — 138 checks
+          total, 134 PASS, 0 FAIL, 4 expected SKIP. Verdict GO.
+        - Backed up production DB and live config to
+          `/opt/backups/infrasignal/pre-prod-a350c3753_20260602_023325` (full
+          `pg_dump`, `conf/general.yml`, `.env`, `docker/.env`, `conf/ssl/`).
+        - Overlaid the exact committed `dev` tree onto `/opt/infrasignal-v2` via
+          `git archive`, explicitly excluding live config and secret paths
+          (`conf/general.yml`, `conf/general.yml-production`, `docker/.env`, `.env`,
+          `conf/ssl`) so production credentials/certs were preserved.
+        - Rebuilt CSS with `bin/make_css`, restarted production stack with
+          `docker compose -f docker/docker-compose-prod.yml down && up -d`.
+            - All four containers (`docker-db-1`, `docker-fixmystreet-1`,
+              `docker-memcached-1`, `docker-nginx-1`) reached `healthy`.
+            - Health check passed: `https://infrasignal.org/status/health` → 200.
+        - Post-deploy regression discovered and fixed: `/reports` returned 500 in
+          all languages because the missing generated `data/all-reports.json` had not
+          been promoted. Resolved by running
+          `docker exec docker-fixmystreet-1 bin/update-all-reports`. After that
+          fix, full multilingual smoke pass on production returned 200 across
+          `/`, `/reports`, `/around?pc=buffalo`, `/auth`, `/contact`, `/about`,
+          `/how-it-works`, `/about/for-local-government`, `/about/security`, `/faq`,
+          `/alert`, `/about/privacy`, `/about/terms`, and `/report/1` for every
+          language (`en-gb`, `es`, `tr`, `ru`).
+    - InfraSignal — Jun 2, 2026 (Production translation drift detected and synced):
+        - Symptom (post-deploy): although `.po` source files matched dev, the live
+          app on `https://infrasignal.org` still rendered some old English strings
+          in Spanish/Russian/Turkish pages and the English `/about` page still
+          showed the legacy layout.
+        - Root cause: the original `git archive` overlay used to promote
+          `/opt/infrasignal-dev → /opt/infrasignal-v2` only copies files that are
+          tracked in git. The compiled `.mo` translation catalogs that the running
+          gettext loader reads are intentionally gitignored, so production kept
+          stale March-1 `.mo` files (es 174094 B, ru_RU 221242 B, tr_TR 169604 B).
+          Two leftover `about-en-gb.html` / `faq-en-gb.html` templates from an
+          earlier UI also remained on disk, and the platform's `find_template`
+          helper preferred those per-language overrides over the unified
+          `about.html` / `faq.html`, so English visitors saw the old layout.
+        - Fix:
+            - Copied current `.mo` files from dev to production:
+              `locale/es.UTF-8/LC_MESSAGES/FixMyStreet.mo` (May 31, 273874 B),
+              `locale/ru_RU.UTF-8/LC_MESSAGES/FixMyStreet.mo` (May 31, 359311 B),
+              `locale/tr_TR.UTF-8/LC_MESSAGES/FixMyStreet.mo` (May 31, 269053 B).
+            - Removed stale `templates/web/infrasignal/about/about-en-gb.html`
+              (+`.ttc`) and `faq-en-gb.html` (+`.ttc`) from production.
+            - Restarted `docker-fixmystreet-1` so the gettext cache reloaded the
+              new `.mo` binaries.
+            - Backed up the replaced files to
+              `/opt/backups/infrasignal/missing-changes-sync_20260602_025053`.
+        - Verification: 24/24 multilingual page checks PASS on production for
+          `ru/tr/es` covering homepage, `/about`, `/faq`, `/about/privacy`,
+          `/about/terms`, `/contact`, `/auth`, `/alert`.
+        - Long-term fix (separate entry): see the "Deploy compiles translations
+          automatically" change below — `bin/deploy` now runs `bin/make_msg` and
+          deletes stray legacy templates on every deploy so this drift cannot
+          recur.
+    - InfraSignal — Jun 2, 2026 (Hero "Use my current location" hover readable):
+        - Symptom: on the homepage hero, hovering the "Use my current location"
+          button turned the pill solid white with white text, so the label
+          completely disappeared until the cursor moved away.
+        - Cause: the platform `_base.scss` rule for `a#geolocate_link:hover`
+          swaps the background to `$geolocation-link` (set to `#fff` for the
+          dark hero) and the text color to `$geolocation-link-background-color`
+          (`rgba(255,255,255,0.1)` — almost transparent white). On a dark hero
+          background that becomes white-on-white.
+        - Fix: scoped override in `web/cobrands/infrasignal/base.scss` under
+          `.frontpage` — hover/focus now uses the InfraSignal inverted button
+          palette (solid white background, trust-blue text/icon, subtle shadow)
+          matching the rest of the app's primary-button hover behavior.
+          Active state darkens to `$primary-900` for tactile feedback.
+        - Prevention: any future button colors on dark surfaces must verify the
+          hover background and text color are not the same value (the platform
+          variable pair is footgun-prone when `$geolocation-link == #fff`).
+        - Rollout: rebuilt `web/cobrands/infrasignal/base.css`
+          (md5 `853324c31cc0…`) in production and staging containers, copied to
+          the dev tree, and restarted each `fixmystreet` container so the
+          template version stamp regenerated. Verified via
+          `cobrands/infrasignal/base.css?853324c31cc0` cachebuster on all three:
+            - Production: `https://infrasignal.org`
+            - Staging: `http://REDACTED-IP:8080`
+            - Dev: `http://REDACTED-IP:3001`
+        - GitHub: commit `bac895509` pushed to `origin/dev`
+          ("Fix hero 'Use my current location' hover going white-on-white.").
+    - InfraSignal — Jun 2, 2026 (Deploy compiles translations automatically):
+        - Problem: `bin/deploy` pulled `.po` translation sources from git but never
+          rebuilt gitignored `.mo` binaries, so production could ship stale Russian,
+          Turkish, or Spanish strings until someone copied `.mo` files by hand.
+        - Fix: added `bin/make_msg` to compile `es`, `ru_RU`, and `tr_TR` catalogs via
+          `msgfmt`, and wired it into `bin/deploy` (full, migrate, and rollback paths)
+          before `bin/make_css` and container restart. Deploy also removes legacy
+          `about-en-gb.html` / `faq-en-gb.html` overrides if they reappear on disk.
+        - Prevention: every production deploy from a clean `git pull` now refreshes
+          translations the same way CSS is rebuilt; no manual `.mo` copy step.
+        - Rollout: `bin/make_msg` and the updated `bin/deploy` were copied to
+          `/opt/infrasignal-v2/bin/` so the next `./bin/deploy` on the production
+          host uses them immediately, even before a full git sync of that tree.
+        - GitHub: commit `958815357` ("Deploy: compile gettext catalogs on every
+          production release.") and `d78aef272` ("Document automatic translation
+          compile step in deploy runbook.") pushed to `origin/dev`.
+    - InfraSignal — Jun 1, 2026 (Report photo lightbox close button anchored):
+        - Symptom: when a user clicked a report photo, the lightbox opened correctly
+          but the `x` close button floated away from the photo instead of staying on
+          the top-right corner of the image.
+        - Cause: `.rpt-photo-lightbox__frame` used flex centering with a fixed
+          `max-width`, so the absolute-positioned close button was anchored to the
+          wider frame, not the actual rendered image.
+        - Fix: make the lightbox frame shrink-wrap the image (`display: inline-block`,
+          `width: auto`, `max-width: calc(100vw - 48px)`) and position the close
+          button inside the frame at `top: 8px; right: 8px`. Because the frame now
+          tracks the image dimensions, the close button remains at the image's
+          top-right corner regardless of photo size.
+    - InfraSignal — Jun 1, 2026 (Report update photo uploader consistent on dev/staging):
+        - Symptom: on the report detail update form, staging showed the intended
+          drag-and-drop photo uploader ("Drag photos here or choose photos"), while
+          dev sometimes showed the raw browser file inputs ("Choose File") for the
+          same report/language.
+        - Cause: the report detail page loads/updates the sidebar asynchronously.
+          The core FixMyStreet Dropzone initializer normally hides `#form_photos` and
+          inserts the styled `.dropzone`, but if that initializer misses the sidebar
+          during a language/page transition the raw fallback inputs remain visible.
+        - Fix: `web/cobrands/infrasignal/filter-pills.js` now calls the platform
+          `fixmystreet.set_up.dropzone()` setup for `#side-report` if raw photo fields
+          are present without a `.dropzone`, then applies the InfraSignal dropzone
+          text/icon styling. This keeps dev and staging visually aligned and preserves
+          the standard upload behavior.
+        - Prevention: `bin/staging-acceptance.py` and
+          `docs/STAGING-TEST-CHECKLIST.md` now include checks for the report update
+          photo uploader so raw browser `Choose File` inputs are caught before
+          production.
+    - InfraSignal — May 31, 2026 (Report detail data consistent across languages):
+        - Symptom: report detail pages showed different information by language. In
+          English `/report/524` showed ref `524`, authority `Buffalo Grove, IL`,
+          `RESOLVED`, a complete timeline, and an official response; in Spanish the
+          same report showed `N/A` for ref/authority, `AWAITING REVIEW`, pending
+          timeline steps, and `Unknown` for the update author.
+        - Cause: `web/cobrands/infrasignal/filter-pills.js` rebuilt the modern report
+          sidebar by parsing visible English text such as `Fixed`, `Responsible
+          Authority`, and `Posted by`. Once those words were translated, the parser
+          could not identify the same data and fell back to defaults.
+        - Fix: report templates now expose language-independent `data-*` attributes
+          for problem state, category, ref number, authority, and update timestamp.
+          `filter-pills.js` reads those attributes and banner classes first, using
+          text parsing only as a fallback. The same report data now renders in every
+          language; only labels/content are translated.
+        - Prevention: do not use translated display text as program logic. Any future
+          report-detail enhancement must read stable machine values (`data-*`,
+          classes, IDs, or API fields), not localized words.
+          `bin/staging-acceptance.py` now checks `/report/524` in English, Spanish,
+          and Turkish for the same stable report state/ref/update timestamp.
+    - InfraSignal — May 31, 2026 (Staging hero "Report a problem" search fixed):
+        - Symptom: on staging (`http://REDACTED-IP:8080`), entering an address and
+          clicking "Reportar un Problema" opened
+          `https://staging.infrasignal.org/around?...` and failed with
+          `DNS_PROBE_FINISHED_NXDOMAIN` (domain does not exist in DNS).
+        - Cause: `conf/general.yml-staging.runtime` had
+          `BASE_URL: https://staging.infrasignal.org`, and the homepage hero form used
+          `c.uri_for('/around')`, which emits absolute URLs from BASE_URL. Users reach
+          staging by IP:8080, not that hostname.
+        - Fix: set staging `BASE_URL` to `http://REDACTED-IP:8080`; hero postcode form
+          and photo upload use relative `action="/around"` and `action="/photo/upload"`;
+          geolocation link uses `.path_query`; `header-nav.js` rewrites any remaining
+          absolute form actions/geolocate href to the current origin on load.
+        - Prevention: document in `docs/STAGING-TEST-CHECKLIST.md`; when staging is
+          accessed by IP, BASE_URL must match that host:port OR forms must use relative
+          paths (same pattern as footer language links).
+    - InfraSignal — May 31, 2026 (Footer/mobile language switch now loads):
+        - Symptom: clicking a language in the footer ("English / Español / Русский /
+          Türkçe") did not load the page, while the header nav switcher worked.
+        - Cause: footer (and mobile-menu) language links used
+          `c.uri_with({ lang => ... })`, which returns an ABSOLUTE URL built from the
+          configured BASE_URL (no `:3001` port) — so it navigated to
+          `REDACTED-IP/?lang=es` on port 80 where nothing serves. The header desktop
+          switcher worked because it builds a relative URL in JS from
+          `window.location` (preserving the port).
+        - Fix: append `.path_query` to those links in
+          `templates/web/infrasignal/front/footer-marketing.html` and the mobile menu
+          in `templates/web/infrasignal/header_site.html`, so they render relative
+          (`/?lang=es`, preserving existing query params) and the browser keeps the
+          current host/port. Verified rendered hrefs are now `/?lang=<code>`.
+        - Follow-up ("looks like still same"): a page tab loaded BEFORE the template
+          fix still held the old absolute hrefs baked into its HTML, so footer clicks
+          kept failing even though the server was correct (the nav switcher kept
+          working because it builds the URL live in JS at click-time). To make this
+          robust regardless of cached HTML, `web/cobrands/infrasignal/header-nav.js`
+          now rewrites every footer/mobile language link (`.site-footer__lang-link`,
+          `.mobile-menu__langs a`) from `window.location` on load — identical to the
+          desktop switcher — so they can never point at a stale or BASE_URL-derived
+          host/port. Verified the live homepage serves the new `header-nav.js` (fresh
+          content hash) containing the rewrite logic.
+    - InfraSignal — May 31, 2026 (Hero search button no longer clips in ru/es/tr):
+        - Symptom: on the homepage hero the orange action button clipped its label in
+          longer languages — "Сообщить о проблеме" → "Сообщить о пробл", "Reportar un
+          Problema" → "Reportar un Proble".
+        - Cause: the pill is a flex row with `overflow: hidden`; the text input had
+          `min-width: 17rem` and the submit button is `flex: none`, so when the
+          translated label was longer the input refused to shrink and the button
+          overflowed the pill and got clipped.
+        - Fix: changed the hero input to `min-width: 0` in
+          `web/cobrands/infrasignal/base.scss` so it yields space to the button; the
+          button (flex:none, white-space:nowrap) now always shows its full label and
+          the input flex-grows to fill the rest. Rebuilt `base.css`.
+    - InfraSignal — May 31, 2026 (Full translation-leak audit + fix: 87 strings):
+        - Built a reusable audit (`bin/i18n-audit.py`) that extracts every
+          `loc()`/`_()` string used by the InfraSignal custom templates (1,002
+          distinct) and cross-checks each ru/tr/es catalog for MISSING / EMPTY /
+          FUZZY / English-leak entries.
+        - Finding: 87 `loc()`-wrapped strings were absent from all three catalogs
+          (so they rendered English in every language) — concentrated in the error/
+          CAPTCHA page (`errors/generic.html`), the sign-in/register/sign-out/
+          change-name auth pages, report-display partials, the questionnaire, the
+          contact blurb, search-error/postcode hints, and the admin staging warning.
+          0 empty and 0 fuzzy — it was all-or-nothing per string.
+        - Fix: translated all 87 into ru/tr/es and added them to the git-tracked
+          catalogs via `bin/i18n-fill-missing.py` (86 new + 1 updated per language),
+          recompiled `.mo`, restarted the dev app. Re-audit now reports
+          MISSING=0/EMPTY=0/FUZZY=0 for all three languages.
+        - Verified live on dev: 404/error page, /auth sign-in, and /contact render
+          fully translated in ru/tr/es.
+        - Remaining "leak" hits are intentional proper nouns/placeholders (MapIt,
+          JSON, WCAG 2.1 AA, Open311 v2, SocietyWorks, your@email.com) and are left
+          untranslated by design.
+        - Note: About/FAQ/Privacy/Terms/Security use dedicated per-language template
+          files and were already translated; they are out of scope for this catalog
+          audit.
+    - InfraSignal — May 31, 2026 (Marketing top-nav stays on one row across languages):
+        - Symptom: the public header (logo · nav · action buttons) reflowed and even
+          clipped "Admin" in some languages because each language renders the same
+          nav labels at different widths. Russian "For Government" =
+          "Для государственных органов" is ~2x the English width, pushing the
+          right-side buttons off-screen.
+        - Fix has two parts:
+          1. Responsive CSS safety net in `web/cobrands/infrasignal/base.scss`:
+             `.header-actions` now `flex-shrink: 0` so the Start Reporting / Admin
+             buttons can never be clipped; `.header-nav` is the flexible zone
+             (`flex: 0 1 auto; min-width: 0`) and its gap, link padding, and
+             font-size compress via `clamp()` between the 1160px desktop breakpoint
+             and wider screens. Below 1160px the existing hamburger menu still takes
+             over, so phones/tablets are unaffected. (Note: `clamp()` mixed-unit math
+             must be wrapped in `calc()` — `calc(0.55vw + 7px)` — because the bundled
+             libsass aborts on `0.55vw + 7px`.)
+          2. Shortened the longest nav labels to near-English width (these msgids are
+             shared only with the vertical footer list, where the shorter synonyms
+             also read naturally; page titles/sidebar use different msgids and are
+             unchanged):
+             - ru: "For Government" Для государственных органов → Для властей;
+               "View Reports" Смотреть отчёты → Отчёты;
+               "Start Reporting" Начать обращение → Сообщить.
+             - es: "About Us" Acerca de Nosotros → Nosotros;
+               "Start Reporting" Comenzar a Reportar → Reportar.
+             - tr: "View Reports" Bildirimleri Görüntüle → Bildirimler;
+               "Start Reporting" Bildirime Başla → Bildir.
+        - "Contact Us" intentionally left as the natural full phrase in every
+          language; the CSS net handles its width.
+        - Rebuilt `web/cobrands/infrasignal/base.css`, recompiled ru/tr/es `.mo`,
+          restarted the dev app. Verified labels render shortened on dev for
+          en/ru/tr/es.
+    - InfraSignal — May 31, 2026 (Admin body edit form visibility):
+        - Fixed the admin body edit form layout where fields such as Parent, Area
+          covered, Cobrand, External URL, and Send Method appeared cramped or
+          partially hidden in the InfraSignal admin shell.
+        - Added scoped `body.admin .content > form` and `body.admin .admin-box > form`
+          styling so legacy base admin forms render as a full-width card with
+          readable labels and controls. The body edit form lives inside
+          `.admin-box`, so the first attempt (direct `.content > form` only) missed
+          it and the native Parent/Cobrand/Send Method selects stayed narrow with
+          vertically clipped text; the selector now covers the nested form and
+          gives selects an explicit `min-height`/`line-height` so option text is
+          no longer cut off. Report pages and public forms are unaffected.
+        - Rebuilt `web/cobrands/infrasignal/base.css` from `base.scss` inside the
+          dev app container.
+    - InfraSignal — May 31, 2026 (Admin language switching and navigation performance):
+        - Fixed language switching on dev/staging admin pages where URLs such as
+          `?lang=en-gb` could still render Turkish because the staging override
+          session only persisted `_override_lang`. `setup_dev_overrides` now accepts
+          the public `lang` query parameter as a validated alias for `_override_lang`
+          (query params only, so admin form fields cannot accidentally change the UI
+          language). Header, mobile, footer, and legacy nav language links now
+          preserve the current URL/query/hash while changing `lang`.
+        - Reduced perceived language-switch reload cost by increasing dev static asset
+          cache lifetime for fingerprinted CSS/JS/images from 5 minutes to 4 weeks
+          with `Cache-Control: public, immutable`.
+        - Fixed slow admin navigation for the InfraSignal admin picker pages. Bodies,
+          Response Templates, Response Priorities, Site Message, and Users were
+          loading all 28k+ bodies into the initial page even though the custom
+          InfraSignal UI loads bodies on demand via `/admin/bodies/bodies_by_state`.
+          These landing pages now skip the all-body fetch for the `infrasignal`
+          cobrand and keep the AJAX state/county/city picker behavior.
+        - Measured authenticated dev page sizes after the fix: `/admin/bodies`
+          ~65KB, `/admin/templates` ~67KB, `/admin/users` ~83KB; previously Bodies
+          and Templates were multi-megabyte responses (up to ~14MB observed) and
+          Users was ~8.1MB.
+        - Mirrored runtime changes to staging and restarted dev/staging.
+    - InfraSignal — May 31, 2026 (Complete remaining admin page translation wrappers):
+        - Kept the prior admin i18n work durable by wrapping the remaining visible
+          hardcoded admin strings in `loc()` across Manifest Theme, Config, Bodies,
+          Response Priorities, and Site Message pages.
+        - Added explicit Manifest Theme form labels for fields that were previously
+          auto-humanized, giving stable gettext msgids for ru/tr/es translations.
+    - InfraSignal — May 30, 2026 (Translate full Privacy Policy & Terms of Use legal text):
+        - Previously only ~3 chrome strings per page were loc()-wrapped; the entire
+          legal body of /about/privacy and /about/terms was hardcoded English, so
+          those pages stayed English in ru/tr/es.
+        - Fix: wrapped every legal string (section titles, accordion summaries,
+          paragraphs, list items) in templates/web/infrasignal/about/{privacy,terms}.html
+          with loc(); used tprintf(loc('...%s...'), ...) for the two strings that embed
+          a dynamic link (site URL, DMCA contact email) so the link stays out of the
+          translatable msgid. Static internal links (/contact, /about/terms,
+          /about/privacy) are kept inside the msgid like the FAQ strings.
+        - Added 171 new msgids x 3 languages (ru/tr/es) to the git-tracked .po catalogs
+          covering the complete Privacy Policy (10 sections) and Terms of Use (17
+          sections). .mo recompiled.
+        - Verified on dev + staging (Accept-Language tr/ru/es): both pages render fully
+          translated with no English body leftovers. Templates + .po/.mo mirrored to
+          staging.
+        - Durability: all strings are loc()-wrapped and committed to the catalogs, so
+          gettext re-extraction preserves them (same mechanism that kept how-it-works).
+    - InfraSignal — May 30, 2026 (Restore lost translations on About / FAQ / Alerts pages):
+        - Symptom: in ru/tr/es the About, FAQ and Local Alerts pages rendered in
+          English again (card descriptions, FAQ Q&A, alert page body), even though
+          how-it-works / for-local-government / security stayed translated.
+        - Root cause: these pages' strings are loc()-wrapped in the templates
+          (templates/web/infrasignal/about/{about,faq}.html and
+          templates/web/infrasignal/alert/{index,_index_text,choose}.html), but the
+          matching msgids were never committed to the git-tracked .po catalogs (a
+          prior file-loss reverted .po to a version that only had the pages above).
+          With no catalog entry, gettext falls back to the English msgid.
+        - Fix (durable): added the missing translations directly to the git-tracked
+          .po catalogs for ru_RU / tr_TR / es — 74 strings for About + FAQ + page
+          chrome + sidebar (About/Terms) and 52 strings for the custom Local Alerts
+          page (126 msgids x 3 languages). Because the strings are loc()-wrapped and
+          now live in the committed .po, gettext re-extraction keeps them — this is
+          why how-it-works survived and these will too once committed.
+        - .mo recompiled for all three languages; dev + staging restarted.
+        - Verified on dev and staging (Accept-Language: tr): /about, /faq and /alert
+          show Turkish with no English leftovers from the checked strings.
+        - NOT changed: the long legal bodies of /about/privacy and /about/terms are
+          hardcoded English prose in the templates (only ~3 chrome strings each are
+          loc()-wrapped, which are now translated). Full legal-text translation would
+          require wrapping each paragraph and is left as a separate decision.
+    - InfraSignal — May 29, 2026 (Fix untranslated admin sidebar items: Duplicate Reports / Priority Zones):
+        - The two custom admin sidebar entries stayed English in every language
+          because their titles were hardcoded plain strings in the cobrand's
+          admin_pages(): `$pages->{duplicate_reports} = [ 'Duplicate Reports', ...]`.
+          The label is rendered from allowed_pages, so it never hit loc().
+        - Fix: wrapped both titles with `_()` (the FMS Perl gettext helper, same as
+          core admin_pages) in perllib/FixMyStreet/Cobrand/Infrasignal.pm, and added
+          the "Priority Zones" msgstr to ru/tr/es ("Duplicate Reports" already
+          existed). .mo recompiled.
+        - Verified logged-in on dev: sidebar shows Дублирующие отчёты/Приоритетные
+          зоны (ru), Yinelenen Bildirimler/Öncelik Bölgeleri (tr) with no English.
+          Perl + .po + .mo mirrored to staging.
+    - InfraSignal — May 29, 2026 (Translate the ADMIN CONSOLE ru/tr/es):
+        - Superuser screenshots showed English leaking across the admin console
+          (Özet/dashboard, Bölümler/bodies, Bildirimler, Duplicate Reports, etc.).
+        - Found 58 untranslated admin loc() strings and added/filled 57 per language
+          via polib (1 already done): dashboard KPIs ("Good morning", "Awaiting
+          send", "Access/Granted", "By Category/Status", "Recent reports", "Find
+          reports and users", …), Duplicate Reports page ("Radius (metres)", "All
+          Categories", "Report State", "Open only", "Duplicate Groups", "Report
+          Pairs", "Detection Radius", "is duplicate of", "%sm apart", …), priority
+          zones, site messages, response-template picker, sidebar items
+          ("Duplicate Reports", "Priority Zones").
+        - Wrapped previously HARDCODED strings so they can localize:
+            - admin/bodies/index.html — static labels (State:, County:, City/Town:,
+              dropdown placeholders, table headers, the empty-state paragraph) AND
+              the JS-generated text. For the JS, added a TT-rendered `T = {…}` i18n
+              map (loc() piped through replace to stay quote-safe) and replaced the
+              hardcoded JS literals ("No bodies found.", section headers, "-- All
+              cities in county --", "No bodies found for %s.", …).
+            - admin/duplicate_reports.html — "%sm apart" via tprintf(loc()).
+        - Verified logged-in on dev (:3001) via a one-time login link: /admin,
+          /admin/duplicate_reports, /admin/bodies render fully translated in
+          ru/tr/es with no visible English. Mirrored templates + .po + .mo to
+          staging (stale .ttc cleared so TT recompiles).
+        - Not changed: the dashboard donut legends (category/status names) are
+          drawn client-side from report DATA, not loc() strings — that is the
+          separate category-name/data-translation track.
+    - InfraSignal — May 29, 2026 (Translate home hero / Reports dashboard / Contact page ru/tr/es):
+        - User reported (via screenshots) English text still leaking on the Russian
+          home page, the Reports Dashboard, and the Contact page — and likely tr/es
+          too. These pages live in templates not covered by the first marketing
+          batch: around/intro.html (hero), around/postcode_form.html (search box +
+          trust badges), reports/index.html (dashboard), contact/index.html (form).
+        - Found 70 untranslated loc() strings on those pages (empty or absent in the
+          catalogs). Added/filled 66 new entries × ru/tr/es (the other 4 were already
+          translated) using polib (fill-or-add, never clobbering existing msgstr).
+          Strings with HTML/`%s`/entities (e.g. the mailto link, the FAQ link, the
+          "Report Form" link, `&rsquo;`/`&ndash;`) keep their markup; `your@email.com`
+          left verbatim. .mo recompiled.
+        - Verified on dev (:3001) and staging (:8080): home, /reports, /contact all
+          render fully translated in ru/tr/es with ZERO English leftovers.
+        - Note: polib re-wraps .po line formatting on save, so the diff is large but
+          msgid counts are intact (ru 1808 / tr 1805 / es 1805).
+    - InfraSignal — May 29, 2026 (Translate marketing pages ru/tr/es via .po + ROOT-CAUSE locale fix):
+        - Scope: home page, how-it-works, for-local-government, security — the
+          remaining custom InfraSignal pages whose loc() strings were never in the
+          .po catalogs, so they showed English in every language.
+        - Added 221 new msgid/msgstr entries (× ru/tr/es = 663 translations) to
+          locale/{ru_RU,tr_TR,es}.UTF-8/LC_MESSAGES/FixMyStreet.po, then recompiled
+          the .mo with msgfmt. (The 14 strings already in core — All Reports,
+          Closed, Open, etc. — were left untouched and reused their core
+          translation.) msgids were paired line-by-line against the extracted
+          loc() list so they match exactly (a mismatch silently falls back to EN).
+        - ROOT CAUSE found while verifying: gettext translation NEVER worked in
+          ru/tr/es on the running dev container — the OS locales (ru_RU.UTF-8,
+          tr_TR.UTF-8, es_ES.UTF-8) were not generated, so setlocale() failed and
+          loc() always returned English. That is why earlier about/faq fixes had to
+          use per-language TEMPLATE files (templates don't need setlocale). This
+          also meant the ~1,300 already-translated CORE strings (report flow,
+          account, alerts) were silently English too.
+        - Fix: `docker/Dockerfile-development` already generates ru/tr/es locales
+          (added Apr 9) — the dev container was simply built before that and never
+          rebuilt. Generated the 3 locales in the live dev container with localedef
+          (no disruptive rebuild needed); next rebuild keeps them automatically.
+          Staging's container was already built with the locales.
+        - Result: dev + staging now render fully translated home / how-it-works /
+          for-local-government / security in ru/tr/es with ZERO English leftovers,
+          AND the core UI now localizes for the first time. Verified on dev (:3001)
+          and staging (:8080).
+        - Promotion note: .mo is gitignored (built from .po via msgfmt /
+          commonlib/bin/gettext-makemo). When promoting code, recompile .mo and
+          ensure the target container has the ru_RU/tr_TR/es_ES OS locales.
+    - InfraSignal — May 29, 2026 (Restore translations on the redesigned info pages):
+        - Follow-up to the consolidation below: making about/faq/privacy/terms
+          generic gave every language the NEW UI but English TEXT (the custom
+          marketing/legal strings aren't in the .po catalogs, so loc() fell back
+          to English). Users reported the lost translations.
+        - Fix: recreated the per-language files in the NEW layout WITH translated
+          copy — `about-{ru,tr,es}.html`, `faq-{ru,tr,es}.html`,
+          `privacy-{ru,tr,es}.html`, `terms-{ru,tr,es}.html` (12 files). Each
+          reuses the redesigned structure (hero, sidebar, cards, accordions,
+          CTA) and the recovered human legal translations from git history.
+        - Result: new branded UI + full translations for ru/tr/es; English keeps
+          the generic loc()-based templates. The About controller picks the
+          `-<lang>.html` variant automatically.
+        - Verified on dev (:3001): translated headings present, ZERO English
+          markers, no template errors, for all 4 pages × ru/tr/es. Mirrored to
+          the staging tree.
+    - InfraSignal — May 29, 2026 (Fix: non-English About pages showed the old UI):
+        - The About controller resolves `about/<page>-<lang>.html` before the
+          generic template. The May-24 redesign only updated the English/
+          generic templates, so `tr/es/ru` kept getting served stale Apr-9
+          per-language files with the OLD layout.
+        - Fix: made `about` + `faq` generic (`about-en-gb.html` → `about.html`,
+          `faq-en-gb.html` → `faq.html`) and removed the stale per-language
+          files for about/faq/privacy/terms (tr/es/ru). All languages now use
+          the redesigned, loc()-based templates (English copy where strings
+          aren't translated in the .po files yet).
+        - Applied to dev + staging trees. Verified new-UI markers render for
+          en-gb/tr/es/ru on /about, /about/faq, /about/privacy, /about/terms.
+    - InfraSignal — May 29, 2026 (Expose staging on a public demo link):
+        - Changed `docker/docker-compose-staging.yml` nginx port binding from
+          `127.0.0.1:8080` to `0.0.0.0:8080` so staging is reachable like dev.
+          Recreated only the `staging-nginx` container; DB + app untouched.
+        - Public demo link: http://REDACTED-IP:8080/ (verified 200).
+        - Promotion stays MANUAL (dev → staging → prod); no auto-sync. See
+          `notes/2026-05-29-staging-public-link.md` and ARCHITECTURE.md.
+        - Note: staging is open (no auth); data was PII-scrubbed earlier.
+    - InfraSignal — May 29, 2026 (Category demo photos on every report — staging + dev):
+        - Generated 13 photorealistic "citizen report" photos (one per distinct
+          issue type; the 17 category strings collapse to 13 real types) and
+          assigned them by category to ALL visible reports on staging (722/722)
+          AND dev (723/723), so both demo environments look credible. Previously
+          only 5 reports per env had photos.
+        - PROD intentionally excluded: it was wiped clean for customers (0
+          reports), so no photos to replace and no mock data added to the live
+          site.
+        - Masters downsized to 1200x800 (~2.9 MB total) and stored in
+          `demo-assets/category-photos/`. Reproducible via
+          `bin/seed-demo-photos.sh <dev|staging>`.
+        - Mechanism: set `problem.photo` per category, then populate the
+          persistent `web/photo` cache (`<id>.0.{fp,tn,full,}.jpeg`, gitignored)
+          that the FixMyStreet Photo controller serves before falling back to
+          the ephemeral `UPLOAD_DIR` master. Verified `full` byte-identical to
+          each master; fp/default/full all 200.
+        - Per-report isolation verified: `delete_cached` only touches a report's
+          own id-keyed cache, and a new upload is content-hashed into a fresh
+          master that repoints only that report. Live test: changing report 6's
+          photo left report 26 (same category/image) byte-for-byte unchanged.
+        - Detailed log at `notes/2026-05-29-staging-category-photos.md`.
+    - InfraSignal — May 29, 2026 (Fix staging broken images — logo + report photos):
+        - Logo, favicons, and report photos showed broken on staging
+          `:8080`. Two causes: (1) the image `location` block in
+          `conf/nginx.conf-docker` (staging-only nginx config) lacked the
+          `try_files $uri @catalyst;` fallback the css/js block has, so
+          all image URLs — static logo/favicons AND app-served
+          `/photo/*.jpeg` — 404'd; (2) the staging tree only had the ~20
+          photo files from the dev rsync, not prod's full set.
+        - Fix 1: added the `@catalyst` fallback to the image block;
+          reloaded nginx live (no recreate). Tracked file — committed.
+        - Fix 2: `rsync` prod's `web/photo` (86 files) into the staging
+          tree (host-only, like the rest of `/opt/infrasignal-staging`).
+        - Verified: logo 200, all 5 report thumbnails 200 (real
+          image/jpeg). Staging-only; prod and dev untouched.
+        - Detailed log at `notes/2026-05-29-staging-images-fix.md`.
+    - InfraSignal — May 29, 2026 (Staging code isolation — own source tree):
+        - Staging now runs from its OWN tree `/opt/infrasignal-staging`
+          (a mirror of the dev working tree) instead of sharing prod's
+          `/opt/infrasignal-v2`. Staging can now show the latest dev UI
+          for customer demos while prod stays frozen on its old code.
+        - Found via `docker inspect` that staging + prod were mounting
+          the same host dir — they differed only by DB + config override.
+          The three UI-relevant mounts (app source, `general.yml`
+          override, nginx `web/`) were repointed in
+          `docker/docker-compose-staging.yml`; nginx routing config and
+          db schema stay shared (identical, db container untouched).
+        - Only `staging-fixmystreet-1` + `staging-nginx-1` were
+          recreated (`--no-build --no-deps`); db/memcached untouched.
+          Perl deps reused from the `staging-local` volume (no carton
+          reinstall). Fixed a `/reports` 500 by running
+          `bin/update-all-reports` (regenerates the ephemeral dashboard
+          JSON the recreated container lacked).
+        - Verified staging serves dev's CSS (`61d616c92162`) and all
+          routes 200; prod verified byte-for-byte unchanged (old CSS
+          hash `9f74d1d3f54a`, same mount, commit 39b493aed, 0 reports).
+        - Now 3 fully independent envs (own code + own DB each). Re-sync
+          recipe (rsync dev→staging) documented in the note.
+        - `/opt/infrasignal-staging` is host-only (generated mirror, not
+          in git). The compose edit IS in git.
+        - Detailed log at `notes/2026-05-29-staging-code-isolation.md`.
+    - InfraSignal — May 29, 2026 (Prod data wipe — clean slate for customers):
+        - Cleared all user-generated / demo content from the
+          **production** DB (723 problems, 555 comments, 6 alerts,
+          4 test users) so first real customers see a fresh app.
+          Single atomic SQL transaction; zero downtime (memcached
+          cache flush only).
+        - KEPT all operational reference data: `body` (28,090),
+          `contacts` (365,170), `translation` (1,095,540),
+          `osm_zone_cache` (56), `priority_zone_config` (30),
+          plus categories/response data, state, config, secret,
+          roles, manifest_theme. Sequences reset
+          (`RESTART IDENTITY`) so the next report is `/report/1`.
+        - KEPT all 4 superusers (admin@infrasignal.org,
+          REDACTED-EMAIL, dev-admin@infrasignal.org,
+          dev-admin@infrasignal.local); passwords unchanged.
+        - Demo dataset preserved in 3 places before the wipe:
+          staging (`:8080`, PII-scrubbed, full 723 reports), plus two
+          persistent backups at
+          `/opt/infrasignal-v2/backups/prod-20260529T174837Z-pre-wipe.{sql.gz,dump}`.
+        - Rollback documented (one gunzip|psql command, ~15s).
+        - Staging demo polish (customer-facing env): replaced the
+          synthetic `Dev User/Reporter <id>` scrub placeholders with
+          realistic names (Michael Anderson, Sarah Williams, …) across
+          `users`/`problem`/`comment`, and hid the one `Test` report.
+          Staging now shows 722 credible reports with real-looking
+          authors — no actual PII (synthetic + reserved example.com).
+        - Detailed log at `notes/2026-05-29-prod-data-wipe.md`.
+    - InfraSignal — May 29, 2026 (/report/new hero polish, CSS-only):
+        - Added a ~121-line block at the end of
+          `web/cobrands/infrasignal/base.scss` that fills in the
+          page-level chrome the previous report-form styling never
+          covered: hero band on the `<h1>` (navy gradient + orange
+          accent + inline SVG pin), branded back-pill on
+          `.problem-back--top`, stronger gradient + 5px border on
+          `.report-routing-note`, and uppercase brand-color section
+          labels for `#photo-upload-label/#title-label/#detail-label/
+          #form_category_legend`.
+        - Diagnosis: prior 1058-line SCSS work compiled fine (hash
+          matched URL, 43 rules → 88 selectors live in CSS) but
+          targeted only form internals (inputs, radios, dropzone,
+          labels). Page-level chrome had no styling, so the page
+          still read as default FixMyStreet.
+        - Rebuilt `base.css` via in-container `bin/make_css
+          web/cobrands/infrasignal/`. Hash: `563e7720b735` →
+          `61d616c92162`. File size: +~2 KB.
+        - No template files were edited. No selectors outside
+          `body.mappage #report-a-problem-main` were touched —
+          other pages unaffected. Prod and staging unchanged.
+        - Detailed log at `notes/2026-05-29-report-new-hero-polish.md`.
+    - InfraSignal — May 29, 2026 (Dev DB seeded from prod, PII scrubbed):
+        - Added `bin/refresh-db` (mirrored to both
+          `/opt/infrasignal-dev/bin/` and `/opt/infrasignal-v2/bin/`):
+          one-shot script that does `pg_dump` from prod →
+          drop+create target DB → restore → run scrub SQL →
+          flush memcached → verify. Refuses to target prod.
+          Always backs up the target DB to `/tmp` first.
+        - Ran it against dev. Dev DB now holds a scrubbed prod
+          snapshot: 723 problems, 555 comments, 28,090 bodies, 9
+          users (8 from prod with all PII anonymized, plus a stable
+          `dev-admin@example.invalid` superuser).
+        - Scrub coverage: `users.email/name/phone/password/social_ids/extra`,
+          `problem.name/cobrand_data/extra`,
+          `comment.name/website/cobrand_data/extra/private_email_text`;
+          truncates `abuse/admin_log/sessions/token/partial_user/
+          moderation_original_data/textmystreet/alert_sent`.
+        - Kept verbatim: `problem.title/detail` and `comment.text`
+          (real prod report content — acceptable for non-public dev,
+          noted as residual risk if dev is ever exposed publicly).
+          Photos are NOT copied by default (`--with-photos` opt-in).
+        - Prod untouched throughout (read-only `pg_dump`); prod still
+          at 723 problems, max id 723, site still 200.
+        - Staging left empty intentionally — same command refreshes
+          it (`bin/refresh-db staging`) when desired.
+        - Detailed log at `notes/2026-05-29-dev-db-refresh.md`.
+    - InfraSignal — May 27, 2026 (Operations / file-watch + repo push):
+        - Added `bin/optwatch` + `/etc/cron.d/optwatch` to log unexpected
+          file modifications under `/opt/infrasignal-v2` and
+          `/opt/infrasignal-dev` to `/var/log/optwatch.log`. Purpose: leave
+          a forensic trail if the May 27 14:58 UTC desync event recurs.
+        - Committed and pushed the restored hardening + isolation work
+          (compose files, nginx conf, deploy script, docs, notes) to
+          `origin/dev`. `/opt/infrasignal-v2` left at its current
+          deployed commit; prod redeploy is a separate intentional step.
+    - InfraSignal — May 26, 2026 (Dev DB isolation):
+        - `/opt/infrasignal-dev` no longer shares production's postgres or
+          memcached. New `dev-db` (postgres 13.11, own `dev-pgdata` volume)
+          and `dev-memcached` services added to
+          `/opt/infrasignal-dev/docker/docker-compose-local.yml`, with
+          aliases `dev-postgres.svc` / `dev-memcached.svc` on the shared
+          `docker_default` bridge.
+        - Dev's `conf/general.yml` repointed; original preserved at
+          `general.yml.pre-isolation-2026-05-26.bak`.
+        - Dev DB initialised at schema version 0094, 37 tables. Prod DB
+          unchanged (still 723 problems, max id 723); zero connections
+          from dev-fixmystreet visible in prod's `pg_stat_activity`.
+        - Updated `SYSTEM-MAP.md` (topology + environment matrix) and
+          added a "Development environment" section to `ARCHITECTURE.md`.
+          Detailed log at `notes/2026-05-26-dev-db-isolation.md`.
+        - No deletions; rollback path documented in the note.
+    - InfraSignal — May 26, 2026 (Production hardening, no-deletion pass):
+        - Operations / infrastructure:
+            - Stopped the broken legacy `infrasignal-v2` Compose stack
+              (containers/volume/network preserved; restart policy disabled).
+            - Locked `conf/nginx.conf-prod` to `server_name infrasignal.org
+              www.infrasignal.org`; unknown hostnames now get a 444. Updated
+              the nginx healthcheck in `docker/docker-compose-prod.yml` to
+              send `Host: infrasignal.org` accordingly.
+            - Fixed `bin/deploy` branch mismatch — default `BRANCH` is now
+              `dev` (matches the actually-deployed branch), overridable via
+              `DEPLOY_BRANCH=`; `--full` / `--migrate` modes now abort on a
+              dirty prod working tree.
+            - Tagged the deployed commit as `prod-2026-05-03` (rollback marker).
+            - Added `docker/docker-compose-prod-image.yml` — a draft
+              image-based prod compose for the future cutover off the live
+              bind mount (existing prod compose untouched).
+            - Brought up the staging environment on `127.0.0.1:8080` with
+              its own postgres/memcached/network. Added `bin/staging-deploy`
+              for bootstrap + lifecycle, and gitignored the generated
+              `conf/general.yml-staging.runtime`.
+            - Updated `ARCHITECTURE.md` with a "Current Production State"
+              section, a "CI image / manual deploy" section, and a "Staging
+              environment" section.
+            - No files / containers / volumes / branches / remotes deleted.
+        - Detailed log at `notes/2026-05-26-prod-hardening.md`.
+    - InfraSignal — May 27, 2026 (Restoration after dev/v2 dir desync):
+        - All compose files, nginx configs, deploy scripts, and notes
+          listed in the two May 26 entries above were rewritten from
+          ground truth (running container `docker inspect` + the
+          surviving `general.yml.pre-isolation-2026-05-26.bak`) after
+          an unidentified sync operation between `/opt/infrasignal-v2`
+          and `/opt/infrasignal-dev` deleted them from disk while the
+          containers stayed running. Container runtime state was
+          preserved end-to-end; brief prod blip (~30s, HTTP 504)
+          occurred during validation when an accidental `docker compose
+          --no-start` recreated db + fixmystreet.
+        - See `notes/2026-05-27-restoration-after-desync.md` for the
+          full incident log.
+    - InfraSignal - May 23, 2026 (Reports dashboard redesign):
+        - Replaced the InfraSignal `/reports` dashboard with the supplied report-dashboard design adapted to the existing FixMyStreet/Catalyst data model and Template Toolkit paths.
+        - Swapped the old Chart.js canvas rendering for a page-local vanilla SVG chart renderer at `web/cobrands/infrasignal/reports-dashboard.js` and stopped loading the old Chart.js dashboard bundle on `/reports`.
+        - Added a small InfraSignal reports icon partial, rebuilt the dashboard markup around the existing report totals, monthly periods, last-seven-day metrics, top authorities, top categories, and jurisdiction picker data.
+        - Added scoped `.rd-*` dashboard styles to `base.scss`, regenerated `web/cobrands/infrasignal/base.css`, and preserved the existing accessible-autocomplete jurisdiction picker behavior.
+        - Verification confirmed `/reports` returns HTTP 200, renders two nonblank SVG charts, initializes the picker autocomplete with placeholder text, loads no old dashboard canvases or Chart.js assets, has no browser console/page errors, and keeps zero horizontal overflow in the available browser viewport.
+        - Implementation committed as `c5049dac1` (`Wire reports dashboard redesign`) before documentation/tracker updates.
+        - Follow-up committed as `7655c1bb8` (`Tighten reports dashboard data display`): removed unsupported demo-style trend values and fake activity visuals, derived the resolution rate from real totals, rendered KPI sparklines from real period arrays, showed honest empty states for zero weekly/category activity, changed the chart copy from monthly to period-based, and fixed sparse mobile sparkline sizing.
+        - Follow-up committed as `c61e2c1de` (`Add reports dashboard preview data and hover`): added a staging-only `?dashboard_preview=1` mode with internally consistent Lovable-style sample data, cities across multiple states, populated categories, active weekly bars, and an interactive SVG chart tooltip/crosshair on hover while keeping normal `/reports` on real data.
+        - Follow-up committed as `1b7046dbb` (`Tune reports preview monthly chart`): adjusted the preview Jan-Dec sample series to create stronger month-to-month rises and dips while preserving the preview totals and monthly hover tooltip behavior.
+        - Follow-up committed as `ecce576b1` (`Surface reports monthly preview link`): added a staging-only hero action on live `/reports` that links to the monthly preview on the same host/port, plus a return link from preview to live data.
+        - Follow-up committed as `429e960e7` (`Show reports preview by default on staging`): made DEV/staging `/reports` show the monthly preview by default, with real live data still available at `/reports?dashboard_live=1`.
+        - Follow-up committed as `39aaac162` (`Remove reports preview fixture data`): removed the staging/sample dashboard fixture path so every visible `/reports` number is loaded from the database-backed dashboard JSON; verified DB counts match `582` visible reports, `440` fixed reports, and `0` last-seven-day reports.
+        - Follow-up committed as `f019193b7` (`Generate reports chart from database samples`): added DB-generated monthly chart arrays plus a guarded DEV seed helper that stores richer sample reports in the DEV database, then regenerated the dashboard JSON so `/reports` shows a curvy monthly chart whose totals, categories, authorities, and hover values match database rows.
+        - Follow-up committed as `7bcc933a5` (`Fix reports picker control layout`): fixed the reports area picker so the autocomplete dropdown no longer covers the address search section, the generated black dropdown arrow is hidden, and the address search icon no longer overlaps placeholder text.
+        - Follow-up committed as `18a08681b` (`Keep reports picker chevron in input`): pinned the custom jurisdiction chevron to the input height so it no longer drops into the autocomplete options when the menu opens.
+
+    - InfraSignal - May 23, 2026 (Start Reporting form highlight):
+        - Added a brief visual highlight to the homepage address form when `Start Reporting` or other report CTAs target `/#postcodeForm`, so the CTA no longer feels like it simply keeps users on the same page.
+        - Reused the existing CTA focus helper in `header-nav.js`; it now scrolls to the form, highlights the search pill, then leaves focus in the address/zipcode field.
+        - Reinforced the orange `Start Reporting` CTA text color so desktop and mobile button labels stay white across normal, visited, hover, and focus states.
+        - Added a reduced-motion fallback and rebuilt `web/cobrands/infrasignal/base.css` from `base.scss`.
+        - Verification confirmed the mobile/header `Start Reporting` flow lands on `/#postcodeForm`, applies the temporary highlight, removes it after the animation window, focuses `#pc`, and keeps zero horizontal overflow.
+        - Implementation committed as `0d28def2b` (`Highlight report form from header CTA`) and text-color follow-up committed as `ffa6d0500` (`Keep orange report CTA text white`) before documentation/tracker updates.
+
+    - InfraSignal - May 23, 2026 (Report CTA address-form target):
+        - Updated the public `Start Reporting` and main `Report an Issue` CTAs so they target the homepage address form at `/#postcodeForm` instead of linking to the bare homepage.
+        - Added a small header navigation helper that focuses the address/zipcode field when report CTAs are clicked on the homepage or when the page loads with the `#postcodeForm` anchor.
+        - Kept the CTA label as `Start Reporting` in the header because reporting is the primary public action; sign-in remains part of the downstream flow when needed.
+        - Cleared Template Toolkit caches on DEV; no CSS rebuild was required.
+        - Verification confirmed the header/mobile `Start Reporting` link from `/how-it-works` navigates to `/#postcodeForm` and focuses the address field, and live DEV pages render the corrected CTA anchors.
+        - Implementation committed as `062dc58e1` (`Point report CTAs to address form`) before documentation/tracker updates.
+
+    - InfraSignal - May 22, 2026 (Map-loaded report detail parity):
+        - Updated the InfraSignal report-detail enhancement script so reports opened from the around/map page are reprocessed after the sidebar content is loaded dynamically.
+        - Kept the existing standalone report detail templates and rich status/timeline styling unchanged while applying the same enhanced view to map-loaded report details.
+        - No CSS rebuild was required because the existing report detail styles already covered the status badge, details grid, description block, and timeline components.
+        - Verification confirmed opening a report from `/around?lon=-87.96334&lat=42.17766&js=1&zoom=3` now shows the enhanced status badge, details grid, description block, and `Reported`, `Acknowledged`, `In Progress`, `Resolved` timeline labels; direct `/report/578` and `/report/579` checks show the same enhanced structure.
+        - Implementation committed as `5f4c23711` (`Enhance dynamically loaded report details`) before documentation/tracker updates.
+
+    - InfraSignal - May 22, 2026 (Around page updates-link removal):
+        - Added an InfraSignal-only `around/_updates.html` override so the shared around/map page no longer renders the visible `Get updates` control or its wrapper above the report filters.
+        - Kept the report-status/category/sort filters, report list, map controls, and alert subscription pages unchanged.
+        - Cleared Template Toolkit caches on DEV.
+        - Verification confirmed the supplied `/around?lon=-87.96334&lat=42.17766&js=1&zoom=3` URL returns HTTP 200, no longer renders `#key-tool-around-updates` or `#key-tools`, has no visible `Get updates` control in browser checks, retains filters/list content, and has zero horizontal overflow.
+        - Implementation committed as `9cc42ee76` (`Hide around page updates link`) before documentation/tracker updates.
+
+    - InfraSignal - May 22, 2026 (How It Works step-card polish):
+        - Polished the first four How It Works process cards with shorter, more professional copy and a cleaner tile treatment.
+        - Restyled the step cards with a smaller badge/title rhythm, fixed visual scene height, separated text area, consistent card heights, and tighter card gaps.
+        - Rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss` and cleared Template Toolkit caches on DEV.
+        - Verification confirmed `/how-it-works` returns HTTP 200, renders the new step copy, has no template errors, shows equal step-card heights in the available browser viewport, and has zero horizontal overflow.
+        - Implementation committed as `db940bc95` (`Polish How It Works step cards`) before documentation/tracker updates.
+
+    - InfraSignal - May 17, 2026 (UI cleanup batch 2: content ownership, local government, and RSS feed UI):
+        - Content ownership:
+            - Created `/about/for-local-government` as the dedicated authority-facing destination for government operations, intake, routing, integrations, and published civic-reporting proof points.
+            - Consolidated scattered government/authority material out of resident-first pages and updated About, How It Works, FAQ, Contact, legal/info pages, Reports, Local Alerts, homepage sections, sidebar links, and footer links so each page points users to the right destination instead of repeating full sections.
+            - Kept useful content by moving or summarizing it; no useful content was intentionally removed as a cleanup shortcut.
+        - For Local Government page:
+            - Added a full InfraSignal Template Toolkit page with shared info-page sidebar behavior, structured intake messaging, civic reporting reference examples, agency workflow, report anatomy, routing/setup tabs, and a final contact CTA.
+            - Added real public-sector proof slides using published SocietyWorks case-study excerpts and metrics, with a disclaimer that the councils are reference points rather than InfraSignal customers or endorsers.
+            - Removed visible workflow numbering while preserving the workflow icons/figures, and fixed the page layout so the shared sidebar remains sticky without clipping the carousel.
+        - RSS feed browser UI:
+            - Replaced the old table-style RSS XSL browser view with an InfraSignal-styled page for `/rss/l/...`, including branded header, compact hero, copyable feed URL, reader shortcuts, latest report cards, sticky help sidebar, and regular footer-style links.
+            - Matched the RSS browser UI to the shared info-page scale: 72rem outer container, 14rem desktop sidebar, 42rem main column, compact panels, and reduced oversized typography.
+            - Fixed the RSS sidebar scroll collision by making the whole sidebar stack sticky instead of only the link list, so the email CTA no longer slides under the nav.
+            - Follow-up style parity committed as `0e916ff14` (`Align RSS page with site styling`): matched the RSS XSL header, navigation links, language/sign-in actions, hero gradient, hero typography, footer typography, language row, and footer CTA to the normal InfraSignal pages.
+            - Follow-up sizing parity committed as `171e12018` (`Match RSS hero sizing`): moved the RSS browser hero under the sticky header like the other public pages, removed the redundant hero pill/actions from the visual header, and matched the RSS hero spacing to the shared public-page header scale.
+            - Follow-up compact hero text committed as `8f1b154cf` (`Shorten RSS browser hero text`): shortened area-feed hero titles such as `/rss/area/974962` to `New problems in Lake County, IL` and reduced the RSS hero lead to one line so RSS browser headers match the normal public-page height while preserving the full feed channel title for RSS readers.
+            - Follow-up RSS help-link behavior committed as `26c77c1bb` (`Open RSS help link in new tab`): changed the browser-rendered RSS sidebar `What is RSS?` link to open in a new tab with safe `rel` attributes instead of navigating away from the feed page.
+        - Local Alerts subscription style parity:
+            - Follow-up style parity committed as `9938791ed` (`Align Local Alerts subscription styling`): normalized `/alert/list` to the same header-adjacent hero scale, typography, card treatment, and footer width used by the rest of the InfraSignal public pages.
+            - Replaced the oversized Local Alerts-specific hero treatment with the Reports-style gradient, 30px/700 title, 14px lead, 42rem content column, restrained white panels, and a white RSS panel.
+            - Contained the recent-report photo scroller and removed the alert-page `100vw` footer breakout so the subscription page no longer creates document-level horizontal overflow.
+        - Error page redesign:
+            - Follow-up error-page redesign committed as `ec953162f` (`Redesign InfraSignal error page`): added an InfraSignal-only `errors/generic.html` override and scoped `body.errorpage` styles so the `/alert/subscribe` CAPTCHA error uses the shared hero/header scale, sidebar/help links, action card, reference-code copy control, and neutral page surface instead of the old centered white error box.
+            - Kept the change reversible through one focused implementation commit; rollback with `git revert ec953162f`, rebuild InfraSignal CSS, and clear Template Toolkit caches.
+        - Public page header consistency:
+            - Follow-up header alignment committed as `03ead4fe4` (`Center public page headers`): centered the hero/header text and matched header sizing across Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
+            - Normalized public hero headers to the same blue gradient, 30px/700 title, 14px lead, 42rem text column, `calc(64px + 2.5rem)` top padding, and 3.5rem bottom padding.
+            - Removed the remaining Contact/Info page `100vw` hero/footer breakout and stacked the Local Alerts entry icon above its title so header text remains centered with no horizontal page overflow.
+            - RSS area feed follow-up committed as `4ca99bde8` (`Center RSS area feed header`): centered the standalone XSL RSS browser hero, title, lead, eyebrow, and buttons for `/rss/area/1025717` while keeping the feed XML output unchanged.
+        - Header navigation:
+            - Follow-up navigation cleanup committed as `38eed5835` (`Remove Home from InfraSignal navigation`): removed the visible `Home` item from the desktop header, mobile menu, and RSS browser header while keeping the InfraSignal logo linked to the homepage.
+            - Follow-up navigation/footer structure committed as `5b7535c8b` (`Update primary navigation and footer links`): changed the visible public header and RSS browser header to the requested `How It Works`, `View Reports`, `About Us`, `Contact Us`, language selector, `Start Reporting`, and `For Government` structure, and updated the standard/RSS footers to the requested footer link set and labels.
+        - Public sidebar consistency:
+            - Follow-up sidebar normalization committed as `ca9050eba` (`Normalize public sidebar navigation`): centralized the public secondary sidebar link set, applied the same `About`, `How It Works`, `For Local Government`, `FAQ`, `Privacy`, `Terms`, `Contact Us`, and `Local Alerts` labels across About, FAQ, Privacy, Terms, Contact, For Local Government, How It Works, Local Alerts, and fallback shared-sidebar pages, and added the missing sidebar to How It Works.
+            - Matched the For Local Government body surface/spacing and the For Local Government/How It Works main column width to the shared public-page layout.
+        - Background color consistency:
+            - Follow-up background pass committed as `48d64aae6` (`Unify public page background color`): added a shared InfraSignal page-surface token and applied it to Reports, Contact/Info, For Local Government, Local Alerts, alert subscription, alert suggestions, and the generated CSS output so these public pages match the RSS browser page surface.
+            - Preserved white cards, footer color, and the shared blue hero gradient while removing nearby gray mismatches (`#f3f4f6` and `#f9fafb`) from page wrappers.
+            - Follow-up How It Works hero pass committed as `92d46c63e` (`Align How It Works hero styling`): removed the dotted overlay, oversized title, larger lead text, extra top padding, and `100vw` breakout from `/how-it-works` so it matches the shared public-page hero/background system.
+        - Location labels:
+            - Follow-up label clarity committed as `9305a6056` (`Show state abbreviations in location labels`): compacted US location labels to city plus state abbreviation, such as `Buffalo Grove, IL`, across Local Alerts subscription pages, ambiguous-location suggestion cards, and RSS area feed titles.
+            - Kept ZIP-only alert searches unchanged while converting full geocoder labels like `Buffalo Grove, Lake County, Illinois` and MapIt/body labels like `Manchester, NH` into a consistent short display form.
+        - Styling:
+            - Added scoped `.page--gov` and RSS XSL styles and rebuilt `web/cobrands/infrasignal/base.css` from `web/cobrands/infrasignal/base.scss`.
+        - Verification:
+            - Rebuilt InfraSignal CSS and cleared Template Toolkit caches on DEV.
+            - Editor diagnostics passed for all touched templates, SCSS, generated CSS, and XSL.
+            - `git diff --check` passed before commit.
+            - Live DEV smoke checks returned HTTP 200 for `/`, `/about`, `/how-it-works`, `/about/for-local-government`, `/faq`, `/contact`, `/about/privacy`, `/about/terms`, `/alert`, `/alert/list?pc=buffalo+gr`, and `/reports`.
+            - `/rss/xsl` parsed as XML and served the new RSS layout markers; `/rss/l/42.154421,-87.958962` kept the `/rss/xsl` stylesheet link and returned 20 feed items.
+            - Browser scroll checks confirmed the RSS sidebar email card stays below the nav at top, mid-scroll, and deep-scroll with no horizontal overflow.
+            - Browser computed-style checks confirmed the RSS header/nav/hero/footer now match the normal Reports page values for colors, font sizes, weights, line heights, padding, border radii, and footer CTA sizing.
+            - Live DEV checks confirmed the Buffalo Grove `/alert/list` URL returned HTTP 200, rendered the expected location, and had no template error.
+            - Browser computed-style checks confirmed the Local Alerts subscription hero, lead, main column, cards, RSS panel, and footer match the shared page scale, with `scrollWidth` equal to `clientWidth` after the overflow fix.
+            - Browser computed-style checks confirmed the public hero/header pass returns centered text, matching gradient, matching padding, matching title/lead sizes, and zero horizontal overflow on Reports, Contact, About, FAQ, Privacy, Terms, For Local Government, Local Alerts, alert subscription, and alert-location suggestion pages.
+            - `/rss/xsl` still parsed as XML and `/rss/area/1025717` still returned an RSS feed with the stylesheet link; browser checks confirmed the RSS area hero is centered with a 30px/700 title, 14px lead, centered actions, and zero horizontal overflow.
+            - Live DEV checks confirmed the Buffalo Grove Local Alerts subscription page now renders `Buffalo Grove, IL`, the ambiguous Buffalo Grove suggestions include `Buffalo Grove, IL`, `/rss/area/1025717` now titles the feed with `Manchester, NH`, and ZIP-only labels such as `60089` remain unchanged.
+            - Browser computed-style checks confirmed Reports, About, Contact, For Local Government, Local Alerts entry, Local Alerts subscription, Local Alerts suggestions, and `/rss/area/1025717` all use `rgb(248, 249, 251)` for the public page surface and retain matching blue hero gradients with zero horizontal overflow.
+            - Browser computed-style checks confirmed `/how-it-works`, Reports, About, FAQ, Privacy, Terms, Contact, For Local Government, Local Alerts, alert subscription, alert suggestions, and `/rss/area/1025717` now share the same public hero title size/weight, lead size, hero gradient, page background, and no visible dot/glow overlays.
+            - Browser computed-style checks confirmed `/rss/l/42.154421,-87.958962` and `/rss/area/1025717` now share the same sticky-header overlap, 104px/56px hero spacing, 30px/700 title, 14px lead text, blue gradient, `rgb(248, 249, 251)` page background, hidden hero-only RSS controls, and zero horizontal overflow as the normal public pages.
+            - Browser computed-style checks confirmed `/rss/area/974962`, `/rss/area/1025717`, and `/rss/l/42.154421,-87.958962` now render one-line RSS browser hero titles/leads at the same 226px header height as How It Works, About, and Local Alerts.
+            - Live DEV checks confirmed `/rss/xsl` and `/rss/area/974962` still parse as XML and the browser-rendered RSS sidebar `What is RSS?` link now carries `target="_blank"` and `rel="noopener noreferrer"`.
+            - Live DEV `/alert/subscribe` POST checks confirmed missing-CAPTCHA Local Alerts submissions now render the new InfraSignal error page with HTTP 400, the old `confirmation-header` markup removed, a 226px hero, 30px/700 title, 14px lead, shared `rgb(248, 249, 251)` page background, and zero horizontal overflow.
+            - Browser checks confirmed `/about`, the Buffalo Grove `/alert/list` page, and `/rss/area/974962` no longer show `Home` in the header navigation, the logo still links home, the first visible nav item is `All reports`, and each tested page has zero horizontal overflow.
+            - Live DEV checks confirmed `/about`, the Buffalo Grove `/alert/list` page, `/rss/xsl`, and `/rss/area/974962` render the updated primary navigation and footer labels; browser checks confirmed the mobile header order and exact footer sequence `How It Works`, `View Reports`, `About Us`, `Contact Us`, `FAQ`, `Start Reporting`, `For Government`, `Privacy Policy`, and `Terms & Conditions` with zero horizontal overflow.
+            - Live DEV checks confirmed `/about`, `/how-it-works`, `/about/for-local-government`, `/alert`, the Buffalo Grove `/alert/list` page, and `/about/security` all render the same secondary/sidebar link order with no template errors; browser checks confirmed one sidebar source per tested page and zero horizontal overflow.
+        - GitHub:
+            - Implementation committed as `c020b7f0e` (`Add local government and RSS UI cleanup`) before documentation/tracker updates.
+            - Local Alerts subscription style parity committed as `9938791ed` (`Align Local Alerts subscription styling`) before documentation/tracker updates.
+            - Public page header alignment committed as `03ead4fe4` (`Center public page headers`) before documentation/tracker updates.
+                - RSS area feed header alignment committed as `4ca99bde8` (`Center RSS area feed header`) before documentation/tracker updates.
+                - Location-label state abbreviation follow-up committed as `9305a6056` (`Show state abbreviations in location labels`) before documentation/tracker updates.
+                - Public background color follow-up committed as `48d64aae6` (`Unify public page background color`) before documentation/tracker updates.
+                - How It Works hero styling follow-up committed as `92d46c63e` (`Align How It Works hero styling`) before documentation/tracker updates.
+                - RSS hero sizing follow-up committed as `171e12018` (`Match RSS hero sizing`) before documentation/tracker updates.
+                - Compact RSS browser hero text follow-up committed as `8f1b154cf` (`Shorten RSS browser hero text`) before documentation/tracker updates.
+                - RSS help-link new-tab follow-up committed as `26c77c1bb` (`Open RSS help link in new tab`) before documentation/tracker updates.
+                - Error page redesign follow-up committed as `ec953162f` (`Redesign InfraSignal error page`) before documentation/tracker updates.
+                - Header Home-link removal follow-up committed as `38eed5835` (`Remove Home from InfraSignal navigation`) before documentation/tracker updates.
+                - Primary navigation/footer label follow-up committed as `5b7535c8b` (`Update primary navigation and footer links`) before documentation/tracker updates.
+                - Public sidebar consistency follow-up committed as `ca9050eba` (`Normalize public sidebar navigation`) before documentation/tracker updates.
+
+    - InfraSignal - May 16, 2026 (UI cleanup batch 1):
+        - Structure and safety:
+            - Fixed the shared support sidebar markup by moving the `How It Works` item into the actual sidebar list.
+            - Removed duplicate shared-sidebar injection from English About, FAQ, Privacy, Terms, and Contact pages that already render their own inline support sidebar.
+            - Added InfraSignal-only hidden compatibility elements for the legacy `/js/front.js` mobile-nav listener so the custom header no longer triggers the null-reference homepage console error.
+        - Revert safety:
+            - Rollback checkpoint before starting: `a9612ab60` (`Add UI cleanup step plan`).
+            - Focused implementation commit: `06e123e8d` (`Clean support sidebars and header compatibility`).
+        - Verification:
+            - Cleared Template Toolkit caches on DEV.
+            - Editor diagnostics and `git diff --check` passed.
+            - Live DEV checks confirmed `/`, `/about`, `/faq`, `/contact`, `/about/privacy`, `/about/terms`, `/about/security`, and `/how-it-works` return HTTP 200.
+            - Live counts confirmed inline-sidebar pages no longer render the shared `sticky-sidebar`, while `/about/security` and `/how-it-works` still use the repaired shared sidebar.
+            - Browser snapshot of the homepage no longer reported the previous `/js/front.js` null-reference page error.
+
+    - InfraSignal - May 16, 2026 (Local Alerts subscription page):
+        - Public alert flow:
+            - Added an InfraSignal-specific `/alert/list` template for the location-specific Local Alerts subscription step.
+            - Adapted the supplied Local Alerts design to the existing FixMyStreet alert backend, preserving the `feed`, `distance`, `rznvy`, `alert`, and `rss` fields used by `POST /alert/subscribe`.
+            - Restyled the post-search alert choices with compact radio rows, per-option RSS buttons, a radius distance input, an email subscription panel, and a final RSS button.
+            - Kept the existing `/alert` search page working as the entry point and reused real nearby report photos when the controller provides them.
+        - Styling:
+            - Added scoped InfraSignal alert-list SCSS for the sidebar, title, photo strip, scope chooser, email subscription panel, RSS controls, and reduced-motion handling.
+            - Rebuilt `web/cobrands/infrasignal/base.css` and cleared Template Toolkit caches on DEV.
+        - Verification:
+            - `git diff --check` passed before the implementation commit.
+            - Editor diagnostics passed for the changed templates, SCSS, and generated CSS.
+            - Live DEV checks confirmed `/alert/list?pc=60089` returns HTTP 200 and renders the title, photo strip, scope radios, email panel, and RSS action.
+            - Live DEV checks confirmed `/alert` still returns HTTP 200 with the existing search page.
+            - Browser checks confirmed the email verification widget is contained inside the Subscribe by email panel; Cloudflare Turnstile still reports its existing dev-host connectivity error in the widget.
+        - Follow-up visual polish:
+            - Reworked the `/alert/list` hero into the supplied richer Local Alerts treatment with a dark grid background, location chip, and alert-area meta panel.
+            - Added category tags to the nearby report preview cards and kept real controller-provided photos when available.
+            - Converted the scope chooser into clickable cards with per-option RSS links, the radius input nested inside the selected radius card, and a small script that keeps card selection in sync with the radios.
+            - Placed the email subscription and RSS subscription actions into a responsive two-panel row while preserving the existing `/alert/subscribe` backend fields.
+            - Rebuilt `web/cobrands/infrasignal/base.css`, cleared Template Toolkit caches, and verified `/alert/list?pc=60089` plus `/alert` on DEV.
+            - Visual polish committed as `527564122` (`Polish Local Alerts subscription page`).
+        - Follow-up header cleanup:
+            - Removed the decorative square grid from the Local Alerts hero header.
+            - Updated the visible hero and scope text to prefer the submitted location/ZIP value while preserving existing alert form actions and button fields.
+            - Header cleanup committed as `58e29b4fb` (`Remove Local Alerts header grid`).
+        - Follow-up chosen-location display:
+            - Preserved the selected address when users choose from multiple location matches so `/alert/list` can display the chosen area instead of falling back to generic text.
+            - Updated the Local Alerts hero, alert-area meta text, page title, and radius label to use the selected address/ZIP or a named local area fallback.
+            - Verified ZIP, chosen-address, and coordinate-only routes on DEV while keeping `/alert/subscribe` form fields and buttons unchanged.
+            - Chosen-location display committed as `860fa37e4` (`Show chosen Local Alerts location`).
+        - Follow-up country trim:
+            - Trimmed country-level suffixes from Local Alerts chosen-location display labels and chooser links so addresses read as city, county, and state.
+            - Verified the chosen-address hero, alert-area badge, and radius label show `Buffalo Grove, Lake County, Illinois` while `/alert/subscribe` fields/buttons remain unchanged.
+            - Country trim committed as `1fe0ad2cb` (`Trim country from Local Alerts location`).
+        - Follow-up city-only display:
+            - Shortened the Local Alerts hero, alert-area badge, and radius label to display only the first chosen place name, such as `Buffalo Grove`.
+            - Verified ZIP display and `/alert/subscribe` form fields/buttons remain unchanged.
+            - City-only display committed as `bbc807bc6` (`Show city only for Local Alerts location`).
+        - Follow-up suggestions page redesign:
+            - Added an InfraSignal-specific ambiguous-location suggestions page for `/alert/list?pc=...` when geocoding returns multiple matches.
+            - Replaced the old plain list with the requested styled hero, try-again refine box, sidebar, and clickable match cards with icon, title, detail, meta text, and chevron.
+            - Preserved the existing choose flow: match cards still link to `/alert/list` with `pc`, `latitude`, and `longitude`; no new controller route or subscribe behavior was added.
+            - Rebuilt `web/cobrands/infrasignal/base.css`, cleared Template Toolkit caches, and verified `/alert/list?pc=buffalo+gr`, `/alert`, and `/alert/list?pc=60089` on DEV.
+            - Suggestions page redesign committed as `5e66e28ea` (`Redesign Local Alerts suggestion page`).
+        - GitHub:
+            - Implementation committed as `b59adf8a1` (`Update Local Alerts subscription page`) before documentation/tracker updates.
+
+    - InfraSignal - May 14, 2026 (Homepage hero pulse background):
+        - Homepage:
+            - Added a progressive-enhancement hero pulse background to the InfraSignal homepage.
+            - Added a small Template Toolkit component at `templates/web/infrasignal/front/hero-pulse.html` and included it only on `/` inside the existing homepage hero.
+            - Added local vanilla JavaScript at `web/cobrands/infrasignal/hero-pulse.js`; no CDN or external dependency was added.
+            - Marked the hero content with `data-hero-exclude` so pulses avoid the headline/search/CTA area.
+        - Styling:
+            - Added scoped `.hero-pulse` SCSS and rebuilt `web/cobrands/infrasignal/base.css`.
+            - Preserved reduced-motion behavior so pulse animations are disabled for users who prefer reduced motion.
+        - Verification:
+            - Rebuilt dev InfraSignal CSS and cleared Template Toolkit cache.
+            - Verified the dev homepage has the pulse root, local script, excluded content, and correct z-index layering.
+            - Timed browser sampling confirmed pulse nodes appear and remove themselves over time.
+            - Verified the local script asset returns HTTP 200 from the dev app.
+        - Follow-up cadence tuning:
+            - Reduced pulse spawn attempts from every 6-12 seconds to every 5-10 seconds so the background feels a little more active without increasing concurrent pulses.
+            - Cadence tuning committed as `bfb74810d` (`Tune homepage hero pulse cadence`).
+        - GitHub:
+            - Implementation committed as `135c56c35` (`Add homepage hero pulse background`) before documentation/tracker updates.
+
+    - InfraSignal - May 12, 2026 (How It Works page):
+        - Public page:
+            - Added `/how-it-works` as an InfraSignal public route, forwarding through the existing static/about page template lookup.
+            - Created a new InfraSignal How It Works page from the supplied Lovable content, adapted to the repo's Template Toolkit layout, route structure, and inline icon approach.
+            - Included the required four-step resident flow: Report, Locate, Route, and Track, plus after-submit details, resident and local-authority benefits, tracking links, example journey, FAQ, and final CTA.
+            - Added How It Works links to the desktop header, mobile menu, shared info sidebar, and visible info/contact page sidebars.
+        - Styling:
+            - Added responsive `.hiw` SCSS components for the hero, step cards, benefit panels, tracking cards, FAQ accordion, and CTA block.
+            - Rebuilt `web/cobrands/infrasignal/base.css` for the dev app.
+        - Verification:
+            - `git diff --check` passed before the implementation commit.
+            - `Static.pm` syntax check passed in the dev container.
+            - Rebuilt dev InfraSignal CSS and cleared Template Toolkit cache.
+            - Verified `http://REDACTED-IP:3001/how-it-works` returns HTTP 200 and renders the required heading and four-step content.
+        - GitHub:
+            - Implementation committed as `9c105e69a` (`Add How It Works page`) on DEV before documentation/tracker updates.
+        - Follow-up polish:
+            - Removed visible sidebar and ordered-list marker artifacts from the How It Works layout.
+            - Replaced the repeated first-section heading with "Report, route, and track in four simple steps".
+            - Tightened section spacing and kept the four-step cards in a roomier two-column layout at normal desktop widths.
+            - Added How It Works to the footer Company links and simplified the final CTA to two primary actions.
+            - Visual polish committed as `4c6cc5133` (`Polish How It Works page layout`).
+        - Follow-up section removal:
+            - Removed the How It Works page sidebar, hero CTA row, Example Journey card, and FAQ block after screenshot review.
+            - Removal committed as `b833b8b9b` (`Remove extra How It Works sections`).
+        - Follow-up label cleanup:
+            - Removed the repeated "How It Works" eyebrow labels from the hero and first content section.
+            - Cleanup committed as `1f1b1eba5` (`Remove repeated How It Works labels`).
+        - Follow-up button alignment:
+            - Aligned the Residents and Local Authorities card buttons to the same vertical level without changing the wording.
+            - Alignment committed as `6eb3e80f9` (`Align How It Works card buttons`).
+        - Follow-up button sizing:
+            - Matched the Residents and Local Authorities card button widths for a cleaner side-by-side presentation.
+            - Sizing committed as `f9d3760d2` (`Match How It Works card button widths`).
+        - Follow-up storyboard scenes:
+            - Added four inline animated storyboard scenes to the How It Works step cards so Report, Locate, Route, and Track each have a purpose-built visual sequence instead of a static icon-only treatment.
+            - Added local vanilla JavaScript at `web/cobrands/infrasignal/hiw-scenes.js` to restart scene animations every 5 seconds only while the cards are on screen, with reduced-motion support and no external dependency.
+            - Scoped the existing `.hiw` SVG icon styling so the new inline scene SVGs render with their intended fills, strokes, and labels.
+            - Storyboard scenes committed as `18a90ad81` (`Add animated How It Works scenes`).
+        - Follow-up scene-card polish:
+            - Removed the older blue icon tiles from the four How It Works step cards so the new storyboard scenes are the primary visual element.
+            - Changed each step header to a compact number badge beside the title, shortened the card descriptions, softened the scene panels, and kept the cards in a calmer two-column layout at desktop widths.
+            - Staggered the How It Works scene animation restarts so visible cards do not all restart at once.
+            - Scene-card polish committed as `41fcd06de` (`Polish How It Works scene cards`).
+        - Follow-up Locate scene cleanup:
+            - Removed the green checkmark badge above the orange Locate map pin so the scene focuses on the pin itself.
+            - Cleanup committed as `a037b4e98` (`Remove Locate scene checkmark`).
+        - Follow-up Report scene photo match:
+            - Updated the small captured-photo card in the Report scene to show a miniature fallen tree that matches the phone camera view after the tree falls.
+            - Photo match committed as `01d7b27bd` (`Match Report scene photo to fallen tree`).
+        - Follow-up Report tree artwork:
+            - Refined the Report scene tree into a fuller leafy tree with visible branches and matching captured-photo detail.
+            - Artwork refinement committed as `79a04eadf` (`Refine Report scene tree artwork`).
+
+    - InfraSignal - May 10, 2026 (Account dashboard and admin polish):
+        - Account experience:
+            - Added an InfraSignal-specific `/my` account dashboard with profile details, notification preferences, report history, update history, and civic-impact summary cards.
+            - Added a `/auth/change_name` profile route plus base and InfraSignal templates so users can add or update the display name shown on their account and reports.
+            - Added account dashboard SCSS for the Lovable-style profile layout, report filters, report list, actions, and responsive mobile behavior.
+        - Admin polish:
+            - Improved contrast for admin body-picker tables used by bodies, response priorities, site messages, and response templates.
+            - Added targeted admin select styling so role dropdowns remain readable in the InfraSignal admin theme.
+        - Documentation and GitHub:
+            - Updated project planning notes for the May 2026 dev UI work and pushed the account/admin changes to GitHub `origin/dev` as commit `a6d3a90f1`.
+            - Left the local backup file `templates/web/base/alert/index.html.bak` uncommitted.
+        - Verification:
+            - Rebuilt dev InfraSignal CSS and cleared Template Toolkit cache.
+            - Verified `Profile.pm` syntax with app/commonlib include paths.
+            - Verified editor diagnostics for the changed docs, templates, controller, and SCSS.
+            - `t/template.t` passed; `t/app/controller/my.t` is currently blocked by the existing test database missing `problem.osm_zone_*` columns from `db/schema_0094-priority-zones.sql`.
+
+    - InfraSignal - May 10, 2026 (Homepage hero refresh):
+        - Homepage:
+            - Added an InfraSignal-specific homepage intro override so the hero headline reads "Report issues. Improve your neighborhood with Infrasignal."
+            - Updated the hero subtext to "Residents report problems. Local authorities fix them. Track everything."
+            - Changed the address search placeholder to "Enter your address or zipcode" and the primary CTA to "Report an Issue".
+            - Adjusted the hero search pill, input padding, and small-screen fallback so the full zipcode placeholder remains visible beside the longer CTA.
+        - Verification:
+            - Rebuilt dev InfraSignal CSS, cleared Template Toolkit cache, and verified the live dev homepage hero at `http://REDACTED-IP:3001/`.
+        - Files added/modified:
+            - `templates/web/infrasignal/around/intro.html` (new homepage hero copy override)
+            - `templates/web/infrasignal/around/postcode_form.html` (placeholder and CTA copy)
+            - `web/cobrands/infrasignal/base.scss` (hero search field sizing)
+
+    - InfraSignal - May 7, 2026 (Lovable admin console and metrics correctness):
+        - Admin dashboard:
+            - Redesigned `/admin` summary into an InfraSignal/Lovable-style admin console with page header, permission-driven sidebar, KPI cards, weekly bar chart, category/status donuts, recent reports, search, and a bounded reports table.
+            - Preserved existing admin routes and forms: report search still submits to `/admin/reports`, user search still submits to `/admin/users`, and the reports waiting table still uses the existing `admin/problem_row.html` behavior.
+            - Moved the large reports-waiting list into an internal scroll area with sticky headers so admins can reach the rest of the page without scrolling through every report row.
+            - Reworked the admin search section to be responsive, full-width, and mobile-safe; removed the legacy `clearfix` class and suppressed clearfix pseudo-elements that were becoming unintended CSS grid items.
+        - Dashboard data:
+            - Added backend dashboard JSON in `Admin.pm` so visuals use explicit report data instead of scraping the rendered reports-waiting table.
+            - Changed "Reports this week" to real current-calendar last-seven-day created-report counts from `$c->cobrand->problems`.
+            - Changed category and status donuts to all-report backend totals, with labels updated to make the scope clear.
+            - Changed recent reports to show newest submissions by `created`/`id`, not the first rows from the awaiting-send queue.
+            - Changed the Access KPI from a static UI label to the real `admin_allow_user` permission result.
+        - Verification:
+            - Verified the dev database has zero reports created in the real May 1-May 7, 2026 window, and the live dev admin bar chart now displays seven zero-count days.
+            - Verified all-report category/status totals render from backend JSON: 582 reports total, with 440 Fixed and 142 Open.
+            - Rebuilt dev CSS, cleared Template Toolkit cache, restarted the dev FixMyStreet container, and confirmed the live `/admin` page has no horizontal overflow on the tested mobile viewport.
+            - Syntax/diagnostics checks passed for the Admin controller, dashboard JavaScript, admin template, and InfraSignal SCSS.
+
+    - InfraSignal - May 3, 2026 (Lovable auth redesign):
+        - Authentication:
+            - Redesigned `/auth`, `/auth/create`, `/auth/forgot`, and expired-password flows with a Lovable-style split card while preserving FixMyStreet auth field names and form actions.
+            - Added a blue interactive brand panel with cursor-responsive dot motion, checklist messaging, and GovCloud/SOC 2 security copy.
+            - Added functional password visibility toggles for sign-in and account-creation password fields.
+            - Restyled client-side validation so magic-link errors appear below the email input instead of overlapping the icon and field.
+            - Guarded legacy mobile-nav setup when custom InfraSignal header markup does not include the base FixMyStreet mobile menu elements.
+
+    - InfraSignal — May 3, 2026 (Logo assets and contrast):
+        - Branding:
+            - Documented the final image-based header logo path, using `logo_web.png` through the Template Toolkit `version()` helper for cache busting.
+            - Documented the high-resolution source logo (`images/logo.png`) and optimized header logo (`images/logo_web.png`), both with the `Signal` wordmark recolored to `#F1F5F9` for dark-header contrast.
+            - Documented responsive header logo sizing (190/235/275px by 45px) and the favicon/PWA icon asset locations.
+
+    - InfraSignal — April 12, 2026 (Version 2.5 — Info Pages Redesign):
+        - Page Layouts:
+            - Added hero banner + sidebar navigation to all info pages (About, FAQ,
+              Privacy, Terms). Sidebar highlights active page. Applied `body.infopage`
+              class and `.infra-container` / `.contact-layout` / `.contact-main` grid.
+            - About page: redesigned with Lovable reference card layout — feature cards,
+              stats section, 3-step "How It Works", benefits checklist with checkmarks,
+              dual CTA (contact form + email).
+            - FAQ page: converted to collapsible accordion using `<details>/<summary>`
+              elements grouped by topic sections (Getting Started, Reporting, Account,
+              Platform, Legal).
+            - Privacy page: converted to collapsible accordion matching FAQ style,
+              with intro card, 10 grouped sections, and "Questions about your privacy?" CTA.
+            - Terms page: converted to collapsible accordion matching FAQ/Privacy style,
+              18 sections grouped into 5 categories (Getting Started, Usage Rules,
+              Content & IP, Legal, General Provisions).
+        - CSS & Theming:
+            - Added `$gray-50`, `$gray-200`, `$gray-600` color variables to `_colours.scss`.
+            - Added `.info-page-card` component styles for info page content cards.
+            - Added FAQ accordion styles: `.faq-sections`, `.faq-accordion`, `.faq-item`,
+              `.faq-item__question`, `.faq-item__answer`, `.faq-cta`, `.faq-cta__btn`.
+            - About page component styles: `.about-features`, `.about-stats`,
+              `.about-steps`, `.about-benefits`, `.about-contact`.
+        - Bug Fixes:
+            - Fixed invisible white-on-blue button text on About, FAQ, and Privacy
+              contact CTA buttons — platform link color override required `!important`.
+            - Fixed duplicate checkmarks on About page benefits list — removed
+              `::before` pseudo-element that duplicated inline `<span>` checkmark.
+            - Changed search bar button label from "Go" to "Report" on production
+              (`around/postcode_form.html`).
+            - Added `header-nav.js` to `footer_extra_js.html` (was missing on production).
+        - Files added/modified:
+            - `templates/web/infrasignal/about/about-en-gb.html` (redesigned)
+            - `templates/web/infrasignal/about/faq-en-gb.html` (redesigned)
+            - `templates/web/infrasignal/about/privacy.html` (redesigned)
+            - `templates/web/infrasignal/about/terms.html` (redesigned)
+            - `templates/web/infrasignal/around/postcode_form.html` (button label fix)
+            - `templates/web/infrasignal/footer_extra_js.html` (added header-nav.js)
+            - `web/cobrands/infrasignal/_colours.scss` (new gray variables)
+            - `web/cobrands/infrasignal/base.scss` (info page + accordion styles)
+            - `web/cobrands/infrasignal/layout.scss` (layout adjustments)
+
+    - InfraSignal — March 26, 2026 (Version 2.4 — Viewer-Local Timestamps):
+        - Localization:
+            - Set server-side timezone to `America/Chicago` (`conf/general.yml TIME_ZONE`)
+              as fallback for non-JS clients. Previously UTC — reports showed wrong time.
+            - Added client-side timezone conversion (`localtime.js`): timestamps on report
+              detail and report list pages are converted to the viewer's browser timezone
+              using `Intl` API. Progressive enhancement — no-JS falls back to Chicago time.
+            - Cobrand-only change — zero modifications to core FixMyStreet files.
+        - Files added/modified:
+            - `web/cobrands/infrasignal/localtime.js` (new)
+            - `templates/web/infrasignal/report/_report_meta_info.html` (new)
+            - `templates/web/infrasignal/report/_item_small.html` (modified)
+            - `templates/web/infrasignal/footer_extra_js.html` (modified)
+            - `conf/general.yml` (TIME_ZONE: "America/Chicago")
+
     - InfraSignal — February 28, 2026 (Version 2.3 — Production Professionalization):
         - Infrastructure & Operations:
             - Created dedicated production Docker Compose file (`docker/docker-compose-prod.yml`)

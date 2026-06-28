@@ -1,0 +1,138 @@
+[% SET bodyclass = 'alertpage' %]
+[%
+  alert_area_fallback = '';
+  alert_area_fallback_type = '';
+  IF all_areas;
+    FOREACH area IN all_areas.values;
+      IF !alert_area_fallback OR (alert_area_fallback_type == 'O04' AND area.type != 'O04');
+        alert_area_fallback = area.name;
+        alert_area_fallback_type = area.type;
+      END;
+    END;
+  END;
+
+  alert_location_label = c.get_param('pc') || pc || pretty_pc || alert_area_fallback || loc('selected area');
+  alert_location_label = c.cobrand.compact_us_location_label(alert_location_label) || alert_location_label;
+
+  IF alert_location_label;
+    title = tprintf( loc("Local RSS feeds and email alerts for '%s'"), alert_location_label );
+  ELSE;
+    title = loc('Local RSS feeds and email alerts');
+  END;
+
+    recent_photos = [
+      { id => 1, tag => loc('Trees'),       title => loc('Fallen tree blocking road'), color_class => 'alerts-photo--green' },
+      { id => 2, tag => loc('School zone'), title => loc('Road damage near school'),   color_class => 'alerts-photo--amber' },
+      { id => 3, tag => loc('Pothole'),     title => loc('Pothole at intersection'),   color_class => 'alerts-photo--slate' },
+      { id => 4, tag => loc('Pothole'),     title => loc('Deep pothole on Main St'),   color_class => 'alerts-photo--stone' },
+      { id => 5, tag => loc('Road'),        title => loc('Crumbling road surface'),    color_class => 'alerts-photo--rust'  },
+    ];
+%]
+
+[% INCLUDE 'header.html', title = title %]
+
+<article class="alerts alerts--list">
+  <header class="alerts-hero alerts-hero--local">
+    <span class="alerts-hero__glow" aria-hidden="true"></span>
+    [% INCLUDE 'front/hero-pulse.html' %]
+    <div class="infra-container alerts-hero__inner" data-hero-exclude>
+      <div class="alerts-hero__text">
+        <span class="alerts-hero__eyebrow">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+          [% loc('Local alerts') %]
+        </span>
+        <h1 class="alerts-hero__title">
+          [% loc('RSS & email alerts for') %]
+          <span class="alerts-hero__chip">[% alert_location_label | html %]</span>
+        </h1>
+        <p class="alerts-hero__lead">
+          [% loc('Subscribe to a quiet, useful feed of new infrastructure reports near you by radius, county, or state.') %]
+        </p>
+      </div>
+      <div class="alerts-hero__meta">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+        <span>[% loc('Alert area') %]: <strong>[% alert_location_label | html %]</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <section class="alerts-body">
+    <div class="infra-container alerts-body__grid">
+      <aside class="alerts-sidebar" aria-label="[% loc('Help & Info') %]">
+        <nav class="alerts-sidebar__nav">
+          <p class="alerts-sidebar__title">[% loc('Help & Info') %]</p>
+          [% INCLUDE 'about/_public-sidebar-links.html'
+              public_sidebar_active = 'alerts'
+              public_sidebar_link_class = 'alerts-sidebar__link'
+              public_sidebar_active_class = 'is-active'
+          %]
+        </nav>
+      </aside>
+
+      <div class="alerts-main">
+        <section class="alerts-photos alerts-photos--strip">
+          <header class="alerts-photos__head">
+            <h2 class="alerts-photos__title">[% loc('Recent nearby reports') %]</h2>
+            <p class="alerts-photos__sub">[% loc('A preview of what your feed will look like.') %]</p>
+          </header>
+          <div class="alerts-photos__strip">
+            [% IF photos.size %]
+              [% FOREACH p IN photos %]
+                [% SET photo_tag = p.category || loc('Report') %]
+                <a href="/report/[% p.id %]" class="alerts-photo" style="background-image: url('[% p.photos.first.url_tn | html %]')">
+                  <span class="alerts-photo__tag">[% photo_tag | html %]</span>
+                  <span class="alerts-photo__caption">[% p.title | html %]</span>
+                </a>
+              [% END %]
+            [% ELSE %]
+              [% FOREACH p IN recent_photos %]
+                <a href="/report/[% p.id %]" class="alerts-photo [% p.color_class | html %]">
+                  <span class="alerts-photo__tag">[% p.tag | html %]</span>
+                  <span class="alerts-photo__caption">[% p.title | html %]</span>
+                </a>
+              [% END %]
+            [% END %]
+          </div>
+        </section>
+
+        <form class="validate js-alert-list alerts-list-form" method="post" action="/alert/subscribe">
+          [% INCLUDE 'alert/_list.html' %]
+        </form>
+      </div>
+    </div>
+  </section>
+</article>
+
+<script nonce="[% csp_nonce %]">
+(function () {
+  var cards = document.querySelectorAll('.alerts-scope__card');
+
+  function setSelected(card) {
+    for (var i = 0; i < cards.length; i++) {
+      cards[i].classList.remove('is-selected');
+    }
+    card.classList.add('is-selected');
+  }
+
+  for (var i = 0; i < cards.length; i++) {
+    (function (card) {
+      var input = card.querySelector('input[type="radio"]');
+      if (!input) { return; }
+
+      if (input.checked) { card.classList.add('is-selected'); }
+
+      card.addEventListener('click', function (event) {
+        if (event.target.closest('a')) { return; }
+        input.checked = true;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+
+      input.addEventListener('change', function () {
+        if (input.checked) { setSelected(card); }
+      });
+    }(cards[i]));
+  }
+}());
+</script>
+
+[% INCLUDE 'footer.html' pagefooter = 'yes' %]

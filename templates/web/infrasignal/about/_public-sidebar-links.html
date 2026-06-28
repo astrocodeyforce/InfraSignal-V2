@@ -1,0 +1,23 @@
+[%~
+  DEFAULT public_sidebar_active = '';
+  DEFAULT public_sidebar_link_class = 'contact-sidebar__link';
+  DEFAULT public_sidebar_active_class = 'contact-sidebar__link--active';
+  DEFAULT public_sidebar_list_items = 0;
+
+  public_sidebar_items = [
+    { key => 'about',      url => '/about',                       label => loc('About') },
+    { key => 'how',        url => '/how-it-works',                label => loc('How It Works') },
+    { key => 'government', url => '/about/for-local-government',  label => loc('For Local Government') },
+    { key => 'faq',        url => '/faq',                         label => loc('FAQ') },
+    { key => 'privacy',    url => c.cobrand.privacy_policy_url,   label => loc('Privacy') },
+    { key => 'terms',      url => '/about/terms',                 label => loc('Terms') },
+    { key => 'contact',    url => '/contact',                     label => loc('Contact Us') },
+    { key => 'alerts',     url => '/alert',                       label => loc('Local Alerts') },
+  ];
+-%]
+[% FOREACH item IN public_sidebar_items -%]
+  [% SET is_active = public_sidebar_active == item.key -%]
+  [% IF public_sidebar_list_items %]<li>[% END -%]
+  <a href="[% item.url | html %]" class="[% public_sidebar_link_class %][% IF is_active %] [% public_sidebar_active_class %][% END %]">[% item.label %]</a>
+  [%- IF public_sidebar_list_items %]</li>[% END %]
+[% END -%]

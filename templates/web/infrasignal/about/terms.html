@@ -1,261 +1,279 @@
 [% INCLUDE 'header.html',
     title = loc('Terms of Use'),
-    sidebar = 'about/_sidebar.html'
+    bodyclass = 'infopage'
 %]
 
-<h1>Terms of Use</h1>
+[% INCLUDE 'about/_public-page-hero.html'
+  public_page_title = loc('Terms of Use')
+    public_page_subtitle = loc('Please read these terms carefully before using InfraSignal.')
+%]
 
-<p><strong>Effective Date: February 15, 2026</strong><br>
-<strong>Last Revised: February 28, 2026</strong></p>
+[%# ===== Two-column layout ===== %]
+<section class="contact-body">
+  <div class="infra-container">
+    <div class="contact-layout">
 
-<h2>1. Description of Service</h2>
+      [%# Sidebar Navigation %]
+      <aside class="contact-sidebar">
+        <nav class="contact-sidebar__nav">
+          <ul class="contact-sidebar__list">
+            [% INCLUDE 'about/_public-sidebar-links.html'
+                public_sidebar_active = 'terms'
+                public_sidebar_link_class = 'contact-sidebar__link'
+                public_sidebar_active_class = 'contact-sidebar__link--active'
+                public_sidebar_list_items = 1
+            %]
+          </ul>
+        </nav>
+      </aside>
 
-<p>InfraSignal is a civic infrastructure reporting platform that enables
-residents of the United States to report problems such as potholes, broken
-streetlights, drainage issues, and other infrastructure concerns to the
-responsible local government authority. Reports are delivered to cities,
-counties, boroughs, and state agencies across all 50 states and the District of
-Columbia.</p>
+      [%# Main Content %]
+      <div class="contact-main">
 
-<p>The Service allows you to:</p>
-<ul>
-    <li>Submit geo-located reports of infrastructure problems with
-    descriptions and photos</li>
-    <li>Track the status of your reports</li>
-    <li>View reports submitted by other users in your area</li>
-    <li>Subscribe to alerts about problems in a specific geographic area</li>
-</ul>
+        [%# Effective date intro %]
+        <div class="info-page-card" style="margin-bottom: 1.5rem">
+          <p style="margin-bottom: 0.5rem"><strong>[% loc('Effective Date:') %] February 15, 2026</strong><br>
+          <strong>[% loc('Last Revised:') %] February 28, 2026</strong></p>
+        </div>
 
-<h2>2. Eligibility</h2>
+        [%# Accordion sections %]
+        <div class="faq-sections">
 
-<p>You must be at least 13 years of age to use the Service. By using the
-Service, you represent that you are at least 13 years old and have the legal
-capacity to enter into these Terms. If you are under 18, you represent that
-your parent or legal guardian has reviewed and agrees to these Terms on your
-behalf.</p>
+          [%# 1. Description of Service %]
+          <div>
+            <h2 class="faq-section__title">[% loc('Getting Started') %]</h2>
+            <div class="faq-accordion">
 
-<h2>3. Account Registration</h2>
+              <details class="faq-item" open>
+                <summary class="faq-item__question">[% loc('1. Description of Service') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('InfraSignal is a civic infrastructure reporting platform that enables residents of the United States to report problems such as potholes, broken streetlights, drainage issues, and other infrastructure concerns to the responsible local government authority. Reports are delivered to cities, counties, boroughs, and state agencies across all 50 states and the District of Columbia.') %]</p>
+                  <p>[% loc('The Service allows you to:') %]</p>
+                  <ul>
+                    <li>[% loc('Submit geo-located reports of infrastructure problems with descriptions and photos') %]</li>
+                    <li>[% loc('Track the status of your reports') %]</li>
+                    <li>[% loc('View reports submitted by other users in your area') %]</li>
+                    <li>[% loc('Subscribe to alerts about problems in a specific geographic area') %]</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>You may submit reports without creating an account by providing your name
-and email address with each submission. Optionally, you may create an account
-to manage your reports and preferences. If you create an account, you are
-responsible for:</p>
-<ul>
-    <li>Providing accurate, current, and complete information</li>
-    <li>Maintaining the security and confidentiality of your login
-    credentials</li>
-    <li>All activity occurring under your account</li>
-    <li>Notifying us promptly of any unauthorized use of your account</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('2. Eligibility') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('You must be at least 13 years of age to use the Service. By using the Service, you represent that you are at least 13 years old and have the legal capacity to enter into these Terms. If you are under 18, you represent that your parent or legal guardian has reviewed and agrees to these Terms on your behalf.') %]</p>
+                </div>
+              </details>
 
-<h2>4. Acceptable Use</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('3. Account Registration') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('You may submit reports without creating an account by providing your name and email address with each submission. Optionally, you may create an account to manage your reports and preferences. If you create an account, you are responsible for:') %]</p>
+                  <ul>
+                    <li>[% loc('Providing accurate, current, and complete information') %]</li>
+                    <li>[% loc('Maintaining the security and confidentiality of your login credentials') %]</li>
+                    <li>[% loc('All activity occurring under your account') %]</li>
+                    <li>[% loc('Notifying us promptly of any unauthorized use of your account') %]</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>You agree to use the Service only for its intended purpose&mdash;reporting
-legitimate infrastructure problems to local government authorities. You
-agree that you will <strong>not</strong>:</p>
+            </div>
+          </div>
 
-<ul>
-    <li>Submit false, misleading, or fraudulent reports</li>
-    <li>Upload photos or content that is obscene, pornographic, sexually
-    explicit, violent, threatening, hateful, defamatory, or otherwise
-    objectionable</li>
-    <li>Upload images depicting nudity, weapons, drugs, alcohol, self-harm,
-    or graphic violence</li>
-    <li>Use the Service to harass, stalk, or intimidate any individual,
-    including government employees</li>
-    <li>Submit reports containing personal information about third parties
-    (such as license plate numbers, faces, or home addresses) without their
-    consent</li>
-    <li>Submit spam, duplicate, or bulk reports for purposes unrelated to
-    infrastructure issues</li>
-    <li>Attempt to gain unauthorized access to the Service, other accounts,
-    servers, or databases</li>
-    <li>Use automated scripts, bots, or scraping tools to access the Service
-    without our prior written consent</li>
-    <li>Interfere with or disrupt the operation of the Service</li>
-    <li>Reverse engineer, decompile, or disassemble the Service, except as
-    permitted by the applicable open-source license</li>
-    <li>Use the Service to violate any applicable local, state, or federal
-    law</li>
-</ul>
+          [%# Usage Rules %]
+          <div>
+            <h2 class="faq-section__title">[% loc('Usage Rules') %]</h2>
+            <div class="faq-accordion">
 
-<h2>5. Content Moderation</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('4. Acceptable Use') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('You agree to use the Service only for its intended purpose&mdash;reporting legitimate infrastructure problems to local government authorities. You agree that you will <strong>not</strong>:') %]</p>
+                  <ul>
+                    <li>[% loc('Submit false, misleading, or fraudulent reports') %]</li>
+                    <li>[% loc('Upload photos or content that is obscene, pornographic, sexually explicit, violent, threatening, hateful, defamatory, or otherwise objectionable') %]</li>
+                    <li>[% loc('Upload images depicting nudity, weapons, drugs, alcohol, self-harm, or graphic violence') %]</li>
+                    <li>[% loc('Use the Service to harass, stalk, or intimidate any individual, including government employees') %]</li>
+                    <li>[% loc('Submit reports containing personal information about third parties without their consent') %]</li>
+                    <li>[% loc('Submit spam, duplicate, or bulk reports for purposes unrelated to infrastructure issues') %]</li>
+                    <li>[% loc('Attempt to gain unauthorized access to the Service, other accounts, servers, or databases') %]</li>
+                    <li>[% loc('Use automated scripts, bots, or scraping tools without our prior written consent') %]</li>
+                    <li>[% loc('Interfere with or disrupt the operation of the Service') %]</li>
+                    <li>[% loc('Reverse engineer, decompile, or disassemble the Service, except as permitted by the applicable open-source license') %]</li>
+                    <li>[% loc('Use the Service to violate any applicable local, state, or federal law') %]</li>
+                  </ul>
+                </div>
+              </details>
 
-<p>All photos uploaded to InfraSignal are subject to automated content
-moderation. Our moderation system analyzes images for prohibited content,
-including but not limited to nudity, weapons, violence, drugs, and other
-inappropriate material. Photos that violate our content guidelines may be
-automatically rejected.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('5. Content Moderation') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('All photos uploaded to InfraSignal are subject to automated content moderation. Our moderation system analyzes images for prohibited content, including but not limited to nudity, weapons, violence, drugs, and other inappropriate material. Photos that violate our content guidelines may be automatically rejected.') %]</p>
+                  <p>[% loc('We also reserve the right to review, edit, or remove any report content (including text and photos) at our sole discretion if it violates these Terms, is inappropriate, or is unrelated to legitimate infrastructure reporting.') %]</p>
+                </div>
+              </details>
 
-<p>We also reserve the right to review, edit, or remove any report content
-(including text and photos) at our sole discretion if it violates these Terms,
-is inappropriate, or is unrelated to legitimate infrastructure reporting.</p>
+            </div>
+          </div>
 
-<h2>6. User-Generated Content</h2>
+          [%# Content & IP %]
+          <div>
+            <h2 class="faq-section__title">[% loc('Content &amp; Intellectual Property') %]</h2>
+            <div class="faq-accordion">
 
-<h3>6.1 Your Content</h3>
-<p>You retain ownership of the text descriptions and photos you submit
-(&ldquo;User Content&rdquo;). By submitting User Content, you grant
-InfraSignal a non-exclusive, royalty-free, worldwide, perpetual,
-irrevocable, transferable, and sub-licensable license to use, host,
-store, display, reproduce, modify, create derivative works from,
-distribute, and transmit your User Content for any purpose, including
-but not limited to operating and improving the Service, sharing reports
-with local government authorities, displaying them publicly on the
-platform, conducting research and analytics, training models and
-algorithms, developing new products and features, and for promotional
-and commercial purposes.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('6. User-Generated Content') %]</summary>
+                <div class="faq-item__answer">
+                  <p><strong>[% loc('6.1 Your Content') %]</strong><br>
+                  [% loc('You retain ownership of the text descriptions and photos you submit (&ldquo;User Content&rdquo;). By submitting User Content, you grant InfraSignal a non-exclusive, royalty-free, worldwide license to host, store, publicly display, reproduce, and transmit your User Content as needed to operate the Service &mdash; including delivering your report to the responsible local government authority, displaying it publicly on the platform, and producing aggregated or de-identified civic statistics.') %]</p>
+                  <p>[% loc('You understand that User Content may be used in an aggregated or de-identified form that does not personally identify you.') %]</p>
+                  <p><strong>[% loc('6.2 Representations') %]</strong><br>
+                  [% loc('By submitting User Content, you represent and warrant that:') %]</p>
+                  <ul>
+                    <li>[% loc('You own or have the necessary rights to submit the content') %]</li>
+                    <li>[% loc('The content does not infringe any third-party intellectual property, privacy, publicity, or other rights') %]</li>
+                    <li>[% loc('The content is truthful and not misleading') %]</li>
+                    <li>[% loc('The content complies with all applicable laws and these Terms') %]</li>
+                  </ul>
+                  <p><strong>[% loc('6.3 No Obligation') %]</strong><br>
+                  [% loc('We are under no obligation to publish, forward, or retain any User Content. We may remove or decline to publish content that violates these Terms.') %]</p>
+                </div>
+              </details>
 
-<p>You understand that User Content may be used in an aggregated or
-de-identified form that does not personally identify you.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('7. Intellectual Property') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('The InfraSignal name, logo, and brand elements are proprietary to InfraSignal and may not be used without our prior written consent. InfraSignal is a modified version of FixMyStreet, open-source software developed by mySociety, and is distributed under the GNU Affero General Public License, version 3 (AGPL v3).') %]</p>
+                </div>
+              </details>
 
-<h3>6.2 Representations</h3>
-<p>By submitting User Content, you represent and warrant that:</p>
-<ul>
-    <li>You own or have the necessary rights to submit the content</li>
-    <li>The content does not infringe any third-party intellectual property,
-    privacy, publicity, or other rights</li>
-    <li>The content is truthful and not misleading</li>
-    <li>The content complies with all applicable laws and these Terms</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('8. Third-Party Services and Links') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('The Service uses third-party services for mapping, geographic boundary lookups, image moderation, and email delivery. Your use of these third-party services is subject to their respective terms and privacy policies. We are not responsible for the practices of third-party providers.') %]</p>
+                  <p>[% loc('The Service may contain links to third-party websites. We do not endorse or assume responsibility for the content or practices of linked websites.') %]</p>
+                </div>
+              </details>
 
-<h3>6.3 No Obligation</h3>
-<p>We are under no obligation to publish, forward, or retain any User
-Content. We may remove or decline to publish content that violates these
-Terms.</p>
+            </div>
+          </div>
 
-<h2>7. Intellectual Property</h2>
+          [%# Legal %]
+          <div>
+            <h2 class="faq-section__title">[% loc('Legal') %]</h2>
+            <div class="faq-accordion">
 
-<p>The InfraSignal name, logo, and brand elements are proprietary to
-InfraSignal and may not be used without our prior written consent.
-Certain components of the Service are licensed under the GNU Affero
-General Public License (AGPL v3).</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('9. Disclaimers') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS AVAILABLE&rdquo; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, NON-INFRINGEMENT, OR AVAILABILITY.') %]</p>
+                  <p>[% loc('Without limiting the foregoing, we make no warranties or representations that:') %]</p>
+                  <ul>
+                    <li>[% loc('The Service will be uninterrupted, timely, secure, or error-free') %]</li>
+                    <li>[% loc('Reports submitted through the Service will be received, acknowledged, or acted upon by any local government authority') %]</li>
+                    <li>[% loc('Any infrastructure problem reported through the Service will be resolved') %]</li>
+                    <li>[% loc('The information, content, or categories available on the Service will be accurate or complete') %]</li>
+                  </ul>
+                  <p>[% loc('InfraSignal is a communication platform. <strong>We are not a government agency and do not perform infrastructure repairs.</strong> Submission of a report through InfraSignal does not constitute an official government filing. For emergencies, always call 911 or your local emergency services.') %]</p>
+                </div>
+              </details>
 
-<h2>8. Third-Party Services and Links</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('10. Limitation of Liability') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL INFRASIGNAL, ITS OPERATOR, CONTRIBUTORS, OR AFFILIATES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION WITH:') %]</p>
+                  <ul>
+                    <li>[% loc('Your use of or inability to use the Service') %]</li>
+                    <li>[% loc('Any failure of a local government authority to respond to or resolve a reported problem') %]</li>
+                    <li>[% loc('Unauthorized access to or alteration of your data') %]</li>
+                    <li>[% loc('Any third-party conduct on the Service') %]</li>
+                    <li>[% loc('Any other matter relating to the Service') %]</li>
+                  </ul>
+                  <p>[% loc('OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS RELATED TO THE SERVICE SHALL NOT EXCEED ONE HUNDRED DOLLARS ($100.00).') %]</p>
+                </div>
+              </details>
 
-<p>The Service uses third-party services for mapping, geographic boundary
-lookups, image moderation, and email delivery. Your use of these
-third-party services is subject to their respective terms and privacy
-policies. We are not responsible for the practices of third-party
-providers.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('11. Indemnification') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('You agree to indemnify and hold harmless InfraSignal, its operator, contributors, and affiliates from and against any claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys&rsquo; fees) arising from or related to your use of the Service, your User Content, or your violation of these Terms.') %]</p>
+                </div>
+              </details>
 
-<p>The Service may contain links to third-party websites. We do not endorse
-or assume responsibility for the content or practices of linked websites.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('12. Account Suspension and Termination') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('We may suspend or terminate your access to the Service at any time, with or without notice, if we reasonably believe you have violated these Terms or engaged in conduct that is harmful to the Service, other users, or third parties. Upon termination, your right to use the Service ceases immediately. Sections 6, 9, 10, 11, and 14 survive termination.') %]</p>
+                </div>
+              </details>
 
-<h2>9. Disclaimers</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('13. Digital Millennium Copyright Act (DMCA)') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% tprintf(loc('If you believe that content on the Service infringes your copyright, please send a notice to our designated agent at %s with the following information:'), '<a href="mailto:' _ c.cobrand.contact_email _ '">' _ c.cobrand.contact_email _ '</a>') %]</p>
+                  <ol>
+                    <li>[% loc('Identification of the copyrighted work you claim has been infringed') %]</li>
+                    <li>[% loc('Identification of the material on the Service that you claim is infringing, with sufficient detail for us to locate it') %]</li>
+                    <li>[% loc('Your contact information (name, address, telephone, email)') %]</li>
+                    <li>[% loc('A statement that you have a good faith belief the use is not authorized by the copyright owner, its agent, or the law') %]</li>
+                    <li>[% loc('A statement, under penalty of perjury, that the information in the notice is accurate and you are authorized to act on behalf of the copyright owner') %]</li>
+                    <li>[% loc('Your physical or electronic signature') %]</li>
+                  </ol>
+                </div>
+              </details>
 
-<p>THE SERVICE IS PROVIDED &ldquo;AS IS&rdquo; AND &ldquo;AS
-AVAILABLE&rdquo; WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE, NON-INFRINGEMENT, OR AVAILABILITY.</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('14. Governing Law and Dispute Resolution') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('InfraSignal is an independent, open-source civic project operated by its creator, not an incorporated company. These Terms are governed by and construed in accordance with the laws of the United States and the state in which the operator resides, without regard to conflict of law principles. Any legal action or proceeding arising from these Terms shall be brought in the state or federal courts of that state, and you consent to the personal jurisdiction of such courts.') %]</p>
+                </div>
+              </details>
 
-<p>Without limiting the foregoing, we make no warranties or representations
-that:</p>
-<ul>
-    <li>The Service will be uninterrupted, timely, secure, or error-free</li>
-    <li>Reports submitted through the Service will be received, acknowledged,
-    or acted upon by any local government authority</li>
-    <li>Any infrastructure problem reported through the Service will be
-    resolved</li>
-    <li>The information, content, or categories available on the Service will
-    be accurate or complete</li>
-</ul>
+            </div>
+          </div>
 
-<p>InfraSignal is a communication platform. <strong>We are not a government
-agency and do not perform infrastructure repairs.</strong> Submission of a
-report through InfraSignal does not constitute an official government filing.
-For emergencies, always call 911 or your local emergency services.</p>
+          [%# General Provisions %]
+          <div>
+            <h2 class="faq-section__title">[% loc('General Provisions') %]</h2>
+            <div class="faq-accordion">
 
-<h2>10. Limitation of Liability</h2>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('15. Modifications to Terms') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('We reserve the right to modify these Terms at any time. If we make material changes, we will update the &ldquo;Last Revised&rdquo; date at the top of this page. Your continued use of the Service after changes are posted constitutes your acceptance of the updated Terms.') %]</p>
+                </div>
+              </details>
 
-<p>TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL
-INFRASIGNAL OR ITS DIRECTORS, OFFICERS, EMPLOYEES, AGENTS,
-OR AFFILIATES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL,
-CONSEQUENTIAL, OR PUNITIVE DAMAGES, OR ANY LOSS OF PROFITS, DATA, USE,
-GOODWILL, OR OTHER INTANGIBLE LOSSES, ARISING OUT OF OR IN CONNECTION
-WITH:</p>
-<ul>
-    <li>Your use of or inability to use the Service</li>
-    <li>Any failure of a local government authority to respond to or resolve
-    a reported problem</li>
-    <li>Unauthorized access to or alteration of your data</li>
-    <li>Any third-party conduct on the Service</li>
-    <li>Any other matter relating to the Service</li>
-</ul>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('16. Severability') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('If any provision of these Terms is held to be invalid, illegal, or unenforceable, the remaining provisions shall continue in full force and effect.') %]</p>
+                </div>
+              </details>
 
-<p>OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS RELATED TO THE SERVICE
-SHALL NOT EXCEED ONE HUNDRED DOLLARS ($100.00).</p>
+              <details class="faq-item">
+                <summary class="faq-item__question">[% loc('17. Entire Agreement') %]</summary>
+                <div class="faq-item__answer">
+                  <p>[% loc('These Terms, together with the <a href="/about/privacy">Privacy Policy</a>, constitute the entire agreement between you and InfraSignal regarding your use of the Service and supersede all prior agreements and understandings.') %]</p>
+                </div>
+              </details>
 
-<h2>11. Indemnification</h2>
+            </div>
+          </div>
 
-<p>You agree to indemnify and hold harmless InfraSignal and
-its officers, directors, employees, agents, and affiliates from and against
-any claims, liabilities, damages, losses, costs, and expenses (including
-reasonable attorneys&rsquo; fees) arising from or related to your use of the
-Service, your User Content, or your violation of these Terms.</p>
+        </div>[%# .faq-sections %]
 
-<h2>12. Account Suspension and Termination</h2>
+        [%# Contact CTA %]
+        <div class="faq-cta">
+          <h3>[% loc('Questions about these terms?') %]</h3>
+          <p>[% loc('If you have questions or concerns, reach out to us.') %]</p>
+          <a href="/contact" class="faq-cta__btn">[% loc('Contact Us') %] →</a>
+        </div>
 
-<p>We may suspend or terminate your access to the Service at any time, with
-or without notice, if we reasonably believe you have violated these Terms or
-engaged in conduct that is harmful to the Service, other users, or third
-parties. Upon termination, your right to use the Service ceases immediately.
-Sections 6, 9, 10, 11, and 14 survive termination.</p>
-
-<h2>13. Digital Millennium Copyright Act (DMCA)</h2>
-
-<p>If you believe that content on the Service infringes your copyright, please
-send a notice to our designated agent at
-<a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a>
-with the following information:</p>
-<ol>
-    <li>Identification of the copyrighted work you claim has been
-    infringed</li>
-    <li>Identification of the material on the Service that you claim is
-    infringing, with sufficient detail for us to locate it</li>
-    <li>Your contact information (name, address, telephone, email)</li>
-    <li>A statement that you have a good faith belief the use is not
-    authorized by the copyright owner, its agent, or the law</li>
-    <li>A statement, under penalty of perjury, that the information in the
-    notice is accurate and you are authorized to act on behalf of the
-    copyright owner</li>
-    <li>Your physical or electronic signature</li>
-</ol>
-
-<h2>14. Governing Law and Dispute Resolution</h2>
-
-<p>These Terms are governed by and construed in accordance with the laws of
-the United States and the State of Delaware, without regard to conflict of
-law principles. Any legal action or proceeding arising from these Terms shall
-be brought exclusively in the state or federal courts located in the State of
-Delaware, and you consent to the personal jurisdiction of such courts.</p>
-
-<h2>15. Modifications to Terms</h2>
-
-<p>We reserve the right to modify these Terms at any time. If we make
-material changes, we will update the &ldquo;Last Revised&rdquo; date at the
-top of this page. Your continued use of the Service after changes are posted
-constitutes your acceptance of the updated Terms. We encourage you to review
-this page periodically.</p>
-
-<h2>16. Severability</h2>
-
-<p>If any provision of these Terms is held to be invalid, illegal, or
-unenforceable, the remaining provisions shall continue in full force and
-effect.</p>
-
-<h2>17. Entire Agreement</h2>
-
-<p>These Terms, together with the <a href="/about/privacy">Privacy Policy</a>,
-constitute the entire agreement between you and InfraSignal regarding your
-use of the Service and supersede all prior agreements and understandings.</p>
-
-<h2>18. Contact Us</h2>
-
-<p>If you have questions about these Terms, please contact us:</p>
-<ul>
-    <li>Email: <a href="mailto:[% c.cobrand.contact_email %]">[% c.cobrand.contact_email %]</a></li>
-    <li>Web: <a href="/contact">Contact Form</a></li>
-</ul>
+      </div>[%# .contact-main %]
+    </div>[%# .contact-layout %]
+  </div>[%# .infra-container %]
+</section>
 
 [% INCLUDE 'footer.html' pagefooter = 'yes' %]

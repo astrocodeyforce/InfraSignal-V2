@@ -1,0 +1,60 @@
+[%
+SET bclass = 'authpage';
+SET title = loc('Close your account');
+INCLUDE 'header.html', title = title bodyclass = bclass
+%]
+
+[% IF email_sent %]
+
+  <div class="confirmation-header">
+    <h1>[% loc('Check your email') %]</h1>
+    <p>
+      [% user_email = c.user.email | html;
+         tprintf(loc('We&rsquo;ve sent a confirmation link to %s. Your account will only be closed after you click that link.'), user_email) %]
+    </p>
+    <p>[% loc('If you didn&rsquo;t mean to do this, simply ignore the email and nothing will change.') %]</p>
+    <p><a href="/my">[% loc('Back to your account') %]</a></p>
+  </div>
+
+[% ELSE %]
+
+<h1>[% title %]</h1>
+
+<div class="box-warning">
+  <p>[% loc('Closing your account will permanently remove your personal information &mdash; your name, email address, phone number, password and any linked sign-in accounts.') %]</p>
+  <p>[% loc('Your existing reports and updates will remain visible as a public record of civic issues, but they will no longer show your name and will not be linked to you.') %]</p>
+  <p><strong>[% tprintf(loc('You&rsquo;ll have %d days to change your mind &mdash; just sign back in and choose &ldquo;Keep my account&rdquo;. After that, this cannot be undone.'), grace_days) %]</strong></p>
+</div>
+
+[% IF close_error == 'superuser' %]
+  <div class="form-error">[% loc('Administrator accounts cannot be closed here. Please ask another administrator to remove your account from the admin area.') %]</div>
+[% ELSIF close_error == 'phrase' %]
+  <div class="form-error">[% tprintf(loc('Please type %s exactly to confirm.'), confirm_phrase) %]</div>
+[% ELSIF close_error == 'password' %]
+  <div class="form-error">[% loc('Your password was incorrect. Please try again.') %]</div>
+[% END %]
+
+<form action="[% c.uri_for_action('/auth/profile/close_account') %]" method="post" name="close_account" class="fieldset">
+    <input type="hidden" name="token" value="[% csrf_token %]">
+
+    [% IF has_password %]
+    <div class="form-field">
+        <label for="current_password">[% loc('Confirm your password:') %]</label>
+        <input id="current_password" class="form-control" type="password" name="current_password" autocomplete="current-password">
+    </div>
+    [% END %]
+
+    <div class="form-field">
+        <label for="confirm_phrase">[% tprintf(loc('Type %s to confirm:'), confirm_phrase) %]</label>
+        <input id="confirm_phrase" class="form-control" type="text" name="confirm_phrase" autocomplete="off" autocapitalize="characters">
+    </div>
+
+    <div class="final-submit">
+        <input type="submit" class="btn btn--danger" value="[% loc('Close my account') %]">
+        <a class="btn" href="/my">[% loc('Cancel') %]</a>
+    </div>
+</form>
+
+[% END %]
+
+[% INCLUDE 'footer.html' %]

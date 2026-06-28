@@ -6,6 +6,14 @@ use namespace::autoclean;
 after set_authenticated => sub {
     my $c = shift;
     $c->change_session_id;
+
+    # Stamp the login moment so Root::auto can enforce idle + absolute session
+    # timeouts on authenticated users (see check_session_timeout). set_authenticated
+    # only fires on a real login (not on session restore), so this marks the true
+    # start of the session for the absolute-lifetime cap.
+    my $now = time();
+    $c->session->{auth_login_time}  = $now;
+    $c->session->{auth_last_active} = $now;
 };
 
 # The below is necessary otherwise the rotation fails due to the delegate

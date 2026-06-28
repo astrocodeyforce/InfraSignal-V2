@@ -1,0 +1,36 @@
+[% IF location_error %]
+    [% INCLUDE 'around/location_error.html' %]
+[% END %]
+
+[% IF possible_location_matches %]
+    <div class="is-geo-matches">
+        <h2 class="is-geo-matches__title">[% loc('We found more than one match for that location.') %]</h2>
+        <p class="is-geo-matches__hint">[% loc('Pick the closest match below to view its reports, or try a different search.') %]</p>
+        <ul class="is-geo-matches__list pc_alternatives">
+            [% FOREACH match IN possible_location_matches %]
+                <li class="is-geo-matches__item">
+                    [% IF match.icon %]
+                        <img class="is-geo-matches__icon" src="[% match.icon %]" alt="">
+                    [% END %]
+                    <a class="is-geo-matches__link" href="/around?lat=[% match.latitude | uri %]&amp;lon=[% match.longitude | uri ~%]
+                        [%~ IF photo_id %]&amp;photo_id=[% photo_id %][% END ~%]
+                        [%~ IF c.get_param('category') %]&amp;category=[% c.get_param('category') | uri %][% END ~%]
+                        [%~ IF c.get_param('filter_category') %]&amp;filter_category=[% c.get_param('filter_category') | uri %][% END ~%]
+                        [%~ IF c.get_param('filter_group') %]&amp;filter_group=[% c.get_param('filter_group') | uri %][% END %]">
+                        <span class="is-geo-matches__name">[% match.address | html %]</span>
+                        <span class="is-geo-matches__chev" aria-hidden="true">&rsaquo;</span>
+                    </a>
+                </li>
+            [% END %]
+        </ul>
+        <p class="is-geo-matches__foot">[% loc('We show up to ten matches, please try a different search if yours is not here.') %]</p>
+        [% INCLUDE 'around/geocoder.html' %]
+    </div>
+[% END %]
+
+[% IF partial_token %]
+    <p style="margin-top: 0; color: #cc0000;">
+        <img align="right" src="[% partial_report.photos.first.url_temp %]" hspace="5">
+        [% loc("Thanks for uploading your photo. We now need to locate your problem, so please enter a nearby street name or postcode in the box above&nbsp;:") %]
+    </p>
+[% END %]

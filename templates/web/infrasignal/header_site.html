@@ -1,0 +1,111 @@
+<header id="site-header" role="banner">
+  <div class="infra-container header-container">
+
+    [%# ── Logo ── %]
+    <a href="[% c.cobrand.base_url IF admin %]/" class="header-logo" title="[% site_name %]">
+      <img src="[% version('/cobrands/infrasignal/images/logo_web.png') %]" class="header-logo-image" alt="[% site_name %]">
+    </a>
+
+    [%# ── Desktop Navigation ── %]
+    <nav class="header-nav" aria-label="[% loc('Main Navigation') %]">
+      <a href="/how-it-works" [% IF c.req.uri.path == '/how-it-works' %]class="is-active"[% END %]>[% loc('How It Works') %]</a>
+      <a href="/reports" [% IF c.req.uri.path.match('^/reports') %]class="is-active"[% END %]>[% loc('View Reports') %]</a>
+      <a href="/about" [% IF c.req.uri.path == '/about' %]class="is-active"[% END %]>[% loc('About Us') %]</a>
+      <a href="/contact" [% IF c.req.uri.path == '/contact' %]class="is-active"[% END %]>[% loc('Contact Us') %]</a>
+      <a href="/about/for-local-government" [% IF c.req.uri.path == '/about/for-local-government' %]class="is-active"[% END %]>[% loc('For Government') %]</a>
+    </nav>
+
+    [%# ── Right Actions ── %]
+    <div class="header-actions">
+
+      [%# Language Switcher %]
+      <div class="header-lang" id="lang-switcher-header">
+        <button class="lang-dd__btn" type="button" aria-haspopup="true" aria-expanded="false">
+          [% IF lang_code == 'es' %]
+            <img src="/cobrands/infrasignal/flags/es.svg" class="lang-dd__flag" alt=""> <span>ES</span>
+          [% ELSIF lang_code == 'ru' %]
+            <img src="/cobrands/infrasignal/flags/ru.svg" class="lang-dd__flag" alt=""> <span>RU</span>
+          [% ELSIF lang_code == 'tr' %]
+            <img src="/cobrands/infrasignal/flags/tr.svg" class="lang-dd__flag" alt=""> <span>TR</span>
+          [% ELSE %]
+            <img src="/cobrands/infrasignal/flags/en.svg" class="lang-dd__flag" alt=""> <span>EN</span>
+          [% END %]
+          <span class="lang-dd__caret">&#9662;</span>
+        </button>
+      </div>
+
+      [% IF c.user_exists AND NOT c.cobrand.admin_allow_user(c.user) %]
+        <a href="/my" class="header-account-link[% IF c.req.uri.path.match('^/my') %] is-active[% END %]">[% loc('My account') %]</a>
+      [% ELSIF NOT c.user_exists %]
+        <a href="/auth" class="header-account-link[% IF c.req.uri.path.match('^/auth') %] is-active[% END %]">[% loc('Sign in') %]</a>
+      [% END %]
+
+      <a href="/#postcodeForm" class="header-signin">[% loc('Start Reporting') %]</a>
+
+      [%# Admin link %]
+      [% IF c.user_exists AND c.cobrand.admin_allow_user(c.user) %]
+        <a href="[% c.uri_for('/admin') | html %]" class="header-admin-link[% IF c.req.uri.path.match('^/admin') %] is-active[% END %]" title="[% loc('Admin Console') | html %]">
+          <svg class="header-admin-link__icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          <span>[% loc('Admin') %]</span>
+        </a>
+      [% END %]
+
+      [%# Hamburger — mobile only %]
+      <button class="header-hamburger" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+
+  </div>
+
+  [%# ── Mobile Slide-Down Menu ── %]
+  <nav class="header-mobile-menu" aria-label="Mobile Navigation">
+    <div class="infra-container">
+      <a href="/how-it-works" [% IF c.req.uri.path == '/how-it-works' %]class="is-active"[% END %]>[% loc('How It Works') %]</a>
+      <a href="/reports" [% IF c.req.uri.path.match('^/reports') %]class="is-active"[% END %]>[% loc('View Reports') %]</a>
+      <a href="/about" [% IF c.req.uri.path == '/about' %]class="is-active"[% END %]>[% loc('About Us') %]</a>
+      <a href="/contact" [% IF c.req.uri.path == '/contact' %]class="is-active"[% END %]>[% loc('Contact Us') %]</a>
+      [% IF c.user_exists AND NOT c.cobrand.admin_allow_user(c.user) %]
+        <a href="/my" [% IF c.req.uri.path.match('^/my') %]class="is-active"[% END %]>[% loc('My account') %]</a>
+      [% ELSIF NOT c.user_exists %]
+        <a href="/auth" [% IF c.req.uri.path.match('^/auth') %]class="is-active"[% END %]>[% loc('Sign in') %]</a>
+      [% END %]
+      <a href="/#postcodeForm" class="mobile-menu__report-btn">[% loc('Start Reporting') %]</a>
+      <a href="/about/for-local-government" [% IF c.req.uri.path == '/about/for-local-government' %]class="is-active"[% END %]>[% loc('For Government') %]</a>
+      [% IF c.user_exists %]
+        [% IF c.user.has_body_permission_to('planned_reports') %]
+          <a href="/my/planned">[% loc('Shortlist') %]</a>
+        [% END %]
+      [% END %]
+      [% IF c.user_exists AND c.cobrand.admin_allow_user(c.user) %]
+        <a href="[% c.uri_for('/admin') | html %]" class="mobile-menu__admin-link[% IF c.req.uri.path.match('^/admin') %] is-active[% END %]">
+          <svg class="mobile-menu__admin-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            <path d="m9 12 2 2 4-4" />
+          </svg>
+          <span>[% loc('Admin') %]</span>
+        </a>
+      [% END %]
+      [%# Language links for mobile %]
+      <div class="mobile-menu__langs">
+        <a href="[% c.uri_with({ lang => 'en-gb' }).path_query %]" [% IF lang_code == 'en-gb' OR !lang_code %]class="is-active"[% END %]>
+          <img src="/cobrands/infrasignal/flags/en.svg" alt=""> EN</a>
+        <a href="[% c.uri_with({ lang => 'es' }).path_query %]" [% IF lang_code == 'es' %]class="is-active"[% END %]>
+          <img src="/cobrands/infrasignal/flags/es.svg" alt=""> ES</a>
+        <a href="[% c.uri_with({ lang => 'ru' }).path_query %]" [% IF lang_code == 'ru' %]class="is-active"[% END %]>
+          <img src="/cobrands/infrasignal/flags/ru.svg" alt=""> RU</a>
+        <a href="[% c.uri_with({ lang => 'tr' }).path_query %]" [% IF lang_code == 'tr' %]class="is-active"[% END %]>
+          <img src="/cobrands/infrasignal/flags/tr.svg" alt=""> TR</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+[%# Compatibility placeholders for legacy /js/front.js mobile-nav listeners. The visible InfraSignal menu is controlled by header-nav.js. %]
+<input type="checkbox" id="main-nav-btn" hidden aria-hidden="true" tabindex="-1">
+<label for="main-nav-btn" hidden aria-hidden="true">[% loc('Main Navigation') %]</label>
+<div id="js-menu-open-modal" hidden aria-hidden="true"></div>
+<nav id="main-nav" hidden aria-hidden="true"><span></span></nav>

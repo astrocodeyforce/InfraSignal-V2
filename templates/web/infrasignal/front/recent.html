@@ -1,0 +1,73 @@
+[%
+    recent_photos = c.cobrand.recent_photos('front', 5);
+%]
+
+[% IF recent_photos.size %]
+<section class="infra-section recent-reports">
+  <div class="infra-container">
+    <div class="recent-reports__header">
+      <div>
+        <h2 class="section-heading__title" style="text-align:left">[% loc('Recently Reported Problems') %]</h2>
+        <p class="recent-reports__subtitle">[% loc('Latest issues reported by community members near you.') %]</p>
+      </div>
+      <a href="/reports" class="recent-reports__view-all">
+        [% loc('View all reports') %]
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="recent-reports__list">
+      [% FOREACH problem IN recent_photos %]
+      <a href="[% c.cobrand.relative_url_for_report( problem ) %][% problem.url %]" class="infra-card recent-reports__card">
+        <div class="recent-reports__thumb">
+          [% IF problem.photo %]
+            <img loading="lazy" src="[% problem.photos.first.url_fp %]" alt="[% problem.title | html %]" />
+          [% ELSE %]
+            <div class="recent-reports__thumb--placeholder"></div>
+          [% END %]
+        </div>
+
+        <div class="recent-reports__content">
+          <h3 class="recent-reports__title">[% problem.title | html %]</h3>
+          <div class="recent-reports__meta">
+            <span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:2px"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              [%- IF problem.days_ago > 0 AND problem.days_ago <= c.cobrand.display_days_ago_threshold %]
+                [% tprintf( nget('%d day ago', '%d days ago', problem.days_ago), problem.days_ago ) %]
+              [%- ELSE %]
+                [% prettify_dt( problem.confirmed, 1 ) %]
+              [%- END %]
+            </span>
+            <span class="recent-reports__dot">&bull;</span>
+            <span>[% problem.category | html %]</span>
+          </div>
+        </div>
+
+        <div class="recent-reports__actions">
+          [% IF problem.is_fixed %]
+            <span class="infra-badge infra-badge--fixed">[% loc('Fixed') %]</span>
+          [% ELSIF problem.is_closed %]
+            <span class="infra-badge infra-badge--closed">[% loc('Closed') %]</span>
+          [% ELSIF problem.state == 'investigating' %]
+            <span class="infra-badge infra-badge--progress">[% loc('Investigating') %]</span>
+          [% ELSIF problem.state == 'in progress' %]
+            <span class="infra-badge infra-badge--progress">[% loc('In Progress') %]</span>
+          [% ELSIF problem.state == 'action scheduled' %]
+            <span class="infra-badge infra-badge--progress">[% loc('Action Scheduled') %]</span>
+          [% ELSE %]
+            <span class="infra-badge infra-badge--open">[% loc('Open') %]</span>
+          [% END %]
+        </div>
+      </a>
+      [% END %]
+    </div>
+
+    <div class="recent-reports__cta">
+      <a href="/#postcodeForm" class="hero__cta">
+        [% loc('Report an Issue') %]
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+[% END %]

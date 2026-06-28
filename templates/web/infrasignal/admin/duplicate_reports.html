@@ -100,7 +100,7 @@
         <div class="dup-group-header">
             <div>
                 <span class="cat">[% group.category | html %]</span>
-                <span class="dist">&mdash; [% group.min_distance %]m apart</span>
+                <span class="dist">&mdash; [% tprintf(loc('%sm apart'), group.min_distance) %]</span>
             </div>
             <span class="badge">[% group.count %] [% loc('reports') %]</span>
         </div>

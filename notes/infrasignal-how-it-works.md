@@ -1,0 +1,102 @@
+# InfraSignal How It Works Page
+
+Date: 2026-05-12
+Environment: `/opt/infrasignal-dev`
+Implementation commit: `9c105e69a`
+Production: not touched
+
+## Summary
+
+Created the new `/how-it-works` page from the user-provided Lovable HTML/SCSS, adapted to InfraSignal's existing FixMyStreet Template Toolkit and SCSS patterns.
+
+## Key Files
+
+- `perllib/FixMyStreet/App/Controller/Static.pm` adds the `/how-it-works` route and forwards to `/about/page` with `how-it-works`.
+- `templates/web/infrasignal/about/how-it-works.html` contains the page content and inline SVG icon block.
+- `templates/web/infrasignal/header_site.html` adds the main desktop and mobile navigation link.
+- `templates/web/infrasignal/about/_sidebar.html` and visible info/contact templates add the sidebar link.
+- `web/cobrands/infrasignal/base.scss` contains the `.hiw` component styles.
+- `web/cobrands/infrasignal/base.css` was regenerated from SCSS.
+
+## Content Included
+
+- Hero: "How InfraSignal Works" with the requested subtext.
+- Four-step process: Report, Locate, Route, Track.
+- What happens after a report is submitted.
+- Resident benefits and local-authority benefits.
+- Tracking links for All Reports, Local Alerts, and account activity.
+- Example journey for a broken streetlight.
+- Frequently asked questions and final CTA.
+
+## Verification
+
+- `git diff --check` passed before commit.
+- `Static.pm` syntax check passed inside the dev container.
+- Dev CSS rebuild completed with `bin/make_css`.
+- Template Toolkit caches were cleared.
+- Browser verification confirmed `http://REDACTED-IP:3001/how-it-works` renders.
+- `curl` verification returned HTTP 200 and found the required heading and four-step labels.
+
+## Visual Polish Follow-up
+
+Commit `4c6cc5133` tightened the page after screenshot review:
+
+- Removed visible sidebar and ordered-list marker artifacts.
+- Changed the repeated first section heading to "Report, route, and track in four simple steps".
+- Reduced section spacing and kept the step cards in a roomier two-column layout at normal desktop widths.
+- Added How It Works to the footer Company links.
+- Simplified the final CTA to `Report an Issue` and `View All Reports`.
+
+Commit `b833b8b9b` then removed the screenshot-highlighted sections entirely:
+
+- Page sidebar.
+- Hero CTA row.
+- Example Journey card.
+- FAQ block.
+
+Commit `1f1b1eba5` removed the repeated "How It Works" eyebrow labels from the hero and first content section after another screenshot review.
+
+Commit `6eb3e80f9` aligned the Residents and Local Authorities card buttons by making each pillar card a vertical flex container and pinning the CTA button to the bottom. Browser measurement confirmed both buttons share the same top and bottom positions at desktop width.
+
+Commit `f9d3760d2` matched the two pillar CTA button widths with a scoped minimum width. Browser measurement confirmed both buttons render at 192px in the tested viewport.
+
+## Storyboard Scenes Follow-up
+
+Commit `18a90ad81` (`Add animated How It Works scenes`) upgraded the four step cards with inline animated storyboard scenes:
+
+- `templates/web/infrasignal/about/how-it-works.html` now embeds four scene wrappers for Report, Locate, Route, and Track.
+- `web/cobrands/infrasignal/hiw-scenes.js` restarts the scene animations every 5 seconds only while the cards are visible.
+- Reduced-motion users get static scenes instead of looping animation.
+- `web/cobrands/infrasignal/base.scss` now scopes icon SVG styling more narrowly so the new scene SVGs keep their intended fills, strokes, and labels.
+- Dev verification confirmed the live page serves 4 scene blocks, loads the local script asset, and renders the scenes inside the existing step cards.
+
+Commit `41fcd06de` (`Polish How It Works scene cards`) refined the scene-card presentation after screenshot review:
+
+- Removed the older blue step icon tiles so the storyboard scenes are the primary visual element.
+- Simplified each card header to an orange number badge plus title.
+- Shortened the four step descriptions.
+- Kept the step grid in a calmer two-column desktop layout, narrowed the grid max width, softened the scene panel styling, and reduced mobile scene height.
+- Staggered JavaScript-driven scene restarts so visible cards do not restart simultaneously.
+- Dev verification confirmed 4 cards, 0 old icon tiles, 4 number badges, 4 scene blocks, and staggered playback on the live page.
+
+Commit `a037b4e98` (`Remove Locate scene checkmark`) removed the green checkmark badge above the orange Locate map pin:
+
+- Removed the `sc-lock` SVG group from the Locate scene.
+- Removed the unused `sc-lock` animation rules and keyframes.
+- Dev verification confirmed the live Locate scene keeps `sc-pin` and no longer includes `sc-lock` or the checkmark path.
+
+Commit `01d7b27bd` (`Match Report scene photo to fallen tree`) updated the Report scene's small captured-photo card:
+
+- Replaced the generic print-photo image area with a miniature fallen-tree scene.
+- Kept the existing phone camera animation intact.
+- Dev verification confirmed the live Report scene serves the `hiw-print-photo` clip and fallen-tree shapes inside `sc-print`.
+
+Commit `79a04eadf` (`Refine Report scene tree artwork`) made the Report tree more recognizable:
+
+- Replaced the simple trunk/circle artwork with a fuller leafy tree, visible branches, and a tapered trunk.
+- Updated the matching captured-photo miniature with clearer fallen-tree branch and canopy detail.
+- Dev verification confirmed the live Report scene serves the updated tree artwork in both places.
+
+## Production Promotion
+
+When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commits, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and HUP/restarting the app for the new route.

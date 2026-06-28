@@ -1,19 +1,78 @@
 # ============================================================
 # DEV Docker Compose — InfraSignal Development Environment
 # ============================================================
-# Shares DB, memcached, mailhog from PRODUCTION stack.
-# Runs its own app + nginx on port 3000 (HTTP only).
+# Runs its own app + nginx on port 3001 (HTTP only).
+#
+# Database isolation (added 2026-05-26):
+#   Dev has its OWN postgres (dev-db) and memcached
+#   (dev-memcached). It does not share the production
+#   postgres / memcached. Writes/edits in dev are
+#   completely invisible to production, and vice versa.
+#
+#   Network: still joins the shared `docker_default` bridge
+#   so the dev-nginx-proxy (separate, hand-started container)
+#   can reach dev-fixmystreet by its `dev-fixmystreet.svc`
+#   alias. Dev's own services use distinct aliases:
+#     - dev-postgres.svc   (was: postgres.svc shared with prod)
+#     - dev-memcached.svc  (was: memcached.svc shared with prod)
+#   Production keeps `postgres.svc` / `memcached.svc` — no
+#   collision because aliases differ.
 #
 # Usage:
 #   cd /opt/infrasignal-dev/docker
-#   docker compose -f docker-compose-local.yml up -d
+#   docker compose -p infrasignal-dev -f docker-compose-local.yml up -d
 #
-# Requires production stack running first:
-#   cd /opt/infrasignal-v2/docker
-#   docker compose -f docker-compose-dev.yml up -d
+# Rollback to shared-prod-DB mode (NOT RECOMMENDED):
+#   1. Stop dev-db and dev-memcached:
+#        docker compose -p infrasignal-dev -f docker-compose-local.yml stop dev-db dev-memcached
+#   2. Restore /opt/infrasignal-dev/conf/general.yml from the
+#      backup created next to it (general.yml.pre-isolation-*.bak).
+#   3. Restart dev-fixmystreet.
 # ============================================================
 
 services:
+  # ---- dev-db --------------------------------------------------
+  # Dedicated postgres for dev only. Inlines the en_GB locale
+  # build steps the FixMyStreet stack expects.
+  dev-db:
+    build:
+      dockerfile_inline: |
+        FROM postgres:13.11
+        RUN localedef -i en_GB -c -f UTF-8 -A /usr/share/locale/locale.alias en_GB.UTF-8
+        ENV LANG=en_GB.utf8
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: 'dev_local_password_2026'
+      PGDATA: '/var/lib/postgresql/data/pgdata'
+      LANG: 'en_GB.utf8'
+    command: >
+      postgres
+      -c shared_buffers=64MB
+      -c max_connections=50
+      -c work_mem=4MB
+      -c maintenance_work_mem=32MB
+    volumes:
+      - dev-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      prod_net:
+        aliases:
+          - dev-postgres.svc
+
+  # ---- dev-memcached -------------------------------------------
+  dev-memcached:
+    image: memcached:1.6.32
+    restart: always
+    command: memcached -m 64 -c 512
+    networks:
+      prod_net:
+        aliases:
+          - dev-memcached.svc
+
   dev-setup:
     build:
       context: ..
@@ -45,7 +104,7 @@ services:
       - dev-fixmystreet
     restart: always
     ports:
-      - 3000:80
+      - 127.0.0.1:3001:80
     volumes:
       - ../web:/var/www/fixmystreet/web:ro
       - ../conf/nginx-dev-local.conf:/etc/nginx/conf.d/default.conf:ro
@@ -75,6 +134,7 @@ services:
 
 volumes:
   dev-local:
+  dev-pgdata:
 
 networks:
   prod_net:

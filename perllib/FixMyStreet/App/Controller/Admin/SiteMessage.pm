@@ -10,6 +10,10 @@ sub index :Path :Args(0) {
     # Normal users can only edit message for the current body.
     $c->detach('edit_site_message', [$c->user->from_body]) unless $c->user->is_superuser;
 
+    # InfraSignal's custom page picks a body using AJAX state/county/city filters.
+    # Do not load every body into the initial admin page.
+    return 1 if $c->cobrand->moniker eq 'infrasignal';
+
     # Superusers can see a list of all bodies with site messages.
     # If the cobrand provides admin_fetch_all_bodies returning non-empty,
     # skip loading all bodies (cobrand template uses AJAX instead).

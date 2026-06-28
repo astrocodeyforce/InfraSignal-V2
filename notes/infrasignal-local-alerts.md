@@ -1,0 +1,190 @@
+# InfraSignal Local Alerts Page
+
+Date: 2026-05-16
+Environment: `/opt/infrasignal-dev`
+Implementation commit: `b59adf8a1`
+Production: not touched
+
+## Summary
+
+Updated the location-specific Local Alerts subscription page at `/alert/list` using the supplied design, adapted to the existing FixMyStreet alert controller and InfraSignal cobrand templates.
+
+## Key Files
+
+- `templates/web/infrasignal/alert/list.html` adds the InfraSignal-specific post-search Local Alerts wrapper.
+- `templates/web/infrasignal/alert/_list.html` contains the existing alert subscription controls restyled as scope choices, email subscription, and RSS subscription.
+- `templates/web/infrasignal/alert/index.html` remains the existing `/alert` search entry page.
+- `web/cobrands/infrasignal/base.scss` contains the scoped alert-list styles.
+- `web/cobrands/infrasignal/base.css` was regenerated from SCSS.
+
+## Backend Compatibility
+
+- The design was wired to the existing `POST /alert/subscribe` endpoint.
+- Existing field names were preserved: `feed`, `distance`, `rznvy`, `alert`, `rss`, `token`, `type`, `pc`, `latitude`, and `longitude`.
+- Per-option RSS links still use controller-supplied `rss_feed_uri` and `option.uri` values.
+- No new Perl routes, database changes, or JavaScript were added.
+
+## Verification
+
+- `git diff --check` passed before the implementation commit.
+- Editor diagnostics passed for the changed templates, SCSS, and generated CSS.
+- Dev CSS rebuild completed with `bin/make_css`.
+- Template Toolkit caches were cleared.
+- `http://REDACTED-IP:3001/alert/list?pc=60089` returned HTTP 200 and rendered the title, nearby photos, scope chooser, email panel, and RSS action.
+- `http://REDACTED-IP:3001/alert` returned HTTP 200 and kept the existing search page working.
+- Browser verification confirmed the verification widget is contained inside the Subscribe by email panel.
+
+## Notes
+
+- Cloudflare Turnstile can show a connectivity/domain error on the DEV IP address. The widget is existing infrastructure and was only moved into the email panel for layout.
+- The existing untracked backup file `templates/web/base/alert/index.html.bak` was not committed.
+
+## Production Promotion
+
+When approved for production, deploy from `/opt/infrasignal-v2` by pulling the DEV commit, rebuilding InfraSignal CSS, clearing Template Toolkit caches, and verifying `/alert` plus `/alert/list` on mobile and desktop.
+
+## Follow-up Visual Polish
+
+Date: 2026-05-16
+Implementation commit: `527564122` (`Polish Local Alerts subscription page`)
+Production: not touched
+
+### Summary
+
+Applied the newer enhanced Local Alerts design to `/alert/list`, keeping the existing alert controller, endpoint, and form field names intact.
+
+### Changes
+
+- Added a richer Local Alerts hero with location chip, alert-area meta panel, grid texture, and accent glow.
+- Added category tags to real nearby report preview cards, with tagged fallback preview cards retained.
+- Converted scope choices into clickable cards with selected-card styling and per-option RSS links.
+- Moved the custom radius input inside the radius card and preserved the existing `distance` field.
+- Reworked the email and RSS subscription actions into a responsive two-panel row.
+- Added a nonce-bearing inline script to keep the selected card state synchronized with the radio buttons while ignoring clicks on per-option RSS links.
+- Rebuilt `web/cobrands/infrasignal/base.css` and cleared Template Toolkit caches on DEV.
+
+### Verification
+
+- `git diff --check` passed before the implementation commit.
+- Editor diagnostics passed for the changed templates, SCSS, and generated CSS.
+- `/alert/list?pc=60089` returned HTTP 200 and served the hero chip, report tags, scope cards, email verification area, RSS panel, and card-selection script.
+- `/alert` returned HTTP 200 after the shared alert style changes.
+- Served form markup retained the required backend fields: `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+- Browser screenshot verification confirmed the polished hero and tagged nearby-report preview layout.
+
+## Follow-up Header Cleanup
+
+Date: 2026-05-16
+Implementation commit: `58e29b4fb` (`Remove Local Alerts header grid`)
+Production: not touched
+
+### Summary
+
+Removed the visible square grid from the Local Alerts hero header and made visible location labels prefer the submitted location/ZIP value.
+
+### Changes
+
+- Removed the `alerts-hero__pattern` element from `templates/web/infrasignal/alert/list.html`.
+- Removed the matching square-grid SCSS from `web/cobrands/infrasignal/base.scss` and regenerated `base.css`.
+- Updated the hero chip, alert-area meta label, and scope text source to prefer the submitted location/ZIP value.
+- Left the alert controller, routes, form endpoint, and submit button names unchanged.
+
+### Verification
+
+- `/alert/list?pc=60089` returned HTTP 200, no longer served `alerts-hero__pattern`, and showed `60089` in both the hero chip and Alert area text.
+- `/alert` returned HTTP 200.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up Chosen Location Display
+
+Date: 2026-05-16
+Implementation commit: `860fa37e4` (`Show chosen Local Alerts location`)
+Production: not touched
+
+### Summary
+
+Fixed the Local Alerts display label so chosen addresses and ZIP codes appear on screen instead of the generic `this location` fallback.
+
+### Changes
+
+- Updated the alert choose page links to include the selected address in the existing `pc` query parameter while preserving latitude and longitude.
+- Updated the InfraSignal `/alert/list` hero chip, alert-area meta text, page title, and radius label to use the submitted `pc`, `pretty_pc`, or a named local area fallback.
+- Added a coordinate-only fallback that prefers a non-state local area when available.
+- Left the alert controller, subscribe endpoint, form field names, and submit button names unchanged.
+
+### Verification
+
+- `/alert/list?pc=60089` returned HTTP 200 and showed `60089`.
+- `/alert/list?pc=Buffalo%20Grove%2C%20IL;latitude=42.166774;longitude=-87.969752` returned HTTP 200 and showed `Buffalo Grove, IL`.
+- `/alert/list?latitude=42.166774;longitude=-87.969752` returned HTTP 200 and showed `Lake County` instead of `this location`.
+- Ambiguous search results now generate `/alert/list?pc=...;latitude=...;longitude=...` links.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up Country Trim
+
+Date: 2026-05-16
+Implementation commit: `1fe0ad2cb` (`Trim country from Local Alerts location`)
+Production: not touched
+
+### Summary
+
+Trimmed country suffixes from the Local Alerts chosen-location display so selected locations show as city, county, and state.
+
+### Changes
+
+- Removed `United States of America`, `United States`, and `USA` suffixes from the displayed Local Alerts location label.
+- Applied the trim to the hero chip, alert-area meta text, radius label, and multiple-match chooser links.
+- Left the alert controller, subscribe endpoint, form field names, and submit button names unchanged.
+
+### Verification
+
+- Chosen-address URL returned HTTP 200 and showed `Buffalo Grove, Lake County, Illinois` in the hero chip, Alert area text, and radius label.
+- Ambiguous chooser links no longer carry `United States` in the selected `pc` value.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up City-Only Display
+
+Date: 2026-05-16
+Implementation commit: `bbc807bc6` (`Show city only for Local Alerts location`)
+Production: not touched
+
+### Summary
+
+Shortened the Local Alerts chosen-location display to the first place name only.
+
+### Changes
+
+- Trimmed visible Local Alerts labels after the first comma so `Buffalo Grove, Lake County, Illinois` displays as `Buffalo Grove`.
+- Applied the trim to the hero chip, alert-area meta text, page title, and radius label.
+- Left the alert controller, subscribe endpoint, form field names, and submit button names unchanged.
+
+### Verification
+
+- Chosen-address URL returned HTTP 200 and showed `Buffalo Grove` in the hero chip, Alert area text, and radius label.
+- ZIP URL returned HTTP 200 and still showed `60089`.
+- Served form markup still posts to `/alert/subscribe` and retains `token`, `type`, `pc`, `latitude`, `longitude`, `feed`, `distance`, `rznvy`, `alert`, and `rss`.
+
+## Follow-up Suggestions Page Redesign
+
+Date: 2026-05-16
+Implementation commit: `5e66e28ea` (`Redesign Local Alerts suggestion page`)
+Production: not touched
+
+### Summary
+
+Redesigned the ambiguous-location suggestions page shown when a Local Alerts search returns multiple matches.
+
+### Changes
+
+- Added `templates/web/infrasignal/alert/choose.html` as the InfraSignal override for the existing `alert/choose.html` flow.
+- Added a styled hero, Back to Local Alerts link, refine search box, sticky help sidebar, and clickable match cards.
+- Match cards show an icon, title, address detail, meta line, and chevron while keeping the existing `/alert/list` link targets with `pc`, `latitude`, and `longitude`.
+- Added scoped `.alerts--suggest` and `.alerts-suggest__*` SCSS and regenerated `web/cobrands/infrasignal/base.css`.
+- No new controller route, React page, or subscription behavior was added.
+
+### Verification
+
+- `/alert/list?pc=buffalo+gr` returned HTTP 200 with the new suggestions markup, 2 match cards, refine box, and no old `pc_alternatives` list.
+- First match-card destination returned HTTP 200 and reached the existing subscription page.
+- `/alert` and `/alert/list?pc=60089` returned HTTP 200 after the override.
+- Generated CSS includes a 16px refine input override.

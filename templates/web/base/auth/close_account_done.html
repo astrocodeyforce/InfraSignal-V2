@@ -1,0 +1,29 @@
+[%
+SET title = loc('Account closure scheduled');
+INCLUDE 'header.html', title = title
+%]
+
+[% IF token_not_found %]
+
+  <div class="confirmation-header">
+    <h1>[% loc('Link expired or invalid') %]</h1>
+    <p>[% loc('This account-closure link is no longer valid. It may have already been used or expired.') %]</p>
+    <p>[% loc('If you still want to close your account, please start again from your account page.') %]</p>
+    <p><a href="/">[% loc('Return to the home page') %]</a></p>
+  </div>
+
+[% ELSE %]
+
+  <div class="confirmation-header">
+    <h1>[% loc('Your account is scheduled to be closed') %]</h1>
+    <p>
+      [% tprintf(loc('Your account will be permanently closed in %d days, and your personal information removed. Your reports will remain online but will no longer be linked to you.'), grace_days) %]
+    </p>
+    <p><strong>[% loc('Changed your mind?') %]</strong>
+       [% loc('Simply sign in again before then and choose &ldquo;Keep my account&rdquo; to cancel.') %]</p>
+    <p><a href="/">[% loc('Return to the home page') %]</a></p>
+  </div>
+
+[% END %]
+
+[% INCLUDE 'footer.html' %]

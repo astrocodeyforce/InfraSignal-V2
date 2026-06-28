@@ -1,0 +1,83 @@
+# ============================================================
+# InfraSignal — Test Environment Config
+# ============================================================
+# Used by: docker/docker-compose-test.yml
+# Purpose: Automated tests in CI (GitHub Actions)
+# ============================================================
+
+FMS_DB_HOST: 'postgres.svc'
+FMS_DB_PORT: '5432'
+FMS_DB_NAME: 'infrasignal_test'
+FMS_DB_USER: 'fms'
+FMS_DB_PASS: 'test_password'
+
+BASE_URL: 'http://localhost:3000'
+SECURE_PROXY_SSL_HEADER: ''
+CONTENT_SECURITY_POLICY: ''
+using_frontend_proxy: 0
+
+EMAIL_DOMAIN: 'test.infrasignal.local'
+CONTACT_EMAIL: 'test@infrasignal.local'
+CONTACT_NAME: 'InfraSignal Test'
+DO_NOT_REPLY_EMAIL: 'noreply@test.infrasignal.local'
+
+STAGING_SITE: 1
+STAGING_FLAGS:
+  send_reports: 0
+  skip_checks: 1
+  hide_staging_banner: 0
+
+EXAMPLE_PLACES: [ 'High Street', 'Main Street' ]
+
+LANGUAGES:
+  - 'en-gb,English,en_GB'
+
+DB_FULL_TEXT_SEARCH_CONFIG: 'english'
+TIME_ZONE: ""
+GEO_CACHE: '../cache/'
+PHOTO_STORAGE_BACKEND: 'FileSystem'
+PHOTO_STORAGE_OPTIONS:
+  UPLOAD_DIR: '../upload/'
+
+SIGHTENGINE_ENABLED: 0
+SIGHTENGINE_API_USER: ''
+SIGHTENGINE_API_SECRET: ''
+
+MAPIT_URL: 'http://localhost:3000/fakemapit/'
+MAPIT_TYPES: [ 'ZZZ' ]
+MAPIT_ID_WHITELIST: []
+MAPIT_GENERATION: 0
+MAPIT_TYPES_CHILDREN: ''
+
+GEOCODER: ''
+GOOGLE_MAPS_API_KEY: ''
+BING_MAPS_API_KEY: ''
+GEOCODING_DISAMBIGUATION: ''
+MAP_TYPE: 'OSM'
+
+ALLOWED_COBRANDS:
+  - infrasignal
+
+ADMIN_BASE_URL: ''
+RSS_LIMIT: '20'
+OPEN311_LIMIT: 1000
+ALL_REPORTS_PER_PAGE: 100
+
+FACEBOOK_APP_ID: ''
+FACEBOOK_APP_SECRET: ''
+TWITTER_KEY: ''
+TWITTER_SECRET: ''
+
+SMTP_SMARTHOST: 'email.svc'
+SMTP_TYPE: ''
+SMTP_PORT: ''
+SMTP_USERNAME: ''
+SMTP_PASSWORD: ''
+
+CHECK_HAVEIBEENPWNED: 0
+GAZE_URL: 'https://gaze.mysociety.org/gaze'
+MEMCACHED_HOST: 'memcached.svc'
+CACHE_TIMEOUT: 60
+AREA_LINKS_FROM_PROBLEMS: '0'
+LOGIN_REQUIRED: 0
+SIGNUPS_DISABLED: 0
