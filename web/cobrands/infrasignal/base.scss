@@ -12696,7 +12696,9 @@ body.mappage #report-a-problem-main .form-section-preview--next {
 }
 
 body.mappage #report-a-problem-main .floating-button-spacer {
-  min-height: calc(112px + env(safe-area-inset-bottom, 0px));
+  // Clearance for the fixed Continue button + its white fade shadow so the
+  // last category ("Other") can scroll fully above it and remain clickable.
+  min-height: calc(176px + env(safe-area-inset-bottom, 0px));
 }
 
 body.mappage #report-a-problem-main .floating-button-wrapper {
