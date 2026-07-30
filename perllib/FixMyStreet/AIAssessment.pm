@@ -21,8 +21,8 @@ FixMyStreet::AIAssessment - Two-pass AI engineering assessment for infrastructur
 Generates professional engineering assessments for infrastructure problem reports.
 Uses a two-pass architecture for maximum output consistency:
 
-  Pass 1 (AI): GPT-4o vision (temperature=0) classifies the damage type and severity
-               from the photo and text description.
+  Pass 1 (AI): GPT-5.6 vision (schema-enforced JSON output) classifies the damage
+               type and severity from the photo and text description.
 
   Pass 2 (Deterministic): A hardcoded lookup table maps the classification to
                exact cost ranges, time estimates, crew sizes, and equipment lists
@@ -490,6 +490,93 @@ my %COST_DB = (
 );
 
 # ----------------------------------------------------------------------
+# PUBLISHED UNIT PRICE DATA
+#
+# Where a category has an entry here, the dollar figures in the assessment
+# are DERIVED: measured quantity x awarded unit price, rather than estimated
+# by the model. Every entry must be traceable to published award data.
+#
+# Source: Illinois DOT awarded contract unit prices (Letting Bulletin pay
+# item reports). District 1 only, because it covers the Chicago metro
+# (Cook, Lake, DuPage, Kane, McHenry, Will) where unit prices differ
+# substantially from downstate districts.
+#
+# p25/p75 are used for the reported range and the quantity-weighted average
+# as the central value. Unbalanced bids (nominal $0.01/$1.00 line items) are
+# excluded and the exclusion recorded in 'note'.
+# ----------------------------------------------------------------------
+
+my %UNIT_PRICE_DB = (
+    'Potholes' => {
+        pay_item     => '44201809',
+        item_name    => 'Class D Patches, Type IV, 13 inch',
+        work_desc    => 'full-depth HMA patch',
+        unit         => 'sq_yd',
+        unit_label   => 'sq yd',
+        p25          => 106.25,
+        p75          => 161.50,
+        weighted_avg => 138.48,
+        samples      => 12,
+        period       => 'Aug 2024 - Apr 2026',
+        district     => 'District 1',
+        source       => 'IDOT awarded contract unit prices',
+        note         => 'one unbalanced $1.00/sq yd bid excluded',
+        excludes     => 'traffic control and mobilization',
+    },
+
+    'Sidewalks' => {
+        pay_item     => '42400200',
+        item_name    => 'Portland Cement Concrete Sidewalk 5 inch',
+        work_desc    => 'sidewalk slab replacement',
+        unit         => 'sq_ft',
+        unit_label   => 'sq ft',
+        p25          => 10.00,
+        p75          => 14.00,
+        weighted_avg => 10.56,
+        samples      => 17,
+        period       => 'Apr 2026 letting',
+        district     => 'District 1',
+        source       => 'IDOT awarded contract unit prices',
+        excludes     => 'removal of the existing slab, traffic control and mobilization',
+    },
+
+    'Traffic Signs' => {
+        pay_item     => '72000100',
+        item_name    => 'Sign Panel - Type 1',
+        work_desc    => 'sign panel',
+        unit         => 'sq_ft',
+        unit_label   => 'sq ft',
+        p25          => 25.54,
+        p75          => 37.23,
+        weighted_avg => 30.57,
+        samples      => 8,
+        period       => 'Apr 2026 letting',
+        district     => 'District 1',
+        source       => 'IDOT awarded contract unit prices',
+        excludes     => 'posts, foundations, traffic control and mobilization',
+    },
+
+    'Bridge' => {
+        pay_item     => '63000001',
+        item_name    => 'Steel Plate Beam Guardrail, Type A, 6 foot posts',
+        work_desc    => 'guardrail replacement',
+        unit         => 'linear_ft',
+        unit_label   => 'ft',
+        p25          => 34.50,
+        p75          => 41.53,
+        weighted_avg => 35.28,
+        samples      => 6,
+        period       => 'Apr 2026 letting',
+        district     => 'District 1',
+        source       => 'IDOT awarded contract unit prices',
+        excludes     => 'end terminals, removal of damaged rail, traffic control and mobilization',
+    },
+);
+
+# Road surface failures are paid under the same patching item.
+$UNIT_PRICE_DB{'Road Surface'} = $UNIT_PRICE_DB{'Potholes'};
+
+# ----------------------------------------------------------------------
 # Category aliases: map DB category names -> COST_DB keys
 # ----------------------------------------------------------------------
 my %CATEGORY_MAP = (
@@ -578,6 +665,15 @@ sub generate_assessment {
     my $longitude = $context->{longitude} || $report->longitude || 0;
     my $address   = $context->{closest_address} || '';
 
+    # Deterministic OSM priority-zone classification (schools, hospitals, etc.)
+    # computed by FixMyStreet::OSM::PriorityClassifier and stored on the report.
+    my $zone = {
+        priority => $report->osm_zone_priority   || '',
+        label    => $report->osm_zone_label      || '',
+        distance => $report->osm_zone_distance_m || 0,
+    };
+    $zone = undef unless $zone->{priority} =~ /^(Emergency|High)$/ && $zone->{label};
+
     # Determine current season
     my @now = localtime();
     my $month = $now[4] + 1;  # localtime months are 0-based
@@ -593,7 +689,7 @@ sub generate_assessment {
     my $ai_result = _classify_with_ai(
         $api_key, $category, $title, $detail, $photo_base64,
         $latitude, $longitude, $address, $season_info->{season},
-        $month, $year, $ref_costs
+        $month, $year, $ref_costs, $zone
     );
 
     unless ($ai_result && $ai_result->{severity}) {
@@ -611,17 +707,122 @@ sub generate_assessment {
             equipment           => $fallback_cost->{equipment},
             method              => $fallback_cost->{method},
             repair_scope        => $fallback_cost->{label},
+            quantity_unit       => 'none',
             site_considerations => ['AI analysis unavailable -- manual field assessment required'],
         };
     }
 
+    # -- Replace the model's dollar guess with a derived figure where we hold
+    # published unit prices for this category. --
+    my $cost_basis = _derive_cost($ai_result, $cost_key);
+
+    # -- Deterministic escalation floor --
+    # The AI weighs the zone context, but the zone classifier is authoritative:
+    # an Emergency zone (school, hospital, fire station) may never end up with a
+    # slower timeline than "Urgent", and a High zone no slower than "Priority".
+    _apply_zone_timeline_floor($ai_result, $zone) if $zone;
+
     # -- Build Assessment Output --
     my $has_photo = $photo_base64 ? 1 : 0;
     my $assessment = _format_assessment(
-        $ai_result, $category, $season_info, $address, $latitude, $longitude, $has_photo
+        $ai_result, $category, $season_info, $address, $latitude, $longitude,
+        $has_photo, $zone, $cost_basis
     );
 
     return $assessment;
+}
+
+# Derive cost from the model's measured quantity and published unit prices.
+# Returns a hashref describing the derivation, or undef when the category has
+# no unit price data or the model could not measure a quantity (in which case
+# the model's own estimate stands and is labelled as such).
+sub _derive_cost {
+    my ($ai, $cost_key) = @_;
+
+    my $up = $UNIT_PRICE_DB{$cost_key} or return undef;
+
+    my $q_low  = $ai->{quantity_low};
+    my $q_high = $ai->{quantity_high};
+    my $q_unit = $ai->{quantity_unit} || 'none';
+    return undef unless $q_low && $q_high && $q_unit ne 'none';
+    ($q_low, $q_high) = ($q_high, $q_low) if $q_low > $q_high;
+
+    # Convert the measured quantity into the unit the price is quoted in.
+    my ($qty_low, $qty_high) = _convert_quantity($q_low, $q_high, $q_unit, $up->{unit});
+    return undef unless defined $qty_low;
+
+    my $cost_low  = _round_to(  $qty_low * $up->{p25}, 50 );
+    my $cost_high = _round_to( $qty_high * $up->{p75}, 50 );
+    return undef unless $cost_high > 0;
+    $cost_low = 50 if $cost_low < 50;
+
+    $ai->{cost_low}  = $cost_low;
+    $ai->{cost_high} = $cost_high;
+
+    return {
+        derived    => 1,
+        quantity   => sprintf('%.1f-%.1f %s', $qty_low, $qty_high, $up->{unit_label}),
+        work_desc  => $up->{work_desc},
+        unit_range => sprintf('$%d-$%d per %s', $up->{p25}, $up->{p75}, $up->{unit_label}),
+        source     => sprintf('%s, %s, pay item %s (%s), %d contracts %s',
+                        $up->{source}, $up->{district}, $up->{pay_item},
+                        $up->{item_name}, $up->{samples}, $up->{period}),
+        average    => sprintf('$%.2f per %s', $up->{weighted_avg}, $up->{unit_label}),
+        excludes   => $up->{excludes}
+                      . ($up->{note} ? ' (' . $up->{note} . ')' : ''),
+    };
+}
+
+# Quantity units the model may report, expressed as (dimension, factor to the
+# dimension's base unit). Conversion is only allowed within a dimension, so a
+# count can never be silently priced as an area.
+my %QUANTITY_UNITS = (
+    sq_ft     => [ area   => 1        ],
+    sq_yd     => [ area   => 9        ],  # base: square feet
+    linear_ft => [ length => 1        ],  # base: feet
+    linear_yd => [ length => 3        ],
+    each      => [ count  => 1        ],
+    ton       => [ weight => 1        ],
+    cu_yd     => [ volume => 1        ],
+);
+
+sub _convert_quantity {
+    my ($low, $high, $from, $to) = @_;
+
+    my $f = $QUANTITY_UNITS{$from || ''} or return;
+    my $t = $QUANTITY_UNITS{$to   || ''} or return;
+    return unless $f->[0] eq $t->[0];   # incompatible dimensions
+
+    my $scale = $f->[1] / $t->[1];
+    return ($low * $scale, $high * $scale);
+}
+
+sub _round_to {
+    my ($value, $step) = @_;
+    return 0 unless $value;
+    return int(($value / $step) + 0.5) * $step;
+}
+
+my %TIMELINE_RANK = (
+    'Routine - 30+ days'             => 1,
+    'Standard - 7 to 14 days'        => 2,
+    'Priority - 48 to 72 hours'      => 3,
+    'Urgent - within 24 hours'       => 4,
+    'Emergency - immediate dispatch' => 5,
+);
+
+sub _apply_zone_timeline_floor {
+    my ($ai, $zone) = @_;
+    my %floor = (Emergency => 4, High => 3);
+    my $min_rank = $floor{$zone->{priority}} or return;
+
+    my $current = $ai->{priority_timeline} || '';
+    my $rank = $TIMELINE_RANK{$current} || 0;
+    return if $rank >= $min_rank;
+
+    my ($floor_timeline) = grep { $TIMELINE_RANK{$_} == $min_rank } keys %TIMELINE_RANK;
+    $ai->{priority_timeline} = $floor_timeline;
+    $ai->{zone_escalated} = 1;
 }
 
 # ----------------------------------------------------------------------
@@ -630,7 +831,7 @@ sub generate_assessment {
 
 sub _classify_with_ai {
     my ($api_key, $category, $title, $detail, $photo_base64,
-        $latitude, $longitude, $address, $season, $month, $year, $ref_costs) = @_;
+        $latitude, $longitude, $address, $season, $month, $year, $ref_costs, $zone) = @_;
 
     # Build reference baseline string from the cost database for this category
     my $ref_baseline = _build_reference_baseline($ref_costs);
@@ -668,6 +869,21 @@ Cost adjustments:
 - Emergency/safety hazard: factor overtime rates
 - Small isolated issues: can be LOWER than baseline minimums
 
+PRIORITY ZONE CONTEXT:
+The platform automatically detects sensitive facilities near the report
+location (schools, hospitals, fire stations, daycare, etc.) from OpenStreetMap.
+If the user message includes a "Priority zone detected" line, you MUST:
+- Weigh it heavily when choosing "priority_timeline":
+  Emergency-level zone: use "Urgent - within 24 hours" or
+  "Emergency - immediate dispatch".
+  High-level zone: use "Priority - 48 to 72 hours" or faster.
+- Mention the facility and why it raises the urgency in "safety_risk"
+  (e.g. children walking to school, ambulance access).
+- Include at least one item in "site_considerations" about working near
+  that facility (timing around school hours, pedestrian control, etc.).
+If no priority zone line is present, choose the timeline on the merits of
+the damage alone.
+
 You MUST respond with ONLY a valid JSON object. No markdown fences, no
 explanation, no extra text. Every field must be the exact type shown below.
 
@@ -684,6 +900,9 @@ EXACT JSON STRUCTURE (follow this template precisely):
   "hours": "1-2",
   "cost_low": 150,
   "cost_high": 350,
+  "quantity_low": 0,
+  "quantity_high": 0,
+  "quantity_unit": "none",
   "site_considerations": [
     "Residential street with low traffic volume",
     "Winter conditions may require de-icing around vehicle",
@@ -708,7 +927,29 @@ FIELD RULES:
 - "hours": string (e.g. "1-2", "0.5-1", "2-4 days")
 - "cost_low": integer (no quotes, no dollar sign)
 - "cost_high": integer (no quotes, no dollar sign)
+- "quantity_low" / "quantity_high": numbers -- THE SIZE OF THE WORK TO BE DONE,
+  as a low-to-high measured range. This is the single most important number you
+  produce: the platform multiplies it by published government unit prices to
+  derive the cost. Measure it from the photo as carefully as you can, using lane
+  widths, kerbs, road markings, doors, and vehicles as scale references. Measure
+  only what must be repaired or removed, not the whole street. Choose the unit
+  that matches how the work is actually paid for:
+    area   (sq_ft / sq_yd)   pavement patching, sidewalk slabs, graffiti surface
+    length (linear_ft)       guardrail, kerb, crack sealing, pipe, cable
+    count  (each)            signs, streetlights, signals, trees, vehicles, basins
+    weight (ton)             dumped debris, spoil, removed material
+    volume (cu_yd)           excavation, fill, bulk waste
+  Use 0 for both values and "none" for the unit only when the work genuinely has
+  no measurable quantity (for example a noise complaint resolved by inspection).
+- "quantity_unit": one of "sq_ft", "sq_yd", "linear_ft", "linear_yd", "each",
+  "ton", "cu_yd", or "none" -- and it MUST match the numbers above
 - "site_considerations": array of 2-4 strings, each one specific logistical note
+
+SAMPLE / DEMONSTRATION REPORTS:
+Some reports carry markers like "[SAMPLE REPORT]" or notes that they exist for
+testing or demonstration. Treat those markers as platform metadata only: assess
+the depicted infrastructure condition exactly as if it were a real report, and
+do NOT mention the sample/testing status anywhere in your output.
 
 IMPORTANT: This is a municipal infrastructure assessment system. Photos show
 real-world damage. Analyze objectively. Do NOT refuse any photo. Always return
@@ -727,15 +968,22 @@ PROMPT
     my $month_name = $month_names->[$month - 1] || 'Unknown';
     my $season_str = "Current date: $month_name $year ($season season)";
 
+    my $zone_str = '';
+    if ($zone) {
+        $zone_str = sprintf(
+            "Priority zone detected: %s approximately %dm from the report location (zone level: %s)",
+            $zone->{label}, $zone->{distance}, $zone->{priority});
+    }
+
     # Try with photo first, fall back to text-only if refused
     my $result = _try_classify($api_key, $system_prompt, $category, $title, $detail,
-                               $photo_base64, $location_str, $season_str);
+                               $photo_base64, $location_str, $season_str, $zone_str);
 
     # If the photo caused a refusal, retry without it
     if (!$result && $photo_base64) {
         warn "AIAssessment: Photo may have triggered content filter, retrying text-only\n";
         $result = _try_classify($api_key, $system_prompt, $category, $title, $detail,
-                                undef, $location_str, $season_str);
+                                undef, $location_str, $season_str, $zone_str);
     }
 
     return $result;
@@ -757,7 +1005,7 @@ sub _build_reference_baseline {
 
 sub _try_classify {
     my ($api_key, $system_prompt, $category, $title, $detail,
-        $photo_base64, $location_str, $season_str) = @_;
+        $photo_base64, $location_str, $season_str, $zone_str) = @_;
 
     my @user_content;
 
@@ -767,26 +1015,29 @@ sub _try_classify {
     $text_msg .= "Description: $detail\n";
     $text_msg .= "$location_str\n" if $location_str;
     $text_msg .= "$season_str\n" if $season_str;
+    $text_msg .= "$zone_str\n" if $zone_str;
     $text_msg .= "Photo attached: " . ($photo_base64 ? "Yes" : "No");
 
     push @user_content, { type => 'text', text => $text_msg };
 
-    # Add photo if available
+    # Add photo if available. 'high' detail so the model can judge actual
+    # dimensions, materials, and damage extent rather than a 512px thumbnail.
     if ($photo_base64) {
         push @user_content, {
             type      => 'image_url',
             image_url => {
                 url    => "data:image/jpeg;base64,$photo_base64",
-                detail => 'low',
+                detail => 'high',
             },
         };
     }
 
     my $payload = {
-        model       => 'gpt-4o',
-        temperature => 0,
-        max_tokens  => 800,
-        messages    => [
+        model => 'gpt-5.6-sol',
+        # Reasoning tokens are drawn from this budget too, so keep it generous.
+        max_completion_tokens => 4000,
+        response_format => _response_schema(),
+        messages => [
             { role => 'system', content => $system_prompt },
             { role => 'user',   content => \@user_content },
         ],
@@ -842,6 +1093,51 @@ sub _try_classify {
     }
 
     return $parsed;
+}
+
+# Strict JSON schema for the assessment output. Enforced server-side by
+# OpenAI structured outputs, so the response is guaranteed to parse and
+# enum fields cannot drift.
+sub _response_schema {
+    return {
+        type => 'json_schema',
+        json_schema => {
+            name   => 'engineering_assessment',
+            strict => \1,
+            schema => {
+                type       => 'object',
+                properties => {
+                    severity => { type => 'string', enum => [qw(minor moderate severe)] },
+                    priority_timeline => { type => 'string', enum => [
+                        'Routine - 30+ days',
+                        'Standard - 7 to 14 days',
+                        'Priority - 48 to 72 hours',
+                        'Urgent - within 24 hours',
+                        'Emergency - immediate dispatch',
+                    ] },
+                    issue_summary       => { type => 'string' },
+                    safety_risk         => { type => 'string' },
+                    repair_scope        => { type => 'string' },
+                    method              => { type => 'string' },
+                    equipment           => { type => 'string' },
+                    crew                => { type => 'string' },
+                    hours               => { type => 'string' },
+                    cost_low            => { type => 'integer' },
+                    cost_high           => { type => 'integer' },
+                    quantity_low        => { type => 'number' },
+                    quantity_high       => { type => 'number' },
+                    quantity_unit       => { type => 'string',
+                        enum => [qw(sq_ft sq_yd linear_ft linear_yd each ton cu_yd none)] },
+                    site_considerations => { type => 'array', items => { type => 'string' } },
+                },
+                required => [qw(severity priority_timeline issue_summary safety_risk
+                                repair_scope method equipment crew hours
+                                cost_low cost_high quantity_low quantity_high
+                                quantity_unit site_considerations)],
+                additionalProperties => \0,
+            },
+        },
+    };
 }
 
 # ----------------------------------------------------------------------
@@ -937,7 +1233,8 @@ sub _get_photo_base64 {
 # ----------------------------------------------------------------------
 
 sub _format_assessment {
-    my ($ai, $category, $season_info, $address, $latitude, $longitude, $has_photo) = @_;
+    my ($ai, $category, $season_info, $address, $latitude, $longitude,
+        $has_photo, $zone, $cost_basis) = @_;
     $has_photo = 1 unless defined $has_photo;  # default to true for backward compat
 
     my $severity    = ucfirst($ai->{severity} || 'Moderate');
@@ -977,6 +1274,32 @@ sub _format_assessment {
     # Build site considerations for plain text
     my $site_text = join("\n  ", map { "- $_" } @site_items);
 
+    # The disclaimer must not claim a calibration that did not happen: only
+    # derived figures are backed by published award data.
+    my $disclaimer_text = $cost_basis
+        ? 'Cost derived from the measured quantity and published government award prices cited above. Scope, method, duration and crew are AI-generated and require field verification.'
+        : 'Preliminary AI-generated estimate. Dollar figures are not derived from published unit prices and should be checked against your own contract rates before use.';
+
+    # Basis of estimate (only when the cost was derived from published prices)
+    my $basis_text = '';
+    if ($cost_basis) {
+        $basis_text = sprintf(
+            "\n\nBASIS OF ESTIMATE\n  Quantity:  %s %s (measured from photo)\n"
+          . "  Unit price: %s (weighted average %s)\n  Source:    %s\n"
+          . "  Excludes:  %s.",
+            $cost_basis->{quantity}, $cost_basis->{work_desc},
+            $cost_basis->{unit_range}, $cost_basis->{average},
+            $cost_basis->{source}, $cost_basis->{excludes});
+    }
+
+    # Priority zone line (from the deterministic OSM classifier)
+    my $zone_text = '';
+    if ($zone) {
+        $zone_text = sprintf("\n  PRIORITY ZONE: %s zone -- %s, %dm from report location.%s",
+            uc($zone->{priority}), $zone->{label}, $zone->{distance},
+            $ai->{zone_escalated} ? ' Response timeline escalated accordingly.' : '');
+    }
+
     # -- Plain Text --
     my $text = <<"TEXT";
 =======================================================
@@ -985,7 +1308,7 @@ sub _format_assessment {
 =======================================================
 
   Severity: $severity | Priority: $priority
-  Category: $category | Location: $location_display
+  Category: $category | Location: $location_display${zone_text}
 
 SUMMARY
   $summary
@@ -1000,15 +1323,13 @@ RECOMMENDED ACTION
 RESOURCE ESTIMATE
   Cost:      $cost_range
   Time:      $hours hours
-  Crew:      $crew
+  Crew:      $crew${basis_text}
 
 SITE CONSIDERATIONS
   $site_text
 
 -------------------------------------------------------
-  AI-generated assessment calibrated against US
-  municipal contract rates (2024-2026). Actual costs
-  vary by jurisdiction and site conditions.${no_photo_note}
+  ${disclaimer_text}${no_photo_note}
 -------------------------------------------------------
 TEXT
 
@@ -1036,6 +1357,52 @@ TEXT
     my $h_hours     = _html_escape($hours);
     my $h_location  = _html_escape($location_display);
     my $h_priority  = _html_escape($priority);
+    my $h_disclaimer = _html_escape($disclaimer_text);
+
+    # Priority zone strip (red for Emergency zones, amber for High)
+    my $zone_html = '';
+    if ($zone) {
+        my $is_emergency = $zone->{priority} eq 'Emergency';
+        my $strip_bg     = $is_emergency ? '#FDECEA' : '#FEF5E7';
+        my $strip_border = $is_emergency ? '#F5B7B1' : '#FAD7A0';
+        my $strip_color  = $is_emergency ? '#922B21' : '#9C640C';
+        my $h_zone_label = _html_escape($zone->{label});
+        my $zone_dist    = int($zone->{distance});
+        my $escalated    = $ai->{zone_escalated}
+            ? ' Response timeline escalated to match the zone level.' : '';
+        my $zone_level   = uc($zone->{priority});
+        $zone_html = <<"ZONE";
+  <!-- Priority Zone -->
+  <div style="padding: 10px 20px; background: ${strip_bg}; border-bottom: 1px solid ${strip_border};">
+    <p style="margin: 0; font-size: 13px; line-height: 1.5; color: ${strip_color};">
+      <strong>&#9888;&nbsp; ${zone_level} ZONE:</strong> ${h_zone_label} located ${zone_dist}m from the report site.${escalated}
+    </p>
+  </div>
+ZONE
+    }
+
+    # Basis of estimate block: shows how the dollar figure was derived and
+    # cites the award data behind it.
+    my $basis_html = '';
+    if ($cost_basis) {
+        my $b_qty    = _html_escape($cost_basis->{quantity} . ' ' . $cost_basis->{work_desc});
+        my $b_unit   = _html_escape($cost_basis->{unit_range});
+        my $b_avg    = _html_escape($cost_basis->{average});
+        my $b_source = _html_escape($cost_basis->{source});
+        my $b_excl   = _html_escape($cost_basis->{excludes});
+        $basis_html = <<"BASIS";
+  <!-- Basis of Estimate -->
+  <div style="padding: 14px 20px; background: #EFF6FF; border-bottom: 1px solid #D6E4FF;">
+    <h3 style="margin: 0 0 8px 0; font-size: 12px; font-weight: 700; color: #1E40AF; text-transform: uppercase; letter-spacing: 0.5px;">Basis of Estimate</h3>
+    <table cellpadding="0" cellspacing="0" border="0" style="font-size: 13px; color: #2c3e50; width: 100%;">
+      <tr><td style="font-weight: 600; width: 100px; padding: 3px 8px 3px 0; vertical-align: top; color: #5d6d7e;">Quantity</td><td style="padding: 3px 0;">${b_qty} (measured from photo)</td></tr>
+      <tr><td style="font-weight: 600; padding: 3px 8px 3px 0; vertical-align: top; color: #5d6d7e;">Unit price</td><td style="padding: 3px 0;">${b_unit} &nbsp;<span style="color: #7f8c8d;">(weighted average ${b_avg})</span></td></tr>
+      <tr><td style="font-weight: 600; padding: 3px 8px 3px 0; vertical-align: top; color: #5d6d7e;">Source</td><td style="padding: 3px 0;">${b_source}</td></tr>
+      <tr><td style="font-weight: 600; padding: 3px 8px 3px 0; vertical-align: top; color: #5d6d7e;">Excludes</td><td style="padding: 3px 0;">${b_excl}</td></tr>
+    </table>
+  </div>
+BASIS
+    }
 
     # Build site considerations HTML
     my $site_html = join("\n", map {
@@ -1047,7 +1414,7 @@ TEXT
 <div style="border: 1px solid #d5d8dc; border-radius: 6px; overflow: hidden; margin: 20px 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; box-shadow: 0 1px 4px rgba(0,0,0,0.08);">
 
   <!-- Header -->
-  <div style="background: #1a5276; padding: 14px 20px;">
+  <div style="background: #0F2444; padding: 14px 20px;">
     <table cellpadding="0" cellspacing="0" border="0" width="100%"><tr>
       <td>
         <h2 style="margin: 0; font-size: 15px; font-weight: 700; color: #ffffff; letter-spacing: 0.5px;">ENGINEERING ASSESSMENT</h2>
@@ -1072,6 +1439,7 @@ TEXT
     </tr></table>
   </div>
 
+${zone_html}
   <!-- Summary -->
   <div style="padding: 14px 20px; background: #ffffff; border-bottom: 1px solid #eaecee;">
     <p style="margin: 0; font-size: 14px; line-height: 1.6; color: #2c3e50;">${h_summary}</p>
@@ -1084,7 +1452,7 @@ TEXT
 
   <!-- Recommended Action -->
   <div style="padding: 14px 20px; background: #f9fafb; border-bottom: 1px solid #eaecee;">
-    <h3 style="margin: 0 0 8px 0; font-size: 12px; font-weight: 700; color: #1a5276; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action</h3>
+    <h3 style="margin: 0 0 8px 0; font-size: 12px; font-weight: 700; color: #1E40AF; text-transform: uppercase; letter-spacing: 0.5px;">Recommended Action</h3>
     <table cellpadding="0" cellspacing="0" border="0" style="font-size: 13px; color: #2c3e50; width: 100%;">
       <tr><td style="font-weight: 600; width: 100px; padding: 3px 8px 3px 0; vertical-align: top; color: #5d6d7e;">Scope</td><td style="padding: 3px 0;">${h_scope}</td></tr>
       <tr><td style="font-weight: 600; padding: 3px 8px 3px 0; vertical-align: top; color: #5d6d7e;">Method</td><td style="padding: 3px 0;">${h_method}</td></tr>
@@ -1094,28 +1462,29 @@ TEXT
 
   <!-- Resource Estimate -->
   <div style="padding: 14px 20px; background: #ffffff; border-bottom: 1px solid #eaecee;">
-    <h3 style="margin: 0 0 10px 0; font-size: 12px; font-weight: 700; color: #1a5276; text-transform: uppercase; letter-spacing: 0.5px;">Resource Estimate</h3>
+    <h3 style="margin: 0 0 10px 0; font-size: 12px; font-weight: 700; color: #1E40AF; text-transform: uppercase; letter-spacing: 0.5px;">Resource Estimate</h3>
     <table cellpadding="0" cellspacing="0" border="0" width="100%">
       <tr>
         <td width="33%" style="text-align: center; padding: 8px;">
-          <div style="font-size: 20px; font-weight: 700; color: #1a5276;">${cost_range}</div>
+          <div style="font-size: 20px; font-weight: 700; color: #1E40AF;">${cost_range}</div>
           <div style="font-size: 10px; color: #7f8c8d; text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px;">Estimated Cost</div>
         </td>
         <td width="33%" style="text-align: center; padding: 8px; border-left: 1px solid #eaecee; border-right: 1px solid #eaecee;">
-          <div style="font-size: 20px; font-weight: 700; color: #1a5276;">${h_hours} hrs</div>
+          <div style="font-size: 20px; font-weight: 700; color: #1E40AF;">${h_hours} hrs</div>
           <div style="font-size: 10px; color: #7f8c8d; text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px;">Duration</div>
         </td>
         <td width="33%" style="text-align: center; padding: 8px;">
-          <div style="font-size: 15px; font-weight: 700; color: #1a5276;">${h_crew}</div>
+          <div style="font-size: 15px; font-weight: 700; color: #1E40AF;">${h_crew}</div>
           <div style="font-size: 10px; color: #7f8c8d; text-transform: uppercase; margin-top: 2px; letter-spacing: 0.5px;">Crew</div>
         </td>
       </tr>
     </table>
   </div>
 
+${basis_html}
   <!-- Site Considerations -->
   <div style="padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #eaecee;">
-    <h3 style="margin: 0 0 6px 0; font-size: 12px; font-weight: 700; color: #1a5276; text-transform: uppercase; letter-spacing: 0.5px;">Site Considerations</h3>
+    <h3 style="margin: 0 0 6px 0; font-size: 12px; font-weight: 700; color: #1E40AF; text-transform: uppercase; letter-spacing: 0.5px;">Site Considerations</h3>
     <table cellpadding="0" cellspacing="0" border="0" style="width: 100%;">
 ${site_html}
     </table>
@@ -1123,7 +1492,7 @@ ${site_html}
 
   <!-- Disclaimer -->
   <div style="padding: 8px 20px; background: #f4f6f7; font-size: 11px; color: #95a5a6; line-height: 1.4;">
-    AI-generated estimate calibrated against US municipal contract rates (2024-2026). Actual costs vary by jurisdiction and site conditions.${no_photo_html}
+    ${h_disclaimer}${no_photo_html}
   </div>
 
 </div>
